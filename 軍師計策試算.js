@@ -6,7 +6,7 @@ window.SPStudy={
   if(model==='a')return Math.floor((20+4*(level-1))*(.4+.6*(intelligence/100)**4));
   if(model==='b')return intelligence+Math.floor(4*(level-1)*intelligence**2/10000);
   if(model!=='c')throw Error('未知方案');
-  const start=Math.max(0,8+Math.floor((Math.min(intelligence,95)-50)/5))+Math.max(0,intelligence-95);
+  const start=10;
   return start+Math.floor((level-1)*intelligence/100);
  },
  transition(current,maximum,event,amount=0){
