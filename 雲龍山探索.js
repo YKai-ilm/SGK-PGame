@@ -12,6 +12,7 @@ window.YunlongExploration=(()=>{
  return {claimed,collect};
 })();
 (()=>{const spot=document.getElementById('yellowFlowers'),dialog=document.getElementById('foundItem'),message=document.getElementById('foundText');
+ document.getElementById('villager').onclick=()=>{message.textContent='這裡是雲龍山，華藥師似乎往山上去了，沿途別忘了看看花花草草，以及美麗的風景唷！';dialog.showModal();};
  function refresh(){try{spot.hidden=YunlongExploration.claimed();}catch{spot.hidden=false;}}
  spot.onclick=async()=>{spot.disabled=true;try{const act=()=>YunlongExploration.collect();const gained=navigator.locks?await navigator.locks.request('yunlong-hidden-reward',act):act();message.textContent=gained?'在黃色花叢中發現布衣！獲得防具「布衣」一件，已收入背包。':'這裡已經找過了。';refresh();}catch{message.textContent='存檔未能保存，尚未領取，請稍後再試。';}finally{spot.disabled=false;dialog.showModal();}};
  document.getElementById('closeFound').onclick=()=>dialog.close();addEventListener('storage',refresh);refresh();})();
