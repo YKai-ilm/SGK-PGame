@@ -13,7 +13,7 @@ window.HealingStudy=(()=>{
  ].map(x=>Object.freeze({...x,cooldown:5}));
  const revisedAmounts=[500,1200,2500,4500,300,1000,2200,400];
  const revisedCatalog=catalog.map((c,i)=>Object.freeze({...c,instant:revisedAmounts[i],...(c.book?{hot:450}:{})}));
- revisedCatalog.push(Object.freeze({id:'puluo',name:'普羅術',category:'策防',intelligence:96,cost:18,instant:3900,targets:5,cooldown:5}));
+ revisedCatalog.push(Object.freeze({id:'puluo',name:'普羅計',category:'策防',intelligence:96,cost:18,instant:3900,targets:5,cooldown:5}));
  const unit=(id,hp,nextHit=0,pending=0,hero=true,max=1000)=>({id,name:id,hp,max,nextHit,pending,hero});
  const scenarios=[
   {id:'scratch',name:'一人缺50生命',units:[unit('劉備',950)],expected:'chixin'},
