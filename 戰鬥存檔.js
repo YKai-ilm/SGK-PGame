@@ -1,7 +1,7 @@
 'use strict';
 window.BattleSave=(()=>{
  let ready=false,armed=false,pending=null,serial=0,manualId=0,storageWarned=false,leaving=false;
- const button=document.createElement('button');button.id='saveBattle';button.textContent='存檔';button.style.cssText='font-size:11px;min-height:30px;padding:4px 6px';$('retreatBattle').after(button);
+ const button=document.createElement('button');button.id='saveBattle';button.hidden=true;button.textContent='存檔';button.style.cssText='font-size:11px;min-height:30px;padding:4px 6px';$('retreatBattle').after(button);
  const dialog=document.createElement('dialog');dialog.id='saveDialog';dialog.setAttribute('aria-label','戰鬥存檔');document.body.append(dialog);
  const input=document.createElement('input');input.type='file';input.accept='.json,application/json';input.hidden=true;document.body.append(input);
  function capture(){
