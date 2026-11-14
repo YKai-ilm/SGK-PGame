@@ -30,6 +30,7 @@ window.HealingStudy=(()=>{
   if(!['legacy','hp-review'].includes(model))throw Error('恢復模型無效');
   if(!Number.isInteger(intelligence)||intelligence<0||intelligence>100||!Number.isInteger(level)||level<1||!Number.isSafeInteger(sp)||sp<0)throw Error('軍師試算輸入不正確');
   if(!['策防','策裝'].includes(category))throw Error('本試算僅包含恢復計策');
+  if(intelligence<65)return {choice:null,reason:'智力未達65，不能擔任軍師或施放軍師計策。',evaluated:0};
   const seen=new Set();
   const live=units.filter(u=>Number.isFinite(u.hp)&&Number.isFinite(u.max)&&u.max>0&&u.hp>0&&u.hp<=u.max).map(u=>{
    if(seen.has(u.id))throw Error('重複單位');seen.add(u.id);

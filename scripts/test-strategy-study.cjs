@@ -5,10 +5,11 @@ let p=60;p=S.transition(p,130,'level');assert.equal(p,60);p=S.transition(p,130,'
 console.log('PASS proposed capacity: 100 levels remain monotonic; intelligence scaling remains monotonic with equal starting capacity; SP scenario preserves current amount and caps recovery only. Study only, not runtime.');
 
 
-assert.deepEqual([50,60,70,78,80,90,97,98,99,100].map(i=>S.capacity(i,1)),[10,10,10,10,10,10,10,10,10,10]);
+assert.deepEqual([50,60,70,78,80,90,97,98,99,100].map(i=>S.capacity(i,1)),[0,0,10,10,10,10,10,10,10,10]);
 for(let l=1;l<=100;l++){assert.ok(S.capacity(97,l)<=S.capacity(98,l)&&S.capacity(98,l)<=S.capacity(99,l));for(let i=50;i<=100;i++)assert.ok(S.capacity(i,l)<S.capacity(i,l,'b'));}
 
-for(let i=0;i<=100;i++)assert.equal(S.capacity(i,1),10);
+for(let i=0;i<=100;i++){assert.equal(S.canAppoint(i),i>=65);assert.equal(S.capacity(i,1),i>=65?10:0);}
+assert.equal(S.canAppoint(64),false);assert.equal(S.canAppoint(65),true);assert.equal(S.canAppoint(NaN),false);assert.equal(S.canAppoint(101),false);
 assert.deepEqual([97,98,99].map(i=>S.capacity(i,100)),[106,107,108]);
 assert.equal(S.capacity(96,9),17);assert.equal(S.capacity(96,10),18);assert.equal(S.transition(10,18,'level'),10);assert.equal(S.transition(10,18,'inn'),18);assert.equal(S.transition(7,10,'battle'),7);
 console.log('PASS uniform initial 10 SP, intelligence growth and no refill on level/battle changes');

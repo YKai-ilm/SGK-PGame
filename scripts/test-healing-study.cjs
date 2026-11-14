@@ -4,7 +4,7 @@ for(const scene of H.scenarios){const before=JSON.stringify(scene.units),r=H.cho
 const injured=[{id:'a',hero:true,hp:820,max:1000}];
 assert.equal(H.choose({...opts,sp:1,units:injured}).choice,null);
 assert.equal(H.choose({...opts,level:1,units:injured}).choice.id,'tongxian');
-assert.equal(H.choose({...opts,intelligence:64,level:6,units:injured}).choice.id,'chixin');
+assert.equal(H.choose({...opts,intelligence:64,level:6,units:injured}).choice,null);
 assert.equal(H.choose({...opts,intelligence:65,level:6,units:injured}).choice.id,'tongxian');
 assert.equal(H.choose({...opts,cooling:['策防'],units:injured}).choice,null);
 assert.equal(H.choose({...opts,category:'策裝',units:injured}).choice,null);
@@ -35,7 +35,7 @@ for(const spell of H.revisedCatalog.filter(c=>!c.pending)){const results=[6000,2
 const bookRisk=H.choose({...newer,category:'策裝',hasBook:true,units:[{id:'a',hero:true,hp:100,max:2000,nextHit:800}]}).choice;assert.equal(bookRisk.saved,0);assert.equal(bookRisk.immediate,400);assert.equal(bookRisk.effective,850);
 assert.throws(()=>H.choose({...newer,model:'unknown'}));console.log('PASS revised fixed heals, SP, targets, urgent rescue and delayed-book isolation');
 
-for(const level of [1,20,100]){const units=[{id:'a',hero:true,hp:1000,max:5000}];assert.equal(H.choose({...newer,level,units}).choice.id,'jinxian');assert.equal(H.choose({...newer,level,intelligence:64,units}).choice.id,'chixin');assert.equal(H.choose({...newer,level,sp:2,units}).choice.id,'chixin');}
+for(const level of [1,20,100]){const units=[{id:'a',hero:true,hp:1000,max:5000}];assert.equal(H.choose({...newer,level,units}).choice.id,'jinxian');assert.equal(H.choose({...newer,level,intelligence:64,units}).choice,null);assert.equal(H.choose({...newer,level,sp:2,units}).choice.id,'chixin');}
 assert.equal(H.choose({...newer,level:1,units:[{id:'a',hero:true,hp:4800,max:5000}]}).choice.id,'chixin');
 console.log('PASS intelligence-only access, level invariance and high-intelligence low-tier selection');
 
@@ -54,3 +54,6 @@ const puluo=H.revisedCatalog.find(c=>c.id==='puluo');assert.equal(puluo.instant,
 
 for(const [intel,sp,expected] of [[95,100,'guangji'],[96,17,'guangji'],[96,18,'puluo']])assert.equal(H.choose({...newer,level:1,intelligence:intel,sp,units:group(5,3900)}).choice.id,expected);
 const p=H.choose({...newer,level:1,intelligence:96,sp:18,units:group(8,3900)}).choice;assert.equal(p.id,'puluo');assert.equal(p.targets.length,5);assert.equal(p.effective,19500);assert.equal(H.choose({...newer,cooling:['puluo'],units:group(5,3900)}).choice.id,'guangji');assert.equal(H.choose({...newer,intelligence:96,units:group(1,200)}).choice.id,'chixin');console.log('PASS Puluo 96 intelligence/18 SP boundary, cap, cooldown and low-tier retention');
+
+for(const category of ['策防','策裝'])assert.equal(H.choose({...newer,intelligence:64,hasBook:true,category,units:group(1,1000)}).choice,null);
+assert.equal(H.choose({...newer,intelligence:65,level:1,units:group(1,1000)}).choice.id,'tongxian');console.log('PASS strategist appointment threshold at 64/65 including book tactics');
