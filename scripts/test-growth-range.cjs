@@ -15,14 +15,10 @@ for(const args of [[0],[101],[NaN],[1,'金'],[1,'紅',0],[1,'紅',11],[1,'紅',1
 assert.equal(before,JSON.stringify(ctx.window.HERO_COMBAT_DATA));
 console.log('Growth range: 18000 progression comparisons and boundaries passed.');
 
-vm.runInContext(fs.readFileSync('成長承傷試算.js','utf8'),ctx);
-const P=ctx.window.HPGrowthPressure;
-assert.equal(P.hp(1000,1,.03),1000);assert.equal(P.hp(1000,10,.03),1270);assert.equal(P.hp(1000,16,.03),1450);assert.equal(P.hp(1000,100,.03),1450);
-assert.equal(P.run(100,0,1).fallenAt,1.3);
-assert.equal(P.run(100000,0,1).damage,46*168+23*150);
-assert.equal(P.run(100000,100,1).damage,(46*168+23*150)/2);
-assert.equal(P.run(100000,0,2).damage,2*(46*168+23*150));
-for(const rate of [.02,.03,.04]){let last=0;for(let l=1;l<=100;l++){const hp=P.hp(10819,l,rate);assert(hp>=last);last=hp;}}
-for(const args of [[0,1,.03],[100,0,.03],[100,1,NaN]])assert.throws(()=>P.hp(...args));
-for(const scale of [1,2.8,5.88])for(const level of [1,10,20])for(const rate of ['old',.03]){const hp=P.hp(10819,level,rate),r=P.run(hp,ctx.window.HeroCombat.stats('郝昭').def,scale);console.log(JSON.stringify({scale,level,rate,hp,remaining:Math.floor(r.remaining),fallenAt:r.fallenAt}));}
-console.log('PASS attack timing, defense, scaling, growth cap and invalid input');
+
+vm.runInContext(fs.readFileSync('統一等級試算.js','utf8'),ctx);const U=ctx.window.UnifiedLevelStudy;
+assert.equal(U.need(50),5000);assert.equal(U.reward(20),30);assert.equal(JSON.stringify(U.gain(50,0,5010)),JSON.stringify({level:51,xp:10}));assert.equal(U.hp(1840,50),3479);assert.equal(U.hp(1840,51),3513);
+let total=0;for(let l=1;l<100;l++)total+=U.need(l);assert.equal(total,495000);assert.equal(U.gain(1,0,total).level,100);
+for(let start=1;start<=100;start++){let a={level:start,xp:0};for(let i=0;i<167;i++)a=U.gain(a.level,a.xp,U.reward(20));assert.equal(JSON.stringify(a),JSON.stringify(U.gain(start,0,5010)));}
+for(const args of [[0,0,1],[50,5000,1],[50,0,-1]])assert.throws(()=>U.gain(...args));
+console.log('PASS shared XP thresholds, fixed enemy reward, overflow, cap and batching invariance');
