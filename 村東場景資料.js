@@ -12,7 +12,7 @@ window.VillageHiddenItems=(()=>{
  function returnRabbit(){const d=read();if(d.flowerQuest!=='searching'||d.rabbitDoll!==1)return false;d.rabbitDoll=0;d.flowerQuest='completed';d.tanghulu=1;localStorage.setItem(key,JSON.stringify(d));return true;}
  function candyOwned(){return read().tanghulu===1;}
  function huatuoDone(){return read().huatuoCompleted===true;}
- function pasteOwned(){return read().fulingPaste===1;}
+ function pasteOwned(){return read().fulingPaste===1&&!JSON.parse(localStorage.getItem('three-kingdoms-interface-preview-v1')||'{}').storyEvents?.yunlongRescue?.medicineUsed;}
  function completeHuatuo(){const d=read();if(d.huatuoCompleted||d.tanghulu!==1)return false;d.tanghulu=0;d.fulingPaste=1;d.huatuoCompleted=true;localStorage.setItem(key,JSON.stringify(d));return true;}
  return{key,claimed,owned,claim,flowerQuest,flowerVisits,finishFlowerVisit,acceptFlower,returnRabbit,candyOwned,huatuoDone,pasteOwned,completeHuatuo};
 })();

@@ -11,6 +11,7 @@ window.ProgressRewards=(()=>{
  {id:'graduate',kind:'achievement',name:'演武結業',desc:'完整完成四段教學；跳過不會解鎖。',value:+done,goal:1,coins:0,diamonds:5,global:true},
  {id:'taoyuanFunding',kind:'achievement',name:'三國人生啟動資助',desc:'完成張世平的贈禮對話，獲得第一筆起兵軍資。',value:+!!r.claims.taoyuanMerchant,goal:1,coins:0,diamonds:2,targetMode:'story',global:true},
  {id:'peachOath',kind:'achievement',name:'桃園三結義',desc:'劉備、關羽、張飛於桃園結為兄弟。',value:+!!s.storyEvents?.peachOath,goal:1,coins:0,diamonds:2,targetMode:'story',global:true},
+ {id:'yunlongRescue',kind:'achievement',name:'仁心救援',desc:'於雲龍山協助華陀救醒小牛，與大牛、小牛回徐州留宿。',value:+!!s.storyEvents?.yunlongRescue?.completed,goal:1,coins:0,diamonds:2,targetMode:'story',global:true},
  {id:'collect1',kind:'achievement',name:'初識名將',desc:'累計解鎖一名武將。',value:s.unlocks[s.mode].heroes.length,goal:1,coins:0,diamonds:2},
  {id:'collect3',kind:'achievement',name:'群英初聚',desc:'累計解鎖三名不同武將。',value:s.unlocks[s.mode].heroes.length,goal:3,coins:0,diamonds:5}
  ].filter(x=>x.id!=='tutorialLetters'||(done&&r.claims.tutorial&&!r.claims.tutorial.letters?.length&&!r.claims.tutorialLetters)).map(x=>{const key=(x.global?x.id:s.mode+':'+x.id)+(x.kind==='achievement'?':diamonds-v1':'');return {...x,diamonds:x.diamonds||0,key,claimed:!!r.claims[key]};});}
