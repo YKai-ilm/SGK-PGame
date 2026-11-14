@@ -11,7 +11,7 @@
  $('battleReport').addEventListener('click',saveVictory);
  const bar=document.createElement('div');bar.className='sweep-actions';bar.style.cssText='display:flex;gap:6px;flex-wrap:wrap;align-items:center';
  const back=document.createElement('button');back.textContent='返回桃源村';back.onclick=()=>BattleResults.leave();
- const label=document.createElement('span');label.textContent=VillageDefense.title+' · '+VillageDefense.waves+'波';back.style.fontSize=label.style.fontSize=getComputedStyle($('speed')).fontSize;bar.append(back,label,$('speed'),$('tactics'),$('play'),$('reset'));document.querySelector('main header').append(bar);
+ const label=document.createElement('span');label.textContent=VillageDefense.title+' · '+VillageDefense.waves+'波';const speedStyle=getComputedStyle($('speed'));back.style.fontSize=label.style.fontSize=speedStyle.fontSize;back.style.minHeight=speedStyle.minHeight;back.style.height=speedStyle.height;back.style.padding=speedStyle.padding;back.style.lineHeight=speedStyle.lineHeight;bar.append(back,label,$('speed'),$('tactics'),$('play'),$('reset'));document.querySelector('main header').append(bar);
  const toolbar=document.querySelector('main>section .toolbar');if(toolbar)toolbar.hidden=true;
  const controls=document.querySelector('.page-battle-controls');if(controls)controls.hidden=true;
  $('supplyMode').hidden=true;$('reset').textContent='重新挑戰';
