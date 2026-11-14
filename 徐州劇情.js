@@ -5,6 +5,7 @@
  const read=()=>JSON.parse((localStorage.getItem(key)||'{}').replace(/\u9761/g,'\u7cdc'));
  let state={scene:'內城',flags:{},history:[],active:null,...read()},timer=null,busy=false;
  const party=()=>{try{return JSON.parse(localStorage.getItem('three-kingdoms-taoyuan-dialogue-v1')||'{}').party||[];}catch{return [];}};
+ const sworn=()=>{try{return !!JSON.parse(localStorage.getItem('three-kingdoms-interface-preview-v1')||'{}').storyEvents?.peachOath||JSON.parse(localStorage.getItem('three-kingdoms-taoyuan-dialogue-v1')||'{}').seen?.includes('oath');}catch{return false;}};
  const address=()=>party().length===0?'壯士':party().length===1?'二位':'諸位';
  const houses={曹豹家:{image:'曹豹家居室-v1.png',points:[['曹豹',33,24.5,'caobao']]},糜家:{image:'糜家居室-v1.png',points:[['糜太公',46,25,'miElder'],['糜芳',25,30,'miFang'],['糜貞',79,51,'miZhen']]},藥師家:{image:'藥師家居室-v1.png',points:[['藥童',76,40,'apprentice']]}};
  const city=[['城主府',57,17.5],['役所',22,92],['驛站',10,29],['客棧',35,35],['酒樓',80,35],['武器店',33,54.5],['防具店',80,54.5],['訓練店',26,72],['編輯所',80,69.5],['道具店',78,86.5],['城西',8.5,39]];
@@ -21,11 +22,14 @@
   else {const id=state.scene==='城主府'?'城主府一':state.scene;const base=SharedInteriorScenes.find(s=>s.id===id),c=XuzhouNpcPlacement[id];if(!base||!c){state.scene='內城';save();render();return;}image=base.image;points=[[c.npc,c.npcX??base.npcX,c.npcY??base.npcY,()=>npc(id)],['離開',base.exitX,base.exitY,()=>go('內城')]];}
   $('backdrop').src=image;$('backdrop').alt=state.scene;for(const [name,x,y,fn]of points){const b=document.createElement('button');b.className='hotspot scene-sign '+(CharacterCardStyle.isHistorical(name)?'sign-story':['離開','回內城'].includes(name)?'sign-exit':'sign-common');b.style.cssText=`left:${x}%;top:${y}%;width:${name.length>2?13.5:12}%`;b.dataset.name=name;const span=document.createElement('span');span.textContent=name;b.append(span);b.onclick=()=>protect(fn);$('hotspots').append(b);}
  }
- function talk(lines,action=null){state.active={lines,index:0,action,recorded:[]};save();show();}
+ function talk(lines,action=null){state.active={lines,index:0,action,recorded:[],visitors:action==='miZhenAwaitingMarriage'?party().slice():undefined};save();show();}
  function show(){stop();if(!state.active||document.hidden||$('history').open)return;const a=state.active,[speaker,line]=a.lines[a.index];$('dialogue').hidden=false;$('resume').hidden=true;$('hotspots').inert=true;$('speaker').textContent=speaker;$('line').textContent=line;$('lineCount').textContent=`${a.index+1} / ${a.lines.length}`;$('nextLine').textContent=a.index===a.lines.length-1?'結束對話':'下一句';if(!a.recorded.includes(a.index)){state.history.push({speaker,line,scene:state.scene});a.recorded.push(a.index);save();}timer=setTimeout(()=>protect(next),Math.max(2200,[...line].length*100));}
  function next(){stop();if(!state.active||$('dialogue').hidden||$('history').open)return;const a=state.active;if(a.index<a.lines.length-1){a.index++;save();show();return;}finish(a.action);}
  function end(){state.active=null;save();$('dialogue').hidden=true;$('hotspots').inert=false;$('resume').hidden=true;}
  function finish(action){
+  if(action==='miElderHeard')state.flags.miElderHeard=true;
+  if(action==='miZhenAwaitingMarriage'){state.flags.miZhenAwaitingMarriage=true;state.flags.miZhenVisitors=state.active?.visitors||[];}
+  if(action==='miMatchmakingDiscussed')state.flags.miMatchmakingDiscussed=true;
   if(action==='huatuo'){const result=VillageHiddenItems.completeHuatuo();if(!result&&!VillageHiddenItems.huatuoDone()){end();notice('身上已沒有糖葫蘆，尚未完成交付。');return;}}
   if(action==='clerk')state.flags.introduced=true;
   if(action==='steward')state.flags.steward=true;
@@ -42,7 +46,9 @@
  function npc(id){
   if(id==='apprentice'){if(VillageHiddenItems.huatuoDone())talk([['藥童','我還有好多草藥要磨，何時才到頭呢？']]);else if(!state.flags.apprenticeFirst)talk([['藥童','華藥師外出採藥，通常要數週不等，爾等日後再來吧！我會轉達有客來訪。']],'apprenticeFirst');else talk([['藥童','每天都在這邊磨藥，吃的藥湯都是苦的，好想吃點甜的東西唷！']],'apprenticeSecond');return;}
   if(id==='caobao'){talk([['曹豹','現今世道黃巾猖獗，陶太守隨朝廷號召義勇兵，希望能盡快平定禍亂吧！']]);return;}
-  if(['miElder','miFang','miZhen'].includes(id)){notice('這位人物的對話尚未開放。');return;}
+  const family=MiFamilyStory.npc(id,state.flags);if(family){talk(family.lines,family.action);return;}
+  if(id==='城主府一'&&MiFamilyStory.canMatchmake(state.flags)){talk(MiFamilyStory.matchmaking({party:party(),sworn:sworn(),visitors:state.flags.miZhenVisitors||[]}), 'miMatchmakingDiscussed');return;}
+  if(id==='城主府一'&&state.flags.miMatchmakingDiscussed){talk([['糜竺','回頭我就與老父親說說，讓您二人多相處些時日。']]);return;}
   if(id==='役所'){if(!state.flags.introduced)talk([['書吏',`${address()}可是前來應募的義勇？`],['劉備','在下劉備，曾與鄉里義士討賊。聞徐州招募義勇，特來相詢。'],['書吏',`近來城西糧車屢遭襲擾，百姓往來也不安穩。糜別駕正在城主府料理此事，${address()}可前去拜見。`]],'clerk');else if(state.flags.slept&&!state.flags.missing)talk([['書吏','昨夜仍未等到護衛隊長回城，今早也沒有傳來消息。'],['書吏','前次運糧的護軍恐怕出了變故，還請往城西沿路查探。'],['劉備','人命攸關，我這便前去。']],'missing');else talk([['書吏',state.flags.missing?'護軍仍未回城，還請留意城西消息。':state.flags.steward?'先去客棧歇息，明日再來。':state.flags.accepted?'糧隊管事在城西糧車旁。':'糜別駕在城主府，請前去拜見。']]);return;}
   if(id==='城主府一'){if(!state.flags.introduced){talk([['門吏','請先到役所通報，再來拜見糜別駕。']]);return;}if(state.flags.accepted){talk([['糜竺','糧車接應之事，請與城西糧隊管事商議。']]);return;}const lines=[['糜竺','如今願意挺身護民的人，實在難得。'],['劉備','備兵微將寡，卻不敢因力薄而袖手。'],['糜竺',`城西有一批糧車等候入城。若糧道再斷，城中米價恐怕還要上漲。願請${address()}前往接應。`]];if(party().includes('張飛'))lines.push(['張飛','護送糧車？交給俺們便是！']);if(party().includes('關羽'))lines.push(['關羽','賊情未明，還是先問清遇襲之處。']);talk(lines,'accept');return;}
   if(id==='steward'){if(!state.flags.accepted)talk([['糧隊管事','這裡是等候接應的城西糧車，接應事宜請先向糜別駕詢問。']]);else if(state.flags.steward)talk([['糧隊管事',state.flags.slept?'請到役所向書吏打聽護衛隊長的消息。':'今日天色已晚，請先到客棧歇息，明日再尋書吏。']]);else talk([['糧隊管事',`糜別駕已派人知會。城西糧車的接應，便請${address()}多費心了。`],['糧隊管事',`今日天色已晚，前次運送糧車的護衛隊長尚未回城，請${address()}可先至客棧歇息，明日再去書吏那尋訪。`]],'steward');return;}
