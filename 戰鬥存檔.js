@@ -14,8 +14,8 @@ window.BattleSave=(()=>{
  function validate(save){
   if(save?.format!=='three-kingdoms-battle'||save.version!==1)throw Error('存檔格式或版本不符');
   const s=save.state,finite=n=>typeof n==='number'&&Number.isFinite(n),list=(a,max)=>Array.isArray(a)&&a.length<=max;
-  if((s?.storySweep?.mission||null)!==(window.VillageDefense?.active?VillageDefense.mission:null))throw Error('請在對應的劇情關卡載入此存檔');
-  if(s?.storySweep?.mission&&(s.storySweep.waves!==window.VillageDefense.waves||s.storySweep.encounterId!=='rabble'))throw Error('首戰配置無效');
+  if((s?.storySweep?.mission||null)!==(window.YunlongBattle?.mission||(window.VillageDefense?.active?VillageDefense.mission:null)))throw Error('請在對應的劇情關卡載入此存檔');
+  if(s?.storySweep?.mission&&(s.storySweep.waves!==(window.YunlongBattle?.waves||window.VillageDefense.waves)||s.storySweep.encounterId!=='rabble'))throw Error('首戰配置無效');
   if(!s||!['6x10','6x15','10x6','15x6','15x12','10x12','16x12','14x10','9x9','11x11','13x13'].includes(s.n+'x'+s.rows)||!finite(s.elapsed)||s.elapsed<0||typeof s.started!=='boolean'||typeof s.ended!=='boolean'||!Number.isInteger(s.wave)||s.wave<0||s.wave>6||!Number.isInteger(s.spawned)||s.spawned<0||s.spawned>12||!Number.isInteger(s.kills)||s.kills<0||!Number.isInteger(s.uid)||s.uid<0||![1,2,4].includes(s.speed))throw Error('戰場資料不完整');
   if(!Array.isArray(s.path)||s.path.length<2||s.path.length>s.n*s.rows)throw Error('道路資料無效');const road=new Set();for(let i=0;i<s.path.length;i++){const p=s.path[i],last=s.path[i-1];if(!p||!Number.isInteger(p.x)||!Number.isInteger(p.y)||p.x<0||p.y<0||p.x>=s.n||p.y>=s.rows||road.has(p.x+','+p.y)||last&&Math.abs(p.x-last.x)+Math.abs(p.y-last.y)!==1)throw Error('道路不連續或重疊');road.add(p.x+','+p.y);}
   if(s.terrainBlocks!==undefined){if(!Array.isArray(s.terrainBlocks)||s.terrainBlocks.length>s.n*s.rows)throw Error('障礙地形無效');const blocked=new Set();for(const p of s.terrainBlocks){const id=p.x+','+p.y;if(!Number.isInteger(p.x)||!Number.isInteger(p.y)||p.x<0||p.y<0||p.x>=s.n||p.y>=s.rows||!['forest','rock'].includes(p.kind)||road.has(id)||blocked.has(id))throw Error('障礙地形位置無效');blocked.add(id);}}
