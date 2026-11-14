@@ -6,5 +6,11 @@ window.UnifiedLevelStudy=(()=>{
  function reward(enemyLevel){if(!valid(enemyLevel))throw Error('敵人等級無效');return 10+enemyLevel;}
  function gain(level,xp,amount){if(!valid(level)||!Number.isSafeInteger(xp)||xp<0||xp>=(need(level)||1)||!Number.isSafeInteger(amount)||amount<0||!Number.isSafeInteger(xp+amount))throw Error('經驗無效');let remaining=xp+amount;while(level<100&&remaining>=need(level)){remaining-=need(level);level++;}return {level,xp:level===100?0:remaining};}
  function hp(base,level){if(!valid(level)||!Number.isFinite(base)||base<=0)throw Error('能力條件無效');return Math.round(base*(1+1.8*(level-1)/99));}
- return {need,reward,gain,hp};
+ // Illustrative village configuration, not the live chapter definition.
+ function villageExample(waves=6){
+  if(![1,3,6].includes(waves))throw Error('波數無效');
+  const enemies=[];for(let w=1;w<=waves;w++)for(let i=0;i<6+w;i++){const level=3+enemies.length%3;enemies.push({wave:w,level,xp:reward(level)});}
+  return enemies;
+ }
+ return {need,reward,gain,hp,villageExample};
 })();

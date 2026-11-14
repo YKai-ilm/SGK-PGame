@@ -22,3 +22,8 @@ let total=0;for(let l=1;l<100;l++)total+=U.need(l);assert.equal(total,495000);as
 for(let start=1;start<=100;start++){let a={level:start,xp:0};for(let i=0;i<167;i++)a=U.gain(a.level,a.xp,U.reward(20));assert.equal(JSON.stringify(a),JSON.stringify(U.gain(start,0,5010)));}
 for(const args of [[0,0,1],[50,5000,1],[50,0,-1]])assert.throws(()=>U.gain(...args));
 console.log('PASS shared XP thresholds, fixed enemy reward, overflow, cap and batching invariance');
+
+for(const [waves,count,total] of [[1,7,97],[3,24,336],[6,57,798]]){const es=U.villageExample(waves);assert.equal(es.length,count);assert.equal(es.reduce((n,e)=>n+e.xp,0),total);for(const e of es){assert(e.level>=3&&e.level<=5);assert.equal(e.xp,U.reward(e.level));}}
+const fixed=JSON.stringify(U.villageExample(6));for(const playerLevel of [1,20,60,100]){U.gain(playerLevel,0,798);assert.equal(JSON.stringify(U.villageExample(6)),fixed);}
+assert.equal(JSON.stringify(U.gain(1,0,7980)),JSON.stringify({level:13,xp:180}));assert.equal(JSON.stringify(U.gain(1,0,2660)),JSON.stringify({level:7,xp:560}));assert.equal(JSON.stringify(U.gain(60,0,7980)),JSON.stringify({level:61,xp:1980}));assert.throws(()=>U.villageExample(2));
+console.log('PASS fixed chapter roster, bounded levels, XP totals and repeatable results independent of player progression');
