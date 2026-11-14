@@ -4,6 +4,12 @@
 const playerStyle=document.createElement('style');
 playerStyle.textContent='#libraryTab,#battleTab,#size,label[for="size"],#routePattern{display:none!important}';
 document.head.append(playerStyle);
+const selection=document.getElementById('selection'),materials=document.getElementById('materialProgress');
+if(selection&&materials){
+ const row=document.createElement('div');row.className='selection-row';selection.before(row);row.append(selection,materials);
+ playerStyle.textContent+='.selection-row{display:flex;align-items:baseline;flex-wrap:wrap;gap:2px 8px;width:100%;min-width:0}.selection-row #selection{min-width:0;overflow-wrap:anywhere}.selection-row #materialProgress{margin-left:auto;text-align:right;max-width:100%;overflow-wrap:anywhere}';
+}
+
 const header=document.querySelector('main header'),nav=document.createElement('nav');nav.className='page-tabs';nav.setAttribute('aria-label','主要分頁');nav.innerHTML='<button id="libraryTab" aria-pressed="false">字卡庫</button><button id="battleTab" class="active" aria-pressed="true">戰場</button>';header.append(nav);
 const toolbar=document.querySelector('.toolbar');
 if(toolbar?.contains($('size'))){
