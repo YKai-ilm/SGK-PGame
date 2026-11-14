@@ -5,6 +5,6 @@ run(process.execPath,['scripts/test-assets.cjs']);
 const files=JSON.parse(fs.readFileSync('publish-inputs.json','utf8'));
 run('git',['add','--',...files,'scripts/build.cjs','scripts/sw-template.js','scripts/test-backup.cjs','scripts/serve.cjs','scripts/release.cjs','package.json','publish-inputs.json','.gitignore','README.md','手機發布說明.html','app-icon.svg']);
 run('git',['add','--','本機自動更新.js','scripts/test-local-update.cjs','scripts/test-offline.cjs']);
-run('git',['add','--','package-lock.json','scripts/test-assets.cjs','scripts/test-mi-family.cjs','scripts/test-rescue-state.cjs','scripts/test-yunlong-rescue.cjs','scripts/test-qingnang-browser.cjs','scripts/test-shortcut-state.cjs','scripts/test-battle-shortcuts.cjs']);
+run('git',['add','--','package-lock.json','scripts/test-assets.cjs','scripts/test-mi-family.cjs','scripts/test-rescue-state.cjs','scripts/test-yunlong-rescue.cjs','scripts/test-qingnang-browser.cjs','scripts/test-shortcut-state.cjs','scripts/test-battle-shortcuts.cjs','scripts/test-shortcut-stress.cjs']);
 const diff=cp.spawnSync('git',['diff','--cached','--quiet']);if(diff.status===1)run('git',['commit','-m',process.argv[2]||'Update game and mobile release']);else if(diff.status!==0)process.exit(diff.status);
 run('git',['push','-u','origin','main']);
