@@ -10,3 +10,5 @@ test-results/
 
 本機GM設定.js
 本機版本.js
+.asset-cache/
+.compression-review/

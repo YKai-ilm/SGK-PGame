@@ -1,5 +1,6 @@
 const CACHE='sgk-release-'+VERSION,ROOT=new URL('./',self.location.href),url=f=>new URL(f,ROOT).href;
 const TOTAL=ASSETS.reduce((n,a)=>n+a.bytes,0),HASH_HEADER='X-SGK-Asset-Hash';
+const aliasPaths=Object.fromEntries(Object.entries(typeof ALIASES==='undefined'?{}:ALIASES).map(([a,b])=>[new URL(a,ROOT).pathname,new URL(b,ROOT).pathname]));
 let job=null,state={phase:'checking',version:VERSION,done:0,total:ASSETS.length,bytes:0,totalBytes:TOTAL};
 async function notify(){for(const c of await self.clients.matchAll({type:'window',includeUncontrolled:true}))c.postMessage({type:'OFFLINE_STATUS',...state});}
 async function digest(b){return [...new Uint8Array(await crypto.subtle.digest('SHA-256',b))].map(x=>x.toString(16).padStart(2,'0')).join('');}
@@ -31,6 +32,7 @@ self.addEventListener('activate',event=>event.waitUntil((async()=>{
  await notify();
 })()));
 self.addEventListener('fetch',event=>{const u=new URL(event.request.url);if(event.request.method!=='GET'||u.origin!==ROOT.origin||!u.pathname.startsWith(ROOT.pathname))return;
+ if(aliasPaths[u.pathname])u.pathname=aliasPaths[u.pathname];
  if(u.pathname.endsWith('/sw.js')||u.pathname.endsWith('/offline-manifest.json'))return;
  event.respondWith((async()=>{const c=await caches.open(CACHE);u.search='';u.hash='';if(u.pathname===ROOT.pathname)u.pathname+='index.html';else if(!u.pathname.endsWith('/')&&!u.pathname.split('/').pop().includes('.'))u.pathname+='.html';const found=await c.match(u.href);if(found)return found.redirected?new Response(found.body,{status:found.status,statusText:found.statusText,headers:found.headers}):found;
   try{const r=await fetch(event.request);if(r.ok&&r.type==='basic')await c.put(u.href,r.clone());return r;}catch{if(event.request.mode==='navigate')return new Response('<meta charset="utf-8"><p>離線資料尚未完整，請連線後自動補下載。</p><a href="'+ROOT.pathname+'">回主城</a>',{headers:{'Content-Type':'text/html;charset=utf-8'}});throw Error('尚未快取');}
