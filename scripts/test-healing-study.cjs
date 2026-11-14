@@ -32,9 +32,20 @@ for(const [missing,expected] of [[200,'chixin'],[500,'chixin'],[1000,'tongxian']
 assert.equal(H.choose({...newer,units:['a','b','c'].map(id=>({id,hero:true,hp:1700,max:2000}))}).choice.id,'qunxian');
 assert.equal(H.choose({...newer,units:[{id:'a',hero:true,hp:100,max:2000,nextHit:800}]}).choice.id,'tongxian');
 for(const spell of H.revisedCatalog){const results=[6000,20000].map(max=>H.choose({...newer,category:spell.category,hasBook:true,cooling:H.revisedCatalog.filter(x=>x.id!==spell.id).map(x=>x.id),units:[{id:'a',hero:true,hp:max-5000,max}]}).choice);assert.equal(results[0].immediate,spell.instant);assert.equal(results[0].effective,spell.instant+(spell.hot||0));assert.equal(results[1].effective,results[0].effective);}
-const bookRisk=H.choose({...newer,category:'策裝',hasBook:true,units:[{id:'a',hero:true,hp:100,max:2000,nextHit:400}]}).choice;assert.equal(bookRisk.saved,0);assert.equal(bookRisk.immediate,240);assert.equal(bookRisk.effective,480);
+const bookRisk=H.choose({...newer,category:'策裝',hasBook:true,units:[{id:'a',hero:true,hp:100,max:2000,nextHit:800}]}).choice;assert.equal(bookRisk.saved,0);assert.equal(bookRisk.immediate,600);assert.equal(bookRisk.effective,1200);
 assert.throws(()=>H.choose({...newer,model:'unknown'}));console.log('PASS revised fixed heals, SP, targets, urgent rescue and delayed-book isolation');
 
 for(const level of [1,20,100]){const units=[{id:'a',hero:true,hp:1000,max:5000}];assert.equal(H.choose({...newer,level,units}).choice.id,'jinxian');assert.equal(H.choose({...newer,level,intelligence:64,units}).choice.id,'chixin');assert.equal(H.choose({...newer,level,sp:2,units}).choice.id,'chixin');}
 assert.equal(H.choose({...newer,level:1,units:[{id:'a',hero:true,hp:4800,max:5000}]}).choice.id,'chixin');
 console.log('PASS intelligence-only access, level invariance and high-intelligence low-tier selection');
+
+const group=(count,missing)=>Array.from({length:count},(_,i)=>({id:'g'+i,hero:true,hp:5000-missing,max:5000}));
+for(const [count,missing,expected] of [[1,200,'chixin'],[1,600,'tongxian'],[1,1000,'tongxian'],[3,200,'tuanfu'],[3,600,'qunxian'],[5,1000,'guangji']]){
+ const units=group(count,missing),before=JSON.stringify(units),r=H.choose({...newer,units}).choice;assert.equal(r.id,expected);assert(r.targets.length<=H.revisedCatalog.find(c=>c.id===expected).targets);assert.equal(r.effective,count*missing);assert.equal(JSON.stringify(units),before);
+}
+const many=H.choose({...newer,units:group(20,1500)}).choice;assert.equal(many.id,'guangji');assert.equal(many.targets.length,5);assert.equal(many.effective,5500);
+assert.equal(H.choose({...newer,category:'策裝',hasBook:false,units:group(1,1500)}).choice,null);
+assert.equal(H.choose({...newer,category:'策裝',hasBook:true,cooling:['futi'],units:group(1,1500)}).choice,null);
+assert.equal(H.choose({...newer,category:'策裝',hasBook:true,units:group(1,1500).map(u=>({...u,hero:false}))}).choice,null);
+assert.equal(H.choose({...newer,category:'策防',hasBook:true,units:group(1,1000)}).choice.id,'tongxian');
+console.log('PASS single/group selection, 5-target cap, overheal, book cooldown and category separation');
