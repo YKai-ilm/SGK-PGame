@@ -39,7 +39,7 @@ try{FullSave.recover();}catch(e){document.documentElement.textContent='存檔恢
    reg.addEventListener('updatefound',watch);watch();
    setInterval(check,5000);setInterval(()=>{reg.update().catch(()=>{});sync();},60000);
    window.addEventListener('online',()=>{reg.update().catch(()=>{});requestChapter();sync();});
-   document.addEventListener('visibilitychange',()=>{if(!document.hidden){reg.update().catch(()=>{});check();}});
+   document.addEventListener('visibilitychange',()=>{if(!document.hidden){reg.update().catch(()=>{});sync();check();}});
    requestChapter();sync();check();
    window.GameUpdate.status=()=>reg.waiting?'新版已準備，回主城後會自動更新':'目前版本 '+APP_VERSION;
   }catch(e){console.warn('更新檢查暫時無法連線',e);}
