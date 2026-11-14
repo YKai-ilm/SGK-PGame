@@ -5,7 +5,7 @@ const root=path.resolve(__dirname,'..'),out=path.join(root,'dist');
 if(path.dirname(out)!==root||path.basename(out)!=='dist')throw Error('輸出路徑錯誤');
 fs.mkdirSync(out,{recursive:true});
 const all=[];function walk(dir){for(const e of fs.readdirSync(dir,{withFileTypes:true})){if(['本機GM設定.js','本機版本.js','本機自動更新.js'].includes(e.name)||e.name.startsWith('.')||['dist','node_modules','scripts'].includes(e.name))continue;const p=path.join(dir,e.name);if(e.isDirectory())walk(p);else if(/\.(html|js|css|png|jpg|jpeg|svg|webp|woff2?|json|webmanifest)$/.test(e.name))all.push(path.relative(root,p).replaceAll('\\','/'));}}walk(root);
-const chosen=new Set(['index.html','主介面流程預覽.html','存檔備份.html','完整存檔.js','手機執行環境.js','離線資料狀態.js','manifest.webmanifest','app-icon-192.png','app-icon-512.png']);
+const chosen=new Set(['index.html','主介面流程預覽.html','存檔備份.html','完整存檔.js','手機執行環境.js','離線資料狀態.js','離線章節設定.json','章節下載.html','manifest.webmanifest','app-icon-192.png','app-icon-512.png']);
 // 以遊戲引用關係收集資源；比對檔名亦涵蓋由場景資料組合的圖片路徑。
 for(let old=-1;old!==chosen.size;){old=chosen.size;for(const f of [...chosen]){if(!/\.(html|js|css|json|webmanifest)$/.test(f))continue;const s=fs.readFileSync(path.join(root,f),'utf8');for(const target of all)if(s.includes(target)||s.includes(path.posix.basename(target)))chosen.add(target);}}
 const inputs=[...chosen].sort();const hash=crypto.createHash('sha256');for(const f of inputs){hash.update(f);hash.update(fs.readFileSync(path.join(root,f)));}hash.update(fs.readFileSync(__filename));hash.update(fs.readFileSync(path.join(__dirname,'sw-template.js')));const version=hash.digest('hex').slice(0,12);
@@ -20,10 +20,13 @@ const files=[];let originalImages=0,packedImages=0;for(const f of inputs){let bu
 fs.writeFileSync(path.join(out,'app-version.js'),`window.APP_VERSION=${JSON.stringify(version)};`);files.push('app-version.js');
 // 保留候選圖仍發布供手冊查看，但不自動下載。
 const assets=files.filter(f=>!/(書院候選|煉丹房候選)/.test(f)).map(file=>{const b=fs.readFileSync(path.join(out,file));return {file,bytes:b.length,hash:crypto.createHash('sha256').update(b).digest('hex')};});
+const config=JSON.parse(fs.readFileSync(path.join(root,'離線章節設定.json'),'utf8'));
+for(const a of assets){a.pack='core';if(a.file.endsWith('.webp')){const rule=config.sceneRules.find(r=>r.prefixes.some(p=>a.file.startsWith(p)));if(!rule)throw Error('請指定場景所屬章節：'+a.file);a.pack=rule.pack;}}
+const packs=config.packs.map(p=>({...p,bytes:assets.filter(a=>a.pack===p.id).reduce((n,a)=>n+a.bytes,0)}));
 const precache=assets.map(a=>a.file);
-fs.writeFileSync(path.join(out,'offline-manifest.json'),JSON.stringify({version,totalBytes:assets.reduce((n,a)=>n+a.bytes,0),assets}));
+fs.writeFileSync(path.join(out,'offline-manifest.json'),JSON.stringify({version,packs,pages:config.pages,totalBytes:assets.reduce((n,a)=>n+a.bytes,0),assets}));
 files.push('offline-manifest.json');
-fs.writeFileSync(path.join(out,'sw.js'),`const VERSION=${JSON.stringify(version)},ASSETS=${JSON.stringify(assets)},ALIASES=${JSON.stringify(aliases)};\n`+fs.readFileSync(path.join(__dirname,'sw-template.js'),'utf8'));
+fs.writeFileSync(path.join(out,'sw.js'),`const VERSION=${JSON.stringify(version)},ASSETS=${JSON.stringify(assets)},ALIASES=${JSON.stringify(aliases)},PACKS=${JSON.stringify(packs)};\n`+fs.readFileSync(path.join(__dirname,'sw-template.js'),'utf8'));
 fs.writeFileSync(path.join(out,'_redirects'),Object.entries(aliases).map(([from,to])=>encodeURI('/'+from)+' '+encodeURI('/'+to)+' 302').join('\n')+'\n');files.push('_redirects');
 fs.writeFileSync(path.join(out,'_headers'),'/*\n  Cache-Control: no-cache\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n/sw.js\n  Cache-Control: no-store\n');
 fs.writeFileSync(path.join(out,'404.html'),'<!doctype html><html lang="zh-Hant"><meta charset="utf-8"><h1>這條路尚未開放</h1><a href="/">回主城</a></html>');

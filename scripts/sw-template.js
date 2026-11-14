@@ -2,30 +2,43 @@ const CACHE='sgk-release-'+VERSION,ROOT=new URL('./',self.location.href),url=f=>
 const TOTAL=ASSETS.reduce((n,a)=>n+a.bytes,0),HASH_HEADER='X-SGK-Asset-Hash';
 const aliasPaths=Object.fromEntries(Object.entries(typeof ALIASES==='undefined'?{}:ALIASES).map(([a,b])=>[new URL(a,ROOT).pathname,new URL(b,ROOT).pathname]));
 let job=null,state={phase:'checking',version:VERSION,done:0,total:ASSETS.length,bytes:0,totalBytes:TOTAL};
+const packDefs=typeof PACKS==='undefined'?[{id:'core',name:'遊戲資料',default:true}]:PACKS;
+const META='sgk-offline-preferences',META_KEY=url('__offline_selection');
+let selected=null,selectionJob=Promise.resolve();
+async function selection(){
+ const meta=await caches.open(META),r=await meta.match(META_KEY);let ids=[];try{ids=r?await r.json():[];}catch{}
+ // 舊版曾整包下載的玩家保留已備妥章節，不因改成分包而失去離線場景。
+ if(!r){for(const key of (await caches.keys()).filter(k=>k.startsWith('sgk-release-')&&k!==CACHE)){const old=await caches.open(key);for(const p of packDefs.filter(p=>!p.default)){const group=ASSETS.filter(a=>a.pack===p.id);if(group.length&&(await Promise.all(group.map(a=>old.match(url(a.file))))).every(Boolean))ids.push(p.id);}}if(ids.length)await meta.put(META_KEY,new Response(JSON.stringify(ids)));}
+ selected=new Set([...packDefs.filter(p=>p.default).map(p=>p.id),...ids.filter(id=>packDefs.some(p=>p.id===id))]);return selected;
+}
+function selectPack(id){selectionJob=selectionJob.catch(()=>{}).then(async()=>{await selection();if(packDefs.some(p=>p.id===id)){selected.add(id);await (await caches.open(META)).put(META_KEY,new Response(JSON.stringify([...selected])));}});return selectionJob;}
 async function notify(){for(const c of await self.clients.matchAll({type:'window',includeUncontrolled:true}))c.postMessage({type:'OFFLINE_STATUS',...state});}
 async function digest(b){return [...new Uint8Array(await crypto.subtle.digest('SHA-256',b))].map(x=>x.toString(16).padStart(2,'0')).join('');}
 async function valid(response,a){if(!response?.ok)return false;if(response.headers.get(HASH_HEADER)===a.hash)return true;return await digest(await response.clone().arrayBuffer())===a.hash;}
 async function tagged(response,a){const headers=new Headers(response.headers);headers.set(HASH_HEADER,a.hash);headers.delete('content-encoding');headers.delete('content-length');return new Response(await response.arrayBuffer(),{status:200,headers});}
-function sync(){if(job)return job;job=download().finally(()=>{job=null;});return job;}
+function sync(){if(job)return job;job=(async()=>{do{await download();}while(ASSETS.some(a=>selected.has(a.pack||'core')&&!state.completedPacks.includes(a.pack||'core')));})().finally(()=>{job=null;});return job;}
 async function download(){
- state={phase:'downloading',version:VERSION,done:0,total:ASSETS.length,bytes:0,totalBytes:TOTAL};await notify();
+ await selection();const ids=[...selected],assets=ASSETS.filter(a=>selected.has(a.pack||'core')).sort((a,b)=>packDefs.findIndex(p=>p.id===(a.pack||'core'))-packDefs.findIndex(p=>p.id===(b.pack||'core')));
+ const remaining=Object.fromEntries(ids.map(id=>[id,assets.filter(a=>(a.pack||'core')===id).length]));
+ state={phase:'downloading',version:VERSION,done:0,total:assets.length,bytes:0,totalBytes:assets.reduce((n,a)=>n+a.bytes,0),selected:ids,packs:packDefs,completedPacks:[]};await notify();
  try{
   const target=await caches.open(CACHE),older=await Promise.all((await caches.keys()).filter(k=>k.startsWith('sgk-release-')&&k!==CACHE).map(k=>caches.open(k)));
   // 每檔完成才記錄；中斷後保留已驗證的檔案，下次補齊。
-  for(const a of ASSETS){
+  for(const a of assets){
    const key=url(a.file);let response=await target.match(key);
    if(!await valid(response,a)){
     response=null;for(const old of older){const candidate=await old.match(key);if(await valid(candidate,a)){response=candidate;break;}}
     if(!response){response=await fetch(new Request(key,{cache:'reload'}));if(!await valid(response,a))throw Error('integrity');}
     await target.put(key,await tagged(response,a));
    }
-   state.done++;state.bytes+=a.bytes;await notify();
+   state.done++;state.bytes+=a.bytes;if(--remaining[a.pack||'core']===0)state.completedPacks.push(a.pack||'core');await notify();
   }
-  state.phase='ready';await notify();
+  state.completedPacks=ids;state.phase='ready';await notify();
  }catch(e){state.phase='error';state.reason=e.name==='QuotaExceededError'?'storage':e.message==='integrity'?'integrity':'network';await notify();throw e;}
 }
 self.addEventListener('install',event=>event.waitUntil(sync()));
 self.addEventListener('activate',event=>event.waitUntil((async()=>{
+ await sync();
  await self.clients.claim();
  // 完整下載並啟用後才釋放舊素材；不接觸玩家存檔。
  for(const k of await caches.keys())if(k.startsWith('sgk-release-')&&k!==CACHE)await caches.delete(k);
@@ -42,7 +55,8 @@ let pending=null;
 function abort(){if(pending)for(const c of pending.clients)c.postMessage({type:'UPDATE_ABORT'});pending=null;}
 self.addEventListener('message',event=>{
  if(event.data?.type==='OFFLINE_SYNC')event.waitUntil(sync().catch(()=>{}));
- if(event.data?.type==='OFFLINE_QUERY')event.source?.postMessage({type:'OFFLINE_STATUS',...state});
+ if(event.data?.type==='OFFLINE_QUERY')event.waitUntil(sync().catch(()=>{}));
+ if(event.data?.type==='OFFLINE_PACK')event.waitUntil(selectPack(event.data.id).then(()=>sync()).catch(async e=>{state.phase='error';state.reason=e.name==='QuotaExceededError'?'storage':state.reason||'network';await notify();}));
  if(event.data?.type==='CHECK_UPDATE'&&!pending){event.waitUntil((async()=>{const clients=await self.clients.matchAll({type:'window',includeUncontrolled:true});if(!clients.length)return;const nonce=crypto.randomUUID();pending={nonce,clients,ids:new Set(clients.map(c=>c.id)),yes:new Set()};for(const c of clients)c.postMessage({type:'CAN_UPDATE',nonce});setTimeout(()=>{if(pending?.nonce===nonce)abort();},4000);})());}
  if(event.data?.type==='UPDATE_READY'&&pending?.nonce===event.data.nonce&&event.source?.id){if(!event.data.ready){abort();return;}pending.yes.add(event.source.id);if([...pending.ids].every(id=>pending.yes.has(id))){pending=null;event.waitUntil(self.skipWaiting());}}
 });

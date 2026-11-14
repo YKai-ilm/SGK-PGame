@@ -1,0 +1,13 @@
+{
+  "packs": [
+    {"id":"core","name":"遊戲基本資料","default":true},
+    {"id":"taoyuan","name":"第一章・桃園聚義","default":true},
+    {"id":"xuzhou","name":"第二章・徐州點兵（含共用店鋪）"}
+  ],
+  "pages": {"桃園起兵.html":"taoyuan","徐州劇情.html":"xuzhou","徐州城入口.html":"xuzhou","徐州城內城預覽.html":"xuzhou"},
+  "sceneRules": [
+    {"pack":"core","prefixes":["主城草地背景"]},
+    {"pack":"taoyuan","prefixes":["桃園村背景","桃源村東","桃源村西","劉備家居室","張飛家居室","村長家居室"]},
+    {"pack":"xuzhou","prefixes":["徐州城","曹豹家居室","糜家居室","藥師家居室","共用室內場景/"]}
+  ]
+}
