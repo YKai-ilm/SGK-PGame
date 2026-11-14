@@ -30,3 +30,15 @@ console.log('PASS fixed chapter roster, bounded levels, XP totals and repeatable
 
 for(const w of [1,3,6])for(const r of [1,1.5,2]){const p=U.pools(w,r);assert.equal(p.settlement,p.count);assert.equal(p.battle,Math.floor(p.count*r));assert(p.battle>=p.settlement&&p.battle<=2*p.settlement);}
 assert.equal(U.pools(6,2).battle,114);assert.equal(U.pools(6,1.5).battle,85);assert.equal(JSON.stringify(U.gain(1,0,114)),JSON.stringify({level:2,xp:14}));assert.equal(JSON.stringify(U.gain(1,0,190)),JSON.stringify({level:2,xp:90}));assert.equal(JSON.stringify(U.gain(1,0,570)),JSON.stringify({level:3,xp:270}));assert.throws(()=>U.pools(6,14));console.log('PASS bounded battle/settlement ratio comparison');
+
+// Run the real settlement allocator in an isolated DOM stub; never touch a save.
+const allocCtx={window:{},roster:Object.fromEntries(['劉備','關羽','張飛'].map(name=>[name,{skills:[{}]}])),document:{createElement:()=>({}),head:{append(){}}}};vm.createContext(allocCtx);vm.runInContext(fs.readFileSync('經驗試算.js','utf8'),allocCtx);
+const waves=Array.from({length:6},(_,i)=>({wave:i+1,count:7+i,hp:1+.04*i,attack:1+.03*i,xp:[7,9,11,13,15,18][i]}));
+const rows=['劉備','關羽','張飛'].map(name=>({name,time:60,damage:100,absorbed:100,healing:0,shieldSupport:0,control:0})),owned=new Set(['劉','備','關','羽','張','飛']);
+function settle(sequence,scale=1){const amounts=Object.fromEntries([...owned].map(ch=>[ch,0]));let total=0;for(const n of sequence){const pool=waves.slice(0,n).reduce((a,w)=>a+w.xp,0)*scale;const r=allocCtx.window.ExperiencePreview.calculate({rows,win:true,rewardXP:pool},owned,true);assert.equal(r.eligible,pool);total+=pool;for(const item of r.items)amounts[item.letter]+=item.amount;}
+return {sequence,scale,total,cards:Object.entries(amounts).map(([name,xp])=>({name,earned:xp,...U.gain(1,0,xp)}))};}
+const result={waves,scenarios:[settle(Array(10).fill(1)),settle([1,1,1,3,3,3,3,6,6,6]),settle(Array(10).fill(6)),settle([1,1,1,3,3,3,3,6,6,6],2),settle([1,1,1,3,3,3,3,6,6,6],3)]};
+assert.equal(result.scenarios[0].total,70);assert.equal(result.scenarios[1].total,348);assert.equal(result.scenarios[2].total,730);
+for(const r of result.scenarios)assert.equal(r.cards.reduce((a,c)=>a+c.earned,0),r.total);
+fs.writeFileSync('波次戰後經驗結果.js','window.WaveSettlementStudy='+JSON.stringify(result,null,2)+';\n');console.log(JSON.stringify(result.scenarios));
+console.log('PASS actual settlement allocator, per-wave totals and persistent-only XP');
