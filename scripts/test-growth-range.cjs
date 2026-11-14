@@ -27,3 +27,6 @@ for(const [waves,count,total] of [[1,7,97],[3,24,336],[6,57,798]]){const es=U.vi
 const fixed=JSON.stringify(U.villageExample(6));for(const playerLevel of [1,20,60,100]){U.gain(playerLevel,0,798);assert.equal(JSON.stringify(U.villageExample(6)),fixed);}
 assert.equal(JSON.stringify(U.gain(1,0,7980)),JSON.stringify({level:13,xp:180}));assert.equal(JSON.stringify(U.gain(1,0,2660)),JSON.stringify({level:7,xp:560}));assert.equal(JSON.stringify(U.gain(60,0,7980)),JSON.stringify({level:61,xp:1980}));assert.throws(()=>U.villageExample(2));
 console.log('PASS fixed chapter roster, bounded levels, XP totals and repeatable results independent of player progression');
+
+for(const w of [1,3,6])for(const r of [1,1.5,2]){const p=U.pools(w,r);assert.equal(p.settlement,p.count);assert.equal(p.battle,Math.floor(p.count*r));assert(p.battle>=p.settlement&&p.battle<=2*p.settlement);}
+assert.equal(U.pools(6,2).battle,114);assert.equal(U.pools(6,1.5).battle,85);assert.equal(JSON.stringify(U.gain(1,0,114)),JSON.stringify({level:2,xp:14}));assert.equal(JSON.stringify(U.gain(1,0,190)),JSON.stringify({level:2,xp:90}));assert.equal(JSON.stringify(U.gain(1,0,570)),JSON.stringify({level:3,xp:270}));assert.throws(()=>U.pools(6,14));console.log('PASS bounded battle/settlement ratio comparison');

@@ -12,5 +12,6 @@ window.UnifiedLevelStudy=(()=>{
   const enemies=[];for(let w=1;w<=waves;w++)for(let i=0;i<6+w;i++){const level=3+enemies.length%3;enemies.push({wave:w,level,xp:reward(level)});}
   return enemies;
  }
- return {need,reward,gain,hp,villageExample};
+ function pools(waves,ratio=2){if(![1,1.5,2].includes(ratio))throw Error('倍率無效');const count=villageExample(waves).length;return {count,settlement:count,battle:Math.floor(count*ratio)};}
+ return {need,reward,gain,hp,villageExample,pools};
 })();
