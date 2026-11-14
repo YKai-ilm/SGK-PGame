@@ -1,37 +1,13 @@
-<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>軍師與計策試算</title><style>
-*{box-sizing:border-box}body{margin:0;background:#f4f0e3;color:#294236;font:17px/1.8 system-ui,"Microsoft JhengHei",sans-serif}main{max-width:1080px;margin:auto;padding:24px 18px}h1{font-size:32px}h2{font-size:23px;margin-top:32px}section{margin:20px 0;padding:20px;background:#fffcf2;border:1px solid #c6ceb7;border-radius:10px}a{color:#285c50}table{border-collapse:collapse;width:100%;font-size:15px}td,th{padding:10px;border:1px solid #bdc8af;text-align:left}th{background:#e8eddb}.scroll{overflow:auto}.note{border-left:4px solid #a08243;padding:12px;background:#f4ecd8}.controls{display:flex;gap:18px;flex-wrap:wrap}input,select,button{font:inherit;padding:7px;min-height:44px}input{width:100px}.controls label{display:flex;gap:8px;align-items:center}output{font-weight:bold}.pill{font-size:14px;color:#6a5735}code{overflow-wrap:anywhere}@media(max-width:480px){section{padding:13px}th,td{padding:7px}main{padding:14px}}
-</style></head><body><main>
-<p class="pill">2026-11-15 · 設計試算／尚未套用正式戰鬥</p><h1>軍師與計策試算</h1><p><a href="恢復計策設計.html">接續：恢復系計策表與自動選策試算（第一輪候選）</a></p>
-<p>先比較容量、連戰使用次數與智力差異，再決定計策消耗。此頁只計算假設，不會修改玩家存檔。</p>
-<p class="note">現行戰鬥仍是舊測試版：SP上限等於智力，新戰鬥補滿，復體術消耗10。這不是新規則的定案；跨戰鬥SP保存、客棧恢復與通用計策尚未接入。</p>
-<section><h2>已確認的規則</h2><ul>
-<li>SP是隊伍資源，由現任軍師影響容量與可用計策；不隨時間自動恢復，不因下一場或勝利自動補滿。</li>
-<li>等級成長可提高容量；換軍師、升級只改上限，原本剩60就是60，不按比例換算，也不藉此回復。</li>
-<li>客棧或恢復SP道具補充現有SP。若換軍師後上限低於現有量，本頁依「現有量不變」保留超額，消耗後不再補超過當前上限；無軍師時保留資源但不能施策。這些邊界做法仍為接續建議。</li>
-<li>計策按策攻、策防、策謀、策裝、特策分類。按一次施放一次；不暫停戰鬥。</li>
-<li>復體術屬策裝：軍師裝青囊書（殘）才可用，立即恢復目標3%，之後每秒1%共3秒，冷卻5秒。消耗重新評估；被動每秒1%仍僅作用於裝備者。</li>
-</ul><p>保留超額會允許玩家先用高容量軍師休息，再換其他軍師帶著原有SP出征。這是「換人不改現有量」的直接結果；不能暗中刪除SP來限制它。</p></section>
-<section><h2>容量比較：推薦先測B案</h2><p>A案保留先前提出的曲線：<code>向下取整[(20＋4×(等級−1))×(0.4＋0.6×(智力÷100)⁴)]</code>。低等級容易把相鄰智力算成相同容量。</p>
-<p>B案候選：<code>智力＋向下取整[4×(永久等級−1)×(智力÷100)²]</code>。每點智力至少差1 SP，且高智力的等級容量成長較高。等級取軍師永久養成等級，不取當場臨時戰鬥等級。係數4沿用先前成長提案，仍需章節驗證；不是原作公式。</p>
-<div class="controls"><label>永久等級 <input id="level" type="number" min="1" max="100" value="10"></label><label>智力 <input id="intelligence" type="number" min="0" max="100" value="97"></label></div>
-<p id="capacity" role="status"></p><div class="scroll"><table><thead><tr><th>智力</th><th>A案 SP</th><th>B案 SP</th><th>B案與前一點差</th></tr></thead><tbody id="comparison"></tbody></table></div>
-<p>智力97、98、99的差異不必每次都多施放整招；剩餘SP跨戰鬥累積，容量差便能保留下來。智力再搭配通用計策資格及專屬計策，不強迫每招同時增加傷害、成功率、降耗，避免效果相乘失衡。</p></section>
-<section><h2>復體術消耗：先看續航，不先定10點</h2><p>下表使用B案滿SP，假設全用復體術、每次完整取得6%治療，尚未考慮傷勢溢補、被動回血、敵人傷害與其他計策。這是資源預算，不能當作實戰勝率或平衡結論。</p>
-<div class="scroll"><table><thead><tr><th>每次消耗（候選）</th><th>可用次數</th><th>用完剩餘SP</th><th>平均每場使用3次，可供完整幾場</th></tr></thead><tbody id="costs"></tbody></table></div>
-<p>初步建議把4、6、8點送進後續實戰比較，2與10作邊界對照。還要與赤心等通用治療比較效果與效率，再決定復體術定位；目前不改正式消耗。</p></section>
-<section><h2>系統怎麼選計策</h2><ol>
-<li>戰前只整理已習得、智力／等級符合、裝備與軍師符合的候選。門檻另定，不把60／70／80／90的舉例直接當定案。</li>
-<li>點擊分類後讀取當下戰況，排除SP不足、冷卻中、沒有合法目標或目標免疫的計策。</li>
-<li>策防先判斷急救需要；瀕死時重視立即治療，不能把三秒後的治療當作現在已經補到。預估傷害沒有可靠資料時，不宣稱能保證救活。</li>
-<li>同等救援效果才優先省SP；單人小傷選低階，多人受傷比較群療實際補量；扣除既有持續治療，避免重複浪費。防禦與治療一起比較減少損失的效果。</li>
-<li>策攻比較有效傷害與覆蓋目標；策謀比較阻止敵人行動的效益，不固定「暈眩必定優於緩速」。策裝與特策只在自身來源內選擇。</li>
-<li>實際施放前再確認SP和目標，只成功扣一次。無有效目標就不施放、不扣SP，給簡短原因。</li>
-</ol><p>保留低階計策本身成本很小；主要成本是反覆掃描戰場。建議戰前建立候選、點擊時共用一份戰況摘要，只做當下評估，不每幀預測多場未來戰鬥。未來加入完整計策後要重新壓測，不能用目前只有復體術的測試代表所有計策。</p></section>
-<section><h2>原作參考與本作改寫</h2><p>《吞食天地2》玩家整理記載，任命軍師的SP約為MSP乘軍師智力再除以255，並列出不同人物持有的計策差異。這屬玩家資料，非已取得的官方公式；借鏡的是容量與軍師資格共同影響使用，不照搬255尺度。<a href="https://www.ffsky.com/article/bc0_a8890.aspx">天幻：我軍武將圖鑑</a></p>
-<p>《三國志14》官方說明中，計略成功條件包含執行者與軍師的智力；部隊武力或智力也影響戰法效果。這與FC的SP機制不同，不能合稱為同一套公式。<a href="https://www.gamecity.ne.jp/manual/PaSjK1n4/jp/4300.html">官方計略說明</a>、<a href="https://www.gamecity.ne.jp/manual/JuLnHe14/jp/5100.html">官方部隊能力說明</a></p>
-<p>周瑜「火燒連營」、龐統「連環計」、孔明「東風破」沿用本作專屬計策方向；效果、消耗、解鎖劇情仍待設計。</p></section>
-</main><script src="軍師計策試算.js"></script><script>
-const level=document.getElementById('level'),intelligence=document.getElementById('intelligence');
-function render(){if(!level.checkValidity()||!intelligence.checkValidity())return;const l=Number(level.value),i=Number(intelligence.value);if(!Number.isInteger(l)||!Number.isInteger(i))return;const cap=SPStudy.capacity(i,l);document.getElementById('capacity').textContent='目前輸入：A案 '+SPStudy.capacity(i,l,'a')+' SP／B案 '+cap+' SP';document.getElementById('comparison').innerHTML=[60,70,80,90,97,98,99,100].map(v=>'<tr><td>'+v+'</td><td>'+SPStudy.capacity(v,l,'a')+'</td><td>'+SPStudy.capacity(v,l)+'</td><td>＋'+(SPStudy.capacity(v,l)-SPStudy.capacity(v-1,l))+'</td></tr>').join('');document.getElementById('costs').innerHTML=[2,4,6,8,10].map(c=>'<tr><td>'+c+' SP</td><td>'+Math.floor(cap/c)+'</td><td>'+cap%c+'</td><td>'+Math.floor(cap/(c*3))+'</td></tr>').join('');}
-level.oninput=intelligence.oninput=render;render();
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>軍師與計策試算</title><style>*{box-sizing:border-box}body{margin:0;background:#f4f0e3;color:#294236;font:17px/1.8 system-ui,"Microsoft JhengHei",sans-serif}main{max-width:1050px;margin:auto;padding:24px 18px}section{background:#fffcf2;border:1px solid #c6ceb7;border-radius:10px;padding:18px;margin:20px 0}h1{font-size:30px}h2{font-size:23px}a{color:#285c50}.scroll{overflow:auto}table{border-collapse:collapse;width:100%;font-size:15px}th,td{border:1px solid #bdc8af;padding:9px;text-align:left}th{background:#e8eddb}.note{border-left:4px solid #a08243;padding:12px;background:#f4ecd8}.controls{display:flex;gap:16px;flex-wrap:wrap}input{font:inherit;width:90px;min-height:44px;padding:6px}code{overflow-wrap:anywhere}</style></head><body><main>
+<p>2026-11-15 · 起始SP調降修訂／容量仍為候選</p><h1>軍師與計策試算</h1><p><a href="恢復計策設計.html">固定恢復量、已確認消耗與自動選策試算</a></p>
+<p class="note">撤回B案作為推薦：初期容量太大，連續施策次數過多。改測低容量C案。正式戰鬥仍沿用舊測試程式（智力當容量、新戰鬥補滿、復體術百分比與10 SP），尚未切換；此頁不改玩家存檔。</p>
+<section><h2>不變的資源規則</h2><ul><li>不隨時間、戰鬥開始或勝利自動恢復SP。</li><li>軍師更換或永久等級成長，只影響上限；現有60就是60，不按比例換算、不自動加滿。</li><li>客棧與恢復SP道具才補充。上限下降時保留既有超額，後續恢復不再增加到新上限以上；這項邊界處理仍是候選。</li><li>無軍師時保留SP但不能施策。低階計策保留，資格、裝備來源與冷卻另行檢查。</li></ul></section>
+<section><h2>C案：前期容量8～22點，放慢成長</h2><p>智力50起始8 SP；50～95每增加5智力，多1 SP。95以上每增加1智力，多1 SP，因此97／98／99仍分別為19／20／21 SP。</p><p>成長候選：<code>上限＝起始量＋向下取整[(永久等級−1)×智力÷100]</code>。每升級約增加0～1容量，不增加現有SP。50以下按相同低段曲線延伸、最低為0；一般恢復計策仍需達到智力門檻。</p><p>要把容量壓在小範圍，就不可能讓所有0～100智力都對應不同整數SP。本案保留高端97／98／99的差異，其他相鄰智力可能暫時同容量；計策資格仍能不同。不用隱藏小數假裝每一點都可多施策。</p>
+<div class="controls"><label>智力 <input id="intelligence" type="number" min="0" max="100" value="78"></label><label>永久等級 <input id="level" type="number" min="1" max="100" value="1"></label></div><p id="capacity" role="status"></p>
+<div class="scroll"><table><thead><tr><th>智力</th><th>C案1級</th><th>C案目前等級</th><th>舊B案目前等級（撤回推薦）</th></tr></thead><tbody id="comparison"></tbody></table></div></section>
+<section><h2>同一份SP能施放幾次</h2><p>表格各列是假設所有SP只用一招，不能把各列次數相加；也不代表已通過智力、等級、裝備資格。第一批常見軍師50～80智力在1級可用4～7次赤心計，或約2～3次復體術，尚未計其他計策支出。</p><div class="scroll"><table><thead><tr><th>計策</th><th>已確認消耗</th><th>滿SP可用次數</th><th>剩餘</th></tr></thead><tbody id="costs"></tbody></table></div><p>每招的恢復量改成固定點數；高生命武將不再因目標最大生命增加而獲得更多治療。完整候選效果與解鎖條件請見恢復計策頁。</p></section>
+<section><h2>已撤回的舊方案</h2><p>A案：容量基底乘智力四次方曲線，曾有相鄰高智力取整後相同的問題。B案：智力直接當起始容量，再加等級成長，導致前期可施策太多。兩案只保留在計算程式作回歸比較，不作現行推薦。</p></section>
+<section><h2>原作參考</h2><p>本作C案、固定恢復量與候選解鎖門檻是自行設計，並非FC原版公式。《吞食天地2》的玩家資料把軍師SP與智力連結；《三國志14》官方則讓智力影響計略成功與戰法效果，不能混稱一套SP機制。</p><p><a href="https://www.ffsky.com/article/bc0_a8890.aspx">天幻玩家資料：吞食天地2武將圖鑑</a> · <a href="https://www.gamecity.ne.jp/manual/PaSjK1n4/jp/4300.html">三國志14官方計略說明</a> · <a href="https://www.gamecity.ne.jp/manual/JuLnHe14/jp/5100.html">官方部隊能力說明</a></p></section>
+</main><script src="軍師計策試算.js"></script><script src="恢復計策試算.js"></script><script>
+const $=id=>document.getElementById(id);function render(){for(const id of ['intelligence','level'])if(!$(id).checkValidity()||!Number.isInteger(Number($(id).value)))return;const i=Number($('intelligence').value),l=Number($('level').value),cap=SPStudy.capacity(i,l);$('capacity').textContent='C案起始 '+SPStudy.capacity(i,1)+' SP／目前等級上限 '+cap+' SP（不自動補現有SP）。';$('comparison').innerHTML=[50,60,70,78,80,90,97,98,99,100].map(v=>'<tr><td>'+v+'</td><td>'+SPStudy.capacity(v,1)+'</td><td>'+SPStudy.capacity(v,l)+'</td><td>'+SPStudy.capacity(v,l,'b')+'</td></tr>').join('');$('costs').innerHTML=HealingStudy.catalog.map(c=>'<tr><td>'+c.name+'</td><td>'+c.cost+'</td><td>'+Math.floor(cap/c.cost)+'</td><td>'+cap%c.cost+'</td></tr>').join('');}$('intelligence').oninput=$('level').oninput=render;render();
 </script><script src="行旅手冊導覽.js"></script></body></html>

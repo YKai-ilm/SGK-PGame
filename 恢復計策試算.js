@@ -2,25 +2,25 @@
 // Isolated design study. These candidates are NOT used by the live battle engine.
 window.HealingStudy=(()=>{
  const catalog=[
-  {id:'chixin',name:'赤心計',category:'策防',intelligence:50,level:1,cost:2,instant:.02,targets:1},
-  {id:'tongxian',name:'銅仙計',category:'策防',intelligence:65,level:6,cost:5,instant:.06,targets:1},
-  {id:'yinxian',name:'銀仙計',category:'策防',intelligence:80,level:16,cost:9,instant:.12,targets:1},
-  {id:'jinxian',name:'金仙計',category:'策防',intelligence:92,level:30,cost:16,instant:.24,targets:1},
-  {id:'tuanfu',name:'團復計',category:'策防',intelligence:60,level:8,cost:6,instant:.03,targets:3},
-  {id:'qunxian',name:'群仙計',category:'策防',intelligence:78,level:20,cost:14,instant:.08,targets:3},
-  {id:'guangji',name:'廣濟計',category:'策防',intelligence:90,level:35,cost:24,instant:.12,targets:5},
-  {id:'futi',name:'復體術',category:'策裝',intelligence:0,level:1,cost:4,instant:.03,hot:.03,targets:1,book:true}
+  {id:'chixin',name:'赤心計',category:'策防',intelligence:50,level:1,cost:2,instant:80,targets:1},
+  {id:'tongxian',name:'銅仙計',category:'策防',intelligence:65,level:6,cost:5,instant:220,targets:1},
+  {id:'yinxian',name:'銀仙計',category:'策防',intelligence:80,level:16,cost:9,instant:480,targets:1},
+  {id:'jinxian',name:'金仙計',category:'策防',intelligence:92,level:30,cost:14,instant:800,targets:1},
+  {id:'tuanfu',name:'團復計',category:'策防',intelligence:60,level:8,cost:3,instant:40,targets:3},
+  {id:'qunxian',name:'群仙計',category:'策防',intelligence:78,level:20,cost:7,instant:120,targets:3},
+  {id:'guangji',name:'廣濟計',category:'策防',intelligence:90,level:35,cost:12,instant:180,targets:5},
+  {id:'futi',name:'復體術',category:'策裝',intelligence:0,level:1,cost:4,instant:120,hot:120,targets:1,book:true}
  ].map(x=>Object.freeze({...x,cooldown:5}));
  const unit=(id,hp,nextHit=0,pending=0,hero=true,max=1000)=>({id,name:id,hp,max,nextHit,pending,hero});
  const scenarios=[
-  {id:'scratch',name:'一人損血1%',units:[unit('劉備',990)],expected:'chixin'},
-  {id:'five',name:'一人損血5%',units:[unit('劉備',950)],expected:'tongxian'},
-  {id:'eleven',name:'一人損血11%',units:[unit('劉備',890)],expected:'yinxian'},
-  {id:'group',name:'三人各損血5%',units:[unit('劉備',950),unit('關羽',950),unit('張飛',950)],expected:'qunxian'},
-  {id:'urgent',name:'一人剩4%，下一擊將扣10%',units:[unit('劉備',40,100)],expected:'yinxian'},
-  {id:'twoUrgent',name:'兩人剩4%，各有一擊將扣10%',units:[unit('劉備',40,100),unit('關羽',40,100)],expected:'qunxian'},
-  {id:'hot',name:'損血1%，一秒內已有足夠續療且無已知攻擊',units:[unit('劉備',990,0,10)],expected:null},
-  {id:'soldier',name:'前排基本兵損血5%',units:[unit('基本兵',950,0,0,false)],expected:'tongxian'},
+  {id:'scratch',name:'一人缺50生命',units:[unit('劉備',950)],expected:'chixin'},
+  {id:'five',name:'一人缺180生命',units:[unit('劉備',820)],expected:'tongxian'},
+  {id:'eleven',name:'一人缺400生命',units:[unit('劉備',600)],expected:'yinxian'},
+  {id:'group',name:'三人各缺100生命',units:[unit('劉備',900),unit('關羽',900),unit('張飛',900)],expected:'qunxian'},
+  {id:'urgent',name:'一人剩40生命，下一擊300傷害',units:[unit('劉備',40,300)],expected:'yinxian'},
+  {id:'twoUrgent',name:'兩人剩40生命，各有一擊150傷害',units:[unit('劉備',40,150),unit('關羽',40,150)],expected:'qunxian'},
+  {id:'hot',name:'缺10生命，一秒內已有足夠續療且無已知攻擊',units:[unit('劉備',990,0,10)],expected:null},
+  {id:'soldier',name:'前排基本兵缺180生命',units:[unit('基本兵',350,0,0,false,530)],expected:'tongxian'},
   {id:'dead',name:'只有倒下武將與滿血武將',units:[unit('劉備',0),unit('關羽',1000)],expected:null}
  ];
  function choose({intelligence,level,sp,category='策防',hasBook=false,cooling=[],units=[]}){
@@ -41,19 +41,19 @@ window.HealingStudy=(()=>{
    eligible=lowest&&lowest.need>1e-8?[lowest]:[];
   }
   if(!eligible.length)return {choice:null,reason:'沒有需要新增治療的有效目標。',evaluated:0};
-  const totalNeed=eligible.reduce((s,u)=>s+u.need/u.max,0);
+  const totalNeed=eligible.reduce((s,u)=>s+u.need,0);
   const alternatives=[];
   for(const c of candidates){
    const scores=eligible.map(u=>{
-    const instant=Math.min(u.max-u.hp,u.max*c.instant);
-    const effective=Math.min(u.need,u.max*(c.instant+(c.hot||0)))/u.max;
+    const instant=Math.min(u.max-u.hp,c.instant);
+    const effective=Math.min(u.need,c.instant+(c.hot||0));
     const saved=u.urgent&&u.hp+instant>u.hit;
     return {u,instant,effective,saved};
    });
    // Book effect keeps its established lowest-HP-ratio hero target; generic heals prioritize immediate rescue.
    scores.sort(c.book?(a,b)=>a.u.hp/a.u.max-b.u.hp/b.u.max||String(a.u.id).localeCompare(String(b.u.id)):(a,b)=>Number(b.saved)-Number(a.saved)||Number(b.u.urgent)-Number(a.u.urgent)||b.effective-a.effective||String(a.u.id).localeCompare(String(b.u.id)));
    const selected=scores.slice(0,c.targets),effective=selected.reduce((s,t)=>s+t.effective,0);
-   alternatives.push({id:c.id,name:c.name,cost:c.cost,targets:selected.map(t=>t.u.id),saved:selected.filter(t=>t.saved).length,effective,complete:effective+1e-8>=totalNeed,immediate:selected.reduce((s,t)=>s+t.instant/t.u.max,0)});
+   alternatives.push({id:c.id,name:c.name,cost:c.cost,targets:selected.map(t=>t.u.id),saved:selected.filter(t=>t.saved).length,effective,complete:effective+1e-8>=totalNeed,immediate:selected.reduce((s,t)=>s+t.instant,0)});
   }
   if(!alternatives.length)return {choice:null,reason:'目前沒有符合智力、等級、SP、冷卻與裝備條件的計策。',evaluated:0};
   // Lexicographic goals avoid hidden weights: rescue count -> fulfill healing need -> cost; otherwise useful heal.

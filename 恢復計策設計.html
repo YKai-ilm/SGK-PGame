@@ -1,37 +1,37 @@
 <!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>恢復系計策設計與選策試算</title><style>
 *{box-sizing:border-box}body{margin:0;background:#f4f0e3;color:#294236;font:17px/1.8 system-ui,"Microsoft JhengHei",sans-serif}main{max-width:1100px;margin:auto;padding:24px 18px}h1{font-size:30px}h2{font-size:23px}section{margin:20px 0;padding:20px;background:#fffcf2;border:1px solid #c6ceb7;border-radius:10px}a{color:#285c50}table{border-collapse:collapse;width:100%;font-size:15px}td,th{padding:10px;border:1px solid #bdc8af;text-align:left}th{background:#e8eddb}.scroll{overflow:auto}.note{border-left:4px solid #a08243;padding:12px;background:#f4ecd8}.controls{display:flex;gap:12px;flex-wrap:wrap}label{display:flex;gap:8px;align-items:center;flex-wrap:wrap}input,select,button{font:inherit;padding:7px;min-height:44px;max-width:100%}input[type=number]{width:95px}select{width:100%}.controls select{width:auto}#result{font-weight:bold}.hint{font-size:14px;color:#686c55}@media(max-width:480px){section{padding:13px}th,td{padding:7px}main{padding:14px}}
-</style></head><body><main><p>2026-11-15 · 第一輪候選／未套用正式戰鬥</p><h1>恢復系計策：省SP，也要來得及救人</h1>
-<p><a href="軍師與計策試算.html">查看軍師容量B案與跨戰鬥SP規則</a></p><p class="note">以下新數值是可重算的設計候選。正式戰鬥仍只有既有復體術測試效果，消耗仍為10；本頁不修改玩家SP、血量或進度。此次只試算治療分支，策防的減傷／護盾尚未加入選擇，不能稱為完整策防最佳解。</p>
-<section><h2>第一輪恢復計策表</h2><p>百分比均按各目標最大生命。智力與永久等級必須同時達標；低階計策保留，不被高階替換。暫以達標即可使用通用計策作試算，專屬與裝備計策另外檢查來源。</p>
-<div class="scroll"><table><thead><tr><th>名稱／分類</th><th>效果</th><th>智力／永久等級</th><th>候選SP</th></tr></thead><tbody id="catalog"></tbody></table></div>
-<p>通用治療可作用於存活的我方武將、字卡與基本兵，不復活。群療只選有治療需要的目標，最多3或5人，不因場上單位增加而無上限擴張。復體術沿用已定方向，僅選生命比例最低的存活武將。</p>
+</style></head><body><main><p>2026-11-15 · 固定恢復修訂 · SP消耗已確認／恢復量仍為候選</p><h1>恢復系計策：省SP，也要來得及救人</h1>
+<p><a href="軍師與計策試算.html">查看軍師容量C案與跨戰鬥SP規則</a></p><p class="note">本輪已確認：恢復改固定數字，SP採赤心2、銅仙5、銀仙9、金仙14、團復3、群仙7、廣濟12、復體4。具體恢復量與容量C案仍為候選。正式戰鬥仍只有舊復體術百分比／10 SP測試效果，尚未切換，本頁不修改玩家SP、血量或進度。此次只試算治療分支，策防的減傷／護盾尚未加入選擇，不能稱為完整策防最佳解。</p>
+<section><h2>固定恢復量與已確認SP</h2><p>固定恢復量不隨目標最大生命、智力、等級、裝備生命加成而增加；實際補量不超過缺少的生命。智力與永久等級必須同時達標；低階計策保留，不被高階替換。暫以達標即可使用通用計策作試算，專屬與裝備計策另外檢查來源。</p>
+<div class="scroll"><table><thead><tr><th>名稱／分類</th><th>效果</th><th>智力／永久等級</th><th>已確認SP</th></tr></thead><tbody id="catalog"></tbody></table></div>
+<p>目前無裝備初始資料：刀兵650、槍兵530、弓兵370；劉備1913、關羽2136、張飛2212生命。以下候選量以這個尺度起算，並非把上一輪百分比乘一個假想基準後直接定案。</p><p>通用治療可作用於存活的我方武將、字卡與基本兵，不復活。群療只選有治療需要的目標，最多3或5人，不因場上單位增加而無上限擴張。復體術沿用已定方向，僅選生命比例最低的存活武將。</p>
 <p>策防治療先試共同冷卻5秒，防止交替點低高階繞過冷卻；策裝復體術沿用自身5秒冷卻，兩類暫不共用。共同冷卻屬新提案；與減傷類的關係待下一輪比較。</p>
 <p>門檻50／65／80／92與各等級皆為新候選，並非將先前60／70／80／90的舉例當定案。成長較低的軍師可持續使用低階治療，高智力但低等級也不會立即取得全部高階計策。</p></section>
 <section><h2>試選一次計策</h2><p>可調整軍師資格、現有SP與情境；每次只算一個決策，不自動連續施放。策裝與策防分開，不跨分類偷換招。</p>
-<div class="controls"><label>智力 <input id="intel" type="number" min="0" max="100" value="99"></label><label>永久等級 <input id="level" type="number" min="1" max="100" value="40"></label><label>現有SP <input id="sp" type="number" min="0" max="10000" value="200"></label><label>分類 <select id="category"><option>策防</option><option>策裝</option></select></label><label><input id="book" type="checkbox">軍師有青囊書（殘）</label><label><input id="cooling" type="checkbox">所選分類冷卻中</label></div>
+<div class="controls"><label>智力 <input id="intel" type="number" min="0" max="100" value="99"></label><label>永久等級 <input id="level" type="number" min="1" max="100" value="40"></label><label>現有SP <input id="sp" type="number" min="0" max="10000" value="59"></label><label>分類 <select id="category"><option>策防</option><option>策裝</option></select></label><label><input id="book" type="checkbox">軍師有青囊書（殘）</label><label><input id="cooling" type="checkbox">所選分類冷卻中</label></div>
 <p id="capacity"></p><label>戰況 <select id="scenario"></select></label>
 <div class="scroll"><table><thead><tr><th>單位</th><th>生命</th><th>已知下一擊傷害</th><th>一秒內已排定續療</th></tr></thead><tbody id="units"></tbody></table></div>
 <p id="result" role="status"></p><p id="reason"></p>
 <p class="hint">這裡的下一擊傷害由測試情境明確給定，並未接上真實敵人預測。真實戰場還需處理飛行中的攻擊、暴擊與多敵集火。沒有已知攻擊也不等於往後絕對安全。</p></section>
-<section><h2>預設資格下的對照結果</h2><p>智力99、永久等級40、SP200、無冷卻，使用策防。</p><div class="scroll"><table><thead><tr><th>戰況</th><th>選擇</th><th>消耗</th></tr></thead><tbody id="cases"></tbody></table></div>
-<p>同樣損血5%，不一定要用銀仙計。這版銅仙計立即恢復6%，已足夠；若改動各招效果，系統就重新按實際治療量比較，不按招式名稱固定選擇。</p></section>
-<section><h2>選擇順序與已知限制</h2><ol><li>先排除未達智力／等級、SP不足、冷卻中、來源不符的招式，並排除倒下或滿血目標。</li><li>有眼前致命攻擊時，先比較能立即救下幾人；相同救援人數優先省SP。若沒有任何招式救得下，退回有效補量比較，明示無法確保生還。</li><li>沒有急救需要時，能補足本次全部已知需求的招式優先，再選最省SP；沒有一招補得足時，選有效補量較高者。用各人最大生命比例加總比較，避免只照顧最大生命較高的武將。</li><li>已排定且一秒內會到的續療，只在沒有已知迫近攻擊時抵銷治療需求；不能把尚未發生的回血拿來抵擋眼前致命傷。</li><li>這是當下的規則式選擇，不是預知後續戰況的全局最佳解。一次施放後是否更值得保留SP，仍涉及下一場與客棧距離，不能只靠此頁判定。</li></ol>
+<section><h2>預設資格下的對照結果</h2><p>智力99、永久等級40、SP59、無冷卻，使用策防。</p><div class="scroll"><table><thead><tr><th>戰況</th><th>選擇</th><th>消耗</th></tr></thead><tbody id="cases"></tbody></table></div>
+<p>相同缺血180點，最大生命530的基本兵與最大生命5000的肉盾，銅仙計都最多補220，實際只補缺少的180。生命越高，不會讓同一招額外放大。</p></section>
+<section><h2>選擇順序與已知限制</h2><ol><li>先排除未達智力／等級、SP不足、冷卻中、來源不符的招式，並排除倒下或滿血目標。</li><li>有眼前致命攻擊時，先比較能立即救下幾人；相同救援人數優先省SP。若沒有任何招式救得下，退回有效補量比較，明示無法確保生還。</li><li>沒有急救需要時，能補足本次全部已知需求的招式優先，再選最省SP；沒有一招補得足時，選有效補量較高者。有效補量以生命點數比較，不乘最大生命；急救仍優先，基本兵不因不是武將而被排除。</li><li>已排定且一秒內會到的續療，只在沒有已知迫近攻擊時抵銷治療需求；不能把尚未發生的回血拿來抵擋眼前致命傷。</li><li>這是當下的規則式選擇，不是預知後續戰況的全局最佳解。一次施放後是否更值得保留SP，仍涉及下一場與客棧距離，不能只靠此頁判定。</li></ol>
 <p>本輪只讓規則「選出一招」，未處理實戰扣SP、原子存檔、攻擊命中時間預測與回城恢復。後續接入時仍需施放前再次驗證目標與SP。</p></section>
-<section><h2>為什麼先測復體術4 SP</h2><p>候選銅仙計5 SP立即恢復6%；復體術4 SP先恢復3%，再於三秒內補3%。省1 SP換取延遲，並保有青囊書的裝備條件。被動每秒1%僅治療裝備者，不能誤算成對任意目標一起生效。</p>
-<p id="budget"></p><p>這只說明相對定位，不代表4 SP已平衡。還要比較隨劇情成長的敵方傷害、被動丹藥、實際休息間隔，以及兩個分類交替施放能否過強；不能只因一招可用很多次就直接調高消耗。</p></section>
-<section><h2>參考界線</h2><p>命名延續吞食天地的赤心／銅仙／銀仙／金仙方向；本作的百分比、多人上限、冷卻、智力與等級門檻均是候選改寫，不能宣稱為FC原版數值。版本與原作參考來源見<a href="軍師與計策試算.html">軍師試算頁</a>。團復、群仙、廣濟是本作群療候選名稱。</p></section>
+<section><h2>為什麼先測復體術4 SP</h2><p>銅仙計5 SP候選立即恢復220；復體術4 SP候選立即恢復120，再每秒40、共3秒，合計最多240。省1 SP且總量稍高，代價是即時救援量較低，並保有青囊書的裝備條件。</p>
+<p id="budget"></p><p>4 SP已按使用者指定保留；目前要驗證的是恢復量與續航，不再擅自變動消耗。還要比較隨劇情成長的敵方傷害、被動丹藥、實際休息間隔，以及兩個分類交替施放能否過強；不能只因一招可用很多次就直接調高消耗。</p></section>
+<section><h2>同類風險：青囊書被動</h2><p>舊被動仍是裝備者每秒恢復最大生命1%，也會隨堆高生命而放大。後續建議一併改為每秒固定20點作候選，尚未定案或修改正式裝備效果；不能只改主動計策就宣稱百分比回血問題已全部消除。</p></section><section><h2>參考界線</h2><p>命名延續吞食天地的赤心／銅仙／銀仙／金仙方向；本作的固定恢復量、多人上限、冷卻、智力與等級門檻均是候選改寫，不能宣稱為FC原版數值。版本與原作參考來源見<a href="軍師與計策試算.html">軍師試算頁</a>。團復、群仙、廣濟是本作群療候選名稱。</p></section>
 </main><script src="軍師計策試算.js"></script><script src="恢復計策試算.js"></script><script>
-const H=HealingStudy,$=id=>document.getElementById(id),pct=n=>Math.round(n*100)+'%';
-$('catalog').innerHTML=H.catalog.map(c=>'<tr><td>'+c.name+'／'+c.category+'</td><td>'+(c.hot?'最低生命比例武將立即3%＋每秒1%共3秒':(c.targets===1?'單人':'最多'+c.targets+'人')+'立即'+pct(c.instant))+'</td><td>'+(c.book?'軍師裝備青囊書（殘），不另加門檻':c.intelligence+'／'+c.level)+'</td><td>'+c.cost+'</td></tr>').join('');
+const H=HealingStudy,$=id=>document.getElementById(id);
+$('catalog').innerHTML=H.catalog.map(c=>'<tr><td>'+c.name+'／'+c.category+'</td><td>'+(c.hot?'最低生命比例武將立即120＋每秒40共3秒':(c.targets===1?'單人':'最多'+c.targets+'人')+'立即'+c.instant+'生命')+'</td><td>'+(c.book?'軍師裝備青囊書（殘），不另加門檻':c.intelligence+'／'+c.level)+'</td><td>'+c.cost+'</td></tr>').join('');
 for(const s of H.scenarios){const o=document.createElement('option');o.value=s.id;o.textContent=s.name;$('scenario').append(o);}
-$('cases').innerHTML=H.scenarios.map(s=>{const r=H.choose({intelligence:99,level:40,sp:200,units:s.units});return '<tr><td>'+s.name+'</td><td>'+(r.choice?.name||'不施放')+'</td><td>'+(r.choice?.cost||0)+'</td></tr>';}).join('');
+$('cases').innerHTML=H.scenarios.map(s=>{const r=H.choose({intelligence:99,level:40,sp:59,units:s.units});return '<tr><td>'+s.name+'</td><td>'+(r.choice?.name||'不施放')+'</td><td>'+(r.choice?.cost||0)+'</td></tr>';}).join('');
 function render(){for(const id of ['intel','level','sp'])if(!$(id).checkValidity()||!Number.isInteger(Number($(id).value))){$('result').textContent='請輸入範圍內的整數。';$('reason').textContent='';return;}
  const intelligence=Number($('intel').value),level=Number($('level').value),sp=Number($('sp').value),category=$('category').value,s=H.scenarios.find(s=>s.id===$('scenario').value),cap=SPStudy.capacity(intelligence,level);
- $('capacity').textContent='B案上限 '+cap+' SP；此處現有量獨立輸入，不隨換軍師或升級改動。'+(sp>cap?'目前超過上限，依保留現有量的邊界提案試算。':'');
+ $('capacity').textContent='C案上限 '+cap+' SP；此處現有量獨立輸入，不隨換軍師或升級改動。'+(sp>cap?'目前超過上限，依保留現有量的邊界提案試算。':'');
  $('units').innerHTML=s.units.map(u=>'<tr><td>'+u.name+'</td><td>'+u.hp+'/'+u.max+'</td><td>'+u.nextHit+'</td><td>'+u.pending+'</td></tr>').join('');
  const r=H.choose({intelligence,level,sp,category,hasBook:$('book').checked,cooling:$('cooling').checked?[category]:[],units:s.units});
  $('result').textContent=r.choice?r.choice.name+' → '+r.choice.targets.join('、')+'；消耗 '+r.choice.cost+' SP，使用後剩 '+(sp-r.choice.cost)+' SP。':'不施放，不消耗SP。';$('reason').textContent=r.reason;
- $('budget').textContent='以目前B案容量 '+cap+' SP全滿計，若全用復體術4 SP，可用 '+Math.floor(cap/4)+' 次；全用銅仙計5 SP，可用 '+Math.floor(cap/5)+' 次。未計其他計策支出與冷卻，並不代表兩招都已解鎖。';
+ $('budget').textContent='以目前C案容量 '+cap+' SP全滿計，若全用復體術4 SP，可用 '+Math.floor(cap/4)+' 次；全用銅仙計5 SP，可用 '+Math.floor(cap/5)+' 次。未計其他計策支出與冷卻，並不代表兩招都已解鎖。';
 }
 for(const id of ['intel','level','sp','category','book','cooling','scenario'])$(id).addEventListener('input',render);render();
 </script><script src="行旅手冊導覽.js"></script></body></html>
