@@ -11,8 +11,9 @@ window.HealingStudy=(()=>{
   {id:'guangji',name:'廣濟計',category:'策防',intelligence:90,level:35,cost:12,instant:180,targets:5},
   {id:'futi',name:'復體術',category:'策裝',intelligence:0,level:1,cost:4,instant:120,hot:120,targets:1,book:true}
  ].map(x=>Object.freeze({...x,cooldown:5}));
- const revisedAmounts=[500,1200,2500,4500,250,700,1100,600];
- const revisedCatalog=catalog.map((c,i)=>Object.freeze({...c,instant:revisedAmounts[i],...(c.book?{hot:600}:{})}));
+ const revisedAmounts=[500,1200,2500,4500,300,1000,2200,400];
+ const revisedCatalog=catalog.map((c,i)=>Object.freeze({...c,instant:revisedAmounts[i],...(c.book?{hot:450}:{})}));
+ revisedCatalog.push(Object.freeze({id:'puluo',name:'普羅術',category:'策防',intelligence:96,cost:18,instant:3900,targets:5,cooldown:5}));
  const unit=(id,hp,nextHit=0,pending=0,hero=true,max=1000)=>({id,name:id,hp,max,nextHit,pending,hero});
  const scenarios=[
   {id:'scratch',name:'一人缺50生命',units:[unit('劉備',950)],expected:'chixin'},
@@ -37,7 +38,7 @@ window.HealingStudy=(()=>{
    const pending=hit===0&&Number.isFinite(u.pending)?Math.max(0,u.pending):0;
    return {...u,hit,urgent:hit>=u.hp,need:Math.max(0,u.max-u.hp-pending)};
   });
-  const candidates=(model==='hp-review'?revisedCatalog:catalog).filter(c=>c.category===category&&c.intelligence<=intelligence&&c.cost<=sp&&!cooling.includes(c.category)&&!cooling.includes(c.id)&&(!c.book||hasBook));
+  const candidates=(model==='hp-review'?revisedCatalog:catalog).filter(c=>!c.pending&&Number.isSafeInteger(c.cost)&&Number.isInteger(c.intelligence)&&c.category===category&&c.intelligence<=intelligence&&c.cost<=sp&&!cooling.includes(c.category)&&!cooling.includes(c.id)&&(!c.book||hasBook));
   let eligible=live.filter(u=>(category!=='策裝'||u.hero)&&u.need>1e-8);
   if(category==='策裝'){
    const lowest=live.filter(u=>u.hero&&u.hp<u.max).sort((a,b)=>a.hp/a.max-b.hp/b.max||String(a.id).localeCompare(String(b.id)))[0];
