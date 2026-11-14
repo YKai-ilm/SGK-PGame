@@ -9,15 +9,15 @@
  function status(text){$('shortcutStatus').textContent=text;}
  function close(){panel=null;update();}
  const categories=[['策攻','攻擊性計策'],['策防','防禦與恢復'],['策謀','控制與持續效果'],['策裝','裝備授予計策'],['特策','軍師專屬計策']];
- function tacticReason(i,q=window.QingnangCombat?.save()){if(i!==3)return '此類計策尚未實裝。';if(!q?.strategist||!q.holders.includes(q.strategist))return '軍師尚未裝備青囊書（殘）。';if(!running||ended)return '請在進行中的戰鬥使用。';if(window.BattleSave?.pending)return '請先處理戰鬥存檔。';if(q.ready>elapsed)return '復體術冷卻中。';if(q.points<10)return 'SP不足。';if(!units.some(u=>u.hero&&u.hp>0&&u.hp<u.max))return '沒有需要恢復的存活武將。';return '';}
- const tacticButtons=categories.map(([name,desc],i)=>{const b=document.createElement('button');b.type='button';b.innerHTML=name+'<small></small>';b.title=desc;b.onclick=()=>{const reason=tacticReason(i);if(reason){status(reason);return;}if(window.QingnangCombat.cast()){status('已施放復體術（目前仍採測試版10 SP，正式消耗待重算）。');close();}};$('tacticChoices').append(b);return b;});
+ function tacticReason(i,q=window.QingnangCombat?.save()){if(i!==3)return '此類計策尚未實裝。';if(q?.strategist&&!window.StrategyPoints.canAppoint(q.strategist))return '智力未達65，不能擔任軍師。';if(!q?.strategist||!q.holders.includes(q.strategist))return '軍師尚未裝備青囊書（殘）。';if(!running||ended)return '請在進行中的戰鬥使用。';if(window.BattleSave?.pending)return '請先處理戰鬥存檔。';if(q.ready>elapsed)return '復體術冷卻中。';if(q.points<4)return 'SP不足。';if(!units.some(u=>u.hero&&u.hp>0&&u.hp<u.max))return '沒有需要恢復的存活武將。';return '';}
+ const tacticButtons=categories.map(([name,desc],i)=>{const b=document.createElement('button');b.type='button';b.innerHTML=name+'<small></small>';b.title=desc;b.onclick=()=>{const reason=tacticReason(i);if(reason){status(reason);return;}if(window.QingnangCombat.cast()){status('已施放復體術，消耗4 SP。');close();}};$('tacticChoices').append(b);return b;});
  const itemButtons=Array.from({length:5},(_,i)=>{const b=document.createElement('button');b.type='button';b.innerHTML='<span></span><small></small>';b.onclick=()=>useItem(i);$('itemChoices').append(b);return b;});
  function update(){try{
   $('tacticChoices').hidden=panel!=='tactic';$('itemChoices').hidden=panel!=='item';
   $('tacticToggle').setAttribute('aria-expanded',String(panel==='tactic'));$('itemToggle').setAttribute('aria-expanded',String(panel==='item'));
   if(panel==='tactic'){
    const q=window.QingnangCombat?.save();
-   tacticButtons.forEach((b,i)=>{b.setAttribute('aria-disabled',String(!!tacticReason(i,q)));setText(b.querySelector('small'),i===3&&q?.strategist&&q.holders.includes(q.strategist)?'復體術 · 試用':'尚無可用');});
+   tacticButtons.forEach((b,i)=>{b.setAttribute('aria-disabled',String(!!tacticReason(i,q)));setText(b.querySelector('small'),i===3&&q?.strategist&&q.holders.includes(q.strategist)?'復體術 · 4 SP':'尚無可用');});
   }else if(panel==='item'){
    const {s,mode,team}=profile(),slots=BattleShortcuts.slots(s,mode,team);
    itemButtons.forEach((b,i)=>{const item=BattleShortcuts.catalog.find(v=>v.id===slots[i]),n=item?BattleShortcuts.count(s,mode,item.id):0;
