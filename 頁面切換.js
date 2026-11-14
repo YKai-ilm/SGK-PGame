@@ -1,5 +1,9 @@
 'use strict';
 (()=>{
+// 舊預覽導覽與手動地圖選擇退出玩家介面；保留控制元素供關卡設定與存檔還原。
+const playerStyle=document.createElement('style');
+playerStyle.textContent='#libraryTab,#battleTab,#size,label[for="size"],#routePattern{display:none!important}';
+document.head.append(playerStyle);
 const header=document.querySelector('main header'),nav=document.createElement('nav');nav.className='page-tabs';nav.setAttribute('aria-label','主要分頁');nav.innerHTML='<button id="libraryTab" aria-pressed="false">字卡庫</button><button id="battleTab" class="active" aria-pressed="true">戰場</button>';header.append(nav);
 const toolbar=document.querySelector('.toolbar');
 if(toolbar?.contains($('size'))){
