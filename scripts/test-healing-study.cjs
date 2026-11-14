@@ -25,3 +25,12 @@ for(const spell of H.catalog){
 }
 const clipped=H.choose({...opts,units:[{id:'a',hero:true,hp:1990,max:2000}]});assert.equal(clipped.choice.immediate,10);assert.equal(clipped.choice.effective,10);
 console.log('PASS exact approved SP costs, fixed healing at 2,000 vs 20,000 max HP, and overheal cap');
+
+const newer={...opts,level:100,model:'hp-review'};
+assert.deepEqual(Array.from(H.revisedCatalog,x=>x.cost),[2,5,9,14,3,7,12,4]);
+for(const [missing,expected] of [[200,'chixin'],[500,'tongxian'],[1000,'yinxian'],[1800,'jinxian']])assert.equal(H.choose({...newer,units:[{id:'a',hero:true,hp:2000-missing,max:2000}]}).choice.id,expected);
+assert.equal(H.choose({...newer,units:['a','b','c'].map(id=>({id,hero:true,hp:1700,max:2000}))}).choice.id,'qunxian');
+assert.equal(H.choose({...newer,units:[{id:'a',hero:true,hp:100,max:2000,nextHit:800}]}).choice.id,'yinxian');
+for(const spell of H.revisedCatalog){const results=[3000,20000].map(max=>H.choose({...newer,category:spell.category,hasBook:true,cooling:H.revisedCatalog.filter(x=>x.id!==spell.id).map(x=>x.id),units:[{id:'a',hero:true,hp:max-2500,max}]}).choice);assert.equal(results[0].immediate,spell.instant);assert.equal(results[0].effective,spell.instant+(spell.hot||0));assert.equal(results[1].effective,results[0].effective);}
+const bookRisk=H.choose({...newer,category:'策裝',hasBook:true,units:[{id:'a',hero:true,hp:100,max:2000,nextHit:400}]}).choice;assert.equal(bookRisk.saved,0);assert.equal(bookRisk.immediate,240);assert.equal(bookRisk.effective,480);
+assert.throws(()=>H.choose({...newer,model:'unknown'}));console.log('PASS revised fixed heals, SP, targets, urgent rescue and delayed-book isolation');

@@ -11,6 +11,8 @@ window.HealingStudy=(()=>{
   {id:'guangji',name:'廣濟計',category:'策防',intelligence:90,level:35,cost:12,instant:180,targets:5},
   {id:'futi',name:'復體術',category:'策裝',intelligence:0,level:1,cost:4,instant:120,hot:120,targets:1,book:true}
  ].map(x=>Object.freeze({...x,cooldown:5}));
+ const revisedAmounts=[240,600,1200,2000,120,360,600,240];
+ const revisedCatalog=catalog.map((c,i)=>Object.freeze({...c,instant:revisedAmounts[i],...(c.book?{hot:240}:{})}));
  const unit=(id,hp,nextHit=0,pending=0,hero=true,max=1000)=>({id,name:id,hp,max,nextHit,pending,hero});
  const scenarios=[
   {id:'scratch',name:'一人缺50生命',units:[unit('劉備',950)],expected:'chixin'},
@@ -23,7 +25,8 @@ window.HealingStudy=(()=>{
   {id:'soldier',name:'前排基本兵缺180生命',units:[unit('基本兵',350,0,0,false,530)],expected:'tongxian'},
   {id:'dead',name:'只有倒下武將與滿血武將',units:[unit('劉備',0),unit('關羽',1000)],expected:null}
  ];
- function choose({intelligence,level,sp,category='策防',hasBook=false,cooling=[],units=[]}){
+ function choose({intelligence,level,sp,category='策防',hasBook=false,cooling=[],units=[],model='legacy'}){
+  if(!['legacy','hp-review'].includes(model))throw Error('恢復模型無效');
   if(!Number.isInteger(intelligence)||intelligence<0||intelligence>100||!Number.isInteger(level)||level<1||!Number.isSafeInteger(sp)||sp<0)throw Error('軍師試算輸入不正確');
   if(!['策防','策裝'].includes(category))throw Error('本試算僅包含恢復計策');
   const seen=new Set();
@@ -34,7 +37,7 @@ window.HealingStudy=(()=>{
    const pending=hit===0&&Number.isFinite(u.pending)?Math.max(0,u.pending):0;
    return {...u,hit,urgent:hit>=u.hp,need:Math.max(0,u.max-u.hp-pending)};
   });
-  const candidates=catalog.filter(c=>c.category===category&&c.intelligence<=intelligence&&c.level<=level&&c.cost<=sp&&!cooling.includes(c.category)&&!cooling.includes(c.id)&&(!c.book||hasBook));
+  const candidates=(model==='hp-review'?revisedCatalog:catalog).filter(c=>c.category===category&&c.intelligence<=intelligence&&c.level<=level&&c.cost<=sp&&!cooling.includes(c.category)&&!cooling.includes(c.id)&&(!c.book||hasBook));
   let eligible=live.filter(u=>(category!=='策裝'||u.hero)&&u.need>1e-8);
   if(category==='策裝'){
    const lowest=live.filter(u=>u.hero&&u.hp<u.max).sort((a,b)=>a.hp/a.max-b.hp/b.max||String(a.id).localeCompare(String(b.id)))[0];
@@ -61,5 +64,5 @@ window.HealingStudy=(()=>{
   const choice=alternatives[0],urgent=eligible.filter(u=>u.urgent).length;
   return {choice,evaluated:alternatives.length,reason:urgent?'先比較立即救援：預估可避開眼前一擊的致命傷 '+choice.saved+'/'+urgent+' 人；不代表後續一定存活。':choice.complete?'可滿足本次已知治療需求的方案中，選擇較省SP者。':'沒有一招能補足全部需求，先選有效治療量較高者。',alternatives};
  }
- return {catalog,scenarios,choose};
+ return {catalog,revisedCatalog,scenarios,choose};
 })();
