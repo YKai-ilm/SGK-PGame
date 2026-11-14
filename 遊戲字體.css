@@ -1,0 +1,3 @@
+/* 共用遊戲字體：優先使用裝置已安裝的標楷體，不打包系統字型檔。 */
+:root{--game-font:"DFKai-SB","標楷體","BiauKai","KaiTi",serif}
+html body,body *,body *::before,body *::after{font-family:var(--game-font)!important}

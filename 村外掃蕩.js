@@ -1,0 +1,45 @@
+'use strict';
+(()=>{
+ if(new URLSearchParams(location.search).get('storySweep')!=='1'||window.TutorialBattleConfig)return;
+ document.body.classList.add('story-sweep');
+ function chooseWaves(id){let h=0;for(const ch of id)h=(h*33+ch.charCodeAt(0))>>>0;return [1,3,6][(h>>>8)%3];}
+ let runId=crypto.randomUUID(),entryMorale=StoryMorale.status().value,waveCount=chooseWaves(runId),encounterId=YellowTurbanEncounter.fromRunId(runId).id,rewardVersion=2,combatVersion=4;
+ let enemyOfficer=makeEnemyOfficer();
+ function makeEnemyOfficer(){const name=YellowTurbanEncounter.encounters.find(e=>e.id===encounterId)?.leader;return name?HeroCombat.encounter(name,{stars:1,baseLevel:1},waveCount):null;}
+ const bar=document.createElement('div');bar.className='sweep-header';bar.style.cssText='display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:12px;padding:6px 0';bar.innerHTML='<span id="sweepProgress"></span><button id="sweepBack">返回桃園村</button>';document.querySelector('main header').append(bar);
+ function goldReward(){return rewardVersion===1?waveCount:({rabble:{1:1,3:2,6:4},deng:{1:2,3:3,6:6},cheng:{1:2,3:3,6:6}}[encounterId]?.[waveCount]||0);}
+ function update(){const encounter=window.YellowTurbanEncounter?.encounters.find(e=>e.id===encounterId);$('sweepProgress').textContent=(encounter?.name||'掃蕩賊寇')+' '+waveCount+'/波';}
+ $('size').hidden=true;if($('routePattern'))$('routePattern').hidden=true;
+ // 正式掃蕩只留下操作用控制，測試工具不占戰場版面。
+ const actions=document.createElement('div');actions.className='sweep-actions';
+ actions.append($('sweepBack'),$('sweepProgress'),$('speed'),$('tactics'),$('play'),$('reset'));bar.append(actions);
+ const oldToolbar=document.querySelector('main>section .toolbar');if(oldToolbar)oldToolbar.hidden=true;
+ const oldControls=document.querySelector('.page-battle-controls');if(oldControls)oldControls.hidden=true;
+ $('supplyMode').hidden=true;$('speed').value='1';$('speed').setAttribute('aria-label','戰鬥倍速');for(const option of $('speed').options)option.textContent=option.value+'×';$('reset').textContent='重開';
+ const controlsStyle=document.createElement('style');controlsStyle.textContent=`
+ .sweep-actions #sweepProgress{font-size:11px;white-space:nowrap;flex-shrink:0}
+ .sweep-actions{display:flex;align-items:center;gap:3px;width:100%;min-width:0}
+ .sweep-actions #speed{width:46px;min-width:46px;min-height:30px;padding:3px 2px;font-size:11px;margin-left:auto;flex-shrink:0}
+ .sweep-actions #tactics{display:flex;flex-direction:row;gap:3px}
+ .sweep-actions button{font-size:11px;min-height:30px;padding:4px 5px;white-space:nowrap;flex-shrink:0}
+ .sweep-actions #sweepBack{margin-right:1px}
+ @media(max-width:450px){.sweep-actions{gap:2px}.sweep-actions button{font-size:10px;padding:4px 3px}.sweep-actions #tactics{gap:2px}.sweep-actions #sweepProgress{font-size:10px}}
+ main>section .toolbar[hidden],.page-battle-controls[hidden],#supplyMode[hidden]{display:none!important}
+ @media(max-aspect-ratio:4/3){
+  .story-sweep main{padding:4px;gap:4px}
+  .story-sweep main>section.panel{padding:3px;gap:3px}
+  .story-sweep main>aside.panel{flex:0 0 58px;padding:4px 6px}
+  .story-sweep main>aside .metrics{margin:1px 0}
+  .story-sweep #bondStatus{min-height:22px;padding:0 3px}
+ }
+ `;document.head.append(controlsStyle);
+ $('sweepBack').onclick=()=>BattleResults.leave();
+ const originalFinish=BattleResults.finish,originalReset=BattleResults.reset;
+ BattleResults.finish=function(win,reason){originalFinish.call(this,win,reason);if(runId){try{StoryMorale.settle(runId,reason==='retreat'?'retreat':win?'win':'loss',waveCount,goldReward());update();}catch{say('士氣結算未能保存，請重新開啟戰報重試。');}}if(win&&reason!=='retreat'&&runId){try{VillageJourney.win(runId);update();}catch{say('掃蕩進度尚未保存，請重新開啟戰報重試。');}}};
+ BattleResults.reset=function(...args){const team=ShuBattlePool.current();Candidates.loadState(team);Recruit.activateStory();runId=crypto.randomUUID();entryMorale=StoryMorale.status().value;waveCount=chooseWaves(runId);encounterId=YellowTurbanEncounter.fromRunId(runId).id;rewardVersion=2;combatVersion=4;enemyOfficer=makeEnemyOfficer();if(!window.BattleRestoring){[n,rows]=BattleRoutes.orientationSize();$('size').value=n+'x'+rows;const patterns=BattleRoutes.available(n,rows);BattleRoutes.selectSaved(patterns[parseInt(runId.replace(/-/g,'').slice(0,8),16)%patterns.length],n,rows);}update();return originalReset.apply(this,args);};
+ window.VillageSweep={get enemyOfficer(){return enemyOfficer?{...enemyOfficer}:null;},get combatVersion(){return combatVersion;},get encounterId(){return runId?encounterId:null;},get rewardVersion(){return rewardVersion;},get waves(){return runId?waveCount:6;},get goldReward(){return runId?goldReward():0;},damageMultiplier:()=>runId?StoryMorale.multiplier(entryMorale):1,save:()=>runId?({runId,morale:entryMorale,waves:waveCount,encounterId,rewardVersion,combatVersion,enemyOfficer:enemyOfficer?{...enemyOfficer}:null}):null,load(s){runId=s?.runId||null;entryMorale=s?.morale??StoryMorale.status().value;waveCount=s?.waves??6;rewardVersion=s?.rewardVersion??1;combatVersion=s?.combatVersion??1;encounterId=s?.encounterId??YellowTurbanEncounter.fromRunId(runId,true)?.id;enemyOfficer=combatVersion>=4&&s?.enemyOfficer?{...s.enemyOfficer}:null;update();}};
+ $('battleReport').addEventListener('click',()=>{if(BattleResults.result&&runId){try{const r=BattleResults.result;StoryMorale.settle(runId,r.outcome==='retreat'?'retreat':r.win?'win':'loss',waveCount,goldReward());update();}catch{say('士氣尚未保存。');}}if(BattleResults.result?.win&&runId){try{VillageJourney.win(runId);update();}catch{say('無法保存掃蕩進度。');}}});
+ reset();
+})();
+
+

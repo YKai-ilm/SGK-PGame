@@ -1,0 +1,1 @@
+{"name":"three-kingdoms-word-defense","version":"0.1.0","private":true,"scripts":{"build":"node scripts/build.cjs","test":"node scripts/test-backup.cjs","preview":"node scripts/serve.cjs","release":"node scripts/release.cjs"},"engines":{"node":">=22"}}

@@ -1,0 +1,392 @@
+{
+  "version": 2,
+  "date": "2026-11-06",
+  "status": "使用者已確認升星晉階規則與碎片需求；尚未接入遊戲",
+  "originalQuality": "依人物原始六項能力分類，只決定取得時的起始品質；與養成後目前品質分開保存。",
+  "qualityOrder": [
+    "青",
+    "綠",
+    "藍",
+    "橘",
+    "紅",
+    "紫",
+    "金"
+  ],
+  "starsPerQuality": 10,
+  "levelScope": "永久武將等級，非局內戰鬥等級",
+  "starUpgrade": {
+    "fromStars": "1至9星",
+    "toStars": "原星數加1",
+    "material": "碎片",
+    "fragmentCost": {
+      "青": [
+        {
+          "fromStar": 1,
+          "toStar": 2,
+          "fragments": 10
+        },
+        {
+          "fromStar": 2,
+          "toStar": 3,
+          "fragments": 20
+        },
+        {
+          "fromStar": 3,
+          "toStar": 4,
+          "fragments": 30
+        },
+        {
+          "fromStar": 4,
+          "toStar": 5,
+          "fragments": 40
+        },
+        {
+          "fromStar": 5,
+          "toStar": 6,
+          "fragments": 60
+        },
+        {
+          "fromStar": 6,
+          "toStar": 7,
+          "fragments": 80
+        },
+        {
+          "fromStar": 7,
+          "toStar": 8,
+          "fragments": 100
+        },
+        {
+          "fromStar": 8,
+          "toStar": 9,
+          "fragments": 130
+        },
+        {
+          "fromStar": 9,
+          "toStar": 10,
+          "fragments": 160
+        }
+      ],
+      "綠": [
+        {
+          "fromStar": 1,
+          "toStar": 2,
+          "fragments": 20
+        },
+        {
+          "fromStar": 2,
+          "toStar": 3,
+          "fragments": 40
+        },
+        {
+          "fromStar": 3,
+          "toStar": 4,
+          "fragments": 60
+        },
+        {
+          "fromStar": 4,
+          "toStar": 5,
+          "fragments": 80
+        },
+        {
+          "fromStar": 5,
+          "toStar": 6,
+          "fragments": 120
+        },
+        {
+          "fromStar": 6,
+          "toStar": 7,
+          "fragments": 160
+        },
+        {
+          "fromStar": 7,
+          "toStar": 8,
+          "fragments": 200
+        },
+        {
+          "fromStar": 8,
+          "toStar": 9,
+          "fragments": 260
+        },
+        {
+          "fromStar": 9,
+          "toStar": 10,
+          "fragments": 320
+        }
+      ],
+      "藍": [
+        {
+          "fromStar": 1,
+          "toStar": 2,
+          "fragments": 30
+        },
+        {
+          "fromStar": 2,
+          "toStar": 3,
+          "fragments": 60
+        },
+        {
+          "fromStar": 3,
+          "toStar": 4,
+          "fragments": 90
+        },
+        {
+          "fromStar": 4,
+          "toStar": 5,
+          "fragments": 120
+        },
+        {
+          "fromStar": 5,
+          "toStar": 6,
+          "fragments": 180
+        },
+        {
+          "fromStar": 6,
+          "toStar": 7,
+          "fragments": 240
+        },
+        {
+          "fromStar": 7,
+          "toStar": 8,
+          "fragments": 300
+        },
+        {
+          "fromStar": 8,
+          "toStar": 9,
+          "fragments": 390
+        },
+        {
+          "fromStar": 9,
+          "toStar": 10,
+          "fragments": 480
+        }
+      ],
+      "橘": [
+        {
+          "fromStar": 1,
+          "toStar": 2,
+          "fragments": 50
+        },
+        {
+          "fromStar": 2,
+          "toStar": 3,
+          "fragments": 100
+        },
+        {
+          "fromStar": 3,
+          "toStar": 4,
+          "fragments": 150
+        },
+        {
+          "fromStar": 4,
+          "toStar": 5,
+          "fragments": 200
+        },
+        {
+          "fromStar": 5,
+          "toStar": 6,
+          "fragments": 300
+        },
+        {
+          "fromStar": 6,
+          "toStar": 7,
+          "fragments": 400
+        },
+        {
+          "fromStar": 7,
+          "toStar": 8,
+          "fragments": 500
+        },
+        {
+          "fromStar": 8,
+          "toStar": 9,
+          "fragments": 650
+        },
+        {
+          "fromStar": 9,
+          "toStar": 10,
+          "fragments": 800
+        }
+      ],
+      "紅": [
+        {
+          "fromStar": 1,
+          "toStar": 2,
+          "fragments": 80
+        },
+        {
+          "fromStar": 2,
+          "toStar": 3,
+          "fragments": 160
+        },
+        {
+          "fromStar": 3,
+          "toStar": 4,
+          "fragments": 240
+        },
+        {
+          "fromStar": 4,
+          "toStar": 5,
+          "fragments": 320
+        },
+        {
+          "fromStar": 5,
+          "toStar": 6,
+          "fragments": 480
+        },
+        {
+          "fromStar": 6,
+          "toStar": 7,
+          "fragments": 640
+        },
+        {
+          "fromStar": 7,
+          "toStar": 8,
+          "fragments": 800
+        },
+        {
+          "fromStar": 8,
+          "toStar": 9,
+          "fragments": 1040
+        },
+        {
+          "fromStar": 9,
+          "toStar": 10,
+          "fragments": 1280
+        }
+      ],
+      "紫": [
+        {
+          "fromStar": 1,
+          "toStar": 2,
+          "fragments": 120
+        },
+        {
+          "fromStar": 2,
+          "toStar": 3,
+          "fragments": 240
+        },
+        {
+          "fromStar": 3,
+          "toStar": 4,
+          "fragments": 360
+        },
+        {
+          "fromStar": 4,
+          "toStar": 5,
+          "fragments": 480
+        },
+        {
+          "fromStar": 5,
+          "toStar": 6,
+          "fragments": 720
+        },
+        {
+          "fromStar": 6,
+          "toStar": 7,
+          "fragments": 960
+        },
+        {
+          "fromStar": 7,
+          "toStar": 8,
+          "fragments": 1200
+        },
+        {
+          "fromStar": 8,
+          "toStar": 9,
+          "fragments": 1560
+        },
+        {
+          "fromStar": 9,
+          "toStar": 10,
+          "fragments": 1920
+        }
+      ],
+      "金": [
+        {
+          "fromStar": 1,
+          "toStar": 2,
+          "fragments": 200
+        },
+        {
+          "fromStar": 2,
+          "toStar": 3,
+          "fragments": 400
+        },
+        {
+          "fromStar": 3,
+          "toStar": 4,
+          "fragments": 600
+        },
+        {
+          "fromStar": 4,
+          "toStar": 5,
+          "fragments": 800
+        },
+        {
+          "fromStar": 5,
+          "toStar": 6,
+          "fragments": 1200
+        },
+        {
+          "fromStar": 6,
+          "toStar": 7,
+          "fragments": 1600
+        },
+        {
+          "fromStar": 7,
+          "toStar": 8,
+          "fragments": 2000
+        },
+        {
+          "fromStar": 8,
+          "toStar": 9,
+          "fragments": 2600
+        },
+        {
+          "fromStar": 9,
+          "toStar": 10,
+          "fragments": 3200
+        }
+      ]
+    },
+    "preserveLevel": true
+  },
+  "qualityAdvancement": {
+    "fromQuality": [
+      "青",
+      "綠",
+      "藍",
+      "橘",
+      "紅"
+    ],
+    "requiredStars": 10,
+    "trigger": "再次投入晉階所需碎片；到十星本身不自動晉階",
+    "toQuality": "下一品質",
+    "toStars": 1,
+    "fragmentCost": {
+      "青": 200,
+      "綠": 400,
+      "藍": 600,
+      "橘": 1000,
+      "紅": 1600
+    },
+    "preserveLevel": true
+  },
+  "firstRebirth": {
+    "fromQuality": "紫",
+    "requiredStars": 10,
+    "requiredPermanentLevel": 100,
+    "fragmentCost": 2400,
+    "toQuality": "金",
+    "toStars": 1,
+    "toPermanentLevel": 1,
+    "rebirthCountIncrease": 1
+  },
+  "pendingDecisions": [
+    "各級寶箱機率、每場同名武將碎片掉落量與養成速度平衡（已取消通用品質碎片）",
+    "每次升星、晉階、轉生的能力增幅",
+    "品質晉階後3、6、10星技能強化的延續與疊加方式",
+    "轉生後等級經驗如何處理及金色十星後的成長規則"
+  ],
+  "fragmentMaterial": "同名武將碎片，跨品質沿用；依目前品質與星數計費，不按原始品質重複加價。"
+}

@@ -1,0 +1,7 @@
+const cp=require('node:child_process'),fs=require('node:fs'),path=require('node:path');process.chdir(path.resolve(__dirname,'..'));
+function run(exe,args){const r=cp.spawnSync(exe,args,{stdio:'inherit'});if(r.status!==0)process.exit(r.status||1);}
+run(process.execPath,['scripts/test-backup.cjs']);run(process.execPath,['scripts/build.cjs']);
+const files=JSON.parse(fs.readFileSync('publish-inputs.json','utf8'));
+run('git',['add','--',...files,'scripts/build.cjs','scripts/sw-template.js','scripts/test-backup.cjs','scripts/serve.cjs','scripts/release.cjs','package.json','publish-inputs.json','.gitignore','README.md','手機發布說明.html','app-icon.svg']);
+const diff=cp.spawnSync('git',['diff','--cached','--quiet']);if(diff.status===1)run('git',['commit','-m',process.argv[2]||'Update game and mobile release']);else if(diff.status!==0)process.exit(diff.status);
+run('git',['push','-u','origin','main']);

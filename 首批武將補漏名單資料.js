@@ -1,0 +1,1182 @@
+window.ROSTER_ADDITIONS={
+  "date": "2026-11-08",
+  "batch": 1,
+  "stage": "名單及能力品質初評完成；未加入正式抽卡池",
+  "policy": "先確認漏收、身分與來源索引，再逐人詳核事蹟與六維；建議定位為設計方向。主陣營是卡庫歸類，非終身效力判定。異名不另建卡，劇情登場年代另行限制。",
+  "existingCount": 240,
+  "entries": [
+    {
+      "name": "凌操",
+      "faction": "吳",
+      "identity": "凌統之父；孫氏早期將領",
+      "suggestedRole": "先鋒突擊",
+      "aliases": [
+        "淩操"
+      ],
+      "source": {
+        "title": "《三國志》卷55",
+        "url": "https://zh.wikisource.org/wiki/三國志/卷55"
+      },
+      "status": "補漏候選・事蹟待詳核",
+      "abilities": {
+        "str": 86,
+        "int": 62,
+        "lead": 77,
+        "body": 85,
+        "agi": 83,
+        "charm": 73
+      },
+      "quality": "橘",
+      "letters": [
+        "凌",
+        "操"
+      ],
+      "average": 77.66666666666667,
+      "qualityReason": "平均 77.67；符合平均≥76、2項≥83、3項≥78；由高至低取橘色，門檻包含等於，平均不先四捨五入。",
+      "assessmentReason": "先鋒型；武力與敏捷突出，統率先設中上，不借用凌統後來的功績。",
+      "assessmentStatus": "能力品質初評完成；數值為遊戲推定，待平衡測試"
+    },
+    {
+      "name": "朱治",
+      "faction": "吳",
+      "identity": "朱然養父；孫氏舊將",
+      "suggestedRole": "地方整備",
+      "aliases": [],
+      "source": {
+        "title": "《三國志》卷56",
+        "url": "https://zh.wikisource.org/wiki/三國志/卷56"
+      },
+      "status": "補漏候選・事蹟待詳核",
+      "abilities": {
+        "str": 72,
+        "int": 78,
+        "lead": 85,
+        "body": 76,
+        "agi": 65,
+        "charm": 84
+      },
+      "quality": "橘",
+      "letters": [
+        "朱",
+        "治"
+      ],
+      "average": 76.66666666666667,
+      "qualityReason": "平均 76.67；符合平均≥76、2項≥83、3項≥78；由高至低取橘色，門檻包含等於，平均不先四捨五入。",
+      "assessmentReason": "資深整備型；統率與信任感優先，不作高速單挑武將。",
+      "assessmentStatus": "能力品質初評完成；數值為遊戲推定，待平衡測試"
+    },
+    {
+      "name": "朱桓",
+      "faction": "吳",
+      "identity": "吳將；與朱治、朱然分列",
+      "suggestedRole": "據點防守",
+      "aliases": [],
+      "source": {
+        "title": "《三國志》卷56",
+        "url": "https://zh.wikisource.org/wiki/三國志/卷56"
+      },
+      "status": "補漏候選・事蹟待詳核",
+      "abilities": {
+        "str": 87,
+        "int": 80,
+        "lead": 90,
+        "body": 86,
+        "agi": 78,
+        "charm": 77
+      },
+      "quality": "紅",
+      "letters": [
+        "朱",
+        "桓"
+      ],
+      "average": 83,
+      "qualityReason": "平均 83.00；符合平均≥81、3項≥85；由高至低取紅色，門檻包含等於，平均不先四捨五入。",
+      "assessmentReason": "守戰主將；統率高於個人武藝，保留謀略空間。",
+      "assessmentStatus": "能力品質初評完成；數值為遊戲推定，待平衡測試"
+    },
+    {
+      "name": "孫韶",
+      "faction": "吳",
+      "identity": "吳宗室傳所列將領",
+      "suggestedRole": "邊境守備",
+      "aliases": [],
+      "source": {
+        "title": "《三國志》卷51",
+        "url": "https://zh.wikisource.org/wiki/三國志/卷51"
+      },
+      "status": "補漏候選・事蹟待詳核",
+      "abilities": {
+        "str": 79,
+        "int": 75,
+        "lead": 84,
+        "body": 80,
+        "agi": 76,
+        "charm": 77
+      },
+      "quality": "橘",
+      "letters": [
+        "孫",
+        "韶"
+      ],
+      "average": 78.5,
+      "qualityReason": "平均 78.50；符合平均≥76、3項≥78；由高至低取橘色，門檻包含等於，平均不先四捨五入。",
+      "assessmentReason": "邊境守備型，六維穩定但不與頂尖統帥齊平。",
+      "assessmentStatus": "能力品質初評完成；數值為遊戲推定，待平衡測試"
+    },
+    {
+      "name": "全琮",
+      "faction": "吳",
+      "identity": "吳將",
+      "suggestedRole": "部隊協同",
+      "aliases": [],
+      "source": {
+        "title": "《三國志》卷60",
+        "url": "https://zh.wikisource.org/wiki/三國志/卷60"
+      },
+      "status": "補漏候選・事蹟待詳核",
+      "abilities": {
+        "str": 80,
+        "int": 78,
+        "lead": 85,
+        "body": 81,
+        "agi": 74,
+        "charm": 83
+      },
+      "quality": "橘",
+      "letters": [
+        "全",
+        "琮"
+      ],
+      "average": 80.16666666666667,
+      "qualityReason": "平均 80.17；符合平均≥76、2項≥83、3項≥78；由高至低取橘色，門檻包含等於，平均不先四捨五入。",
+      "assessmentReason": "協同領軍型，統率與魅力帶動特色。",
+      "assessmentStatus": "能力品質初評完成；數值為遊戲推定，待平衡測試"
+    },
+    {
+      "name": "賀齊",
+      "faction": "吳",
+      "identity": "吳將",
+      "suggestedRole": "山地作戰",
+      "aliases": [],
+      "source": {
+        "title": "《三國志》卷60",
+        "url": "https://zh.wikisource.org/wiki/三國志/卷60"
+      },
+      "status": "補漏候選・事蹟待詳核",
+      "abilities": {
+        "str": 86,
+        "int": 77,
+        "lead": 88,
+        "body": 87,
+        "agi": 79,
+        "charm": 75
+      },
+      "quality": "紅",
+      "letters": [
+        "賀",
+        "齊"
+      ],
+      "average": 82,
+      "qualityReason": "平均 82.00；符合平均≥81、3項≥85；由高至低取紅色，門檻包含等於，平均不先四捨五入。",
+      "assessmentReason": "山地作戰型，體魄與統率並重。",
+      "assessmentStatus": "能力品質初評完成；數值為遊戲推定，待平衡測試"
+    },
+    {
+      "name": "陸抗",
+      "faction": "吳",
+      "identity": "陸遜之子；吳後期將領",
+      "suggestedRole": "戰線調度",
+      "aliases": [],
+      "source": {
+        "title": "《三國志》卷58",
+        "url": "https://zh.wikisource.org/wiki/三國志/卷58"
+      },
+      "status": "補漏候選・事蹟待詳核",
+      "abilities": {
+        "str": 72,
+        "int": 95,
+        "lead": 97,
+        "body": 79,
+        "agi": 75,
+        "charm": 88
+      },
+      "quality": "紫",
+      "letters": [
+        "陸",
+        "抗"
+      ],
+      "average": 84.33333333333333,
+      "qualityReason": "平均 84.33；符合2項≥95；由高至低取紫色，門檻包含等於，平均不先四捨五入。",
+      "assessmentReason": "後期統帥核心；智統雙高，武力不以軍團勝績直接拉到猛將級。",
+      "assessmentStatus": "能力品質初評完成；數值為遊戲推定，待平衡測試"
+    },
+    {
+      "name": "顧雍",
+      "faction": "吳",
+      "identity": "吳國丞相",
+      "suggestedRole": "政務支援",
+      "aliases": [],
+      "source": {
+        "title": "《三國志》卷52",
+        "url": "https://zh.wikisource.org/wiki/三國志/卷52"
+      },
+      "status": "補漏候選・事蹟待詳核",
+      "abilities": {
+        "str": 30,
+        "int": 88,
+        "lead": 67,
+        "body": 58,
+        "agi": 46,
+        "charm": 94
+      },
+      "quality": "橘",
+      "letters": [
+        "顧",
+        "雍"
+      ],
+      "average": 63.833333333333336,
+      "qualityReason": "平均 63.83；符合1項≥88、2項≥83；由高至低取橘色，門檻包含等於，平均不先四捨五入。",
+      "assessmentReason": "政務與聲望支援，魅力突出；缺乏個人武藝依據的項目保守。",
+      "assessmentStatus": "能力品質初評完成；數值為遊戲推定，待平衡測試"
+    },
+    {
+      "name": "步騭",
+      "faction": "吳",
+      "identity": "吳國重臣",
+      "suggestedRole": "安定整備",
+      "aliases": [
+        "歩騭"
+      ],
+      "source": {
+        "title": "《三國志》卷52",
+        "url": "https://zh.wikisource.org/wiki/三國志/卷52"
+      },
+      "status": "補漏候選・事蹟待詳核",
+      "abilities": {
+        "str": 48,
+        "int": 85,
+        "lead": 78,
+        "body": 65,
+        "agi": 55,
+        "charm": 85
+      },
+      "quality": "橘",
+      "letters": [
+        "步",
+        "騭"
+      ],
+      "average": 69.33333333333333,
+      "qualityReason": "平均 69.33；符合2項≥83、3項≥78；由高至低取橘色，門檻包含等於，平均不先四捨五入。",
+      "assessmentReason": "治理及協調型，智魅為主；體敏為低信心設計估值。",
+      "assessmentStatus": "能力品質初評完成；數值為遊戲推定，待平衡測試"
+    },
+    {
+      "name": "諸葛恪",
+      "faction": "吳",
+      "identity": "諸葛瑾之子；吳後期輔政人物",
+      "suggestedRole": "軍政籌畫",
+      "aliases": [],
+      "source": {
+        "title": "《三國志》卷64",
+        "url": "https://zh.wikisource.org/wiki/三國志/卷64"
+      },
+      "status": "補漏候選・事蹟待詳核",
+      "abilities": {
+        "str": 52,
+        "int": 90,
+        "lead": 80,
+        "body": 64,
+        "agi": 62,
+        "charm": 80
+      },
+      "quality": "橘",
+      "letters": [
+        "諸",
+        "葛",
+        "恪"
+      ],
+      "average": 71.33333333333333,
+      "qualityReason": "平均 71.33；符合1項≥88、3項≥78；由高至低取橘色，門檻包含等於，平均不先四捨五入。",
+      "assessmentReason": "才辯與籌畫強，但統率不因名氣直接給到頂尖。",
+      "assessmentStatus": "能力品質初評完成；數值為遊戲推定，待平衡測試"
+    },
+    {
+      "name": "臧霸",
+      "faction": "魏",
+      "identity": "先後隸屬不同勢力；以曹營定位歸魏",
+      "suggestedRole": "地方統御",
+      "aliases": [],
+      "source": {
+        "title": "《三國志》卷18",
+        "url": "https://zh.wikisource.org/wiki/三國志/卷18"
+      },
+      "status": "補漏候選・事蹟待詳核",
+      "abilities": {
+        "str": 87,
+        "int": 78,
+        "lead": 88,
+        "body": 87,
+        "agi": 79,
+        "charm": 86
+      },
+      "quality": "紅",
+      "letters": [
+        "臧",
+        "霸"
+      ],
+      "average": 84.16666666666667,
+      "qualityReason": "平均 84.17；符合平均≥81、3項≥85；由高至低取紅色，門檻包含等於，平均不先四捨五入。",
+      "assessmentReason": "地方統御與實戰兼具，魅力反映部眾號召。",
+      "assessmentStatus": "能力品質初評完成；數值為遊戲推定，待平衡測試"
+    },
+    {
+      "name": "牽招",
+      "faction": "魏",
+      "identity": "曾事袁紹，後入曹營",
+      "suggestedRole": "邊境協調",
+      "aliases": [],
+      "source": {
+        "title": "《三國志》卷26",
+        "url": "https://zh.wikisource.org/wiki/三國志/卷26"
+      },
+      "status": "補漏候選・事蹟待詳核",
+      "abilities": {
+        "str": 76,
+        "int": 83,
+        "lead": 86,
+        "body": 78,
+        "agi": 70,
+        "charm": 85
+      },
+      "quality": "橘",
+      "letters": [
+        "牽",
+        "招"
+      ],
+      "average": 79.66666666666667,
+      "qualityReason": "平均 79.67；符合平均≥76、2項≥83、3項≥78；由高至低取橘色，門檻包含等於，平均不先四捨五入。",
+      "assessmentReason": "邊防協調型，統智魅高於單挑能力。",
+      "assessmentStatus": "能力品質初評完成；數值為遊戲推定，待平衡測試"
+    },
+    {
+      "name": "田豫",
+      "faction": "魏",
+      "identity": "早年曾從劉備，後事曹魏",
+      "suggestedRole": "邊防應變",
+      "aliases": [],
+      "source": {
+        "title": "《三國志》卷26",
+        "url": "https://zh.wikisource.org/wiki/三國志/卷26"
+      },
+      "status": "補漏候選・事蹟待詳核",
+      "abilities": {
+        "str": 78,
+        "int": 88,
+        "lead": 90,
+        "body": 80,
+        "agi": 74,
+        "charm": 85
+      },
+      "quality": "紅",
+      "letters": [
+        "田",
+        "豫"
+      ],
+      "average": 82.5,
+      "qualityReason": "平均 82.50；符合平均≥81、3項≥85；由高至低取紅色，門檻包含等於，平均不先四捨五入。",
+      "assessmentReason": "邊防應變型，統率與判斷並重。",
+      "assessmentStatus": "能力品質初評完成；數值為遊戲推定，待平衡測試"
+    },
+    {
+      "name": "郭淮",
+      "faction": "魏",
+      "identity": "曹魏將領",
+      "suggestedRole": "持守調度",
+      "aliases": [],
+      "source": {
+        "title": "《三國志》卷26",
+        "url": "https://zh.wikisource.org/wiki/三國志/卷26"
+      },
+      "status": "補漏候選・事蹟待詳核",
+      "abilities": {
+        "str": 78,
+        "int": 88,
+        "lead": 91,
+        "body": 80,
+        "agi": 70,
+        "charm": 79
+      },
+      "quality": "紅",
+      "letters": [
+        "郭",
+        "淮"
+      ],
+      "average": 81,
+      "qualityReason": "平均 81.00；符合平均≥81；由高至低取紅色，門檻包含等於，平均不先四捨五入。",
+      "assessmentReason": "防線組織型，統率突出、機動中等。",
+      "assessmentStatus": "能力品質初評完成；數值為遊戲推定，待平衡測試"
+    },
+    {
+      "name": "陳泰",
+      "faction": "魏",
+      "identity": "陳群之子；見陳群傳附記",
+      "suggestedRole": "援軍應變",
+      "aliases": [],
+      "source": {
+        "title": "《三國志》卷22",
+        "url": "https://zh.wikisource.org/wiki/三國志/卷22"
+      },
+      "status": "補漏候選・事蹟待詳核",
+      "abilities": {
+        "str": 74,
+        "int": 89,
+        "lead": 92,
+        "body": 76,
+        "agi": 72,
+        "charm": 84
+      },
+      "quality": "紅",
+      "letters": [
+        "陳",
+        "泰"
+      ],
+      "average": 81.16666666666667,
+      "qualityReason": "平均 81.17；符合平均≥81；由高至低取紅色，門檻包含等於，平均不先四捨五入。",
+      "assessmentReason": "援軍調度型，統率高於個人武力。",
+      "assessmentStatus": "能力品質初評完成；數值為遊戲推定，待平衡測試"
+    },
+    {
+      "name": "鄧艾",
+      "faction": "魏",
+      "identity": "曹魏後期將領",
+      "suggestedRole": "險路進軍",
+      "aliases": [],
+      "source": {
+        "title": "《三國志》卷28",
+        "url": "https://zh.wikisource.org/wiki/三國志/卷28"
+      },
+      "status": "補漏候選・事蹟待詳核",
+      "abilities": {
+        "str": 87,
+        "int": 95,
+        "lead": 96,
+        "body": 88,
+        "agi": 83,
+        "charm": 73
+      },
+      "quality": "紫",
+      "letters": [
+        "鄧",
+        "艾"
+      ],
+      "average": 87,
+      "qualityReason": "平均 87.00；符合平均≥86、2項≥95；由高至低取紫色，門檻包含等於，平均不先四捨五入。",
+      "assessmentReason": "險路進軍與戰略兼長；雙95達紫，魅力不與智統同步拉高。",
+      "assessmentStatus": "能力品質初評完成；數值為遊戲推定，待平衡測試"
+    },
+    {
+      "name": "鍾會",
+      "faction": "魏",
+      "identity": "鍾繇之子；曹魏後期將領",
+      "suggestedRole": "大軍籌畫",
+      "aliases": [
+        "鐘會"
+      ],
+      "source": {
+        "title": "《三國志》卷28",
+        "url": "https://zh.wikisource.org/wiki/三國志/卷28"
+      },
+      "status": "補漏候選・事蹟待詳核",
+      "abilities": {
+        "str": 60,
+        "int": 96,
+        "lead": 88,
+        "body": 64,
+        "agi": 66,
+        "charm": 82
+      },
+      "quality": "紅",
+      "letters": [
+        "鍾",
+        "會"
+      ],
+      "average": 76,
+      "qualityReason": "平均 76.00；符合1項≥95；由高至低取紅色，門檻包含等於，平均不先四捨五入。",
+      "assessmentReason": "智謀型統軍，低於鄧艾的體魄與武藝，保留強弱差別。",
+      "assessmentStatus": "能力品質初評完成；數值為遊戲推定，待平衡測試"
+    },
+    {
+      "name": "王基",
+      "faction": "魏",
+      "identity": "曹魏將領",
+      "suggestedRole": "軍政協作",
+      "aliases": [],
+      "source": {
+        "title": "《三國志》卷27",
+        "url": "https://zh.wikisource.org/wiki/三國志/卷27"
+      },
+      "status": "補漏候選・事蹟待詳核",
+      "abilities": {
+        "str": 78,
+        "int": 87,
+        "lead": 89,
+        "body": 79,
+        "agi": 72,
+        "charm": 83
+      },
+      "quality": "紅",
+      "letters": [
+        "王",
+        "基"
+      ],
+      "average": 81.33333333333333,
+      "qualityReason": "平均 81.33；符合平均≥81；由高至低取紅色，門檻包含等於，平均不先四捨五入。",
+      "assessmentReason": "軍政協作型，智統均衡。",
+      "assessmentStatus": "能力品質初評完成；數值為遊戲推定，待平衡測試"
+    },
+    {
+      "name": "王昶",
+      "faction": "魏",
+      "identity": "曹魏將領",
+      "suggestedRole": "整軍支援",
+      "aliases": [],
+      "source": {
+        "title": "《三國志》卷27",
+        "url": "https://zh.wikisource.org/wiki/三國志/卷27"
+      },
+      "status": "補漏候選・事蹟待詳核",
+      "abilities": {
+        "str": 73,
+        "int": 84,
+        "lead": 86,
+        "body": 77,
+        "agi": 67,
+        "charm": 85
+      },
+      "quality": "橘",
+      "letters": [
+        "王",
+        "昶"
+      ],
+      "average": 78.66666666666667,
+      "qualityReason": "平均 78.67；符合平均≥76、2項≥83、3項≥78；由高至低取橘色，門檻包含等於，平均不先四捨五入。",
+      "assessmentReason": "整軍協同型，統率及聲望為主要優勢。",
+      "assessmentStatus": "能力品質初評完成；數值為遊戲推定，待平衡測試"
+    },
+    {
+      "name": "胡質",
+      "faction": "魏",
+      "identity": "曹魏地方重臣",
+      "suggestedRole": "地方安定",
+      "aliases": [],
+      "source": {
+        "title": "《三國志》卷27",
+        "url": "https://zh.wikisource.org/wiki/三國志/卷27"
+      },
+      "status": "補漏候選・事蹟待詳核",
+      "abilities": {
+        "str": 48,
+        "int": 82,
+        "lead": 75,
+        "body": 65,
+        "agi": 52,
+        "charm": 87
+      },
+      "quality": "藍",
+      "letters": [
+        "胡",
+        "質"
+      ],
+      "average": 68.16666666666667,
+      "qualityReason": "平均 68.17；符合1項≥80、2項≥75、3項≥70；由高至低取藍色，門檻包含等於，平均不先四捨五入。",
+      "assessmentReason": "地方安定型，魅力與判斷優先。",
+      "assessmentStatus": "能力品質初評完成；數值為遊戲推定，待平衡測試"
+    },
+    {
+      "name": "張嶷",
+      "faction": "蜀",
+      "identity": "蜀漢將領；與張翼不同",
+      "suggestedRole": "地方安撫",
+      "aliases": [],
+      "source": {
+        "title": "《三國志》卷43",
+        "url": "https://zh.wikisource.org/wiki/三國志/卷43"
+      },
+      "status": "補漏候選・事蹟待詳核",
+      "abilities": {
+        "str": 84,
+        "int": 78,
+        "lead": 86,
+        "body": 78,
+        "agi": 72,
+        "charm": 87
+      },
+      "quality": "橘",
+      "letters": [
+        "張",
+        "嶷"
+      ],
+      "average": 80.83333333333333,
+      "qualityReason": "平均 80.83；符合平均≥76、2項≥83、3項≥78；由高至低取橘色，門檻包含等於，平均不先四捨五入。",
+      "assessmentReason": "橘色上緣的作戰與安撫型武將；保留武84、統86、魅87，智82→78、體82→78、敏75→72，收斂先前偏全面的估值。平均80.83，不滿足紅色門檻；魅力仍反映地方號召與信任。此為遊戲平衡修正，不宣稱史料能直接量化點數。",
+      "assessmentStatus": "能力品質初評完成；數值為遊戲推定，待平衡測試"
+    },
+    {
+      "name": "羅憲",
+      "faction": "蜀",
+      "identity": "蜀漢末年將領，後仕晉；主卡庫暫歸蜀",
+      "suggestedRole": "孤城持守",
+      "aliases": [],
+      "source": {
+        "title": "《晉書》卷057",
+        "url": "https://zh.wikisource.org/wiki/晉書/卷057"
+      },
+      "status": "補漏候選・事蹟待詳核",
+      "abilities": {
+        "str": 82,
+        "int": 85,
+        "lead": 90,
+        "body": 85,
+        "agi": 73,
+        "charm": 86
+      },
+      "quality": "紅",
+      "letters": [
+        "羅",
+        "憲"
+      ],
+      "average": 83.5,
+      "qualityReason": "平均 83.50；符合平均≥81、3項≥85；由高至低取紅色，門檻包含等於，平均不先四捨五入。",
+      "assessmentReason": "孤城持守型，統率與持久性突出。",
+      "assessmentStatus": "能力品質初評完成；數值為遊戲推定，待平衡測試"
+    },
+    {
+      "name": "霍弋",
+      "faction": "蜀",
+      "identity": "霍峻之子；蜀漢將領，後歸魏晉",
+      "suggestedRole": "南方守備",
+      "aliases": [],
+      "source": {
+        "title": "《三國志》卷41",
+        "url": "https://zh.wikisource.org/wiki/三國志/卷41"
+      },
+      "status": "補漏候選・事蹟待詳核",
+      "abilities": {
+        "str": 76,
+        "int": 81,
+        "lead": 84,
+        "body": 79,
+        "agi": 67,
+        "charm": 82
+      },
+      "quality": "橘",
+      "letters": [
+        "霍",
+        "弋"
+      ],
+      "average": 78.16666666666667,
+      "qualityReason": "平均 78.17；符合平均≥76、3項≥78；由高至低取橘色，門檻包含等於，平均不先四捨五入。",
+      "assessmentReason": "南方守備型，不把父親霍峻的功績直接累加。",
+      "assessmentStatus": "能力品質初評完成；數值為遊戲推定，待平衡測試"
+    },
+    {
+      "name": "傅僉",
+      "faction": "蜀",
+      "identity": "傅彤之子；見季漢輔臣贊注",
+      "suggestedRole": "前線奮戰",
+      "aliases": [],
+      "source": {
+        "title": "《三國志》卷45",
+        "url": "https://zh.wikisource.org/wiki/三國志/卷45"
+      },
+      "status": "補漏候選・事蹟待詳核",
+      "abilities": {
+        "str": 86,
+        "int": 65,
+        "lead": 76,
+        "body": 86,
+        "agi": 80,
+        "charm": 75
+      },
+      "quality": "橘",
+      "letters": [
+        "傅",
+        "僉"
+      ],
+      "average": 78,
+      "qualityReason": "平均 78.00；符合平均≥76、2項≥83、3項≥78；由高至低取橘色，門檻包含等於，平均不先四捨五入。",
+      "assessmentReason": "奮戰前線型，武體突出而智統有限。",
+      "assessmentStatus": "能力品質初評完成；數值為遊戲推定，待平衡測試"
+    },
+    {
+      "name": "宗預",
+      "faction": "蜀",
+      "identity": "蜀漢官員、使臣",
+      "suggestedRole": "外交支援",
+      "aliases": [],
+      "source": {
+        "title": "《三國志》卷45",
+        "url": "https://zh.wikisource.org/wiki/三國志/卷45"
+      },
+      "status": "補漏候選・事蹟待詳核",
+      "abilities": {
+        "str": 56,
+        "int": 80,
+        "lead": 70,
+        "body": 70,
+        "agi": 57,
+        "charm": 86
+      },
+      "quality": "藍",
+      "letters": [
+        "宗",
+        "預"
+      ],
+      "average": 69.83333333333333,
+      "qualityReason": "平均 69.83；符合1項≥80、2項≥75、3項≥70；由高至低取藍色，門檻包含等於，平均不先四捨五入。",
+      "assessmentReason": "外交支援型，魅力優先；非一線物理輸出。",
+      "assessmentStatus": "能力品質初評完成；數值為遊戲推定，待平衡測試"
+    },
+    {
+      "name": "董允",
+      "faction": "蜀",
+      "identity": "董和之子；蜀漢重臣",
+      "suggestedRole": "中樞輔佐",
+      "aliases": [],
+      "source": {
+        "title": "《三國志》卷39",
+        "url": "https://zh.wikisource.org/wiki/三國志/卷39"
+      },
+      "status": "補漏候選・事蹟待詳核",
+      "abilities": {
+        "str": 36,
+        "int": 86,
+        "lead": 73,
+        "body": 62,
+        "agi": 48,
+        "charm": 92
+      },
+      "quality": "橘",
+      "letters": [
+        "董",
+        "允"
+      ],
+      "average": 66.16666666666667,
+      "qualityReason": "平均 66.17；符合1項≥88、2項≥83；由高至低取橘色，門檻包含等於，平均不先四捨五入。",
+      "assessmentReason": "中樞匡輔型，魅力反映公信與敢諫，不是親和外貌。",
+      "assessmentStatus": "能力品質初評完成；數值為遊戲推定，待平衡測試"
+    },
+    {
+      "name": "陳祗",
+      "faction": "蜀",
+      "identity": "蜀漢官員；與陳震不同",
+      "suggestedRole": "政務協調",
+      "aliases": [],
+      "source": {
+        "title": "《三國志》卷39",
+        "url": "https://zh.wikisource.org/wiki/三國志/卷39"
+      },
+      "status": "補漏候選・事蹟待詳核",
+      "abilities": {
+        "str": 35,
+        "int": 79,
+        "lead": 64,
+        "body": 59,
+        "agi": 50,
+        "charm": 75
+      },
+      "quality": "藍",
+      "letters": [
+        "陳",
+        "祗"
+      ],
+      "average": 60.333333333333336,
+      "qualityReason": "平均 60.33；符合2項≥75；由高至低取藍色，門檻包含等於，平均不先四捨五入。",
+      "assessmentReason": "政務協調型；不把道德評價直接當魅力零分。",
+      "assessmentStatus": "能力品質初評完成；數值為遊戲推定，待平衡測試"
+    },
+    {
+      "name": "鄧芝",
+      "faction": "蜀",
+      "identity": "蜀漢將領、使臣",
+      "suggestedRole": "聯盟協調",
+      "aliases": [],
+      "source": {
+        "title": "《三國志》卷45",
+        "url": "https://zh.wikisource.org/wiki/三國志/卷45"
+      },
+      "status": "補漏候選・事蹟待詳核",
+      "abilities": {
+        "str": 54,
+        "int": 86,
+        "lead": 78,
+        "body": 70,
+        "agi": 62,
+        "charm": 90
+      },
+      "quality": "橘",
+      "letters": [
+        "鄧",
+        "芝"
+      ],
+      "average": 73.33333333333333,
+      "qualityReason": "平均 73.33；符合1項≥88、2項≥83、3項≥78；由高至低取橘色，門檻包含等於，平均不先四捨五入。",
+      "assessmentReason": "聯盟協調型，智魅雙長，武力保守。",
+      "assessmentStatus": "能力品質初評完成；數值為遊戲推定，待平衡測試"
+    },
+    {
+      "name": "麴義",
+      "faction": "群雄",
+      "identity": "袁紹部將；異寫須共用一人",
+      "suggestedRole": "精兵破陣",
+      "aliases": [
+        "鞠義"
+      ],
+      "source": {
+        "title": "《三國志》卷06",
+        "url": "https://zh.wikisource.org/wiki/三國志/卷06"
+      },
+      "status": "補漏候選・事蹟待詳核",
+      "abilities": {
+        "str": 89,
+        "int": 75,
+        "lead": 89,
+        "body": 85,
+        "agi": 82,
+        "charm": 69
+      },
+      "quality": "紅",
+      "letters": [
+        "麴",
+        "義"
+      ],
+      "average": 81.5,
+      "qualityReason": "平均 81.50；符合平均≥81、3項≥85；由高至低取紅色，門檻包含等於，平均不先四捨五入。",
+      "assessmentReason": "精兵破陣型，武統突出；號召範圍較集中。",
+      "assessmentStatus": "能力品質初評完成；數值為遊戲推定，待平衡測試"
+    },
+    {
+      "name": "審配",
+      "faction": "群雄",
+      "identity": "袁紹、袁尚陣營人物",
+      "suggestedRole": "城池守備",
+      "aliases": [],
+      "source": {
+        "title": "《三國志》卷06",
+        "url": "https://zh.wikisource.org/wiki/三國志/卷06"
+      },
+      "status": "補漏候選・事蹟待詳核",
+      "abilities": {
+        "str": 63,
+        "int": 84,
+        "lead": 85,
+        "body": 78,
+        "agi": 58,
+        "charm": 78
+      },
+      "quality": "橘",
+      "letters": [
+        "審",
+        "配"
+      ],
+      "average": 74.33333333333333,
+      "qualityReason": "平均 74.33；符合2項≥83、3項≥78；由高至低取橘色，門檻包含等於，平均不先四捨五入。",
+      "assessmentReason": "守城與組織型，敏捷較低但不等同沒有實務能力。",
+      "assessmentStatus": "能力品質初評完成；數值為遊戲推定，待平衡測試"
+    },
+    {
+      "name": "徐榮",
+      "faction": "群雄",
+      "identity": "董卓部將；與徐晃不同",
+      "suggestedRole": "伏擊攔截",
+      "aliases": [],
+      "source": {
+        "title": "《三國志》卷01",
+        "url": "https://zh.wikisource.org/wiki/三國志/卷01"
+      },
+      "status": "補漏候選・事蹟待詳核",
+      "abilities": {
+        "str": 84,
+        "int": 83,
+        "lead": 89,
+        "body": 83,
+        "agi": 76,
+        "charm": 70
+      },
+      "quality": "橘",
+      "letters": [
+        "徐",
+        "榮"
+      ],
+      "average": 80.83333333333333,
+      "qualityReason": "平均 80.83；符合平均≥76、1項≥88、2項≥83、3項≥78；由高至低取橘色，門檻包含等於，平均不先四捨五入。",
+      "assessmentReason": "戰術攔截型，統率為主、武力次之。",
+      "assessmentStatus": "能力品質初評完成；數值為遊戲推定，待平衡測試"
+    },
+    {
+      "name": "公孫度",
+      "faction": "群雄",
+      "identity": "遼東勢力人物",
+      "suggestedRole": "地域經營",
+      "aliases": [],
+      "source": {
+        "title": "《三國志》卷08",
+        "url": "https://zh.wikisource.org/wiki/三國志/卷08"
+      },
+      "status": "補漏候選・事蹟待詳核",
+      "abilities": {
+        "str": 76,
+        "int": 78,
+        "lead": 82,
+        "body": 79,
+        "agi": 65,
+        "charm": 77
+      },
+      "quality": "橘",
+      "letters": [
+        "公",
+        "孫",
+        "度"
+      ],
+      "average": 76.16666666666667,
+      "qualityReason": "平均 76.17；符合平均≥76、3項≥78；由高至低取橘色，門檻包含等於，平均不先四捨五入。",
+      "assessmentReason": "地域經營型，統率與體魄中上。",
+      "assessmentStatus": "能力品質初評完成；數值為遊戲推定，待平衡測試"
+    },
+    {
+      "name": "公孫康",
+      "faction": "群雄",
+      "identity": "公孫度之子；與公孫淵分列",
+      "suggestedRole": "邊境決策",
+      "aliases": [],
+      "source": {
+        "title": "《三國志》卷08",
+        "url": "https://zh.wikisource.org/wiki/三國志/卷08"
+      },
+      "status": "補漏候選・事蹟待詳核",
+      "abilities": {
+        "str": 71,
+        "int": 81,
+        "lead": 80,
+        "body": 74,
+        "agi": 66,
+        "charm": 73
+      },
+      "quality": "藍",
+      "letters": [
+        "公",
+        "孫",
+        "康"
+      ],
+      "average": 74.16666666666667,
+      "qualityReason": "平均 74.17；符合平均≥71、1項≥80、2項≥75、3項≥70；由高至低取藍色，門檻包含等於，平均不先四捨五入。",
+      "assessmentReason": "邊境決策型，判斷略強於武力。",
+      "assessmentStatus": "能力品質初評完成；數值為遊戲推定，待平衡測試"
+    },
+    {
+      "name": "張燕",
+      "faction": "群雄",
+      "identity": "黑山勢力人物，後歸曹；主卡庫暫歸群雄",
+      "suggestedRole": "山地集眾",
+      "aliases": [],
+      "source": {
+        "title": "《三國志》卷08",
+        "url": "https://zh.wikisource.org/wiki/三國志/卷08"
+      },
+      "status": "補漏候選・事蹟待詳核",
+      "abilities": {
+        "str": 85,
+        "int": 73,
+        "lead": 86,
+        "body": 84,
+        "agi": 84,
+        "charm": 84
+      },
+      "quality": "紅",
+      "letters": [
+        "張",
+        "燕"
+      ],
+      "average": 82.66666666666667,
+      "qualityReason": "平均 82.67；符合平均≥81；由高至低取紅色，門檻包含等於，平均不先四捨五入。",
+      "assessmentReason": "山地部眾型，機動與號召兼具。",
+      "assessmentStatus": "能力品質初評完成；數值為遊戲推定，待平衡測試"
+    },
+    {
+      "name": "劉虞",
+      "faction": "東漢",
+      "identity": "漢宗室、幽州牧；主卡庫暫歸東漢",
+      "suggestedRole": "安民聲望",
+      "aliases": [],
+      "source": {
+        "title": "《後漢書》卷73",
+        "url": "https://zh.wikisource.org/wiki/後漢書/卷73"
+      },
+      "status": "補漏候選・事蹟待詳核",
+      "abilities": {
+        "str": 32,
+        "int": 83,
+        "lead": 71,
+        "body": 57,
+        "agi": 45,
+        "charm": 95
+      },
+      "quality": "紅",
+      "letters": [
+        "劉",
+        "虞"
+      ],
+      "average": 63.833333333333336,
+      "qualityReason": "平均 63.83；符合1項≥95；由高至低取紅色，門檻包含等於，平均不先四捨五入。",
+      "assessmentReason": "安民聲望型；魅力95達紅不代表具備前線承傷能力。",
+      "assessmentStatus": "能力品質初評完成；數值為遊戲推定，待平衡測試"
+    },
+    {
+      "name": "丁原",
+      "faction": "東漢",
+      "identity": "漢末官員；見呂布傳",
+      "suggestedRole": "部隊整備",
+      "aliases": [],
+      "source": {
+        "title": "《三國志》卷07",
+        "url": "https://zh.wikisource.org/wiki/三國志/卷07"
+      },
+      "status": "補漏候選・事蹟待詳核",
+      "abilities": {
+        "str": 77,
+        "int": 61,
+        "lead": 73,
+        "body": 78,
+        "agi": 64,
+        "charm": 71
+      },
+      "quality": "藍",
+      "letters": [
+        "丁",
+        "原"
+      ],
+      "average": 70.66666666666667,
+      "qualityReason": "平均 70.67；符合2項≥75、3項≥70；由高至低取藍色，門檻包含等於，平均不先四捨五入。",
+      "assessmentReason": "部隊整備型，武體中上，謀略保守。",
+      "assessmentStatus": "能力品質初評完成；數值為遊戲推定，待平衡測試"
+    },
+    {
+      "name": "徐璆",
+      "faction": "東漢",
+      "identity": "東漢官員",
+      "suggestedRole": "秩序支援",
+      "aliases": [],
+      "source": {
+        "title": "《後漢書》卷48",
+        "url": "https://zh.wikisource.org/wiki/後漢書/卷48"
+      },
+      "status": "補漏候選・事蹟待詳核",
+      "abilities": {
+        "str": 42,
+        "int": 79,
+        "lead": 68,
+        "body": 61,
+        "agi": 48,
+        "charm": 83
+      },
+      "quality": "藍",
+      "letters": [
+        "徐",
+        "璆"
+      ],
+      "average": 63.5,
+      "qualityReason": "平均 63.50；符合1項≥80、2項≥75；由高至低取藍色，門檻包含等於，平均不先四捨五入。",
+      "assessmentReason": "秩序與公信支援型，武敏缺乏明確依據，採保守估值。",
+      "assessmentStatus": "能力品質初評完成；數值為遊戲推定，待平衡測試"
+    },
+    {
+      "name": "蓋勳",
+      "faction": "東漢",
+      "identity": "漢末官員",
+      "suggestedRole": "邊地安定",
+      "aliases": [],
+      "source": {
+        "title": "《後漢書》卷58",
+        "url": "https://zh.wikisource.org/wiki/後漢書/卷58"
+      },
+      "status": "補漏候選・事蹟待詳核",
+      "abilities": {
+        "str": 73,
+        "int": 81,
+        "lead": 81,
+        "body": 76,
+        "agi": 62,
+        "charm": 86
+      },
+      "quality": "橘",
+      "letters": [
+        "蓋",
+        "勳"
+      ],
+      "average": 76.5,
+      "qualityReason": "平均 76.50；符合平均≥76、3項≥78；由高至低取橘色，門檻包含等於，平均不先四捨五入。",
+      "assessmentReason": "邊地安定型，智統魅均衡。",
+      "assessmentStatus": "能力品質初評完成；數值為遊戲推定，待平衡測試"
+    },
+    {
+      "name": "士燮",
+      "faction": "東漢",
+      "identity": "交趾太守，後與孫氏有歸附關係；暫歸東漢",
+      "suggestedRole": "地方安民",
+      "aliases": [
+        "士爕"
+      ],
+      "source": {
+        "title": "《三國志》卷49",
+        "url": "https://zh.wikisource.org/wiki/三國志/卷49"
+      },
+      "status": "補漏候選・事蹟待詳核",
+      "abilities": {
+        "str": 34,
+        "int": 84,
+        "lead": 72,
+        "body": 63,
+        "agi": 44,
+        "charm": 93
+      },
+      "quality": "橘",
+      "letters": [
+        "士",
+        "燮"
+      ],
+      "average": 65,
+      "qualityReason": "平均 65.00；符合1項≥88、2項≥83；由高至低取橘色，門檻包含等於，平均不先四捨五入。",
+      "assessmentReason": "地方聲望核心，魅力強而非武力強。",
+      "assessmentStatus": "能力品質初評完成；數值為遊戲推定，待平衡測試"
+    },
+    {
+      "name": "蔡邕",
+      "faction": "東漢",
+      "identity": "漢末學者、官員",
+      "suggestedRole": "文化聲望",
+      "aliases": [],
+      "source": {
+        "title": "《後漢書》卷60下",
+        "url": "https://zh.wikisource.org/wiki/後漢書/卷60下"
+      },
+      "status": "補漏候選・事蹟待詳核",
+      "abilities": {
+        "str": 24,
+        "int": 88,
+        "lead": 42,
+        "body": 51,
+        "agi": 46,
+        "charm": 94
+      },
+      "quality": "橘",
+      "letters": [
+        "蔡",
+        "邕"
+      ],
+      "average": 57.5,
+      "qualityReason": "平均 57.50；符合1項≥88、2項≥83；由高至低取橘色，門檻包含等於，平均不先四捨五入。",
+      "assessmentReason": "博學名士型；智力不等於軍略滿分，統率保留明顯弱項。",
+      "assessmentStatus": "能力品質初評完成；數值為遊戲推定，待平衡測試"
+    }
+  ]
+};

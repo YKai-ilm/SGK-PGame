@@ -1,0 +1,10507 @@
+window.SKILL_TRIAL={
+  "version": 2,
+  "date": "2026-11-08",
+  "scenarios": [
+    {
+      "name": "密集步兵",
+      "count": 12,
+      "hp": 650,
+      "speed": 0.8,
+      "def": 30,
+      "mdef": 30,
+      "atk": 45
+    },
+    {
+      "name": "快速敵軍",
+      "count": 12,
+      "hp": 650,
+      "speed": 1.8,
+      "def": 30,
+      "mdef": 30,
+      "atk": 45
+    },
+    {
+      "name": "高血量重兵",
+      "count": 4,
+      "hp": 4000,
+      "speed": 0.65,
+      "def": 70,
+      "mdef": 70,
+      "atk": 90
+    },
+    {
+      "name": "彎道密集",
+      "count": 12,
+      "hp": 650,
+      "speed": 0.8,
+      "def": 30,
+      "mdef": 30,
+      "atk": 45,
+      "route": "bend"
+    },
+    {
+      "name": "彎道分散",
+      "count": 12,
+      "hp": 650,
+      "speed": 0.8,
+      "def": 30,
+      "mdef": 30,
+      "atk": 45,
+      "route": "bend",
+      "spread": true
+    },
+    {
+      "name": "遠程謀攻",
+      "count": 12,
+      "hp": 650,
+      "speed": 0.8,
+      "def": 30,
+      "mdef": 30,
+      "atk": 45,
+      "type": "策",
+      "range": 3
+    }
+  ],
+  "positions": [
+    [
+      5,
+      4
+    ],
+    [
+      5,
+      3
+    ],
+    [
+      5,
+      5
+    ],
+    [
+      6,
+      4
+    ],
+    [
+      6,
+      3
+    ]
+  ],
+  "data": [
+    {
+      "scenario": "密集步兵",
+      "formation": "劉備",
+      "kind": "單將支援測試",
+      "disableBonds": false,
+      "members": [
+        "劉備"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "劉備",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [],
+      "seconds": 30,
+      "kills": 6,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 1,
+      "heroCount": 1,
+      "enemyHP": 3272,
+      "damage": 4528,
+      "healing": 2798,
+      "shield": 1668,
+      "control": 0,
+      "frozenShare": 0,
+      "individual": [
+        {
+          "name": "劉備",
+          "damage": 4528,
+          "healing": 2798,
+          "hp": 734
+        }
+      ]
+    },
+    {
+      "scenario": "密集步兵",
+      "formation": "關羽",
+      "kind": "單將支援測試",
+      "disableBonds": false,
+      "members": [
+        "關羽"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "關羽",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [],
+      "seconds": 5.3,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 1,
+      "heroCount": 1,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 6,
+      "frozenShare": 12.6,
+      "individual": [
+        {
+          "name": "關羽",
+          "damage": 7800,
+          "healing": 0,
+          "hp": 1709
+        }
+      ]
+    },
+    {
+      "scenario": "密集步兵",
+      "formation": "張飛",
+      "kind": "單將支援測試",
+      "disableBonds": false,
+      "members": [
+        "張飛"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "張飛",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [],
+      "seconds": 9.05,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 1,
+      "heroCount": 1,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 13.6,
+      "frozenShare": 17.6,
+      "individual": [
+        {
+          "name": "張飛",
+          "damage": 7800,
+          "healing": 0,
+          "hp": 1160
+        }
+      ]
+    },
+    {
+      "scenario": "密集步兵",
+      "formation": "趙雲",
+      "kind": "單將支援測試",
+      "disableBonds": false,
+      "members": [
+        "趙雲"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "趙雲",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [],
+      "seconds": 11.25,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 1,
+      "heroCount": 1,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 0,
+      "frozenShare": 0,
+      "individual": [
+        {
+          "name": "趙雲",
+          "damage": 7800,
+          "healing": 0,
+          "hp": 788
+        }
+      ]
+    },
+    {
+      "scenario": "密集步兵",
+      "formation": "黃忠",
+      "kind": "單將支援測試",
+      "disableBonds": false,
+      "members": [
+        "黃忠"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "黃忠",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [],
+      "seconds": 30,
+      "kills": 7,
+      "total": 12,
+      "gateHP": 1442,
+      "heroesAlive": 0,
+      "heroCount": 1,
+      "enemyHP": 2238,
+      "damage": 5397,
+      "healing": 0,
+      "shield": 0,
+      "control": 0,
+      "frozenShare": 0,
+      "individual": [
+        {
+          "name": "黃忠",
+          "damage": 5397,
+          "healing": 0,
+          "hp": 0
+        }
+      ]
+    },
+    {
+      "scenario": "密集步兵",
+      "formation": "諸葛亮",
+      "kind": "單將支援測試",
+      "disableBonds": false,
+      "members": [
+        "諸葛亮"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "諸葛亮",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [],
+      "seconds": 3.35,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 1,
+      "heroCount": 1,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 33.5,
+      "frozenShare": 0,
+      "individual": [
+        {
+          "name": "諸葛亮",
+          "damage": 7800,
+          "healing": 0,
+          "hp": 1235
+        }
+      ]
+    },
+    {
+      "scenario": "密集步兵",
+      "formation": "徐庶",
+      "kind": "單將支援測試",
+      "disableBonds": false,
+      "members": [
+        "徐庶"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "徐庶",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [],
+      "seconds": 3.6,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 1,
+      "heroCount": 1,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 32,
+      "frozenShare": 0,
+      "individual": [
+        {
+          "name": "徐庶",
+          "damage": 7800,
+          "healing": 0,
+          "hp": 1110
+        }
+      ]
+    },
+    {
+      "scenario": "密集步兵",
+      "formation": "馬超",
+      "kind": "單將支援測試",
+      "disableBonds": false,
+      "members": [
+        "馬超"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "馬超",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [],
+      "seconds": 4.35,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 1,
+      "heroCount": 1,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 0.9,
+      "frozenShare": 0,
+      "individual": [
+        {
+          "name": "馬超",
+          "damage": 7800,
+          "healing": 0,
+          "hp": 1657
+        }
+      ]
+    },
+    {
+      "scenario": "密集步兵",
+      "formation": "桃園結義",
+      "kind": "既有羈絆聯測",
+      "disableBonds": false,
+      "members": [
+        "劉備",
+        "關羽",
+        "張飛"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "劉備",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "關羽",
+          "x": 5,
+          "y": 3
+        },
+        {
+          "name": "張飛",
+          "x": 5,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [
+        "桃園結義",
+        "五虎將"
+      ],
+      "seconds": 4.55,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 3,
+      "heroCount": 3,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 667,
+      "shield": 0,
+      "control": 4.9,
+      "frozenShare": 10.3,
+      "individual": [
+        {
+          "name": "劉備",
+          "damage": 419,
+          "healing": 667,
+          "hp": 1721
+        },
+        {
+          "name": "關羽",
+          "damage": 2608,
+          "healing": 0,
+          "hp": 2042
+        },
+        {
+          "name": "張飛",
+          "damage": 4773,
+          "healing": 0,
+          "hp": 1770
+        }
+      ]
+    },
+    {
+      "scenario": "密集步兵",
+      "formation": "桃園結義（關閉羈絆）",
+      "kind": "既有羈絆聯測",
+      "disableBonds": true,
+      "members": [
+        "劉備",
+        "關羽",
+        "張飛"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "劉備",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "關羽",
+          "x": 5,
+          "y": 3
+        },
+        {
+          "name": "張飛",
+          "x": 5,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [],
+      "seconds": 4.55,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 3,
+      "heroCount": 3,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 667,
+      "shield": 0,
+      "control": 4.9,
+      "frozenShare": 10.3,
+      "individual": [
+        {
+          "name": "劉備",
+          "damage": 419,
+          "healing": 667,
+          "hp": 1705
+        },
+        {
+          "name": "關羽",
+          "damage": 2529,
+          "healing": 0,
+          "hp": 2042
+        },
+        {
+          "name": "張飛",
+          "damage": 4852,
+          "healing": 0,
+          "hp": 1770
+        }
+      ]
+    },
+    {
+      "scenario": "密集步兵",
+      "formation": "五虎將",
+      "kind": "既有羈絆聯測",
+      "disableBonds": false,
+      "members": [
+        "關羽",
+        "張飛",
+        "趙雲",
+        "黃忠",
+        "馬超"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "關羽",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "張飛",
+          "x": 5,
+          "y": 3
+        },
+        {
+          "name": "趙雲",
+          "x": 5,
+          "y": 5
+        },
+        {
+          "name": "黃忠",
+          "x": 6,
+          "y": 4
+        },
+        {
+          "name": "馬超",
+          "x": 6,
+          "y": 3
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [
+        "桃園結義",
+        "五虎將"
+      ],
+      "seconds": 1.3,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 5,
+      "heroCount": 5,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 0,
+      "frozenShare": 0,
+      "individual": [
+        {
+          "name": "關羽",
+          "damage": 0,
+          "healing": 0,
+          "hp": 1709
+        },
+        {
+          "name": "張飛",
+          "damage": 1950,
+          "healing": 0,
+          "hp": 1770
+        },
+        {
+          "name": "趙雲",
+          "damage": 1151,
+          "healing": 0,
+          "hp": 1678
+        },
+        {
+          "name": "黃忠",
+          "damage": 344,
+          "healing": 0,
+          "hp": 1604
+        },
+        {
+          "name": "馬超",
+          "damage": 4355,
+          "healing": 0,
+          "hp": 1709
+        }
+      ]
+    },
+    {
+      "scenario": "密集步兵",
+      "formation": "五虎將（關閉羈絆）",
+      "kind": "既有羈絆聯測",
+      "disableBonds": true,
+      "members": [
+        "關羽",
+        "張飛",
+        "趙雲",
+        "黃忠",
+        "馬超"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "關羽",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "張飛",
+          "x": 5,
+          "y": 3
+        },
+        {
+          "name": "趙雲",
+          "x": 5,
+          "y": 5
+        },
+        {
+          "name": "黃忠",
+          "x": 6,
+          "y": 4
+        },
+        {
+          "name": "馬超",
+          "x": 6,
+          "y": 3
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [],
+      "seconds": 1.6,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 5,
+      "heroCount": 5,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 1.4,
+      "frozenShare": 8.7,
+      "individual": [
+        {
+          "name": "關羽",
+          "damage": 0,
+          "healing": 0,
+          "hp": 1709
+        },
+        {
+          "name": "張飛",
+          "damage": 1690,
+          "healing": 0,
+          "hp": 1770
+        },
+        {
+          "name": "趙雲",
+          "damage": 425,
+          "healing": 0,
+          "hp": 1678
+        },
+        {
+          "name": "黃忠",
+          "damage": 374,
+          "healing": 0,
+          "hp": 1604
+        },
+        {
+          "name": "馬超",
+          "damage": 5311,
+          "healing": 0,
+          "hp": 1709
+        }
+      ]
+    },
+    {
+      "scenario": "密集步兵",
+      "formation": "臥龍元直",
+      "kind": "既有羈絆聯測",
+      "disableBonds": false,
+      "members": [
+        "諸葛亮",
+        "徐庶"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "諸葛亮",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "徐庶",
+          "x": 5,
+          "y": 3
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [
+        "臥龍元直"
+      ],
+      "seconds": 0.35,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 2,
+      "heroCount": 2,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 3.6,
+      "frozenShare": 0,
+      "individual": [
+        {
+          "name": "諸葛亮",
+          "damage": 7800,
+          "healing": 0,
+          "hp": 1235
+        },
+        {
+          "name": "徐庶",
+          "damage": 0,
+          "healing": 0,
+          "hp": 1278
+        }
+      ]
+    },
+    {
+      "scenario": "密集步兵",
+      "formation": "臥龍元直（關閉羈絆）",
+      "kind": "既有羈絆聯測",
+      "disableBonds": true,
+      "members": [
+        "諸葛亮",
+        "徐庶"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "諸葛亮",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "徐庶",
+          "x": 5,
+          "y": 3
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [],
+      "seconds": 3.35,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 2,
+      "heroCount": 2,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 33.4,
+      "frozenShare": 0,
+      "individual": [
+        {
+          "name": "諸葛亮",
+          "damage": 7658,
+          "healing": 0,
+          "hp": 1235
+        },
+        {
+          "name": "徐庶",
+          "damage": 142,
+          "healing": 0,
+          "hp": 1278
+        }
+      ]
+    },
+    {
+      "scenario": "密集步兵",
+      "formation": "三將控場",
+      "kind": "控制接續測試",
+      "disableBonds": false,
+      "members": [
+        "關羽",
+        "張飛",
+        "諸葛亮"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "關羽",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "張飛",
+          "x": 5,
+          "y": 3
+        },
+        {
+          "name": "諸葛亮",
+          "x": 5,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [
+        "桃園結義",
+        "五虎將"
+      ],
+      "seconds": 3.35,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 3,
+      "heroCount": 3,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 27.5,
+      "frozenShare": 3.2,
+      "individual": [
+        {
+          "name": "關羽",
+          "damage": 0,
+          "healing": 0,
+          "hp": 1709
+        },
+        {
+          "name": "張飛",
+          "damage": 1874,
+          "healing": 0,
+          "hp": 1770
+        },
+        {
+          "name": "諸葛亮",
+          "damage": 5926,
+          "healing": 0,
+          "hp": 1235
+        }
+      ]
+    },
+    {
+      "scenario": "密集步兵",
+      "formation": "三將控場（關閉羈絆）",
+      "kind": "控制接續測試",
+      "disableBonds": true,
+      "members": [
+        "關羽",
+        "張飛",
+        "諸葛亮"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "關羽",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "張飛",
+          "x": 5,
+          "y": 3
+        },
+        {
+          "name": "諸葛亮",
+          "x": 5,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [],
+      "seconds": 3.35,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 3,
+      "heroCount": 3,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 27.5,
+      "frozenShare": 3.2,
+      "individual": [
+        {
+          "name": "關羽",
+          "damage": 0,
+          "healing": 0,
+          "hp": 1709
+        },
+        {
+          "name": "張飛",
+          "damage": 1705,
+          "healing": 0,
+          "hp": 1770
+        },
+        {
+          "name": "諸葛亮",
+          "damage": 6095,
+          "healing": 0,
+          "hp": 1235
+        }
+      ]
+    },
+    {
+      "scenario": "快速敵軍",
+      "formation": "劉備",
+      "kind": "單將支援測試",
+      "disableBonds": false,
+      "members": [
+        "劉備"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "劉備",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [],
+      "seconds": 30,
+      "kills": 7,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 1,
+      "heroCount": 1,
+      "enemyHP": 3250,
+      "damage": 4550,
+      "healing": 3002,
+      "shield": 1668,
+      "control": 0,
+      "frozenShare": 0,
+      "individual": [
+        {
+          "name": "劉備",
+          "damage": 4550,
+          "healing": 3002,
+          "hp": 856
+        }
+      ]
+    },
+    {
+      "scenario": "快速敵軍",
+      "formation": "關羽",
+      "kind": "單將支援測試",
+      "disableBonds": false,
+      "members": [
+        "關羽"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "關羽",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [],
+      "seconds": 4.35,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 1,
+      "heroCount": 1,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 4.1,
+      "frozenShare": 13.7,
+      "individual": [
+        {
+          "name": "關羽",
+          "damage": 7800,
+          "healing": 0,
+          "hp": 1634
+        }
+      ]
+    },
+    {
+      "scenario": "快速敵軍",
+      "formation": "張飛",
+      "kind": "單將支援測試",
+      "disableBonds": false,
+      "members": [
+        "張飛"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "張飛",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [],
+      "seconds": 9.05,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 1,
+      "heroCount": 1,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 11.2,
+      "frozenShare": 16,
+      "individual": [
+        {
+          "name": "張飛",
+          "damage": 7800,
+          "healing": 0,
+          "hp": 992
+        }
+      ]
+    },
+    {
+      "scenario": "快速敵軍",
+      "formation": "趙雲",
+      "kind": "單將支援測試",
+      "disableBonds": false,
+      "members": [
+        "趙雲"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "趙雲",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [],
+      "seconds": 12.55,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 1,
+      "heroCount": 1,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 0,
+      "frozenShare": 0,
+      "individual": [
+        {
+          "name": "趙雲",
+          "damage": 7800,
+          "healing": 0,
+          "hp": 167
+        }
+      ]
+    },
+    {
+      "scenario": "快速敵軍",
+      "formation": "黃忠",
+      "kind": "單將支援測試",
+      "disableBonds": false,
+      "members": [
+        "黃忠"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "黃忠",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [],
+      "seconds": 30,
+      "kills": 7,
+      "total": 12,
+      "gateHP": 923,
+      "heroesAlive": 0,
+      "heroCount": 1,
+      "enemyHP": 3118,
+      "damage": 4550,
+      "healing": 0,
+      "shield": 0,
+      "control": 0,
+      "frozenShare": 0,
+      "individual": [
+        {
+          "name": "黃忠",
+          "damage": 4550,
+          "healing": 0,
+          "hp": 0
+        }
+      ]
+    },
+    {
+      "scenario": "快速敵軍",
+      "formation": "諸葛亮",
+      "kind": "單將支援測試",
+      "disableBonds": false,
+      "members": [
+        "諸葛亮"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "諸葛亮",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [],
+      "seconds": 3.35,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 1,
+      "heroCount": 1,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 33.3,
+      "frozenShare": 0,
+      "individual": [
+        {
+          "name": "諸葛亮",
+          "damage": 7800,
+          "healing": 0,
+          "hp": 965
+        }
+      ]
+    },
+    {
+      "scenario": "快速敵軍",
+      "formation": "徐庶",
+      "kind": "單將支援測試",
+      "disableBonds": false,
+      "members": [
+        "徐庶"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "徐庶",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [],
+      "seconds": 3.6,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 1,
+      "heroCount": 1,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 31.8,
+      "frozenShare": 0,
+      "individual": [
+        {
+          "name": "徐庶",
+          "damage": 7800,
+          "healing": 0,
+          "hp": 716
+        }
+      ]
+    },
+    {
+      "scenario": "快速敵軍",
+      "formation": "馬超",
+      "kind": "單將支援測試",
+      "disableBonds": false,
+      "members": [
+        "馬超"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "馬超",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [],
+      "seconds": 3.2,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 1,
+      "heroCount": 1,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 0.3,
+      "frozenShare": 0,
+      "individual": [
+        {
+          "name": "馬超",
+          "damage": 7800,
+          "healing": 0,
+          "hp": 1555
+        }
+      ]
+    },
+    {
+      "scenario": "快速敵軍",
+      "formation": "桃園結義",
+      "kind": "既有羈絆聯測",
+      "disableBonds": false,
+      "members": [
+        "劉備",
+        "關羽",
+        "張飛"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "劉備",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "關羽",
+          "x": 5,
+          "y": 3
+        },
+        {
+          "name": "張飛",
+          "x": 5,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [
+        "桃園結義",
+        "五虎將"
+      ],
+      "seconds": 3.35,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 3,
+      "heroCount": 3,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 334,
+      "shield": 0,
+      "control": 4.3,
+      "frozenShare": 15,
+      "individual": [
+        {
+          "name": "劉備",
+          "damage": 240,
+          "healing": 334,
+          "hp": 1650
+        },
+        {
+          "name": "關羽",
+          "damage": 4866,
+          "healing": 0,
+          "hp": 1709
+        },
+        {
+          "name": "張飛",
+          "damage": 2695,
+          "healing": 0,
+          "hp": 1770
+        }
+      ]
+    },
+    {
+      "scenario": "快速敵軍",
+      "formation": "桃園結義（關閉羈絆）",
+      "kind": "既有羈絆聯測",
+      "disableBonds": true,
+      "members": [
+        "劉備",
+        "關羽",
+        "張飛"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "劉備",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "關羽",
+          "x": 5,
+          "y": 3
+        },
+        {
+          "name": "張飛",
+          "x": 5,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [],
+      "seconds": 3.9,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 3,
+      "heroCount": 3,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 667,
+      "shield": 0,
+      "control": 4.5,
+      "frozenShare": 14.4,
+      "individual": [
+        {
+          "name": "劉備",
+          "damage": 506,
+          "healing": 667,
+          "hp": 1626
+        },
+        {
+          "name": "關羽",
+          "damage": 4965,
+          "healing": 0,
+          "hp": 2042
+        },
+        {
+          "name": "張飛",
+          "damage": 2330,
+          "healing": 0,
+          "hp": 1770
+        }
+      ]
+    },
+    {
+      "scenario": "快速敵軍",
+      "formation": "五虎將",
+      "kind": "既有羈絆聯測",
+      "disableBonds": false,
+      "members": [
+        "關羽",
+        "張飛",
+        "趙雲",
+        "黃忠",
+        "馬超"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "關羽",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "張飛",
+          "x": 5,
+          "y": 3
+        },
+        {
+          "name": "趙雲",
+          "x": 5,
+          "y": 5
+        },
+        {
+          "name": "黃忠",
+          "x": 6,
+          "y": 4
+        },
+        {
+          "name": "馬超",
+          "x": 6,
+          "y": 3
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [
+        "桃園結義",
+        "五虎將"
+      ],
+      "seconds": 1.2,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 5,
+      "heroCount": 5,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 0,
+      "frozenShare": 0,
+      "individual": [
+        {
+          "name": "關羽",
+          "damage": 0,
+          "healing": 0,
+          "hp": 1709
+        },
+        {
+          "name": "張飛",
+          "damage": 2082,
+          "healing": 0,
+          "hp": 1770
+        },
+        {
+          "name": "趙雲",
+          "damage": 1503,
+          "healing": 0,
+          "hp": 1678
+        },
+        {
+          "name": "黃忠",
+          "damage": 756,
+          "healing": 0,
+          "hp": 1604
+        },
+        {
+          "name": "馬超",
+          "damage": 3459,
+          "healing": 0,
+          "hp": 1709
+        }
+      ]
+    },
+    {
+      "scenario": "快速敵軍",
+      "formation": "五虎將（關閉羈絆）",
+      "kind": "既有羈絆聯測",
+      "disableBonds": true,
+      "members": [
+        "關羽",
+        "張飛",
+        "趙雲",
+        "黃忠",
+        "馬超"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "關羽",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "張飛",
+          "x": 5,
+          "y": 3
+        },
+        {
+          "name": "趙雲",
+          "x": 5,
+          "y": 5
+        },
+        {
+          "name": "黃忠",
+          "x": 6,
+          "y": 4
+        },
+        {
+          "name": "馬超",
+          "x": 6,
+          "y": 3
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [],
+      "seconds": 2.05,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 5,
+      "heroCount": 5,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 1.8,
+      "frozenShare": 11.9,
+      "individual": [
+        {
+          "name": "關羽",
+          "damage": 0,
+          "healing": 0,
+          "hp": 1709
+        },
+        {
+          "name": "張飛",
+          "damage": 2012,
+          "healing": 0,
+          "hp": 1770
+        },
+        {
+          "name": "趙雲",
+          "damage": 706,
+          "healing": 0,
+          "hp": 1678
+        },
+        {
+          "name": "黃忠",
+          "damage": 374,
+          "healing": 0,
+          "hp": 1604
+        },
+        {
+          "name": "馬超",
+          "damage": 4707,
+          "healing": 0,
+          "hp": 1709
+        }
+      ]
+    },
+    {
+      "scenario": "快速敵軍",
+      "formation": "臥龍元直",
+      "kind": "既有羈絆聯測",
+      "disableBonds": false,
+      "members": [
+        "諸葛亮",
+        "徐庶"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "諸葛亮",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "徐庶",
+          "x": 5,
+          "y": 3
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [
+        "臥龍元直"
+      ],
+      "seconds": 0.35,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 2,
+      "heroCount": 2,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 3.5,
+      "frozenShare": 0,
+      "individual": [
+        {
+          "name": "諸葛亮",
+          "damage": 2264,
+          "healing": 0,
+          "hp": 1235
+        },
+        {
+          "name": "徐庶",
+          "damage": 5536,
+          "healing": 0,
+          "hp": 1278
+        }
+      ]
+    },
+    {
+      "scenario": "快速敵軍",
+      "formation": "臥龍元直（關閉羈絆）",
+      "kind": "既有羈絆聯測",
+      "disableBonds": true,
+      "members": [
+        "諸葛亮",
+        "徐庶"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "諸葛亮",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "徐庶",
+          "x": 5,
+          "y": 3
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [],
+      "seconds": 0.35,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 2,
+      "heroCount": 2,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 3.5,
+      "frozenShare": 0,
+      "individual": [
+        {
+          "name": "諸葛亮",
+          "damage": 2901,
+          "healing": 0,
+          "hp": 1235
+        },
+        {
+          "name": "徐庶",
+          "damage": 4899,
+          "healing": 0,
+          "hp": 1278
+        }
+      ]
+    },
+    {
+      "scenario": "快速敵軍",
+      "formation": "三將控場",
+      "kind": "控制接續測試",
+      "disableBonds": false,
+      "members": [
+        "關羽",
+        "張飛",
+        "諸葛亮"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "關羽",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "張飛",
+          "x": 5,
+          "y": 3
+        },
+        {
+          "name": "諸葛亮",
+          "x": 5,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [
+        "桃園結義",
+        "五虎將"
+      ],
+      "seconds": 2.1,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 3,
+      "heroCount": 3,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 17.6,
+      "frozenShare": 5,
+      "individual": [
+        {
+          "name": "關羽",
+          "damage": 332,
+          "healing": 0,
+          "hp": 1709
+        },
+        {
+          "name": "張飛",
+          "damage": 1906,
+          "healing": 0,
+          "hp": 1770
+        },
+        {
+          "name": "諸葛亮",
+          "damage": 5562,
+          "healing": 0,
+          "hp": 1235
+        }
+      ]
+    },
+    {
+      "scenario": "快速敵軍",
+      "formation": "三將控場（關閉羈絆）",
+      "kind": "控制接續測試",
+      "disableBonds": true,
+      "members": [
+        "關羽",
+        "張飛",
+        "諸葛亮"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "關羽",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "張飛",
+          "x": 5,
+          "y": 3
+        },
+        {
+          "name": "諸葛亮",
+          "x": 5,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [],
+      "seconds": 2.1,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 3,
+      "heroCount": 3,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 17.6,
+      "frozenShare": 5,
+      "individual": [
+        {
+          "name": "關羽",
+          "damage": 332,
+          "healing": 0,
+          "hp": 1709
+        },
+        {
+          "name": "張飛",
+          "damage": 1737,
+          "healing": 0,
+          "hp": 1770
+        },
+        {
+          "name": "諸葛亮",
+          "damage": 5731,
+          "healing": 0,
+          "hp": 1235
+        }
+      ]
+    },
+    {
+      "scenario": "高血量重兵",
+      "formation": "劉備",
+      "kind": "單將支援測試",
+      "disableBonds": false,
+      "members": [
+        "劉備"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "劉備",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [],
+      "seconds": 30,
+      "kills": 0,
+      "total": 4,
+      "gateHP": 3000,
+      "heroesAlive": 1,
+      "heroCount": 1,
+      "enemyHP": 11836,
+      "damage": 4164,
+      "healing": 2798,
+      "shield": 1334,
+      "control": 0,
+      "frozenShare": 0,
+      "individual": [
+        {
+          "name": "劉備",
+          "damage": 4164,
+          "healing": 2798,
+          "hp": 1141
+        }
+      ]
+    },
+    {
+      "scenario": "高血量重兵",
+      "formation": "關羽",
+      "kind": "單將支援測試",
+      "disableBonds": false,
+      "members": [
+        "關羽"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "關羽",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [],
+      "seconds": 30,
+      "kills": 2,
+      "total": 4,
+      "gateHP": 3000,
+      "heroesAlive": 1,
+      "heroCount": 1,
+      "enemyHP": 290,
+      "damage": 15710,
+      "healing": 0,
+      "shield": 0,
+      "control": 25,
+      "frozenShare": 22.7,
+      "individual": [
+        {
+          "name": "關羽",
+          "damage": 15710,
+          "healing": 0,
+          "hp": 1709
+        }
+      ]
+    },
+    {
+      "scenario": "高血量重兵",
+      "formation": "張飛",
+      "kind": "單將支援測試",
+      "disableBonds": false,
+      "members": [
+        "張飛"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "張飛",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [],
+      "seconds": 30,
+      "kills": 1,
+      "total": 4,
+      "gateHP": 2377,
+      "heroesAlive": 0,
+      "heroCount": 1,
+      "enemyHP": 5007,
+      "damage": 10892,
+      "healing": 0,
+      "shield": 0,
+      "control": 22.4,
+      "frozenShare": 20.7,
+      "individual": [
+        {
+          "name": "張飛",
+          "damage": 10892,
+          "healing": 0,
+          "hp": 0
+        }
+      ]
+    },
+    {
+      "scenario": "高血量重兵",
+      "formation": "趙雲",
+      "kind": "單將支援測試",
+      "disableBonds": false,
+      "members": [
+        "趙雲"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "趙雲",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [],
+      "seconds": 30,
+      "kills": 0,
+      "total": 4,
+      "gateHP": 1062,
+      "heroesAlive": 0,
+      "heroCount": 1,
+      "enemyHP": 7076,
+      "damage": 8873,
+      "healing": 0,
+      "shield": 0,
+      "control": 0,
+      "frozenShare": 0,
+      "individual": [
+        {
+          "name": "趙雲",
+          "damage": 8873,
+          "healing": 0,
+          "hp": 0
+        }
+      ]
+    },
+    {
+      "scenario": "高血量重兵",
+      "formation": "黃忠",
+      "kind": "單將支援測試",
+      "disableBonds": false,
+      "members": [
+        "黃忠"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "黃忠",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [],
+      "seconds": 30,
+      "kills": 0,
+      "total": 4,
+      "gateHP": 785,
+      "heroesAlive": 0,
+      "heroCount": 1,
+      "enemyHP": 9879,
+      "damage": 6070,
+      "healing": 0,
+      "shield": 0,
+      "control": 0,
+      "frozenShare": 0,
+      "individual": [
+        {
+          "name": "黃忠",
+          "damage": 6070,
+          "healing": 0,
+          "hp": 0
+        }
+      ]
+    },
+    {
+      "scenario": "高血量重兵",
+      "formation": "諸葛亮",
+      "kind": "單將支援測試",
+      "disableBonds": false,
+      "members": [
+        "諸葛亮"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "諸葛亮",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [],
+      "seconds": 12.1,
+      "kills": 4,
+      "total": 4,
+      "gateHP": 3000,
+      "heroesAlive": 1,
+      "heroCount": 1,
+      "enemyHP": 0,
+      "damage": 16000,
+      "healing": 0,
+      "shield": 0,
+      "control": 36.4,
+      "frozenShare": 0,
+      "individual": [
+        {
+          "name": "諸葛亮",
+          "damage": 16000,
+          "healing": 0,
+          "hp": 262
+        }
+      ]
+    },
+    {
+      "scenario": "高血量重兵",
+      "formation": "徐庶",
+      "kind": "單將支援測試",
+      "disableBonds": false,
+      "members": [
+        "徐庶"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "徐庶",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [],
+      "seconds": 30,
+      "kills": 0,
+      "total": 4,
+      "gateHP": 231,
+      "heroesAlive": 0,
+      "heroCount": 1,
+      "enemyHP": 9365,
+      "damage": 6584,
+      "healing": 0,
+      "shield": 0,
+      "control": 47.2,
+      "frozenShare": 0,
+      "individual": [
+        {
+          "name": "徐庶",
+          "damage": 6584,
+          "healing": 0,
+          "hp": 0
+        }
+      ]
+    },
+    {
+      "scenario": "高血量重兵",
+      "formation": "馬超",
+      "kind": "單將支援測試",
+      "disableBonds": false,
+      "members": [
+        "馬超"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "馬超",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [],
+      "seconds": 25.55,
+      "kills": 4,
+      "total": 4,
+      "gateHP": 3000,
+      "heroesAlive": 1,
+      "heroCount": 1,
+      "enemyHP": 0,
+      "damage": 16000,
+      "healing": 0,
+      "shield": 0,
+      "control": 12,
+      "frozenShare": 0,
+      "individual": [
+        {
+          "name": "馬超",
+          "damage": 16000,
+          "healing": 0,
+          "hp": 1452
+        }
+      ]
+    },
+    {
+      "scenario": "高血量重兵",
+      "formation": "桃園結義",
+      "kind": "既有羈絆聯測",
+      "disableBonds": false,
+      "members": [
+        "劉備",
+        "關羽",
+        "張飛"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "劉備",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "關羽",
+          "x": 5,
+          "y": 3
+        },
+        {
+          "name": "張飛",
+          "x": 5,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [
+        "桃園結義",
+        "五虎將"
+      ],
+      "seconds": 17.35,
+      "kills": 4,
+      "total": 4,
+      "gateHP": 3000,
+      "heroesAlive": 3,
+      "heroCount": 3,
+      "enemyHP": 0,
+      "damage": 16000,
+      "healing": 1464,
+      "shield": 0,
+      "control": 21.5,
+      "frozenShare": 31.8,
+      "individual": [
+        {
+          "name": "劉備",
+          "damage": 1281,
+          "healing": 1464,
+          "hp": 1626
+        },
+        {
+          "name": "關羽",
+          "damage": 5686,
+          "healing": 0,
+          "hp": 2042
+        },
+        {
+          "name": "張飛",
+          "damage": 9033,
+          "healing": 0,
+          "hp": 2103
+        }
+      ]
+    },
+    {
+      "scenario": "高血量重兵",
+      "formation": "桃園結義（關閉羈絆）",
+      "kind": "既有羈絆聯測",
+      "disableBonds": true,
+      "members": [
+        "劉備",
+        "關羽",
+        "張飛"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "劉備",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "關羽",
+          "x": 5,
+          "y": 3
+        },
+        {
+          "name": "張飛",
+          "x": 5,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [],
+      "seconds": 20.05,
+      "kills": 4,
+      "total": 4,
+      "gateHP": 3000,
+      "heroesAlive": 3,
+      "heroCount": 3,
+      "enemyHP": 0,
+      "damage": 16000,
+      "healing": 1798,
+      "shield": 0,
+      "control": 25.8,
+      "frozenShare": 32.5,
+      "individual": [
+        {
+          "name": "劉備",
+          "damage": 1275,
+          "healing": 1798,
+          "hp": 1631
+        },
+        {
+          "name": "關羽",
+          "damage": 5249,
+          "healing": 0,
+          "hp": 2042
+        },
+        {
+          "name": "張飛",
+          "damage": 9476,
+          "healing": 0,
+          "hp": 2103
+        }
+      ]
+    },
+    {
+      "scenario": "高血量重兵",
+      "formation": "五虎將",
+      "kind": "既有羈絆聯測",
+      "disableBonds": false,
+      "members": [
+        "關羽",
+        "張飛",
+        "趙雲",
+        "黃忠",
+        "馬超"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "關羽",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "張飛",
+          "x": 5,
+          "y": 3
+        },
+        {
+          "name": "趙雲",
+          "x": 5,
+          "y": 5
+        },
+        {
+          "name": "黃忠",
+          "x": 6,
+          "y": 4
+        },
+        {
+          "name": "馬超",
+          "x": 6,
+          "y": 3
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [
+        "桃園結義",
+        "五虎將"
+      ],
+      "seconds": 15.55,
+      "kills": 4,
+      "total": 4,
+      "gateHP": 3000,
+      "heroesAlive": 5,
+      "heroCount": 5,
+      "enemyHP": 0,
+      "damage": 16000,
+      "healing": 0,
+      "shield": 0,
+      "control": 5.6,
+      "frozenShare": 13.3,
+      "individual": [
+        {
+          "name": "關羽",
+          "damage": 0,
+          "healing": 0,
+          "hp": 1709
+        },
+        {
+          "name": "張飛",
+          "damage": 2692,
+          "healing": 0,
+          "hp": 1770
+        },
+        {
+          "name": "趙雲",
+          "damage": 1925,
+          "healing": 0,
+          "hp": 1678
+        },
+        {
+          "name": "黃忠",
+          "damage": 4728,
+          "healing": 0,
+          "hp": 1604
+        },
+        {
+          "name": "馬超",
+          "damage": 6655,
+          "healing": 0,
+          "hp": 1709
+        }
+      ]
+    },
+    {
+      "scenario": "高血量重兵",
+      "formation": "五虎將（關閉羈絆）",
+      "kind": "既有羈絆聯測",
+      "disableBonds": true,
+      "members": [
+        "關羽",
+        "張飛",
+        "趙雲",
+        "黃忠",
+        "馬超"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "關羽",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "張飛",
+          "x": 5,
+          "y": 3
+        },
+        {
+          "name": "趙雲",
+          "x": 5,
+          "y": 5
+        },
+        {
+          "name": "黃忠",
+          "x": 6,
+          "y": 4
+        },
+        {
+          "name": "馬超",
+          "x": 6,
+          "y": 3
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [],
+      "seconds": 19.1,
+      "kills": 4,
+      "total": 4,
+      "gateHP": 3000,
+      "heroesAlive": 5,
+      "heroCount": 5,
+      "enemyHP": 0,
+      "damage": 16000,
+      "healing": 0,
+      "shield": 0,
+      "control": 7,
+      "frozenShare": 12.6,
+      "individual": [
+        {
+          "name": "關羽",
+          "damage": 0,
+          "healing": 0,
+          "hp": 1709
+        },
+        {
+          "name": "張飛",
+          "damage": 2154,
+          "healing": 0,
+          "hp": 1770
+        },
+        {
+          "name": "趙雲",
+          "damage": 1540,
+          "healing": 0,
+          "hp": 1678
+        },
+        {
+          "name": "黃忠",
+          "damage": 4889,
+          "healing": 0,
+          "hp": 1604
+        },
+        {
+          "name": "馬超",
+          "damage": 7418,
+          "healing": 0,
+          "hp": 1709
+        }
+      ]
+    },
+    {
+      "scenario": "高血量重兵",
+      "formation": "臥龍元直",
+      "kind": "既有羈絆聯測",
+      "disableBonds": false,
+      "members": [
+        "諸葛亮",
+        "徐庶"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "諸葛亮",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "徐庶",
+          "x": 5,
+          "y": 3
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [
+        "臥龍元直"
+      ],
+      "seconds": 8.1,
+      "kills": 4,
+      "total": 4,
+      "gateHP": 3000,
+      "heroesAlive": 2,
+      "heroCount": 2,
+      "enemyHP": 0,
+      "damage": 16000,
+      "healing": 0,
+      "shield": 0,
+      "control": 24.1,
+      "frozenShare": 0,
+      "individual": [
+        {
+          "name": "諸葛亮",
+          "damage": 10359,
+          "healing": 0,
+          "hp": 1073
+        },
+        {
+          "name": "徐庶",
+          "damage": 5641,
+          "healing": 0,
+          "hp": 1278
+        }
+      ]
+    },
+    {
+      "scenario": "高血量重兵",
+      "formation": "臥龍元直（關閉羈絆）",
+      "kind": "既有羈絆聯測",
+      "disableBonds": true,
+      "members": [
+        "諸葛亮",
+        "徐庶"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "諸葛亮",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "徐庶",
+          "x": 5,
+          "y": 3
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [],
+      "seconds": 8.15,
+      "kills": 4,
+      "total": 4,
+      "gateHP": 3000,
+      "heroesAlive": 2,
+      "heroCount": 2,
+      "enemyHP": 0,
+      "damage": 16000,
+      "healing": 0,
+      "shield": 0,
+      "control": 26.6,
+      "frozenShare": 0,
+      "individual": [
+        {
+          "name": "諸葛亮",
+          "damage": 10921,
+          "healing": 0,
+          "hp": 965
+        },
+        {
+          "name": "徐庶",
+          "damage": 5079,
+          "healing": 0,
+          "hp": 1278
+        }
+      ]
+    },
+    {
+      "scenario": "高血量重兵",
+      "formation": "三將控場",
+      "kind": "控制接續測試",
+      "disableBonds": false,
+      "members": [
+        "關羽",
+        "張飛",
+        "諸葛亮"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "關羽",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "張飛",
+          "x": 5,
+          "y": 3
+        },
+        {
+          "name": "諸葛亮",
+          "x": 5,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [
+        "桃園結義",
+        "五虎將"
+      ],
+      "seconds": 8.75,
+      "kills": 4,
+      "total": 4,
+      "gateHP": 3000,
+      "heroesAlive": 3,
+      "heroCount": 3,
+      "enemyHP": 0,
+      "damage": 16000,
+      "healing": 0,
+      "shield": 0,
+      "control": 27.5,
+      "frozenShare": 26.6,
+      "individual": [
+        {
+          "name": "關羽",
+          "damage": 2274,
+          "healing": 0,
+          "hp": 1709
+        },
+        {
+          "name": "張飛",
+          "damage": 2606,
+          "healing": 0,
+          "hp": 1770
+        },
+        {
+          "name": "諸葛亮",
+          "damage": 11120,
+          "healing": 0,
+          "hp": 1235
+        }
+      ]
+    },
+    {
+      "scenario": "高血量重兵",
+      "formation": "三將控場（關閉羈絆）",
+      "kind": "控制接續測試",
+      "disableBonds": true,
+      "members": [
+        "關羽",
+        "張飛",
+        "諸葛亮"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "關羽",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "張飛",
+          "x": 5,
+          "y": 3
+        },
+        {
+          "name": "諸葛亮",
+          "x": 5,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [],
+      "seconds": 8.75,
+      "kills": 4,
+      "total": 4,
+      "gateHP": 3000,
+      "heroesAlive": 3,
+      "heroCount": 3,
+      "enemyHP": 0,
+      "damage": 16000,
+      "healing": 0,
+      "shield": 0,
+      "control": 28.6,
+      "frozenShare": 26,
+      "individual": [
+        {
+          "name": "關羽",
+          "damage": 2161,
+          "healing": 0,
+          "hp": 1709
+        },
+        {
+          "name": "張飛",
+          "damage": 2369,
+          "healing": 0,
+          "hp": 1770
+        },
+        {
+          "name": "諸葛亮",
+          "damage": 11470,
+          "healing": 0,
+          "hp": 1235
+        }
+      ]
+    },
+    {
+      "scenario": "彎道密集",
+      "formation": "劉備",
+      "kind": "單將支援測試",
+      "disableBonds": false,
+      "members": [
+        "劉備"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 2
+        },
+        {
+          "x": 1,
+          "y": 2
+        },
+        {
+          "x": 2,
+          "y": 2
+        },
+        {
+          "x": 3,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 3
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 5
+        },
+        {
+          "x": 4,
+          "y": 6
+        },
+        {
+          "x": 5,
+          "y": 6
+        },
+        {
+          "x": 6,
+          "y": 6
+        },
+        {
+          "x": 7,
+          "y": 6
+        },
+        {
+          "x": 8,
+          "y": 6
+        },
+        {
+          "x": 9,
+          "y": 6
+        }
+      ],
+      "placements": [
+        {
+          "name": "劉備",
+          "x": 4,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 6
+        }
+      ],
+      "bonds": [],
+      "seconds": 30,
+      "kills": 6,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 1,
+      "heroCount": 1,
+      "enemyHP": 3481,
+      "damage": 4319,
+      "healing": 2798,
+      "shield": 1668,
+      "control": 0,
+      "frozenShare": 0,
+      "individual": [
+        {
+          "name": "劉備",
+          "damage": 4319,
+          "healing": 2798,
+          "hp": 840
+        }
+      ]
+    },
+    {
+      "scenario": "彎道密集",
+      "formation": "關羽",
+      "kind": "單將支援測試",
+      "disableBonds": false,
+      "members": [
+        "關羽"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 2
+        },
+        {
+          "x": 1,
+          "y": 2
+        },
+        {
+          "x": 2,
+          "y": 2
+        },
+        {
+          "x": 3,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 3
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 5
+        },
+        {
+          "x": 4,
+          "y": 6
+        },
+        {
+          "x": 5,
+          "y": 6
+        },
+        {
+          "x": 6,
+          "y": 6
+        },
+        {
+          "x": 7,
+          "y": 6
+        },
+        {
+          "x": 8,
+          "y": 6
+        },
+        {
+          "x": 9,
+          "y": 6
+        }
+      ],
+      "placements": [
+        {
+          "name": "關羽",
+          "x": 4,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 6
+        }
+      ],
+      "bonds": [],
+      "seconds": 7.55,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 1,
+      "heroCount": 1,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 4,
+      "frozenShare": 3.8,
+      "individual": [
+        {
+          "name": "關羽",
+          "damage": 7800,
+          "healing": 0,
+          "hp": 1534
+        }
+      ]
+    },
+    {
+      "scenario": "彎道密集",
+      "formation": "張飛",
+      "kind": "單將支援測試",
+      "disableBonds": false,
+      "members": [
+        "張飛"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 2
+        },
+        {
+          "x": 1,
+          "y": 2
+        },
+        {
+          "x": 2,
+          "y": 2
+        },
+        {
+          "x": 3,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 3
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 5
+        },
+        {
+          "x": 4,
+          "y": 6
+        },
+        {
+          "x": 5,
+          "y": 6
+        },
+        {
+          "x": 6,
+          "y": 6
+        },
+        {
+          "x": 7,
+          "y": 6
+        },
+        {
+          "x": 8,
+          "y": 6
+        },
+        {
+          "x": 9,
+          "y": 6
+        }
+      ],
+      "placements": [
+        {
+          "name": "張飛",
+          "x": 4,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 6
+        }
+      ],
+      "bonds": [],
+      "seconds": 9.05,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 1,
+      "heroCount": 1,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 14.7,
+      "frozenShare": 21.7,
+      "individual": [
+        {
+          "name": "張飛",
+          "damage": 7800,
+          "healing": 0,
+          "hp": 1553
+        }
+      ]
+    },
+    {
+      "scenario": "彎道密集",
+      "formation": "趙雲",
+      "kind": "單將支援測試",
+      "disableBonds": false,
+      "members": [
+        "趙雲"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 2
+        },
+        {
+          "x": 1,
+          "y": 2
+        },
+        {
+          "x": 2,
+          "y": 2
+        },
+        {
+          "x": 3,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 3
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 5
+        },
+        {
+          "x": 4,
+          "y": 6
+        },
+        {
+          "x": 5,
+          "y": 6
+        },
+        {
+          "x": 6,
+          "y": 6
+        },
+        {
+          "x": 7,
+          "y": 6
+        },
+        {
+          "x": 8,
+          "y": 6
+        },
+        {
+          "x": 9,
+          "y": 6
+        }
+      ],
+      "placements": [
+        {
+          "name": "趙雲",
+          "x": 4,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 6
+        }
+      ],
+      "bonds": [],
+      "seconds": 14,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 1,
+      "heroCount": 1,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 0,
+      "frozenShare": 0,
+      "individual": [
+        {
+          "name": "趙雲",
+          "damage": 7800,
+          "healing": 0,
+          "hp": 705
+        }
+      ]
+    },
+    {
+      "scenario": "彎道密集",
+      "formation": "黃忠",
+      "kind": "單將支援測試",
+      "disableBonds": false,
+      "members": [
+        "黃忠"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 2
+        },
+        {
+          "x": 1,
+          "y": 2
+        },
+        {
+          "x": 2,
+          "y": 2
+        },
+        {
+          "x": 3,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 3
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 5
+        },
+        {
+          "x": 4,
+          "y": 6
+        },
+        {
+          "x": 5,
+          "y": 6
+        },
+        {
+          "x": 6,
+          "y": 6
+        },
+        {
+          "x": 7,
+          "y": 6
+        },
+        {
+          "x": 8,
+          "y": 6
+        },
+        {
+          "x": 9,
+          "y": 6
+        }
+      ],
+      "placements": [
+        {
+          "name": "黃忠",
+          "x": 4,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 6
+        }
+      ],
+      "bonds": [],
+      "seconds": 18.6,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 1,
+      "heroCount": 1,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 0,
+      "frozenShare": 0,
+      "individual": [
+        {
+          "name": "黃忠",
+          "damage": 7800,
+          "healing": 0,
+          "hp": 128
+        }
+      ]
+    },
+    {
+      "scenario": "彎道密集",
+      "formation": "諸葛亮",
+      "kind": "單將支援測試",
+      "disableBonds": false,
+      "members": [
+        "諸葛亮"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 2
+        },
+        {
+          "x": 1,
+          "y": 2
+        },
+        {
+          "x": 2,
+          "y": 2
+        },
+        {
+          "x": 3,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 3
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 5
+        },
+        {
+          "x": 4,
+          "y": 6
+        },
+        {
+          "x": 5,
+          "y": 6
+        },
+        {
+          "x": 6,
+          "y": 6
+        },
+        {
+          "x": 7,
+          "y": 6
+        },
+        {
+          "x": 8,
+          "y": 6
+        },
+        {
+          "x": 9,
+          "y": 6
+        }
+      ],
+      "placements": [
+        {
+          "name": "諸葛亮",
+          "x": 4,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 6
+        }
+      ],
+      "bonds": [],
+      "seconds": 3.3,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 1,
+      "heroCount": 1,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 33.1,
+      "frozenShare": 0,
+      "individual": [
+        {
+          "name": "諸葛亮",
+          "damage": 7800,
+          "healing": 0,
+          "hp": 1235
+        }
+      ]
+    },
+    {
+      "scenario": "彎道密集",
+      "formation": "徐庶",
+      "kind": "單將支援測試",
+      "disableBonds": false,
+      "members": [
+        "徐庶"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 2
+        },
+        {
+          "x": 1,
+          "y": 2
+        },
+        {
+          "x": 2,
+          "y": 2
+        },
+        {
+          "x": 3,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 3
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 5
+        },
+        {
+          "x": 4,
+          "y": 6
+        },
+        {
+          "x": 5,
+          "y": 6
+        },
+        {
+          "x": 6,
+          "y": 6
+        },
+        {
+          "x": 7,
+          "y": 6
+        },
+        {
+          "x": 8,
+          "y": 6
+        },
+        {
+          "x": 9,
+          "y": 6
+        }
+      ],
+      "placements": [
+        {
+          "name": "徐庶",
+          "x": 4,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 6
+        }
+      ],
+      "bonds": [],
+      "seconds": 3.65,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 1,
+      "heroCount": 1,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 32.6,
+      "frozenShare": 0,
+      "individual": [
+        {
+          "name": "徐庶",
+          "damage": 7800,
+          "healing": 0,
+          "hp": 1278
+        }
+      ]
+    },
+    {
+      "scenario": "彎道密集",
+      "formation": "馬超",
+      "kind": "單將支援測試",
+      "disableBonds": false,
+      "members": [
+        "馬超"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 2
+        },
+        {
+          "x": 1,
+          "y": 2
+        },
+        {
+          "x": 2,
+          "y": 2
+        },
+        {
+          "x": 3,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 3
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 5
+        },
+        {
+          "x": 4,
+          "y": 6
+        },
+        {
+          "x": 5,
+          "y": 6
+        },
+        {
+          "x": 6,
+          "y": 6
+        },
+        {
+          "x": 7,
+          "y": 6
+        },
+        {
+          "x": 8,
+          "y": 6
+        },
+        {
+          "x": 9,
+          "y": 6
+        }
+      ],
+      "placements": [
+        {
+          "name": "馬超",
+          "x": 4,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 6
+        }
+      ],
+      "bonds": [],
+      "seconds": 5.25,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 1,
+      "heroCount": 1,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 0.9,
+      "frozenShare": 0,
+      "individual": [
+        {
+          "name": "馬超",
+          "damage": 7800,
+          "healing": 0,
+          "hp": 1657
+        }
+      ]
+    },
+    {
+      "scenario": "彎道密集",
+      "formation": "桃園結義",
+      "kind": "既有羈絆聯測",
+      "disableBonds": false,
+      "members": [
+        "劉備",
+        "關羽",
+        "張飛"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 2
+        },
+        {
+          "x": 1,
+          "y": 2
+        },
+        {
+          "x": 2,
+          "y": 2
+        },
+        {
+          "x": 3,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 3
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 5
+        },
+        {
+          "x": 4,
+          "y": 6
+        },
+        {
+          "x": 5,
+          "y": 6
+        },
+        {
+          "x": 6,
+          "y": 6
+        },
+        {
+          "x": 7,
+          "y": 6
+        },
+        {
+          "x": 8,
+          "y": 6
+        },
+        {
+          "x": 9,
+          "y": 6
+        }
+      ],
+      "placements": [
+        {
+          "name": "劉備",
+          "x": 4,
+          "y": 4
+        },
+        {
+          "name": "關羽",
+          "x": 3,
+          "y": 4
+        },
+        {
+          "name": "張飛",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 6
+        }
+      ],
+      "bonds": [
+        "桃園結義",
+        "五虎將"
+      ],
+      "seconds": 5.3,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 3,
+      "heroCount": 3,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 667,
+      "shield": 0,
+      "control": 4.4,
+      "frozenShare": 7.5,
+      "individual": [
+        {
+          "name": "劉備",
+          "damage": 209,
+          "healing": 667,
+          "hp": 1792
+        },
+        {
+          "name": "關羽",
+          "damage": 2608,
+          "healing": 0,
+          "hp": 2042
+        },
+        {
+          "name": "張飛",
+          "damage": 4983,
+          "healing": 0,
+          "hp": 1770
+        }
+      ]
+    },
+    {
+      "scenario": "彎道密集",
+      "formation": "桃園結義（關閉羈絆）",
+      "kind": "既有羈絆聯測",
+      "disableBonds": true,
+      "members": [
+        "劉備",
+        "關羽",
+        "張飛"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 2
+        },
+        {
+          "x": 1,
+          "y": 2
+        },
+        {
+          "x": 2,
+          "y": 2
+        },
+        {
+          "x": 3,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 3
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 5
+        },
+        {
+          "x": 4,
+          "y": 6
+        },
+        {
+          "x": 5,
+          "y": 6
+        },
+        {
+          "x": 6,
+          "y": 6
+        },
+        {
+          "x": 7,
+          "y": 6
+        },
+        {
+          "x": 8,
+          "y": 6
+        },
+        {
+          "x": 9,
+          "y": 6
+        }
+      ],
+      "placements": [
+        {
+          "name": "劉備",
+          "x": 4,
+          "y": 4
+        },
+        {
+          "name": "關羽",
+          "x": 3,
+          "y": 4
+        },
+        {
+          "name": "張飛",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 6
+        }
+      ],
+      "bonds": [],
+      "seconds": 5.3,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 3,
+      "heroCount": 3,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 667,
+      "shield": 0,
+      "control": 4.4,
+      "frozenShare": 7.5,
+      "individual": [
+        {
+          "name": "劉備",
+          "damage": 209,
+          "healing": 667,
+          "hp": 1785
+        },
+        {
+          "name": "關羽",
+          "damage": 2529,
+          "healing": 0,
+          "hp": 2042
+        },
+        {
+          "name": "張飛",
+          "damage": 5061,
+          "healing": 0,
+          "hp": 1770
+        }
+      ]
+    },
+    {
+      "scenario": "彎道密集",
+      "formation": "五虎將",
+      "kind": "既有羈絆聯測",
+      "disableBonds": false,
+      "members": [
+        "關羽",
+        "張飛",
+        "趙雲",
+        "黃忠",
+        "馬超"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 2
+        },
+        {
+          "x": 1,
+          "y": 2
+        },
+        {
+          "x": 2,
+          "y": 2
+        },
+        {
+          "x": 3,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 3
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 5
+        },
+        {
+          "x": 4,
+          "y": 6
+        },
+        {
+          "x": 5,
+          "y": 6
+        },
+        {
+          "x": 6,
+          "y": 6
+        },
+        {
+          "x": 7,
+          "y": 6
+        },
+        {
+          "x": 8,
+          "y": 6
+        },
+        {
+          "x": 9,
+          "y": 6
+        }
+      ],
+      "placements": [
+        {
+          "name": "關羽",
+          "x": 4,
+          "y": 4
+        },
+        {
+          "name": "張飛",
+          "x": 3,
+          "y": 4
+        },
+        {
+          "name": "趙雲",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "黃忠",
+          "x": 4,
+          "y": 5
+        },
+        {
+          "name": "馬超",
+          "x": 5,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 6
+        }
+      ],
+      "bonds": [
+        "桃園結義",
+        "五虎將"
+      ],
+      "seconds": 0.05,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 5,
+      "heroCount": 5,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 0,
+      "frozenShare": 0,
+      "individual": [
+        {
+          "name": "關羽",
+          "damage": 0,
+          "healing": 0,
+          "hp": 1709
+        },
+        {
+          "name": "張飛",
+          "damage": 7800,
+          "healing": 0,
+          "hp": 1770
+        },
+        {
+          "name": "趙雲",
+          "damage": 0,
+          "healing": 0,
+          "hp": 1678
+        },
+        {
+          "name": "黃忠",
+          "damage": 0,
+          "healing": 0,
+          "hp": 1604
+        },
+        {
+          "name": "馬超",
+          "damage": 0,
+          "healing": 0,
+          "hp": 1709
+        }
+      ]
+    },
+    {
+      "scenario": "彎道密集",
+      "formation": "五虎將（關閉羈絆）",
+      "kind": "既有羈絆聯測",
+      "disableBonds": true,
+      "members": [
+        "關羽",
+        "張飛",
+        "趙雲",
+        "黃忠",
+        "馬超"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 2
+        },
+        {
+          "x": 1,
+          "y": 2
+        },
+        {
+          "x": 2,
+          "y": 2
+        },
+        {
+          "x": 3,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 3
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 5
+        },
+        {
+          "x": 4,
+          "y": 6
+        },
+        {
+          "x": 5,
+          "y": 6
+        },
+        {
+          "x": 6,
+          "y": 6
+        },
+        {
+          "x": 7,
+          "y": 6
+        },
+        {
+          "x": 8,
+          "y": 6
+        },
+        {
+          "x": 9,
+          "y": 6
+        }
+      ],
+      "placements": [
+        {
+          "name": "關羽",
+          "x": 4,
+          "y": 4
+        },
+        {
+          "name": "張飛",
+          "x": 3,
+          "y": 4
+        },
+        {
+          "name": "趙雲",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "黃忠",
+          "x": 4,
+          "y": 5
+        },
+        {
+          "name": "馬超",
+          "x": 5,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 6
+        }
+      ],
+      "bonds": [],
+      "seconds": 1.75,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 5,
+      "heroCount": 5,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 15.1,
+      "frozenShare": 82.1,
+      "individual": [
+        {
+          "name": "關羽",
+          "damage": 0,
+          "healing": 0,
+          "hp": 1709
+        },
+        {
+          "name": "張飛",
+          "damage": 6759,
+          "healing": 0,
+          "hp": 1770
+        },
+        {
+          "name": "趙雲",
+          "damage": 0,
+          "healing": 0,
+          "hp": 1678
+        },
+        {
+          "name": "黃忠",
+          "damage": 260,
+          "healing": 0,
+          "hp": 1604
+        },
+        {
+          "name": "馬超",
+          "damage": 781,
+          "healing": 0,
+          "hp": 1709
+        }
+      ]
+    },
+    {
+      "scenario": "彎道密集",
+      "formation": "臥龍元直",
+      "kind": "既有羈絆聯測",
+      "disableBonds": false,
+      "members": [
+        "諸葛亮",
+        "徐庶"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 2
+        },
+        {
+          "x": 1,
+          "y": 2
+        },
+        {
+          "x": 2,
+          "y": 2
+        },
+        {
+          "x": 3,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 3
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 5
+        },
+        {
+          "x": 4,
+          "y": 6
+        },
+        {
+          "x": 5,
+          "y": 6
+        },
+        {
+          "x": 6,
+          "y": 6
+        },
+        {
+          "x": 7,
+          "y": 6
+        },
+        {
+          "x": 8,
+          "y": 6
+        },
+        {
+          "x": 9,
+          "y": 6
+        }
+      ],
+      "placements": [
+        {
+          "name": "諸葛亮",
+          "x": 4,
+          "y": 4
+        },
+        {
+          "name": "徐庶",
+          "x": 3,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 6
+        }
+      ],
+      "bonds": [
+        "臥龍元直"
+      ],
+      "seconds": 0.3,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 2,
+      "heroCount": 2,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 2.9,
+      "frozenShare": 0,
+      "individual": [
+        {
+          "name": "諸葛亮",
+          "damage": 1936,
+          "healing": 0,
+          "hp": 1235
+        },
+        {
+          "name": "徐庶",
+          "damage": 5864,
+          "healing": 0,
+          "hp": 1278
+        }
+      ]
+    },
+    {
+      "scenario": "彎道密集",
+      "formation": "臥龍元直（關閉羈絆）",
+      "kind": "既有羈絆聯測",
+      "disableBonds": true,
+      "members": [
+        "諸葛亮",
+        "徐庶"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 2
+        },
+        {
+          "x": 1,
+          "y": 2
+        },
+        {
+          "x": 2,
+          "y": 2
+        },
+        {
+          "x": 3,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 3
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 5
+        },
+        {
+          "x": 4,
+          "y": 6
+        },
+        {
+          "x": 5,
+          "y": 6
+        },
+        {
+          "x": 6,
+          "y": 6
+        },
+        {
+          "x": 7,
+          "y": 6
+        },
+        {
+          "x": 8,
+          "y": 6
+        },
+        {
+          "x": 9,
+          "y": 6
+        }
+      ],
+      "placements": [
+        {
+          "name": "諸葛亮",
+          "x": 4,
+          "y": 4
+        },
+        {
+          "name": "徐庶",
+          "x": 3,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 6
+        }
+      ],
+      "bonds": [],
+      "seconds": 0.3,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 2,
+      "heroCount": 2,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 2.9,
+      "frozenShare": 0,
+      "individual": [
+        {
+          "name": "諸葛亮",
+          "damage": 2616,
+          "healing": 0,
+          "hp": 1235
+        },
+        {
+          "name": "徐庶",
+          "damage": 5184,
+          "healing": 0,
+          "hp": 1278
+        }
+      ]
+    },
+    {
+      "scenario": "彎道密集",
+      "formation": "三將控場",
+      "kind": "控制接續測試",
+      "disableBonds": false,
+      "members": [
+        "關羽",
+        "張飛",
+        "諸葛亮"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 2
+        },
+        {
+          "x": 1,
+          "y": 2
+        },
+        {
+          "x": 2,
+          "y": 2
+        },
+        {
+          "x": 3,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 3
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 5
+        },
+        {
+          "x": 4,
+          "y": 6
+        },
+        {
+          "x": 5,
+          "y": 6
+        },
+        {
+          "x": 6,
+          "y": 6
+        },
+        {
+          "x": 7,
+          "y": 6
+        },
+        {
+          "x": 8,
+          "y": 6
+        },
+        {
+          "x": 9,
+          "y": 6
+        }
+      ],
+      "placements": [
+        {
+          "name": "關羽",
+          "x": 4,
+          "y": 4
+        },
+        {
+          "name": "張飛",
+          "x": 3,
+          "y": 4
+        },
+        {
+          "name": "諸葛亮",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 6
+        }
+      ],
+      "bonds": [
+        "桃園結義",
+        "五虎將"
+      ],
+      "seconds": 0.4,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 3,
+      "heroCount": 3,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 4.2,
+      "frozenShare": 87.5,
+      "individual": [
+        {
+          "name": "關羽",
+          "damage": 0,
+          "healing": 0,
+          "hp": 1709
+        },
+        {
+          "name": "張飛",
+          "damage": 7435,
+          "healing": 0,
+          "hp": 1770
+        },
+        {
+          "name": "諸葛亮",
+          "damage": 365,
+          "healing": 0,
+          "hp": 1235
+        }
+      ]
+    },
+    {
+      "scenario": "彎道密集",
+      "formation": "三將控場（關閉羈絆）",
+      "kind": "控制接續測試",
+      "disableBonds": true,
+      "members": [
+        "關羽",
+        "張飛",
+        "諸葛亮"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 2
+        },
+        {
+          "x": 1,
+          "y": 2
+        },
+        {
+          "x": 2,
+          "y": 2
+        },
+        {
+          "x": 3,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 3
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 5
+        },
+        {
+          "x": 4,
+          "y": 6
+        },
+        {
+          "x": 5,
+          "y": 6
+        },
+        {
+          "x": 6,
+          "y": 6
+        },
+        {
+          "x": 7,
+          "y": 6
+        },
+        {
+          "x": 8,
+          "y": 6
+        },
+        {
+          "x": 9,
+          "y": 6
+        }
+      ],
+      "placements": [
+        {
+          "name": "關羽",
+          "x": 4,
+          "y": 4
+        },
+        {
+          "name": "張飛",
+          "x": 3,
+          "y": 4
+        },
+        {
+          "name": "諸葛亮",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 6
+        }
+      ],
+      "bonds": [],
+      "seconds": 0.4,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 3,
+      "heroCount": 3,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 4.2,
+      "frozenShare": 87.5,
+      "individual": [
+        {
+          "name": "關羽",
+          "damage": 0,
+          "healing": 0,
+          "hp": 1709
+        },
+        {
+          "name": "張飛",
+          "damage": 6759,
+          "healing": 0,
+          "hp": 1770
+        },
+        {
+          "name": "諸葛亮",
+          "damage": 1041,
+          "healing": 0,
+          "hp": 1235
+        }
+      ]
+    },
+    {
+      "scenario": "彎道分散",
+      "formation": "劉備",
+      "kind": "單將支援測試",
+      "disableBonds": false,
+      "members": [
+        "劉備"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 2
+        },
+        {
+          "x": 1,
+          "y": 2
+        },
+        {
+          "x": 2,
+          "y": 2
+        },
+        {
+          "x": 3,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 3
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 5
+        },
+        {
+          "x": 4,
+          "y": 6
+        },
+        {
+          "x": 5,
+          "y": 6
+        },
+        {
+          "x": 6,
+          "y": 6
+        },
+        {
+          "x": 7,
+          "y": 6
+        },
+        {
+          "x": 8,
+          "y": 6
+        },
+        {
+          "x": 9,
+          "y": 6
+        }
+      ],
+      "placements": [
+        {
+          "name": "劉備",
+          "x": 4,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 6
+        }
+      ],
+      "bonds": [],
+      "seconds": 30,
+      "kills": 7,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 1,
+      "heroCount": 1,
+      "enemyHP": 3041,
+      "damage": 4759,
+      "healing": 3002,
+      "shield": 1668,
+      "control": 0,
+      "frozenShare": 0,
+      "individual": [
+        {
+          "name": "劉備",
+          "damage": 4759,
+          "healing": 3002,
+          "hp": 1253
+        }
+      ]
+    },
+    {
+      "scenario": "彎道分散",
+      "formation": "關羽",
+      "kind": "單將支援測試",
+      "disableBonds": false,
+      "members": [
+        "關羽"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 2
+        },
+        {
+          "x": 1,
+          "y": 2
+        },
+        {
+          "x": 2,
+          "y": 2
+        },
+        {
+          "x": 3,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 3
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 5
+        },
+        {
+          "x": 4,
+          "y": 6
+        },
+        {
+          "x": 5,
+          "y": 6
+        },
+        {
+          "x": 6,
+          "y": 6
+        },
+        {
+          "x": 7,
+          "y": 6
+        },
+        {
+          "x": 8,
+          "y": 6
+        },
+        {
+          "x": 9,
+          "y": 6
+        }
+      ],
+      "placements": [
+        {
+          "name": "關羽",
+          "x": 4,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 6
+        }
+      ],
+      "bonds": [],
+      "seconds": 7.55,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 1,
+      "heroCount": 1,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 4.8,
+      "frozenShare": 7.3,
+      "individual": [
+        {
+          "name": "關羽",
+          "damage": 7800,
+          "healing": 0,
+          "hp": 1534
+        }
+      ]
+    },
+    {
+      "scenario": "彎道分散",
+      "formation": "張飛",
+      "kind": "單將支援測試",
+      "disableBonds": false,
+      "members": [
+        "張飛"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 2
+        },
+        {
+          "x": 1,
+          "y": 2
+        },
+        {
+          "x": 2,
+          "y": 2
+        },
+        {
+          "x": 3,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 3
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 5
+        },
+        {
+          "x": 4,
+          "y": 6
+        },
+        {
+          "x": 5,
+          "y": 6
+        },
+        {
+          "x": 6,
+          "y": 6
+        },
+        {
+          "x": 7,
+          "y": 6
+        },
+        {
+          "x": 8,
+          "y": 6
+        },
+        {
+          "x": 9,
+          "y": 6
+        }
+      ],
+      "placements": [
+        {
+          "name": "張飛",
+          "x": 4,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 6
+        }
+      ],
+      "bonds": [],
+      "seconds": 8.05,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 1,
+      "heroCount": 1,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 14.1,
+      "frozenShare": 28.1,
+      "individual": [
+        {
+          "name": "張飛",
+          "damage": 7800,
+          "healing": 0,
+          "hp": 1670
+        }
+      ]
+    },
+    {
+      "scenario": "彎道分散",
+      "formation": "趙雲",
+      "kind": "單將支援測試",
+      "disableBonds": false,
+      "members": [
+        "趙雲"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 2
+        },
+        {
+          "x": 1,
+          "y": 2
+        },
+        {
+          "x": 2,
+          "y": 2
+        },
+        {
+          "x": 3,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 3
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 5
+        },
+        {
+          "x": 4,
+          "y": 6
+        },
+        {
+          "x": 5,
+          "y": 6
+        },
+        {
+          "x": 6,
+          "y": 6
+        },
+        {
+          "x": 7,
+          "y": 6
+        },
+        {
+          "x": 8,
+          "y": 6
+        },
+        {
+          "x": 9,
+          "y": 6
+        }
+      ],
+      "placements": [
+        {
+          "name": "趙雲",
+          "x": 4,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 6
+        }
+      ],
+      "bonds": [],
+      "seconds": 12.3,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 1,
+      "heroCount": 1,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 0,
+      "frozenShare": 0,
+      "individual": [
+        {
+          "name": "趙雲",
+          "damage": 7800,
+          "healing": 0,
+          "hp": 269
+        }
+      ]
+    },
+    {
+      "scenario": "彎道分散",
+      "formation": "黃忠",
+      "kind": "單將支援測試",
+      "disableBonds": false,
+      "members": [
+        "黃忠"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 2
+        },
+        {
+          "x": 1,
+          "y": 2
+        },
+        {
+          "x": 2,
+          "y": 2
+        },
+        {
+          "x": 3,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 3
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 5
+        },
+        {
+          "x": 4,
+          "y": 6
+        },
+        {
+          "x": 5,
+          "y": 6
+        },
+        {
+          "x": 6,
+          "y": 6
+        },
+        {
+          "x": 7,
+          "y": 6
+        },
+        {
+          "x": 8,
+          "y": 6
+        },
+        {
+          "x": 9,
+          "y": 6
+        }
+      ],
+      "placements": [
+        {
+          "name": "黃忠",
+          "x": 4,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 6
+        }
+      ],
+      "bonds": [],
+      "seconds": 30,
+      "kills": 7,
+      "total": 12,
+      "gateHP": 1962,
+      "heroesAlive": 0,
+      "heroCount": 1,
+      "enemyHP": 2260,
+      "damage": 5375,
+      "healing": 0,
+      "shield": 0,
+      "control": 0,
+      "frozenShare": 0,
+      "individual": [
+        {
+          "name": "黃忠",
+          "damage": 5375,
+          "healing": 0,
+          "hp": 0
+        }
+      ]
+    },
+    {
+      "scenario": "彎道分散",
+      "formation": "諸葛亮",
+      "kind": "單將支援測試",
+      "disableBonds": false,
+      "members": [
+        "諸葛亮"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 2
+        },
+        {
+          "x": 1,
+          "y": 2
+        },
+        {
+          "x": 2,
+          "y": 2
+        },
+        {
+          "x": 3,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 3
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 5
+        },
+        {
+          "x": 4,
+          "y": 6
+        },
+        {
+          "x": 5,
+          "y": 6
+        },
+        {
+          "x": 6,
+          "y": 6
+        },
+        {
+          "x": 7,
+          "y": 6
+        },
+        {
+          "x": 8,
+          "y": 6
+        },
+        {
+          "x": 9,
+          "y": 6
+        }
+      ],
+      "placements": [
+        {
+          "name": "諸葛亮",
+          "x": 4,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 6
+        }
+      ],
+      "bonds": [],
+      "seconds": 5.45,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 1,
+      "heroCount": 1,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 12.9,
+      "frozenShare": 0,
+      "individual": [
+        {
+          "name": "諸葛亮",
+          "damage": 7800,
+          "healing": 0,
+          "hp": 1127
+        }
+      ]
+    },
+    {
+      "scenario": "彎道分散",
+      "formation": "徐庶",
+      "kind": "單將支援測試",
+      "disableBonds": false,
+      "members": [
+        "徐庶"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 2
+        },
+        {
+          "x": 1,
+          "y": 2
+        },
+        {
+          "x": 2,
+          "y": 2
+        },
+        {
+          "x": 3,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 3
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 5
+        },
+        {
+          "x": 4,
+          "y": 6
+        },
+        {
+          "x": 5,
+          "y": 6
+        },
+        {
+          "x": 6,
+          "y": 6
+        },
+        {
+          "x": 7,
+          "y": 6
+        },
+        {
+          "x": 8,
+          "y": 6
+        },
+        {
+          "x": 9,
+          "y": 6
+        }
+      ],
+      "placements": [
+        {
+          "name": "徐庶",
+          "x": 4,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 6
+        }
+      ],
+      "bonds": [],
+      "seconds": 7.1,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 1,
+      "heroCount": 1,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 21.5,
+      "frozenShare": 0,
+      "individual": [
+        {
+          "name": "徐庶",
+          "damage": 7800,
+          "healing": 0,
+          "hp": 773
+        }
+      ]
+    },
+    {
+      "scenario": "彎道分散",
+      "formation": "馬超",
+      "kind": "單將支援測試",
+      "disableBonds": false,
+      "members": [
+        "馬超"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 2
+        },
+        {
+          "x": 1,
+          "y": 2
+        },
+        {
+          "x": 2,
+          "y": 2
+        },
+        {
+          "x": 3,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 3
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 5
+        },
+        {
+          "x": 4,
+          "y": 6
+        },
+        {
+          "x": 5,
+          "y": 6
+        },
+        {
+          "x": 6,
+          "y": 6
+        },
+        {
+          "x": 7,
+          "y": 6
+        },
+        {
+          "x": 8,
+          "y": 6
+        },
+        {
+          "x": 9,
+          "y": 6
+        }
+      ],
+      "placements": [
+        {
+          "name": "馬超",
+          "x": 4,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 6
+        }
+      ],
+      "bonds": [],
+      "seconds": 5.6,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 1,
+      "heroCount": 1,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 0.9,
+      "frozenShare": 0,
+      "individual": [
+        {
+          "name": "馬超",
+          "damage": 7800,
+          "healing": 0,
+          "hp": 1503
+        }
+      ]
+    },
+    {
+      "scenario": "彎道分散",
+      "formation": "桃園結義",
+      "kind": "既有羈絆聯測",
+      "disableBonds": false,
+      "members": [
+        "劉備",
+        "關羽",
+        "張飛"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 2
+        },
+        {
+          "x": 1,
+          "y": 2
+        },
+        {
+          "x": 2,
+          "y": 2
+        },
+        {
+          "x": 3,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 3
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 5
+        },
+        {
+          "x": 4,
+          "y": 6
+        },
+        {
+          "x": 5,
+          "y": 6
+        },
+        {
+          "x": 6,
+          "y": 6
+        },
+        {
+          "x": 7,
+          "y": 6
+        },
+        {
+          "x": 8,
+          "y": 6
+        },
+        {
+          "x": 9,
+          "y": 6
+        }
+      ],
+      "placements": [
+        {
+          "name": "劉備",
+          "x": 4,
+          "y": 4
+        },
+        {
+          "name": "關羽",
+          "x": 3,
+          "y": 4
+        },
+        {
+          "name": "張飛",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 6
+        }
+      ],
+      "bonds": [
+        "桃園結義",
+        "五虎將"
+      ],
+      "seconds": 7.2,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 3,
+      "heroCount": 3,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 1001,
+      "shield": 0,
+      "control": 8,
+      "frozenShare": 19.6,
+      "individual": [
+        {
+          "name": "劉備",
+          "damage": 419,
+          "healing": 1001,
+          "hp": 1792
+        },
+        {
+          "name": "關羽",
+          "damage": 1004,
+          "healing": 0,
+          "hp": 2042
+        },
+        {
+          "name": "張飛",
+          "damage": 6377,
+          "healing": 0,
+          "hp": 2103
+        }
+      ]
+    },
+    {
+      "scenario": "彎道分散",
+      "formation": "桃園結義（關閉羈絆）",
+      "kind": "既有羈絆聯測",
+      "disableBonds": true,
+      "members": [
+        "劉備",
+        "關羽",
+        "張飛"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 2
+        },
+        {
+          "x": 1,
+          "y": 2
+        },
+        {
+          "x": 2,
+          "y": 2
+        },
+        {
+          "x": 3,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 3
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 5
+        },
+        {
+          "x": 4,
+          "y": 6
+        },
+        {
+          "x": 5,
+          "y": 6
+        },
+        {
+          "x": 6,
+          "y": 6
+        },
+        {
+          "x": 7,
+          "y": 6
+        },
+        {
+          "x": 8,
+          "y": 6
+        },
+        {
+          "x": 9,
+          "y": 6
+        }
+      ],
+      "placements": [
+        {
+          "name": "劉備",
+          "x": 4,
+          "y": 4
+        },
+        {
+          "name": "關羽",
+          "x": 3,
+          "y": 4
+        },
+        {
+          "name": "張飛",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 6
+        }
+      ],
+      "bonds": [],
+      "seconds": 7.2,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 3,
+      "heroCount": 3,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 1001,
+      "shield": 0,
+      "control": 8,
+      "frozenShare": 19.6,
+      "individual": [
+        {
+          "name": "劉備",
+          "damage": 419,
+          "healing": 1001,
+          "hp": 1785
+        },
+        {
+          "name": "關羽",
+          "damage": 1111,
+          "healing": 0,
+          "hp": 2042
+        },
+        {
+          "name": "張飛",
+          "damage": 6270,
+          "healing": 0,
+          "hp": 2103
+        }
+      ]
+    },
+    {
+      "scenario": "彎道分散",
+      "formation": "五虎將",
+      "kind": "既有羈絆聯測",
+      "disableBonds": false,
+      "members": [
+        "關羽",
+        "張飛",
+        "趙雲",
+        "黃忠",
+        "馬超"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 2
+        },
+        {
+          "x": 1,
+          "y": 2
+        },
+        {
+          "x": 2,
+          "y": 2
+        },
+        {
+          "x": 3,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 3
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 5
+        },
+        {
+          "x": 4,
+          "y": 6
+        },
+        {
+          "x": 5,
+          "y": 6
+        },
+        {
+          "x": 6,
+          "y": 6
+        },
+        {
+          "x": 7,
+          "y": 6
+        },
+        {
+          "x": 8,
+          "y": 6
+        },
+        {
+          "x": 9,
+          "y": 6
+        }
+      ],
+      "placements": [
+        {
+          "name": "關羽",
+          "x": 4,
+          "y": 4
+        },
+        {
+          "name": "張飛",
+          "x": 3,
+          "y": 4
+        },
+        {
+          "name": "趙雲",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "黃忠",
+          "x": 4,
+          "y": 5
+        },
+        {
+          "name": "馬超",
+          "x": 5,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 6
+        }
+      ],
+      "bonds": [
+        "桃園結義",
+        "五虎將"
+      ],
+      "seconds": 1.85,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 5,
+      "heroCount": 5,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 0,
+      "frozenShare": 0,
+      "individual": [
+        {
+          "name": "關羽",
+          "damage": 1197,
+          "healing": 0,
+          "hp": 1709
+        },
+        {
+          "name": "張飛",
+          "damage": 5303,
+          "healing": 0,
+          "hp": 1770
+        },
+        {
+          "name": "趙雲",
+          "damage": 0,
+          "healing": 0,
+          "hp": 1678
+        },
+        {
+          "name": "黃忠",
+          "damage": 1165,
+          "healing": 0,
+          "hp": 1604
+        },
+        {
+          "name": "馬超",
+          "damage": 135,
+          "healing": 0,
+          "hp": 1709
+        }
+      ]
+    },
+    {
+      "scenario": "彎道分散",
+      "formation": "五虎將（關閉羈絆）",
+      "kind": "既有羈絆聯測",
+      "disableBonds": true,
+      "members": [
+        "關羽",
+        "張飛",
+        "趙雲",
+        "黃忠",
+        "馬超"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 2
+        },
+        {
+          "x": 1,
+          "y": 2
+        },
+        {
+          "x": 2,
+          "y": 2
+        },
+        {
+          "x": 3,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 3
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 5
+        },
+        {
+          "x": 4,
+          "y": 6
+        },
+        {
+          "x": 5,
+          "y": 6
+        },
+        {
+          "x": 6,
+          "y": 6
+        },
+        {
+          "x": 7,
+          "y": 6
+        },
+        {
+          "x": 8,
+          "y": 6
+        },
+        {
+          "x": 9,
+          "y": 6
+        }
+      ],
+      "placements": [
+        {
+          "name": "關羽",
+          "x": 4,
+          "y": 4
+        },
+        {
+          "name": "張飛",
+          "x": 3,
+          "y": 4
+        },
+        {
+          "name": "趙雲",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "黃忠",
+          "x": 4,
+          "y": 5
+        },
+        {
+          "name": "馬超",
+          "x": 5,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 6
+        }
+      ],
+      "bonds": [],
+      "seconds": 2.4,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 5,
+      "heroCount": 5,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 5.4,
+      "frozenShare": 47.4,
+      "individual": [
+        {
+          "name": "關羽",
+          "damage": 958,
+          "healing": 0,
+          "hp": 1709
+        },
+        {
+          "name": "張飛",
+          "damage": 5022,
+          "healing": 0,
+          "hp": 1770
+        },
+        {
+          "name": "趙雲",
+          "damage": 171,
+          "healing": 0,
+          "hp": 1678
+        },
+        {
+          "name": "黃忠",
+          "damage": 176,
+          "healing": 0,
+          "hp": 1604
+        },
+        {
+          "name": "馬超",
+          "damage": 1473,
+          "healing": 0,
+          "hp": 1709
+        }
+      ]
+    },
+    {
+      "scenario": "彎道分散",
+      "formation": "臥龍元直",
+      "kind": "既有羈絆聯測",
+      "disableBonds": false,
+      "members": [
+        "諸葛亮",
+        "徐庶"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 2
+        },
+        {
+          "x": 1,
+          "y": 2
+        },
+        {
+          "x": 2,
+          "y": 2
+        },
+        {
+          "x": 3,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 3
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 5
+        },
+        {
+          "x": 4,
+          "y": 6
+        },
+        {
+          "x": 5,
+          "y": 6
+        },
+        {
+          "x": 6,
+          "y": 6
+        },
+        {
+          "x": 7,
+          "y": 6
+        },
+        {
+          "x": 8,
+          "y": 6
+        },
+        {
+          "x": 9,
+          "y": 6
+        }
+      ],
+      "placements": [
+        {
+          "name": "諸葛亮",
+          "x": 4,
+          "y": 4
+        },
+        {
+          "name": "徐庶",
+          "x": 3,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 6
+        }
+      ],
+      "bonds": [
+        "臥龍元直"
+      ],
+      "seconds": 4.25,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 2,
+      "heroCount": 2,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 0.8,
+      "frozenShare": 0,
+      "individual": [
+        {
+          "name": "諸葛亮",
+          "damage": 6682,
+          "healing": 0,
+          "hp": 1181
+        },
+        {
+          "name": "徐庶",
+          "damage": 1118,
+          "healing": 0,
+          "hp": 1278
+        }
+      ]
+    },
+    {
+      "scenario": "彎道分散",
+      "formation": "臥龍元直（關閉羈絆）",
+      "kind": "既有羈絆聯測",
+      "disableBonds": true,
+      "members": [
+        "諸葛亮",
+        "徐庶"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 2
+        },
+        {
+          "x": 1,
+          "y": 2
+        },
+        {
+          "x": 2,
+          "y": 2
+        },
+        {
+          "x": 3,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 3
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 5
+        },
+        {
+          "x": 4,
+          "y": 6
+        },
+        {
+          "x": 5,
+          "y": 6
+        },
+        {
+          "x": 6,
+          "y": 6
+        },
+        {
+          "x": 7,
+          "y": 6
+        },
+        {
+          "x": 8,
+          "y": 6
+        },
+        {
+          "x": 9,
+          "y": 6
+        }
+      ],
+      "placements": [
+        {
+          "name": "諸葛亮",
+          "x": 4,
+          "y": 4
+        },
+        {
+          "name": "徐庶",
+          "x": 3,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 6
+        }
+      ],
+      "bonds": [],
+      "seconds": 4.25,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 2,
+      "heroCount": 2,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 13.4,
+      "frozenShare": 0,
+      "individual": [
+        {
+          "name": "諸葛亮",
+          "damage": 6548,
+          "healing": 0,
+          "hp": 1127
+        },
+        {
+          "name": "徐庶",
+          "damage": 1252,
+          "healing": 0,
+          "hp": 1278
+        }
+      ]
+    },
+    {
+      "scenario": "彎道分散",
+      "formation": "三將控場",
+      "kind": "控制接續測試",
+      "disableBonds": false,
+      "members": [
+        "關羽",
+        "張飛",
+        "諸葛亮"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 2
+        },
+        {
+          "x": 1,
+          "y": 2
+        },
+        {
+          "x": 2,
+          "y": 2
+        },
+        {
+          "x": 3,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 3
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 5
+        },
+        {
+          "x": 4,
+          "y": 6
+        },
+        {
+          "x": 5,
+          "y": 6
+        },
+        {
+          "x": 6,
+          "y": 6
+        },
+        {
+          "x": 7,
+          "y": 6
+        },
+        {
+          "x": 8,
+          "y": 6
+        },
+        {
+          "x": 9,
+          "y": 6
+        }
+      ],
+      "placements": [
+        {
+          "name": "關羽",
+          "x": 4,
+          "y": 4
+        },
+        {
+          "name": "張飛",
+          "x": 3,
+          "y": 4
+        },
+        {
+          "name": "諸葛亮",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 6
+        }
+      ],
+      "bonds": [
+        "桃園結義",
+        "五虎將"
+      ],
+      "seconds": 3.8,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 3,
+      "heroCount": 3,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 1.5,
+      "frozenShare": 19.9,
+      "individual": [
+        {
+          "name": "關羽",
+          "damage": 1053,
+          "healing": 0,
+          "hp": 1709
+        },
+        {
+          "name": "張飛",
+          "damage": 5344,
+          "healing": 0,
+          "hp": 1770
+        },
+        {
+          "name": "諸葛亮",
+          "damage": 1402,
+          "healing": 0,
+          "hp": 1235
+        }
+      ]
+    },
+    {
+      "scenario": "彎道分散",
+      "formation": "三將控場（關閉羈絆）",
+      "kind": "控制接續測試",
+      "disableBonds": true,
+      "members": [
+        "關羽",
+        "張飛",
+        "諸葛亮"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 2
+        },
+        {
+          "x": 1,
+          "y": 2
+        },
+        {
+          "x": 2,
+          "y": 2
+        },
+        {
+          "x": 3,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 2
+        },
+        {
+          "x": 4,
+          "y": 3
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 5
+        },
+        {
+          "x": 4,
+          "y": 6
+        },
+        {
+          "x": 5,
+          "y": 6
+        },
+        {
+          "x": 6,
+          "y": 6
+        },
+        {
+          "x": 7,
+          "y": 6
+        },
+        {
+          "x": 8,
+          "y": 6
+        },
+        {
+          "x": 9,
+          "y": 6
+        }
+      ],
+      "placements": [
+        {
+          "name": "關羽",
+          "x": 4,
+          "y": 4
+        },
+        {
+          "name": "張飛",
+          "x": 3,
+          "y": 4
+        },
+        {
+          "name": "諸葛亮",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 6
+        }
+      ],
+      "bonds": [],
+      "seconds": 3.8,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 3,
+      "heroCount": 3,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 1.5,
+      "frozenShare": 19.9,
+      "individual": [
+        {
+          "name": "關羽",
+          "damage": 958,
+          "healing": 0,
+          "hp": 1709
+        },
+        {
+          "name": "張飛",
+          "damage": 5102,
+          "healing": 0,
+          "hp": 1770
+        },
+        {
+          "name": "諸葛亮",
+          "damage": 1740,
+          "healing": 0,
+          "hp": 1235
+        }
+      ]
+    },
+    {
+      "scenario": "遠程謀攻",
+      "formation": "劉備",
+      "kind": "單將支援測試",
+      "disableBonds": false,
+      "members": [
+        "劉備"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "劉備",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [],
+      "seconds": 30,
+      "kills": 6,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 1,
+      "heroCount": 1,
+      "enemyHP": 3900,
+      "damage": 3900,
+      "healing": 3002,
+      "shield": 1989,
+      "control": 0,
+      "frozenShare": 0,
+      "individual": [
+        {
+          "name": "劉備",
+          "damage": 3900,
+          "healing": 3002,
+          "hp": 491
+        }
+      ]
+    },
+    {
+      "scenario": "遠程謀攻",
+      "formation": "關羽",
+      "kind": "單將支援測試",
+      "disableBonds": false,
+      "members": [
+        "關羽"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "關羽",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [],
+      "seconds": 5.3,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 1,
+      "heroCount": 1,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 6,
+      "frozenShare": 12.6,
+      "individual": [
+        {
+          "name": "關羽",
+          "damage": 7800,
+          "healing": 0,
+          "hp": 747
+        }
+      ]
+    },
+    {
+      "scenario": "遠程謀攻",
+      "formation": "張飛",
+      "kind": "單將支援測試",
+      "disableBonds": false,
+      "members": [
+        "張飛"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "張飛",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [],
+      "seconds": 9.05,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 1,
+      "heroCount": 1,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 13.6,
+      "frozenShare": 17.5,
+      "individual": [
+        {
+          "name": "張飛",
+          "damage": 7800,
+          "healing": 0,
+          "hp": 660
+        }
+      ]
+    },
+    {
+      "scenario": "遠程謀攻",
+      "formation": "趙雲",
+      "kind": "單將支援測試",
+      "disableBonds": false,
+      "members": [
+        "趙雲"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "趙雲",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [],
+      "seconds": 12.15,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 1,
+      "heroCount": 1,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 0,
+      "frozenShare": 0,
+      "individual": [
+        {
+          "name": "趙雲",
+          "damage": 7800,
+          "healing": 0,
+          "hp": 8
+        }
+      ]
+    },
+    {
+      "scenario": "遠程謀攻",
+      "formation": "黃忠",
+      "kind": "單將支援測試",
+      "disableBonds": false,
+      "members": [
+        "黃忠"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "黃忠",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [],
+      "seconds": 23.65,
+      "kills": 4,
+      "total": 12,
+      "gateHP": 0,
+      "heroesAlive": 0,
+      "heroCount": 1,
+      "enemyHP": 3991,
+      "damage": 3776,
+      "healing": 0,
+      "shield": 0,
+      "control": 0,
+      "frozenShare": 0,
+      "individual": [
+        {
+          "name": "黃忠",
+          "damage": 3776,
+          "healing": 0,
+          "hp": 0
+        }
+      ]
+    },
+    {
+      "scenario": "遠程謀攻",
+      "formation": "諸葛亮",
+      "kind": "單將支援測試",
+      "disableBonds": false,
+      "members": [
+        "諸葛亮"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "諸葛亮",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [],
+      "seconds": 3.35,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 1,
+      "heroCount": 1,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 33.5,
+      "frozenShare": 0,
+      "individual": [
+        {
+          "name": "諸葛亮",
+          "damage": 7800,
+          "healing": 0,
+          "hp": 697
+        }
+      ]
+    },
+    {
+      "scenario": "遠程謀攻",
+      "formation": "徐庶",
+      "kind": "單將支援測試",
+      "disableBonds": false,
+      "members": [
+        "徐庶"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "徐庶",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [],
+      "seconds": 3.6,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 1,
+      "heroCount": 1,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 32,
+      "frozenShare": 0,
+      "individual": [
+        {
+          "name": "徐庶",
+          "damage": 7800,
+          "healing": 0,
+          "hp": 545
+        }
+      ]
+    },
+    {
+      "scenario": "遠程謀攻",
+      "formation": "馬超",
+      "kind": "單將支援測試",
+      "disableBonds": false,
+      "members": [
+        "馬超"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "馬超",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [],
+      "seconds": 4.35,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 1,
+      "heroCount": 1,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 0.9,
+      "frozenShare": 0,
+      "individual": [
+        {
+          "name": "馬超",
+          "damage": 7800,
+          "healing": 0,
+          "hp": 1220
+        }
+      ]
+    },
+    {
+      "scenario": "遠程謀攻",
+      "formation": "桃園結義",
+      "kind": "既有羈絆聯測",
+      "disableBonds": false,
+      "members": [
+        "劉備",
+        "關羽",
+        "張飛"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "劉備",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "關羽",
+          "x": 5,
+          "y": 3
+        },
+        {
+          "name": "張飛",
+          "x": 5,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [
+        "桃園結義",
+        "五虎將"
+      ],
+      "seconds": 4.55,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 3,
+      "heroCount": 3,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 667,
+      "shield": 0,
+      "control": 4.9,
+      "frozenShare": 10.3,
+      "individual": [
+        {
+          "name": "劉備",
+          "damage": 419,
+          "healing": 667,
+          "hp": 1426
+        },
+        {
+          "name": "關羽",
+          "damage": 2608,
+          "healing": 0,
+          "hp": 1709
+        },
+        {
+          "name": "張飛",
+          "damage": 4773,
+          "healing": 0,
+          "hp": 1770
+        }
+      ]
+    },
+    {
+      "scenario": "遠程謀攻",
+      "formation": "桃園結義（關閉羈絆）",
+      "kind": "既有羈絆聯測",
+      "disableBonds": true,
+      "members": [
+        "劉備",
+        "關羽",
+        "張飛"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "劉備",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "關羽",
+          "x": 5,
+          "y": 3
+        },
+        {
+          "name": "張飛",
+          "x": 5,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [],
+      "seconds": 4.55,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 3,
+      "heroCount": 3,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 667,
+      "shield": 0,
+      "control": 4.9,
+      "frozenShare": 10.3,
+      "individual": [
+        {
+          "name": "劉備",
+          "damage": 419,
+          "healing": 667,
+          "hp": 1340
+        },
+        {
+          "name": "關羽",
+          "damage": 2529,
+          "healing": 0,
+          "hp": 1709
+        },
+        {
+          "name": "張飛",
+          "damage": 4852,
+          "healing": 0,
+          "hp": 1770
+        }
+      ]
+    },
+    {
+      "scenario": "遠程謀攻",
+      "formation": "五虎將",
+      "kind": "既有羈絆聯測",
+      "disableBonds": false,
+      "members": [
+        "關羽",
+        "張飛",
+        "趙雲",
+        "黃忠",
+        "馬超"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "關羽",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "張飛",
+          "x": 5,
+          "y": 3
+        },
+        {
+          "name": "趙雲",
+          "x": 5,
+          "y": 5
+        },
+        {
+          "name": "黃忠",
+          "x": 6,
+          "y": 4
+        },
+        {
+          "name": "馬超",
+          "x": 6,
+          "y": 3
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [
+        "桃園結義",
+        "五虎將"
+      ],
+      "seconds": 1.3,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 5,
+      "heroCount": 5,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 0,
+      "frozenShare": 0,
+      "individual": [
+        {
+          "name": "關羽",
+          "damage": 0,
+          "healing": 0,
+          "hp": 1557
+        },
+        {
+          "name": "張飛",
+          "damage": 1950,
+          "healing": 0,
+          "hp": 1770
+        },
+        {
+          "name": "趙雲",
+          "damage": 1151,
+          "healing": 0,
+          "hp": 1678
+        },
+        {
+          "name": "黃忠",
+          "damage": 344,
+          "healing": 0,
+          "hp": 1604
+        },
+        {
+          "name": "馬超",
+          "damage": 4355,
+          "healing": 0,
+          "hp": 1709
+        }
+      ]
+    },
+    {
+      "scenario": "遠程謀攻",
+      "formation": "五虎將（關閉羈絆）",
+      "kind": "既有羈絆聯測",
+      "disableBonds": true,
+      "members": [
+        "關羽",
+        "張飛",
+        "趙雲",
+        "黃忠",
+        "馬超"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "關羽",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "張飛",
+          "x": 5,
+          "y": 3
+        },
+        {
+          "name": "趙雲",
+          "x": 5,
+          "y": 5
+        },
+        {
+          "name": "黃忠",
+          "x": 6,
+          "y": 4
+        },
+        {
+          "name": "馬超",
+          "x": 6,
+          "y": 3
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [],
+      "seconds": 1.6,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 5,
+      "heroCount": 5,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 1.4,
+      "frozenShare": 8.7,
+      "individual": [
+        {
+          "name": "關羽",
+          "damage": 0,
+          "healing": 0,
+          "hp": 1549
+        },
+        {
+          "name": "張飛",
+          "damage": 1690,
+          "healing": 0,
+          "hp": 1770
+        },
+        {
+          "name": "趙雲",
+          "damage": 425,
+          "healing": 0,
+          "hp": 1678
+        },
+        {
+          "name": "黃忠",
+          "damage": 374,
+          "healing": 0,
+          "hp": 1604
+        },
+        {
+          "name": "馬超",
+          "damage": 5311,
+          "healing": 0,
+          "hp": 1709
+        }
+      ]
+    },
+    {
+      "scenario": "遠程謀攻",
+      "formation": "臥龍元直",
+      "kind": "既有羈絆聯測",
+      "disableBonds": false,
+      "members": [
+        "諸葛亮",
+        "徐庶"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "諸葛亮",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "徐庶",
+          "x": 5,
+          "y": 3
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [
+        "臥龍元直"
+      ],
+      "seconds": 0.35,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 2,
+      "heroCount": 2,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 3.6,
+      "frozenShare": 0,
+      "individual": [
+        {
+          "name": "諸葛亮",
+          "damage": 7800,
+          "healing": 0,
+          "hp": 1162
+        },
+        {
+          "name": "徐庶",
+          "damage": 0,
+          "healing": 0,
+          "hp": 1278
+        }
+      ]
+    },
+    {
+      "scenario": "遠程謀攻",
+      "formation": "臥龍元直（關閉羈絆）",
+      "kind": "既有羈絆聯測",
+      "disableBonds": true,
+      "members": [
+        "諸葛亮",
+        "徐庶"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "諸葛亮",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "徐庶",
+          "x": 5,
+          "y": 3
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [],
+      "seconds": 3.35,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 2,
+      "heroCount": 2,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 33.4,
+      "frozenShare": 0,
+      "individual": [
+        {
+          "name": "諸葛亮",
+          "damage": 7658,
+          "healing": 0,
+          "hp": 697
+        },
+        {
+          "name": "徐庶",
+          "damage": 142,
+          "healing": 0,
+          "hp": 1278
+        }
+      ]
+    },
+    {
+      "scenario": "遠程謀攻",
+      "formation": "三將控場",
+      "kind": "控制接續測試",
+      "disableBonds": false,
+      "members": [
+        "關羽",
+        "張飛",
+        "諸葛亮"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "關羽",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "張飛",
+          "x": 5,
+          "y": 3
+        },
+        {
+          "name": "諸葛亮",
+          "x": 5,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [
+        "桃園結義",
+        "五虎將"
+      ],
+      "seconds": 3.35,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 3,
+      "heroCount": 3,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 27.5,
+      "frozenShare": 3.2,
+      "individual": [
+        {
+          "name": "關羽",
+          "damage": 0,
+          "healing": 0,
+          "hp": 1328
+        },
+        {
+          "name": "張飛",
+          "damage": 1874,
+          "healing": 0,
+          "hp": 1770
+        },
+        {
+          "name": "諸葛亮",
+          "damage": 5926,
+          "healing": 0,
+          "hp": 1235
+        }
+      ]
+    },
+    {
+      "scenario": "遠程謀攻",
+      "formation": "三將控場（關閉羈絆）",
+      "kind": "控制接續測試",
+      "disableBonds": true,
+      "members": [
+        "關羽",
+        "張飛",
+        "諸葛亮"
+      ],
+      "route": [
+        {
+          "x": 0,
+          "y": 4
+        },
+        {
+          "x": 1,
+          "y": 4
+        },
+        {
+          "x": 2,
+          "y": 4
+        },
+        {
+          "x": 3,
+          "y": 4
+        },
+        {
+          "x": 4,
+          "y": 4
+        },
+        {
+          "x": 5,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "placements": [
+        {
+          "name": "關羽",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "name": "張飛",
+          "x": 5,
+          "y": 3
+        },
+        {
+          "name": "諸葛亮",
+          "x": 5,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "name": "刀",
+          "x": 7,
+          "y": 4
+        }
+      ],
+      "bonds": [],
+      "seconds": 3.35,
+      "kills": 12,
+      "total": 12,
+      "gateHP": 3000,
+      "heroesAlive": 3,
+      "heroCount": 3,
+      "enemyHP": 0,
+      "damage": 7800,
+      "healing": 0,
+      "shield": 0,
+      "control": 27.5,
+      "frozenShare": 3.2,
+      "individual": [
+        {
+          "name": "關羽",
+          "damage": 0,
+          "healing": 0,
+          "hp": 1308
+        },
+        {
+          "name": "張飛",
+          "damage": 1705,
+          "healing": 0,
+          "hp": 1770
+        },
+        {
+          "name": "諸葛亮",
+          "damage": 6095,
+          "healing": 0,
+          "hp": 1235
+        }
+      ]
+    }
+  ]
+};

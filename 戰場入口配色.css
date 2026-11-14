@@ -1,0 +1,35 @@
+/* 與主入口共用米白、淡金、墨綠意象；不改地圖素材與品質辨識色。 */
+:root{color-scheme:light;background:#eee9dc;color:#253d31}
+body{background:#eee9dc;color:#253d31}
+body .panel{background:#f8f4e8;border-color:#c9ceb7}
+body .battle,body #portraitBattle{background:#dfe3d5;border-color:#b7bda3;border-radius:8px}
+body button,body select{background:#f8f5e9;color:#253d31;border-color:#b8bea8}
+body button.active,body .page-tabs button.active{background:#2d503b;color:#fff0d5;border-color:#2d503b}
+body button:focus-visible,body select:focus-visible{outline:3px solid #b88739;outline-offset:2px}
+body p,body header span,body .controls label,body .label,body .metrics,body .note,body .supply small{color:#64725d}
+body h2,body #selection,body #foodCount,body #battleHud{color:#253d31}
+body #materialProgress,body .eyebrow{color:#806332}
+body .skill-line{background:#e5e8d8}
+body .skill-effect,body .skill-state{color:#304b38}
+body .skill-state.cooling{color:#785921}
+body .skill-name-box{background:#fff;color:#17251c;border-color:#7c896f}
+body .skill-name-box.cooling{background:#737b77;color:#fff}
+body .skill-details-link{background:none;color:#795a23;border:0}
+body dialog{background:#f8f4e8;color:#253d31;border-color:#a99b76}
+body dialog::backdrop{background:#26372c66}
+body .skill-detail{border-color:#c9ceb7}
+body #status.notice-visible,body #battleMenu{background:#f8f4e8f5;color:#253d31;border-color:#a99b76}
+body #status{color:#725a2e}
+body #bondPanel,body #bondPanel summary{color:#64725d}
+body #bondRows{background:#f8f4e8;border-color:#b8bea8;color:#253d31}
+body #bondRows strong,body #xpPreview summary{color:#795a23}
+body #bondRows .bond-active{color:#2e643c}
+body #tutorialGuide{background:#e5e8d8;color:#253d31;border-color:#b7bda3}
+body #lessonNext:not(:disabled){background:#294e38;color:#fff0d5;border-color:#294e38}
+body .rotate{background:#eee9dc;color:#253d31}
+body .rotate p{color:#64725d}
+body .card.hero-card{background:var(--quality-fill);color:#17251c;border-color:#131a15}
+body .card.hero-card.active{outline-color:#927024}
+body .empty-slot{background:#e5e8d8;color:#64725d}
+body #cards .card.retreat-slot{background:#c9d8bb}
+body .card.hero-card:has(.empty-slot){background:#e5e8d8;opacity:1;border-color:#b8bea8;box-shadow:none}body .card .empty-slot{background:transparent;color:#64725d}

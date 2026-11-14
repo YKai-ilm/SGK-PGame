@@ -1,0 +1,216 @@
+{
+  "version": 1,
+  "status": "試算提案，未套用正式戰鬥",
+  "tiers": [
+    {
+      "quality": "綠",
+      "attack": 24,
+      "defense": 12,
+      "haste": 0.04,
+      "accessoryHP": 80,
+      "accessoryAttack": 8
+    },
+    {
+      "quality": "藍",
+      "attack": 40,
+      "defense": 20,
+      "haste": 0.06,
+      "accessoryHP": 130,
+      "accessoryAttack": 14
+    },
+    {
+      "quality": "橘",
+      "attack": 64,
+      "defense": 30,
+      "haste": 0.08,
+      "accessoryHP": 200,
+      "accessoryAttack": 22
+    },
+    {
+      "quality": "紅",
+      "attack": 96,
+      "defense": 44,
+      "haste": 0.1,
+      "accessoryHP": 300,
+      "accessoryAttack": 34
+    },
+    {
+      "quality": "金",
+      "attack": 140,
+      "defense": 62,
+      "haste": 0.12,
+      "accessoryHP": 420,
+      "accessoryAttack": 50
+    },
+    {
+      "quality": "紫金",
+      "attack": 190,
+      "defense": 84,
+      "haste": 0.14,
+      "accessoryHP": 580,
+      "accessoryAttack": 70
+    }
+  ],
+  "weaponFactors": {
+    "劍": 1,
+    "刀": 1.05,
+    "槍": 1,
+    "矛": 1.08,
+    "戟": 1.08,
+    "斧": 1.12,
+    "弓": 0.9
+  },
+  "profiles": [
+    {
+      "id": "base",
+      "name": "基本配置",
+      "level": 1,
+      "tier": null
+    },
+    {
+      "id": "normal",
+      "name": "一般配置",
+      "level": 2,
+      "tier": 0
+    },
+    {
+      "id": "full",
+      "name": "較完整配置",
+      "level": 3,
+      "tier": 1
+    }
+  ],
+  "stages": [
+    {
+      "id": "village1",
+      "name": "桃源・1波散賊",
+      "region": "桃源",
+      "waves": 1,
+      "encounter": "rabble",
+      "hp": 1,
+      "atk": 1,
+      "def": 0,
+      "bossLevel": 1,
+      "basis": "現行敵軍"
+    },
+    {
+      "id": "village3",
+      "name": "桃源・3波鄧茂",
+      "region": "桃源",
+      "waves": 3,
+      "encounter": "deng",
+      "hp": 1,
+      "atk": 1,
+      "def": 0,
+      "bossLevel": 3,
+      "basis": "現行敵軍"
+    },
+    {
+      "id": "village6",
+      "name": "桃源・6波程遠志",
+      "region": "桃源",
+      "waves": 6,
+      "encounter": "cheng",
+      "hp": 1,
+      "atk": 1,
+      "def": 0,
+      "bossLevel": 6,
+      "basis": "現行敵軍"
+    },
+    {
+      "id": "xuzhou3",
+      "name": "徐州・3波接應測試",
+      "region": "徐州",
+      "waves": 3,
+      "encounter": "deng",
+      "hp": 1.6,
+      "atk": 1.3,
+      "def": 8,
+      "bossLevel": 4,
+      "basis": "未定案；借鄧茂測敵將強度，不代表劇情出場"
+    },
+    {
+      "id": "xuzhou6",
+      "name": "徐州・6波護糧測試",
+      "region": "徐州",
+      "waves": 6,
+      "encounter": "cheng",
+      "hp": 2.2,
+      "atk": 1.6,
+      "def": 14,
+      "bossLevel": 7,
+      "basis": "未定案；借程遠志測敵將強度，不代表劇情出場"
+    }
+  ],
+  "parties": [
+    {
+      "id": "liu",
+      "name": "僅劉備＋基本兵",
+      "front": [
+        "刀",
+        "槍"
+      ],
+      "rear": [
+        "劉備",
+        "弓"
+      ]
+    },
+    {
+      "id": "guan",
+      "name": "劉備＋關羽",
+      "front": [
+        "刀",
+        "關羽"
+      ],
+      "rear": [
+        "劉備",
+        "弓"
+      ]
+    },
+    {
+      "id": "zhang",
+      "name": "劉備＋張飛",
+      "front": [
+        "張飛",
+        "槍"
+      ],
+      "rear": [
+        "劉備",
+        "弓"
+      ]
+    },
+    {
+      "id": "all",
+      "name": "劉關張齊全",
+      "front": [
+        "張飛",
+        "關羽"
+      ],
+      "rear": [
+        "劉備",
+        "弓"
+      ]
+    }
+  ],
+  "pills": [
+    {
+      "name": "赤心丹",
+      "heal": 40
+    },
+    {
+      "name": "銅仙丹",
+      "heal": 75
+    },
+    {
+      "name": "銀仙丹",
+      "heal": 120
+    },
+    {
+      "name": "金仙丹",
+      "heal": 180
+    }
+  ],
+  "dt": 0.05,
+  "limit": 360,
+  "pillTargetRule": "每5秒選生命比例最低的3個我方存活單位，包含基本兵、單字兵及武將；同血量比例隨機，不足3個則全選，不恢復城門，不復活。"
+}

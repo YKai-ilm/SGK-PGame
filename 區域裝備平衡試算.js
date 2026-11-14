@@ -1,0 +1,23 @@
+'use strict';
+(()=>{const d=RegionBalance,c=d.config,$=id=>document.getElementById(id),num=n=>Math.round(n),pct=n=>(n*100).toFixed(1)+'%',result=r=>r.win===null?'逾時':r.win?'守住':'失守',formations=['前段雙阻擋','後段雙阻擋','劉備前排'];
+ const table=(id,rows)=>{$(id).innerHTML=rows.map(r=>'<tr>'+r.map(v=>'<td>'+v+'</td>').join('')+'</tr>').join('');};
+ $('summary').innerHTML=c.stages.map(s=>{const rs=d.main.filter(r=>r.stage===s.id);return '<div class="stat">'+s.name+'<b>'+rs.filter(r=>r.win).length+'／'+rs.length+'組守住</b><small>固定配置測試，非勝率</small></div>';}).join('');
+ table('baseValues',c.tiers.map(t=>[t.quality,'＋'+t.attack,'＋'+t.defense+'／＋'+t.defense,pct(t.haste),'＋'+t.accessoryHP,'＋'+t.accessoryAttack]));
+ $('weaponHead').innerHTML='<tr><th>類別</th>'+c.tiers.map(t=>'<th>'+t.quality+'</th>').join('')+'</tr>';
+ table('weaponValues',Object.entries(c.weaponFactors).map(([name,f])=>[name,...c.tiers.map(t=>'＋'+Math.round(t.attack*f))]));
+ for(const [id,options]of [['stage',c.stages],['profile',c.profiles],['party',c.parties],['effectParty',c.parties]])for(const o of options)$(id).add(new Option(o.name,o.id));
+ $('stage').value='xuzhou6';$('profile').value='normal';$('party').value='liu';$('effectParty').value='zhang';
+ function render(){const stage=c.stages.find(s=>s.id===$('stage').value),r=d.main.find(r=>r.stage===stage.id&&r.profile===$('profile').value&&r.party===$('party').value&&r.formation===+$('formation').value),p=c.profiles.find(p=>p.id===r.profile);$('stageNote').textContent=stage.basis+'。敵軍生命×'+stage.hp+'、攻擊×'+stage.atk+'、兩防各＋'+stage.def+'；末波敵將LV'+stage.bossLevel+'。我方入場局內LV'+p.level+'。';
+ $('outcome').textContent=result(r)+' · '+r.time.toFixed(1)+'秒 · 擊殺'+r.kills+'/'+r.spawned+' · 城門'+num(r.gate)+'/3000 · 存活'+r.alive+'/4';
+ table('unitRows',r.initial.map((u,i)=>[u.name,u.hp,num(u.attack),num(u.def)+'／'+num(u.mdef),u.interval.toFixed(2)+'秒',num(r.final[i].hp)+'/'+r.final[i].max+' · LV'+r.final[i].level]));
+ const range=(rs,k)=>{if(!rs.length)return '—';const vals=rs.map(e=>e[k]);return num(Math.min(...vals))===num(Math.max(...vals))?num(vals[0]):num(Math.min(...vals))+'～'+num(Math.max(...vals));};
+ table('enemyRows',Array.from({length:stage.waves},(_,i)=>{const es=r.spawns.filter(e=>e.wave===i+1),m=es.filter(e=>e.type!=='將'),boss=es.find(e=>e.type==='將');return [i+1,es.length,range(m,'hp'),range(m,'atk'),range(m,'def')+'／'+range(m,'mdef'),boss?boss.name+' · 血'+num(boss.hp)+'／攻'+num(boss.atk)+'／防'+num(boss.def)+'／謀防'+num(boss.mdef):'—'];}));
+ table('waveRows',r.snapshots.map(w=>[w.wave,w.time.toFixed(1)+'秒',w.alive,w.enemies,num(w.gate)]));$('loss').textContent=r.firstLoss?'首次陣亡：第'+r.firstLoss.wave+'波，'+r.firstLoss.time.toFixed(1)+'秒（'+r.firstLoss.names.join('、')+'）。':'本次沒有單位陣亡。';
+ const map=BattleMapPresets.find(m=>m.id==='normal1'&&m.cols===6&&m.rows===10);$('map').replaceChildren();for(let y=0;y<10;y++)for(let x=0;x<6;x++){const el=document.createElement('div'),unit=r.initial.find(u=>u.x===x&&u.y===y),road=map.path.some(p=>p.x===x&&p.y===y),block=map.blocks.some(p=>p.x===x&&p.y===y);el.className='cell '+(unit?'unit':block?'block':road?'road':'');el.textContent=unit?.name||(map.path[0].x===x&&map.path[0].y===y?'入':map.path.at(-1).x===x&&map.path.at(-1).y===y?'城':'');el.title=`(${x},${y}) ${unit?.name||''}`;$('map').append(el);}}
+ for(const id of ['stage','profile','party','formation'])$(id).onchange=render;render();
+ $('pillValues').innerHTML=c.pills.map(p=>'<div class="stat">'+p.name+'<b>每人＋'+p.heal+'</b><small>每5秒；全隊上限'+p.heal*3+'，無傷不補</small></div>').join('');
+ function renderEffects(){const party=$('effectParty').value;table('pillRows',[0,...c.pills.map(p=>p.heal)].map(heal=>{const rs=d.items.filter(r=>r.party===party&&r.pill===heal),loss=rs.filter(r=>r.firstLoss);return [heal||'未帶丹藥',num(rs.reduce((n,r)=>n+r.healed,0)/rs.length),rs.map(result).join('／'),loss.length?(loss.reduce((n,r)=>n+r.firstLoss.time,0)/loss.length).toFixed(1)+'秒':'無陣亡'];}));table('smokeRows',d.smoke.filter(r=>r.party===party).map(r=>[r.smoke+'秒',result(r),r.smokeUsed?'是':'否',r.preventedHits,r.firstLoss?r.firstLoss.time.toFixed(1)+'秒':'無陣亡']));} $('effectParty').onchange=renderEffects;renderEffects();
+ $('poisonAssumptions').textContent=d.effects.poison.assumptions;table('poisonRows',d.effects.poison.rows.map(r=>[r.interval+'秒',r.duration+'秒',num(r.pure),num(r.poison),pct(r.delta),pct(r.min)+'～'+pct(r.max)]));
+ table('isolated',c.parties.map(p=>[p.name,...[null,0,1,2,3,4,5].map(t=>{const r=d.isolated.find(r=>r.party===p.id&&r.tier===t);return result(r)+'／存活'+r.alive;})]));
+ $('convergence').textContent='主矩陣180組，以0.05秒一步計算；另選徐州六波一般配置的12組以0.025秒複驗，其中'+d.convergence.filter(r=>r.coarse.win===r.fine.win).length+'組勝負一致。這不是全場景收斂證明。';table('sources',d.sources.map(s=>[s.file,s.sha256]));
+})();

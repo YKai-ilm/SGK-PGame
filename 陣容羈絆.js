@@ -1,0 +1,18 @@
+'use strict';
+window.Bonds=(()=>{
+ const strip=document.createElement('div');strip.id='bondStatus';strip.setAttribute('aria-label','戰場羈絆人數');canvas.after(strip);
+ const dialog=document.createElement('dialog');dialog.id='unitBondDialog';dialog.setAttribute('aria-labelledby','unitBondTitle');dialog.innerHTML='<div class="bond-dialog-head"><strong id="unitBondTitle"></strong><button id="closeUnitBonds" type="button" aria-label="關閉羈絆效果">×</button></div><div id="unitBondBody"></div><small>查看時戰鬥繼續進行</small>';document.body.append(dialog);let viewed=null;
+ const style=document.createElement('style');style.textContent='#bondStatus{display:flex;gap:5px;flex:0 0 auto;align-items:center;overflow-x:auto;max-width:100%;width:100%;min-height:26px;font-size:11px;line-height:20px;padding:2px 4px;color:#b4bca8;white-space:nowrap}#bondStatus span{padding:0 6px;border:1px solid #87927266;border-radius:4px}#bondStatus .active{color:#f2df9f;border-color:#b9a16a;background:#44533a}#battle{flex-direction:column}#unitBondDialog{position:fixed;inset:auto 10px 10px auto;margin:0;width:min(330px,calc(100vw - 20px));max-height:45dvh;overflow:auto;z-index:60;border:1px solid #ad9e77;border-radius:10px;padding:12px;background:#f5efdf;color:#283e31;box-shadow:0 6px 28px #0005;font-size:14px;line-height:1.6}#unitBondDialog p{margin:6px 0}#unitBondDialog small{color:#5c6b56}#unitBondDialog section{border-top:1px solid #bac3ab;padding:8px 0}.bond-dialog-head{display:flex;align-items:center;justify-content:space-between;gap:10px}#closeUnitBonds{background:#e4e5d6;color:#283e31;min-height:32px;min-width:32px;padding:2px 8px}.library-view #bondStatus{display:none}';document.head.append(style);
+ const label=r=>r.id==='tigers'?'五虎上將':r.name;
+ function activeNames(){return units.filter(u=>u.hp>0&&roster[u.type]?.skills.length).map(u=>u.type);}
+ function states(){return BondRules.states(activeNames());}
+ function effects(u){if(!u||u.enemy||u.hp<=0||!units.includes(u)||!roster[u.type]?.skills.length)return{physical:0,magic:0,reduction:0};return BondRules.effects(u.type,activeNames());}
+ function close(){viewed=null;dialog.close();}
+ function show(name,u=null){if(!roster[name]?.skills.length){close();return;}viewed={name,id:u?.id??null};update();if(!dialog.open)dialog.show();}
+ function update(){window.LingCombat?.update();const list=states(),visible=list.filter(r=>r.present.length);const html=visible.length?visible.map(r=>'<span class="'+(r.value?'active':'')+'">'+label(r)+' '+r.present.length+'/'+r.members.length+'</span>').join(''):'<small>羈絆 · 尚無武將在場</small>';if(strip.innerHTML!==html)strip.innerHTML=html;
+  if(!viewed)return;const u=units.find(u=>u.id===viewed.id&&u.hp>0),name=viewed.name,related=list.filter(r=>r.members.includes(name)||(r.id==='qiao'&&r.value));$('unitBondTitle').textContent=name+' · 羈絆效果';
+  const body='<p>'+(u?'已部署 · 加成依存活成員即時更新':'未在場 · 此卡目前不享有羈絆加成')+'</p>'+related.map(r=>'<section><strong>'+label(r)+' '+r.present.length+'/'+r.members.length+'</strong><p>'+(u&&r.value?BondRules.describe(BondRules.sources(name,activeNames()).find(s=>s.id===r.id)):r.value?'場上此羈絆已啟動；此卡未在場，不受益。':'尚未啟動')+(r.id==='ling'&&u?'<br>'+LingCombat.status(u):'')+'</p><p>'+r.stages.map(s=>s.count+'人：'+r.label+Math.round(s.value*100)+'%').join('；')+'</p><small>尚缺：'+(r.missing.join('、')||'已齊全')+'</small></section>').join('')+(related.length?'':'<p>目前尚無此武將的已實裝羈絆。</p>');if($('unitBondBody').innerHTML!==body)$('unitBondBody').innerHTML=body;
+ }
+ $('closeUnitBonds').onclick=close;dialog.addEventListener('cancel',()=>{viewed=null;});document.addEventListener('pointerdown',e=>{if(dialog.open&&!dialog.contains(e.target))close();});
+ update();requestAnimationFrame(()=>window.fitBattle?.());return{states,effects,update,show,close};
+})();

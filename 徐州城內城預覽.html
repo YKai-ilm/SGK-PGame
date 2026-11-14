@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>徐州城內城</title><link rel="stylesheet" href="遊戲字體.css"><link rel="stylesheet" href="桃園起兵.css">
+<style>
+.story{max-width:860px} .stage{background:#eae6d8} .story>header{height:58px} header button{border:1px solid #aaa987;border-radius:5px;background:#fff7e5;padding:6px;font-size:13px}
+.map{width:min(100%,calc((100dvh - 130px - var(--story-safe-top))*2/3))}
+footer{justify-content:center;color:#756b50}dialog{max-width:85vw;border:2px solid #a89970;border-radius:10px;background:#faf3e2;color:#263e33;padding:20px;font:inherit}dialog::backdrop{background:#17291c66}dialog button{float:right;padding:8px 20px;border:1px solid #a89970;background:#e7e9d2;border-radius:5px}
+</style></head>
+<body><main class="story"><header><button id="toggle">隱藏字牌</button><div><strong>徐州城</strong><small>內城</small></div></header>
+<section class="stage"><div class="map"><img id="backdrop" src="徐州城內城-v3-王宮役所對調.png" alt="徐州內城：上方為大型城主府，左下方為役所，左側道路通往城西"><div id="hotspots"></div></div></section>
+<footer><a href="桃園起兵.html">返回桃源村</a> · <a href="劇情場景圖鑑.html">劇情場景圖鑑</a> · 點字牌進入場景查看人物；任務與商店功能尚待接入。</footer></main>
+<dialog id="detail"><h2 id="place"></h2><p id="description"></p><button id="close">關閉</button></dialog>
+<script src="城池場景導航.js"></script><script>
+const places=[
+['城主府',57,17.5,'城主處理城務、接見來客的場所。'],
+['役所',22,92,'城中處理政務的場所。'],
+['驛站',10,29,'通往驛站，櫃檯為驛丞。'],
+['客棧',35,35,'休息住宿的場所。'],
+['酒樓',80,35,'飲食歇腳、打聽消息的場所。'],
+['武器店',33,54.5,'武器店鋪。'],
+['防具店',80,54.5,'防具店鋪。'],
+['訓練店',26,72,'設有練武場與箭靶的訓練場所。'],
+['編輯所',80,69.5,'預留編輯所的位置，功能待定。'],
+['道具店',78,86.5,'出售行旅用品的店鋪。'],
+['城西',8.5,39,'前往徐州城西。'],
+['離開',48,96,'由下方主道離開徐州城。']
+];
+const panel=document.getElementById('detail');
+for(const [name,x,y,description] of places){
+ const b=document.createElement('button');b.className='hotspot scene-sign '+(['城西','離開'].includes(name)?'sign-exit':'sign-common');
+ b.style.cssText='left:'+x+'%;top:'+y+'%;width:'+(name.length>2?14:11)+'%';
+ const span=document.createElement('span');span.textContent=name;b.append(span);
+ b.onclick=()=>{if(name==='離開'){location.href='桃園起兵.html';return;}location.href=CitySceneNavigation.sceneURL(name==='城主府'?'城主府一':name,CitySceneNavigation.context('?city=xuzhou'));};
+ document.getElementById('hotspots').append(b);
+}
+document.getElementById('close').onclick=()=>panel.close();
+document.getElementById('toggle').onclick=function(){const h=document.getElementById('hotspots');h.hidden=!h.hidden;this.textContent=h.hidden?'顯示字牌':'隱藏字牌'};
+</script><script src="行旅手冊導覽.js"></script></body></html>

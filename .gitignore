@@ -1,0 +1,11 @@
+dist/
+node_modules/
+.wrangler/
+.env*
+*.log
+playwright-report/
+test-results/
+*.backup.json
+.DS_Store
+
+本機GM設定.js
