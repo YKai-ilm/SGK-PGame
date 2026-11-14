@@ -13,5 +13,7 @@ window.UnifiedLevelStudy=(()=>{
   return enemies;
  }
  function pools(waves,ratio=2){if(![1,1.5,2].includes(ratio))throw Error('倍率無效');const count=villageExample(waves).length;return {count,settlement:count,battle:Math.floor(count*ratio)};}
- return {need,reward,gain,hp,villageExample,pools};
+ function demand(level){if(!valid(level))throw Error('等級無效');return 50*level*(level-1);}
+ function milestones(){return Array.from({length:20},(_,i)=>{const chapter=i+1,level=chapter*5,quality=chapter<=10?'紅':'紫',star=chapter<=10?chapter:chapter-10;const costs=window.OfficerStarCosts;const fragments=(quality==='紫'?costs['紅'].reduce((n,c)=>n+c.fragments,0)+1600:0)+costs[quality].slice(0,star-1).reduce((n,c)=>n+c.fragments,0);return {chapter,level,quality,star,xp:demand(level),segmentXP:demand(level)-demand(i===0?1:i*5),fragments};});}
+ return {need,reward,gain,hp,villageExample,pools,demand,milestones};
 })();

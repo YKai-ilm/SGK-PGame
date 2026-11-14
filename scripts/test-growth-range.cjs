@@ -42,3 +42,5 @@ assert.equal(result.scenarios[0].total,70);assert.equal(result.scenarios[1].tota
 for(const r of result.scenarios)assert.equal(r.cards.reduce((a,c)=>a+c.earned,0),r.total);
 fs.writeFileSync('波次戰後經驗結果.js','window.WaveSettlementStudy='+JSON.stringify(result,null,2)+';\n');console.log(JSON.stringify(result.scenarios));
 console.log('PASS actual settlement allocator, per-wave totals and persistent-only XP');
+
+const milestones=U.milestones();assert.equal(milestones.length,20);assert.equal(U.demand(5),1000);assert.equal(U.demand(100),495000);assert.equal(milestones[1].segmentXP,3500);assert.equal(milestones.reduce((a,r)=>a+r.segmentXP,0),495000);assert.equal(milestones[9].fragments,5040);assert.equal(milestones[10].fragments,6640);assert.equal(milestones[19].fragments,14200);for(let l=1;l<=100;l++){const r=U.gain(1,0,U.demand(l));assert.equal(r.level,l);assert.equal(r.xp,0);}console.log('PASS cost-only milestones, chapter boundary continuity and XP inversion');
