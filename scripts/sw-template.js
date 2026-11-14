@@ -8,7 +8,8 @@ self.addEventListener('fetch',event=>{const u=new URL(event.request.url);if(even
  })());
 });
 let pending=null;
+function abort(){if(pending)for(const c of pending.clients)c.postMessage({type:'UPDATE_ABORT'});pending=null;}
 self.addEventListener('message',event=>{
- if(event.data?.type==='CHECK_UPDATE'&&!pending){event.waitUntil((async()=>{const clients=await self.clients.matchAll({type:'window',includeUncontrolled:true});if(!clients.length)return;const nonce=crypto.randomUUID();pending={nonce,ids:new Set(clients.map(c=>c.id)),yes:new Set()};for(const c of clients)c.postMessage({type:'CAN_UPDATE',nonce});setTimeout(()=>{if(pending?.nonce===nonce)pending=null;},4000);})());}
- if(event.data?.type==='UPDATE_READY'&&pending?.nonce===event.data.nonce&&event.source?.id){if(!event.data.ready){pending=null;return;}pending.yes.add(event.source.id);if([...pending.ids].every(id=>pending.yes.has(id))){pending=null;event.waitUntil(self.skipWaiting());}}
+ if(event.data?.type==='CHECK_UPDATE'&&!pending){event.waitUntil((async()=>{const clients=await self.clients.matchAll({type:'window',includeUncontrolled:true});if(!clients.length)return;const nonce=crypto.randomUUID();pending={nonce,clients,ids:new Set(clients.map(c=>c.id)),yes:new Set()};for(const c of clients)c.postMessage({type:'CAN_UPDATE',nonce});setTimeout(()=>{if(pending?.nonce===nonce)abort();},4000);})());}
+ if(event.data?.type==='UPDATE_READY'&&pending?.nonce===event.data.nonce&&event.source?.id){if(!event.data.ready){abort();return;}pending.yes.add(event.source.id);if([...pending.ids].every(id=>pending.yes.has(id))){pending=null;event.waitUntil(self.skipWaiting());}}
 });

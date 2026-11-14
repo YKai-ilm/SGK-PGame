@@ -11,9 +11,18 @@ try{FullSave.recover();}catch(e){document.documentElement.textContent='存檔恢
  window.GameUpdate={safe:()=>!stale&&window.GameCanUpdate?.()===true};
  window.addEventListener('load',async()=>{
   if(!('serviceWorker' in navigator)||!['https:','http:'].includes(location.protocol)||!window.APP_VERSION)return;
-  try{const reg=await navigator.serviceWorker.register('sw.js',{updateViaCache:'none'});let reloading=false;
-   navigator.serviceWorker.addEventListener('message',e=>{if(e.data?.type==='CAN_UPDATE')e.source?.postMessage({type:'UPDATE_READY',nonce:e.data.nonce,ready:GameUpdate.safe()});});
-   navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!reloading&&reg.active){reloading=true;location.reload();}});
+  let controlled=!!navigator.serviceWorker.controller;
+  try{const reg=await navigator.serviceWorker.register('sw.js',{updateViaCache:'none'});let reloading=false,lock=null,lockTimer;
+   const unlock=()=>{lock?.remove();lock=null;clearTimeout(lockTimer);};
+   const block=e=>{if(lock){e.preventDefault();e.stopImmediatePropagation();}};
+   document.addEventListener('click',block,true);document.addEventListener('keydown',block,true);
+   navigator.serviceWorker.addEventListener('message',e=>{
+    if(e.data?.type==='UPDATE_ABORT'){unlock();return;}
+    if(e.data?.type!=='CAN_UPDATE')return;
+    const ready=GameUpdate.safe();if(ready){unlock();lock=document.createElement('div');lock.style.cssText='position:fixed;inset:0;z-index:2147483647;cursor:wait';lock.setAttribute('aria-label','正在確認更新');document.body.append(lock);lockTimer=setTimeout(unlock,4500);}
+    e.source?.postMessage({type:'UPDATE_READY',nonce:e.data.nonce,ready});
+   });
+   navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!controlled){controlled=true;return;}if(!reloading&&reg.active){reloading=true;location.reload();}});
    const check=()=>{if(reg.waiting&&GameUpdate.safe())reg.waiting.postMessage({type:'CHECK_UPDATE'});};
    reg.addEventListener('updatefound',()=>reg.installing?.addEventListener('statechange',check));
    setInterval(check,5000);setInterval(()=>reg.update().catch(()=>{}),60000);
