@@ -1,6 +1,8 @@
 'use strict';
 window.CardRecycle=(()=>{
  const button=document.createElement('button');button.id='recycleCard';button.textContent='回收';button.title='選卡後點擊，或將卡片拖到這裡';document.querySelector('.supply-actions').append(button);
+ // 招募操作集中排列；存檔按鈕隨後會接在撤退按鈕後方。
+ button.after(document.getElementById('retreatBattle'));
  const dialog=document.createElement('dialog');dialog.id='recycleDialog';dialog.setAttribute('aria-label','回收卡片確認');document.body.append(dialog);
  function value(type,level=1){const base=roster[type]?.skills.length?10:3;return Math.floor(base*(1+.2*(level-1))*.5+1e-8);}
  function request(source){if(!Recruit.enabled||!actionAllowed())return;const slot=typeof source==='number',u=slot?Recruit.saved(source):source,type=slot?deck[source]:u?.type;
