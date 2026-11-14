@@ -17,17 +17,21 @@ try{FullSave.recover();}catch(e){document.documentElement.textContent='存檔恢
    const block=e=>{if(lock){e.preventDefault();e.stopImmediatePropagation();}};
    document.addEventListener('click',block,true);document.addEventListener('keydown',block,true);
    navigator.serviceWorker.addEventListener('message',e=>{
+    if(e.data?.type==='OFFLINE_STATUS'){if(e.source===reg.active&&(reg.installing||reg.waiting))return;window.GameOffline?.receive(e.data);return;}
     if(e.data?.type==='UPDATE_ABORT'){unlock();return;}
     if(e.data?.type!=='CAN_UPDATE')return;
     const ready=GameUpdate.safe();if(ready){unlock();lock=document.createElement('div');lock.style.cssText='position:fixed;inset:0;z-index:2147483647;cursor:wait';lock.setAttribute('aria-label','正在確認更新');document.body.append(lock);lockTimer=setTimeout(unlock,4500);}
     e.source?.postMessage({type:'UPDATE_READY',nonce:e.data.nonce,ready});
    });
    navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!controlled){controlled=true;return;}if(!reloading&&reg.active){reloading=true;location.reload();}});
+   const report=()=>{const worker=reg.installing||reg.waiting||reg.active;worker?.postMessage({type:'OFFLINE_QUERY'});};
+   const sync=()=>{report();if(!reg.installing)(reg.waiting||reg.active)?.postMessage({type:'OFFLINE_SYNC'});};
    const check=()=>{if(reg.waiting&&GameUpdate.safe())reg.waiting.postMessage({type:'CHECK_UPDATE'});};
    reg.addEventListener('updatefound',()=>reg.installing?.addEventListener('statechange',check));
-   setInterval(check,5000);setInterval(()=>reg.update().catch(()=>{}),60000);
+   setInterval(check,5000);setInterval(()=>{reg.update().catch(()=>{});sync();},60000);
+   window.addEventListener('online',()=>{reg.update().catch(()=>{});sync();});
    document.addEventListener('visibilitychange',()=>{if(!document.hidden){reg.update().catch(()=>{});check();}});
-   check();
+   sync();check();
    window.GameUpdate.status=()=>reg.waiting?'新版已準備，回主城後會自動更新':'目前版本 '+APP_VERSION;
   }catch(e){console.warn('更新檢查暫時無法連線',e);}
  });
