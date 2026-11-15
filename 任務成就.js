@@ -1,7 +1,7 @@
 'use strict';
 window.ProgressRewards=(()=>{
  const number=x=>Number.isSafeInteger(x)&&x>=0?x:0;
- function init(s){s.rewards??={};const r=s.rewards;r.claims??={};r.history=Array.isArray(r.history)?r.history:[];r.modes??={};for(const mode of ['story','battle']){const m=r.modes[mode]??={};m.coins=number(m.coins);m.diamonds=number(m.diamonds);m.visited=Array.isArray(m.visited)?[...new Set(m.visited)]:[];m.teamReady=!!m.teamReady;}return r;}
+ function init(s){s.rewards??={};const r=s.rewards;window.SharedWallet.init(s);r.claims??={};r.history=Array.isArray(r.history)?r.history:[];r.modes??={};for(const mode of ['story','battle']){const m=r.modes[mode]??={};m.visited=Array.isArray(m.visited)?[...new Set(m.visited)]:[];m.teamReady=!!m.teamReady;}return r;}
  function sync(s){window.ChestSystem?.syncUnlocked(s);const r=init(s);for(const mode of ['story','battle']){if(Object.entries(s.teams).some(([k,t])=>(mode==='battle'?k==='battle':k.startsWith('story:'))&&t.slots?.some(n=>s.unlocks[mode].heroes.includes(n))))r.modes[mode].teamReady=true;}return r;}
  function rows(s){const r=sync(s),m=r.modes[s.mode],done=s.tutorial.status==='completed',skipped=s.tutorial.status==='skipped';return [
  {id:'tutorial',kind:'task',name:done?'完整教學獎勵':'首次入城獎勵',desc:done?'完成四段演練。舊版完成資格也可領取。':skipped?'跳過教學，領取基本獎勵。':'完成教學或確認跳過後領取。',value:done||skipped?1:0,goal:1,coins:done?200:100,letterCount:done?2:0,targetMode:'story',global:true},
@@ -27,7 +27,7 @@ window.ProgressRewards=(()=>{
   window.ChestSystem?.syncUnlocked(s);
   return picked;
  }
- function claim(s,id){const item=rows(s).find(x=>x.id===id);if(!item||item.claimed||item.value<item.goal)return null;const r=s.rewards,mode=item.targetMode||s.mode,m=r.modes[mode];
+ function claim(s,id){const item=rows(s).find(x=>x.id===id);if(!item||item.claimed||item.value<item.goal)return null;const r=s.rewards,mode=item.targetMode||s.mode,m=window.SharedWallet.init(s);
   const letters=item.letterCount?drawLetters(s,mode,item.letterCount):[];
   m.coins+=item.coins;m.diamonds+=item.diamonds;
   const record={key:item.key,name:item.name,mode,coins:item.coins,diamonds:item.diamonds,letters,at:new Date().toISOString()};r.claims[item.key]=record;r.history.unshift(record);if(id==='tutorial')s.tutorial.reward='claimed';return record;}

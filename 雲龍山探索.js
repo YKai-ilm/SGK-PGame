@@ -14,7 +14,7 @@ window.YunlongExploration=(()=>{
  function openChest(){const s=read();if(s.rewards?.claims?.[chestClaim])return false;s.storyItems??={};const n=s.storyItems.protectionSmoke;s.storyItems.protectionSmoke=(Number.isSafeInteger(n)&&n>0?n:0)+1;s.rewards??={};s.rewards.claims??={};s.rewards.claims[chestClaim]={at:Date.now(),items:['護身煙']};localStorage.setItem(key,JSON.stringify(s));return true;}
  const bagClaim='yunlongTreeBag';
  function bagTaken(){return !!read().rewards?.claims?.[bagClaim];}
- function takeBag(){const s=read();if(s.rewards?.claims?.[bagClaim])return false;s.rewards??={};s.rewards.modes??={};s.rewards.modes.story??={};const n=s.rewards.modes.story.coins;s.rewards.modes.story.coins=(Number.isSafeInteger(n)&&n>=0?n:0)+20;s.rewards.claims??={};s.rewards.claims[bagClaim]={at:Date.now(),coins:20};localStorage.setItem(key,JSON.stringify(s));return true;}
+ function takeBag(){const s=read();if(s.rewards?.claims?.[bagClaim])return false;s.rewards??={};window.SharedWallet.init(s).coins+=20;s.rewards.claims??={};s.rewards.claims[bagClaim]={at:Date.now(),coins:20};localStorage.setItem(key,JSON.stringify(s));return true;}
  function huangVisible(){try{return read().storyEvents?.dreamReincarnationTriggered===true;}catch{return false;}}
  return {claimed,collect,chestOpened,openChest,bagTaken,takeBag,huangVisible};
 })();

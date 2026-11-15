@@ -14,7 +14,7 @@ window.BubbleTraining=(()=>{
  function start(now=Date.now()){
   const s=read();if(s.bubbleTraining?.active)return s.bubbleTraining.active;
   if(s.mode!=='story'||!names(s.storyFaction).length)throw Error('請先選擇劇情陣營。');
-  const wallet=ProgressRewards.init(s).modes.story;if(wallet.coins<cost)throw Error('金幣不足，需要100金幣。');
+  const wallet=window.SharedWallet.init(s);if(wallet.coins<cost)throw Error('金幣不足，需要100金幣。');
   if(!rewardPool(s,s.storyFaction).length)throw Error('此陣營暫無可用獎勵。');
   const g={id:crypto.randomUUID(),faction:s.storyFaction,deadline:now+duration,score:0,matches:0,shots:0,...seed(names(s.storyFaction))};g.current=ammo(g);g.next=ammo(g,g.current);wallet.coins-=cost;s.bubbleTraining??={};s.bubbleTraining.active=g;write(s);return g;
  }
