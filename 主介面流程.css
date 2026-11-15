@@ -68,3 +68,8 @@
 .app>.resources{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
 .resources>span{min-width:0;white-space:nowrap;text-align:left}
 .resources b{font-variant-numeric:tabular-nums}
+
+/* Only the bag inventory scrolls; heading and category controls stay in place. */
+#content:has(>#bagCollection){display:flex;flex-direction:column;overflow:hidden}
+#content:has(>#bagCollection)>*{flex-shrink:0}
+#content:has(>#bagCollection)>#bagCollection{flex:1 1 0;min-height:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior-y:contain;scrollbar-width:thin;padding:0 2px 8px}

@@ -17,7 +17,7 @@
  // 完成訊息送出前關頁，也可從已保存的四段演練補回資格。
  try{const cp=JSON.parse(localStorage.getItem(trainingKey)||'null');if(state.tutorial.status==='progress'&&cp?.engine==='shared-battle-v2'&&cp.complete&&cp.stage===3&&cp.history?.length===4&&cp.history.every(x=>x===true)){state.tutorial={status:'completed',step:3,reward:'earned-pending',engine:1};localStorage.setItem(key,JSON.stringify(state));}}catch{}
  ProgressRewards.init(state);
- let rewardTab='task',taskReturn=false,bagTab='items',armoryTab='formation',equipmentFilter='all',weaponFilter='all',equipmentView=null;
+ let rewardTab='task',taskReturn=false,bagTab='items',itemFilter='all',armoryTab='formation',equipmentFilter='all',weaponFilter='all',equipmentView=null;
  let page=state.page||'home',tab='heroes',search='',draft=null,pickSlot=null,pickFaction=state.libraryFaction,teachVisible=false,toastTimer;
  const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const btn=(text,a,extra='',cls='')=>`<button data-a="${a}" ${extra} class="${cls}">${text}</button>`;
@@ -56,7 +56,21 @@
 
 
   if(state.mode==='story'&&bagTab==='items'&&state.storyItems?.letterXPBook120>0){const empty=$('content').querySelector('section.panel');if(empty?.textContent.includes('目前沒有道具'))empty.remove();$('content').insertAdjacentHTML('beforeend','<section class="panel bag-item"><strong>字卡經驗書（120經驗）</strong><span>×'+state.storyItems.letterXPBook120+'</span>'+btn('使用','useXPBook120')+'</section>');}
-  if(state.mode==='story'&&bagTab==='items'&&Number.isSafeInteger(state.storyItems?.protectionSmoke)&&state.storyItems.protectionSmoke>0){const empty=$('content').querySelector('section.panel');if(empty?.textContent.includes('目前沒有道具'))empty.remove();$('content').insertAdjacentHTML('beforeend','<section class="panel bag-item"><span class="bag-item-mark">煙</span><span><strong>護身煙</strong><small>消耗道具</small></span><b>×'+state.storyItems.protectionSmoke+'</b></section>');}
+  if(state.mode==='story'&&bagTab==='items'&&Number.isSafeInteger(state.storyItems?.protectionSmoke)&&state.storyItems.protectionSmoke>0){const empty=$('content').querySelector('section.panel');if(empty?.textContent.includes('目前沒有道具'))empty.remove();$('content').insertAdjacentHTML('beforeend','<section class="panel bag-item" data-item-kind="consumable"><span class="bag-item-mark">煙</span><span><strong>護身煙</strong><small>消耗道具</small></span><b>×'+state.storyItems.protectionSmoke+'</b></section>');}
+  layoutBag();
+ }
+ function layoutBag(){
+  const content=$('content'),list=document.createElement('div');list.id='bagCollection';list.tabIndex=0;list.setAttribute('role','region');list.setAttribute('aria-label',bagTab==='items'?'道具清單':'裝備清單');
+  if(bagTab==='items'){
+   const choices=[['all','全部'],['consumable','消耗道具'],['growth','成長道具'],['quest','劇情道具']];
+   const filters=document.createElement('div');filters.className='equipment-filters';filters.innerHTML=choices.map(([id,label])=>btn(label,'itemFilter','data-filter="'+id+'" aria-pressed="'+(itemFilter===id)+'"',itemFilter===id?'active':'')).join('');
+   for(const item of [...content.children].slice(1)){if(!item.matches('.bag-item'))continue;const kind=item.dataset.itemKind||(item.matches('[data-a="bagItem"]')?'consumable':item.querySelector('[data-a="useXPBook120"]')?'growth':'quest');if(itemFilter==='all'||itemFilter===kind)list.append(item);else item.remove();}
+   for(const empty of content.querySelectorAll(':scope>section.panel'))empty.remove();
+   content.append(filters);if(!list.children.length)list.innerHTML='<section class="panel"><p>目前沒有'+(itemFilter==='all'?'道具':choices.find(x=>x[0]===itemFilter)[1])+'。</p></section>';
+  }else{
+   for(const item of [...content.children])if(!item.matches('.bag-heading,.equipment-filters,.weapon-filter'))list.append(item);
+  }
+  content.append(list);
  }
  function renderLibrary(){const visited=state.rewards.modes[state.mode].visited;if(!visited.includes(state.libraryFaction)){visited.push(state.libraryFaction);save();}$('content').innerHTML=`${taskBack()}<div class="row library-heading"><h2>${state.mode==='story'?'劇情':'對戰'}字卡庫</h2><div class="subtabs">${btn('武將','tab','data-tab="heroes"',tab==='heroes'?'active':'')}${btn('單字','tab','data-tab="letters"',tab==='letters'?'active':'')}</div>${btn('編輯隊伍','team','','confirm')}</div>${factionTabs(state.libraryFaction,'faction')}<p class="small">五陣營皆可瀏覽；只有已解鎖的武將能編隊。劇情另限目前所選陣營。</p>${state.mode==='story'?'<p class="notice">訓練可分配經驗：'+(state.chests?.story?.trainingXP||0)+'。切換「單字」，點已持有字卡即可分配。</p>':''}<input id="search" class="search" placeholder="搜尋名稱" aria-label="搜尋名稱" value="${esc(search)}"><div class="collection" id="collection">${libraryItems()}</div>`;$('search').oninput=e=>{search=e.target.value;$('collection').innerHTML=libraryItems();};}
  function openTeam(){if(state.mode==='story'&&!state.storyFaction){toast('先選擇劇情陣營，再設定該路線的隊伍。');navigate('journey');return;}if(!draft)draft=JSON.parse(JSON.stringify(currentTeam()));page='armory';save();render();}
@@ -157,7 +171,7 @@
 
  if(a==='equipment'){showEquipment(b.dataset.name);return;}
  if(a==='equipmentSlot'){showEquipmentSlot(b.dataset.name,b.dataset.slot);return;}
- if(a==='equipmentFilter'){equipmentFilter=Object.hasOwn(EquipmentSystem.slots,b.dataset.filter)?b.dataset.filter:'all';renderBag();return;}
+ if(a==='itemFilter'){itemFilter=['consumable','growth','quest'].includes(b.dataset.filter)?b.dataset.filter:'all';renderBag();return;}if(a==='equipmentFilter'){equipmentFilter=Object.hasOwn(EquipmentSystem.slots,b.dataset.filter)?b.dataset.filter:'all';renderBag();return;}
  if(a==='bagEquipment'){showBagEquipment(b.dataset.item);return;}
  if(a==='equipItem'){commitEquipment(b.dataset.name,b.dataset.slot,b.dataset.item);return;}
  if(a==='unequipItem'){commitEquipment(b.dataset.name,b.dataset.slot,null);return;}
