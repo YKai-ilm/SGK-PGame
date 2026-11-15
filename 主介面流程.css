@@ -73,3 +73,8 @@
 #content:has(>#bagCollection){display:flex;flex-direction:column;overflow:hidden}
 #content:has(>#bagCollection)>*{flex-shrink:0}
 #content:has(>#bagCollection)>#bagCollection{flex:1 1 0;min-height:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior-y:contain;scrollbar-width:thin;padding:0 2px 8px}
+
+.army-resources>div{display:grid;grid-template-columns:4em minmax(0,1fr);gap:6px;align-items:center}
+.resource-formula{display:grid;grid-template-columns:3em minmax(5ch,1fr) .7em 4em minmax(5ch,1fr) .7em 3em minmax(5ch,1fr);align-items:center;font-variant-numeric:tabular-nums}
+.resource-formula>span{text-align:center;white-space:nowrap}
+@media(max-width:370px){.army-resources>div{grid-template-columns:minmax(0,1fr);gap:3px}}
