@@ -1,0 +1,10 @@
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
+const context={window:{}};vm.runInNewContext(fs.readFileSync('任務成就.js','utf8'),context);const R=context.window.ProgressRewards;
+const make=()=>({mode:'story',tutorial:{status:'skipped'},teams:{},unlocks:{story:{heroes:['劉備','關羽','張飛'],letters:[]},battle:{heroes:['劉備','關羽','張飛'],letters:[]}},storyEvents:{peachOath:true}});
+let s=make();R.init(s);s.rewards.modes.story.visited=['魏','蜀','吳','群雄','東漢'];
+assert.ok(R.claim(s,'tutorial'));assert.equal(R.claim(s,'tutorial'),null);assert.ok(R.claim(s,'peachOath'));assert.ok(R.claim(s,'collect3'));assert.ok(R.claim(s,'factions'));
+const story=JSON.stringify(s.rewards.modes.story);s.mode='battle';assert.deepEqual(Array.from(R.rows(s),x=>x.id),['factions','team']);for(const id of ['tutorial','graduate','peachOath','collect3','yunlongRescue'])assert.equal(R.claim(s,id),null);assert.equal(R.claim(s,'factions'),null);assert.equal(JSON.stringify(s.rewards.modes.story),story);assert.equal(s.rewards.modes.battle.coins,0);
+s.rewards.modes.battle.visited=['魏','蜀','吳','群雄','東漢'];assert.ok(R.claim(s,'factions'));assert.equal(R.claim(s,'factions'),null);assert.equal(s.rewards.modes.battle.coins,100);s=JSON.parse(JSON.stringify(s));s.mode='story';assert.equal(R.claim(s,'factions'),null);assert.equal(R.claim(s,'peachOath'),null);
+for(const source of ['claims','history']){const old=make();R.init(old);const record={key:'peachOath',mode:'story',diamonds:2};if(source==='claims')old.rewards.claims.peachOath=record;else old.rewards.history.push(record);assert.equal(R.rows(old).find(x=>x.id==='peachOath').claimed,true);assert.equal(R.claim(old,'peachOath'),null);assert.equal(old.rewards.modes.story.diamonds,0);}
+const graduate=make();graduate.tutorial.status='completed';R.init(graduate);graduate.mode='battle';assert.equal(R.claim(graduate,'graduate'),null);graduate.mode='story';assert.equal(R.claim(graduate,'graduate').mode,'story');assert.equal(R.claim(graduate,'graduate'),null);
+console.log('PASS mode-specific catalogs/progress/wallets, repeated claims, reload, shared unlock isolation and legacy claims/history');

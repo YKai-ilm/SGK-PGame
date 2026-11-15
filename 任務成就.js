@@ -8,13 +8,13 @@ window.ProgressRewards=(()=>{
  {id:'tutorialLetters',kind:'task',name:'教學字卡補領',desc:'已領過舊版教學金幣，可補領兩張蜀國青色單字卡，不重發金幣。',value:done&&!!r.claims.tutorial?1:0,goal:1,coins:0,letterCount:2,targetMode:'story',global:true},
  {id:'factions',kind:'task',name:'認識五方勢力',desc:'在字卡庫瀏覽魏、蜀、吳、群雄、東漢。',value:m.visited.length,goal:5,coins:100},
  {id:'team',kind:'task',name:'整備第一支隊伍',desc:'保存至少含一名已解鎖武將的隊伍。',value:+m.teamReady,goal:1,coins:100},
- {id:'graduate',kind:'achievement',name:'演武結業',desc:'完整完成四段教學；跳過不會解鎖。',value:+done,goal:1,coins:0,diamonds:5,global:true},
+ {id:'graduate',kind:'achievement',name:'演武結業',desc:'完整完成四段教學；跳過不會解鎖。',value:+done,goal:1,coins:0,diamonds:5,targetMode:'story',global:true},
  {id:'taoyuanFunding',kind:'achievement',name:'三國人生啟動資助',desc:'完成張世平的贈禮對話，獲得第一筆起兵軍資。',value:+!!r.claims.taoyuanMerchant,goal:1,coins:0,diamonds:2,targetMode:'story',global:true},
  {id:'peachOath',kind:'achievement',name:'桃園三結義',desc:'劉備、關羽、張飛於桃園結為兄弟。',value:+!!s.storyEvents?.peachOath,goal:1,coins:0,diamonds:2,targetMode:'story',global:true},
  {id:'yunlongRescue',kind:'achievement',name:'仁心救援',desc:'於雲龍山協助華陀救醒小牛，與大牛、小牛回徐州留宿。',value:+!!s.storyEvents?.yunlongRescue?.completed,goal:1,coins:0,diamonds:2,targetMode:'story',global:true},
  {id:'collect1',kind:'achievement',name:'初識名將',desc:'累計解鎖一名武將。',value:s.unlocks[s.mode].heroes.length,goal:1,coins:0,diamonds:2},
  {id:'collect3',kind:'achievement',name:'群英初聚',desc:'累計解鎖三名不同武將。',value:s.unlocks[s.mode].heroes.length,goal:3,coins:0,diamonds:5}
- ].filter(x=>x.id!=='tutorialLetters'||(done&&r.claims.tutorial&&!r.claims.tutorial.letters?.length&&!r.claims.tutorialLetters)).map(x=>{const key=(x.global?x.id:s.mode+':'+x.id)+(x.kind==='achievement'?':diamonds-v1':'');return {...x,diamonds:x.diamonds||0,key,claimed:!!r.claims[key]};});}
+ ].filter(x=>s.mode==='story'||['factions','team'].includes(x.id)).filter(x=>x.id!=='tutorialLetters'||(done&&r.claims.tutorial&&!r.claims.tutorial.letters?.length&&!r.claims.tutorialLetters)).map(x=>{const key=(x.global?x.id:s.mode+':'+x.id)+(x.kind==='achievement'?':diamonds-v1':'');const legacyKey=key.replace(/:diamonds-v1$/,'');const claimed=!!r.claims[key]||!!r.claims[legacyKey]||r.history.some(h=>h.key===key||h.key===legacyKey);return {...x,name:(s.mode==='battle'?'對戰 · ':'')+x.name,diamonds:x.diamonds||0,key,claimed};});}
 
  function drawLetters(s,mode,count){
   const pool=[...new Set(OFFICER_PROPOSAL.entries.filter(p=>p.faction==='蜀').map(p=>p.name).join(''))];
