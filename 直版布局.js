@@ -9,7 +9,7 @@
  #bondStatus{min-height:22px;line-height:18px;padding:0 4px}
  .toolbar[hidden],.toolbar:empty,.supply>[hidden]{display:none!important}
  .supply-actions{margin:0}#supplyBody:not([hidden]){gap:3px 6px}
- @media(max-aspect-ratio:4/3){main{gap:3px}main>section.panel{gap:3px;padding-top:4px}}
+ @media(max-aspect-ratio:4/3){main{gap:1px}main>section.panel{gap:3px;padding-top:1px}#portraitBattle{align-items:flex-start}}
  `;document.head.append(style);
  const horizontal=matchMedia('(min-aspect-ratio:4/3)'),aside=document.querySelector('main>aside.panel');
  const movable=[document.querySelector('.supply'),$('cards')].filter(Boolean).map(el=>{const anchor=document.createComment('直版原位');el.before(anchor);return{el,anchor};});
