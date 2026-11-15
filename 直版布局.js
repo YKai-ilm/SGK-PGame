@@ -6,6 +6,10 @@
 
  @media(min-aspect-ratio:4/3){main{max-width:none;width:100%;display:grid;grid-template-columns:minmax(0,1fr) 260px;grid-template-rows:auto minmax(0,1fr);gap:5px;padding:5px}main>header{grid-column:1/-1}main>section.panel{grid-column:1;grid-row:2;min-width:0;min-height:0}main>aside.panel{grid-column:2;grid-row:2;min-width:0;min-height:0;overflow:auto;padding:6px}.cards{grid-template-columns:repeat(3,minmax(0,1fr))}.cards .card{height:47px;min-height:47px}#portraitBattle{min-height:0}.sweep-header{font-size:10px!important;padding:2px 0!important}}
  @media(max-aspect-ratio:4/3){body main,body.story-sweep main{padding-top:max(28px,env(safe-area-inset-top,0px));padding-left:max(8px,env(safe-area-inset-left,0px));padding-right:max(8px,env(safe-area-inset-right,0px))}}
+ #bondStatus{min-height:22px;line-height:18px;padding:0 4px}
+ .toolbar[hidden],.toolbar:empty,.supply>[hidden]{display:none!important}
+ .supply-actions{margin:0}#supplyBody:not([hidden]){gap:3px 6px}
+ @media(max-aspect-ratio:4/3){main>section.panel{gap:3px}}
  `;document.head.append(style);
  const horizontal=matchMedia('(min-aspect-ratio:4/3)'),aside=document.querySelector('main>aside.panel');
  const movable=[document.querySelector('.supply'),$('cards')].filter(Boolean).map(el=>{const anchor=document.createComment('直版原位');el.before(anchor);return{el,anchor};});
