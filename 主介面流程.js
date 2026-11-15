@@ -56,17 +56,17 @@
 
 
   if(state.mode==='story'&&bagTab==='items'&&state.storyItems?.letterXPBook120>0){const empty=$('content').querySelector('section.panel');if(empty?.textContent.includes('目前沒有道具'))empty.remove();$('content').insertAdjacentHTML('beforeend','<section class="panel bag-item"><strong>字卡經驗書（120經驗）</strong><span>×'+state.storyItems.letterXPBook120+'</span>'+btn('使用','useXPBook120')+'</section>');}
-  if(state.mode==='story'&&bagTab==='items'&&Number.isSafeInteger(state.storyItems?.protectionSmoke)&&state.storyItems.protectionSmoke>0){const empty=$('content').querySelector('section.panel');if(empty?.textContent.includes('目前沒有道具'))empty.remove();$('content').insertAdjacentHTML('beforeend','<section class="panel bag-item" data-item-kind="consumable"><span class="bag-item-mark">煙</span><span><strong>護身煙</strong><small>消耗道具</small></span><b>×'+state.storyItems.protectionSmoke+'</b></section>');}
+  if(state.mode==='story'&&bagTab==='items'&&Number.isSafeInteger(state.storyItems?.protectionSmoke)&&state.storyItems.protectionSmoke>0){const empty=$('content').querySelector('section.panel');if(empty?.textContent.includes('目前沒有道具'))empty.remove();$('content').insertAdjacentHTML('beforeend','<section class="panel bag-item" data-item-kind="battle"><span class="bag-item-mark">煙</span><span><strong>護身煙</strong><small>消耗道具</small></span><b>×'+state.storyItems.protectionSmoke+'</b></section>');}
   layoutBag();
  }
  function layoutBag(){
   const content=$('content'),list=document.createElement('div');list.id='bagCollection';list.tabIndex=0;list.setAttribute('role','region');list.setAttribute('aria-label',bagTab==='items'?'道具清單':'裝備清單');
   if(bagTab==='items'){
-   const choices=[['all','全部'],['consumable','消耗道具'],['growth','成長道具'],['quest','劇情道具']];
+   const choices=[['all','全部'],['general','一般'],['battle','戰場'],['growth','成長'],['quest','劇情']];
    const filters=document.createElement('div');filters.className='equipment-filters';filters.innerHTML=choices.map(([id,label])=>btn(label,'itemFilter','data-filter="'+id+'" aria-pressed="'+(itemFilter===id)+'"',itemFilter===id?'active':'')).join('');
-   for(const item of [...content.children].slice(1)){if(!item.matches('.bag-item'))continue;const kind=item.dataset.itemKind||(item.matches('[data-a="bagItem"]')?'consumable':item.querySelector('[data-a="useXPBook120"]')?'growth':'quest');if(itemFilter==='all'||itemFilter===kind)list.append(item);else item.remove();}
+   for(const item of [...content.children].slice(1)){if(!item.matches('.bag-item'))continue;const kind=item.dataset.itemKind||(item.matches('[data-a="bagItem"]')?'battle':item.querySelector('[data-a="useXPBook120"]')?'growth':'quest');if(itemFilter==='all'||itemFilter===kind)list.append(item);else item.remove();}
    for(const empty of content.querySelectorAll(':scope>section.panel'))empty.remove();
-   content.append(filters);if(!list.children.length)list.innerHTML='<section class="panel"><p>目前沒有'+(itemFilter==='all'?'道具':choices.find(x=>x[0]===itemFilter)[1])+'。</p></section>';
+   content.append(filters);if(!list.children.length)list.innerHTML='<section class="panel"><p>目前沒有'+(itemFilter==='all'?'道具':choices.find(x=>x[0]===itemFilter)[1]+'道具')+'。</p></section>';
   }else{
    for(const item of [...content.children])if(!item.matches('.bag-heading,.equipment-filters,.weapon-filter'))list.append(item);
   }
@@ -171,7 +171,7 @@
 
  if(a==='equipment'){showEquipment(b.dataset.name);return;}
  if(a==='equipmentSlot'){showEquipmentSlot(b.dataset.name,b.dataset.slot);return;}
- if(a==='itemFilter'){itemFilter=['consumable','growth','quest'].includes(b.dataset.filter)?b.dataset.filter:'all';renderBag();return;}if(a==='equipmentFilter'){equipmentFilter=Object.hasOwn(EquipmentSystem.slots,b.dataset.filter)?b.dataset.filter:'all';renderBag();return;}
+ if(a==='itemFilter'){itemFilter=['general','battle','growth','quest'].includes(b.dataset.filter)?b.dataset.filter:'all';renderBag();return;}if(a==='equipmentFilter'){equipmentFilter=Object.hasOwn(EquipmentSystem.slots,b.dataset.filter)?b.dataset.filter:'all';renderBag();return;}
  if(a==='bagEquipment'){showBagEquipment(b.dataset.item);return;}
  if(a==='equipItem'){commitEquipment(b.dataset.name,b.dataset.slot,b.dataset.item);return;}
  if(a==='unequipItem'){commitEquipment(b.dataset.name,b.dataset.slot,null);return;}
