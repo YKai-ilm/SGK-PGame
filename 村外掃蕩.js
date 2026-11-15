@@ -19,7 +19,7 @@
  const controlsStyle=document.createElement('style');controlsStyle.textContent=`
  .sweep-actions #sweepProgress{font-size:11px;white-space:nowrap;flex-shrink:0}
  .sweep-actions{display:flex;align-items:center;gap:3px;width:100%;min-width:0}
- .sweep-actions #speed{width:62px;min-width:62px;min-height:30px;padding:3px 2px;font-size:11px;margin-left:auto;flex-shrink:0}
+ .sweep-actions #speed{width:52px;min-width:52px;min-height:30px;padding:3px 2px;font-size:11px;margin-left:auto;flex-shrink:0}
  .sweep-actions #tactics{display:flex;flex-direction:row;gap:3px}
  .sweep-actions button{font-size:11px;min-height:30px;padding:4px 5px;white-space:nowrap;flex-shrink:0}
  .sweep-actions #sweepBack{margin-right:1px}
