@@ -10,7 +10,7 @@
  .toolbar[hidden],.toolbar:empty,.supply>[hidden]{display:none!important}
  .supply-actions{margin:0}#supplyBody:not([hidden]){gap:3px 6px}
  @media(max-aspect-ratio:4/3){main{gap:1px}main>section.panel{gap:3px;padding-top:1px}#portraitBattle{align-items:flex-start}}
- @media(max-aspect-ratio:4/3){body main>aside.panel,body.story-sweep main>aside.panel{flex:0 0 auto;height:auto;min-height:128px;max-height:38dvh;padding:8px;overflow:auto}body main,body.story-sweep main{padding-bottom:max(8px,env(safe-area-inset-bottom,0px))}}
+ @media(max-aspect-ratio:4/3){body main>aside.panel,body.story-sweep main>aside.panel{flex:0 0 176px;height:176px;min-height:176px;max-height:176px;padding:8px;overflow:auto}body main,body.story-sweep main{padding-bottom:max(8px,env(safe-area-inset-bottom,0px))}}
  `;document.head.append(style);
  const horizontal=matchMedia('(min-aspect-ratio:4/3)'),aside=document.querySelector('main>aside.panel');
  const movable=[document.querySelector('.supply'),$('cards')].filter(Boolean).map(el=>{const anchor=document.createComment('直版原位');el.before(anchor);return{el,anchor};});
