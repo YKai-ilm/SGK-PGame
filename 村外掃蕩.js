@@ -15,11 +15,11 @@
  actions.append($('sweepBack'),$('sweepProgress'),$('speed'),$('tactics'),$('play'),$('reset'));bar.append(actions);
  const oldToolbar=document.querySelector('main>section .toolbar');if(oldToolbar)oldToolbar.hidden=true;
  const oldControls=document.querySelector('.page-battle-controls');if(oldControls)oldControls.hidden=true;
- $('supplyMode').hidden=true;$('speed').value='1';$('speed').setAttribute('aria-label','戰鬥倍速');for(const option of $('speed').options)option.textContent=option.value+'×';$('reset').textContent='重開';
+ $('supplyMode').hidden=true;$('speed').value='1';$('speed').setAttribute('aria-label','戰鬥倍速');for(const option of $('speed').options)option.textContent=option.value+'X 速';$('reset').textContent='重開';
  const controlsStyle=document.createElement('style');controlsStyle.textContent=`
  .sweep-actions #sweepProgress{font-size:11px;white-space:nowrap;flex-shrink:0}
  .sweep-actions{display:flex;align-items:center;gap:3px;width:100%;min-width:0}
- .sweep-actions #speed{width:46px;min-width:46px;min-height:30px;padding:3px 2px;font-size:11px;margin-left:auto;flex-shrink:0}
+ .sweep-actions #speed{width:62px;min-width:62px;min-height:30px;padding:3px 2px;font-size:11px;margin-left:auto;flex-shrink:0}
  .sweep-actions #tactics{display:flex;flex-direction:row;gap:3px}
  .sweep-actions button{font-size:11px;min-height:30px;padding:4px 5px;white-space:nowrap;flex-shrink:0}
  .sweep-actions #sweepBack{margin-right:1px}
