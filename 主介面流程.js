@@ -42,7 +42,7 @@
  function armoryHeading(){return taskBack()+'<div class="row bag-heading"><h2>軍備</h2><div class="subtabs">'+btn('軍陣','armoryTab','data-tab="formation" aria-pressed="'+(armoryTab==='formation')+'"',armoryTab==='formation'?'active':'')+btn('隊裝','armoryTab','data-tab="equipment" aria-pressed="'+(armoryTab==='equipment')+'"',armoryTab==='equipment'?'active':'')+'</div><small>'+(state.mode==='story'?'劇情':'對戰')+'</small></div>';}
  function renderArmory(){renderTeam();}
  function renderTeamEquipment(){
-  $('content').innerHTML=armoryHeading()+'<section class="panel"><h3>隊伍武將裝備</h3><div class="equipment-options">'+draft.slots.map((name,i)=>name?btn('<b>'+esc(name)+'</b><small>'+(i===5?'軍師':i===6?'運糧':'武將')+' · '+Object.entries(EquipmentSystem.slots).map(([slot,label])=>label+'：'+esc(EquipmentSystem.equipped(state,state.mode,name,slot)?.name||'未裝備')).join('／')+'</small>','equipment','data-name="'+esc(name)+'"'):'').join('')+'</div>'+(!draft.slots.some(Boolean)?'<p>請先到軍陣配置武將。</p>':'')+'</section>';
+  $('content').innerHTML=armoryHeading();
   renderItemShortcuts();$('content').insertAdjacentHTML('beforeend','<div class="actions">'+btn('取消修改','cancelTeam')+btn('確認保存','saveTeam','','confirm')+'</div>');
  }
  function renderBag(){
