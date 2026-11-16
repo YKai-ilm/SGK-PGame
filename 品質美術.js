@@ -23,4 +23,4 @@ function draw(c,u,x,y,s,selected,fullCell=false){
  }
  c.drawImage(sprite,x-sprite.width/2,y-sprite.height/2);
 }
-return{palette,quality,colors,draw};})();
+return{palette,quality,colors,draw,clearCache};})();
