@@ -7,6 +7,7 @@
  function talk(value,finish){lines=value;index=0;done=finish;display();if(!dialog.open)dialog.showModal();}
  function note(text,label='確定',action=null){lines=null;done=action;message.textContent=text;close.textContent=label;close.hidden=false;if(!dialog.open)dialog.showModal();}
  function guard(fn){try{return fn();}catch(e){message.textContent=e.message+'\n進度尚未完成，請再試一次。';close.hidden=false;return false;}}
+ document.addEventListener('click',e=>{if(!dialog.open||!lines||waiting||acting)return;if(e.target.closest('button,a,input,select,textarea'))return;e.preventDefault();e.stopImmediatePropagation();close.click();},true);
  close.onclick=async()=>{if(waiting||acting)return;if(lines&&index<lines.length-1){index++;display();return;}acting=true;try{const fn=done;done=null;lines=null;const run=()=>{try{return fn?.();}catch(e){done=fn;message.textContent=e.message+'\n請按按鈕重試。';return false;}};const result=navigator.locks?await navigator.locks.request('yunlong-hidden-reward',run):run();refresh();if(result!==false&&dialog.open)dialog.close();}finally{acting=false;}};
  function clear(){clearTimeout(timer);lines=null;done=null;waiting=false;close.textContent='確定';close.hidden=false;}
  dialog.addEventListener('close',clear);dialog.addEventListener('cancel',e=>{if(waiting||acting)e.preventDefault();else clear();});
