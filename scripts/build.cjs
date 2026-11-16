@@ -4,7 +4,7 @@ const root=path.resolve(__dirname,'..'),out=path.join(root,'dist');
 // 僅整理固定的輸出目錄，不刪除原始美術。
 if(path.dirname(out)!==root||path.basename(out)!=='dist')throw Error('輸出路徑錯誤');
 fs.mkdirSync(out,{recursive:true});
-const all=[];function walk(dir){for(const e of fs.readdirSync(dir,{withFileTypes:true})){if(['本機GM設定.js','本機版本.js','本機自動更新.js'].includes(e.name)||e.name.startsWith('.')||['dist','node_modules','scripts'].includes(e.name))continue;const p=path.join(dir,e.name);if(e.isDirectory())walk(p);else if(/\.(html|js|css|png|jpg|jpeg|svg|webp|woff2?|json|webmanifest)$/.test(e.name))all.push(path.relative(root,p).replaceAll('\\','/'));}}walk(root);
+const all=[];function walk(dir){for(const e of fs.readdirSync(dir,{withFileTypes:true})){if(['本機GM設定.js','本機版本.js','本機自動更新.js'].includes(e.name)||e.name.startsWith('.')||['dist','node_modules','scripts'].includes(e.name))continue;const p=path.join(dir,e.name);if(e.isDirectory())walk(p);else if(/\.(html|js|css|png|jpg|jpeg|svg|webp|woff2?|mp3|ogg|json|webmanifest)$/.test(e.name))all.push(path.relative(root,p).replaceAll('\\','/'));}}walk(root);
 const chosen=new Set(['index.html','主介面流程預覽.html','存檔備份.html','完整存檔.js','手機執行環境.js','離線資料狀態.js','離線章節設定.json','章節下載.html','manifest.webmanifest','app-icon-192.png','app-icon-512.png']);
 // 以遊戲引用關係收集資源；比對檔名亦涵蓋由場景資料組合的圖片路徑。
 for(let old=-1;old!==chosen.size;){old=chosen.size;for(const f of [...chosen]){if(!/\.(html|js|css|json|webmanifest)$/.test(f))continue;const s=fs.readFileSync(path.join(root,f),'utf8');for(const target of all)if(s.includes(target)||s.includes(path.posix.basename(target)))chosen.add(target);}}

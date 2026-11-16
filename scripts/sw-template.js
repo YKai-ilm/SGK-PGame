@@ -47,12 +47,23 @@ self.addEventListener('activate',event=>event.waitUntil((async()=>{
  for(const k of await caches.keys())if(k.startsWith('sgk-release-')&&k!==CACHE)await caches.delete(k);
  await notify();
 })()));
+// iOS 音訊會分段讀取；從完整離線檔案回覆正確的 206 範圍。
+async function mediaRange(response,request){
+ const range=request.headers.get('Range');if(!range)return response;
+ const m=/^bytes=(\d*)-(\d*)$/.exec(range);if(!m||(!m[1]&&!m[2]))return response;
+ const data=await response.arrayBuffer(),size=data.byteLength;
+ const start=m[1]?Number(m[1]):Math.max(0,size-Number(m[2]));
+ const end=m[1]?(m[2]?Math.min(size-1,Number(m[2])):size-1):size-1;
+ if(start>=size||start>end)return new Response(null,{status:416,headers:{'Content-Range':'bytes */'+size}});
+ const headers=new Headers(response.headers);headers.set('Content-Range','bytes '+start+'-'+end+'/'+size);headers.set('Content-Length',String(end-start+1));headers.set('Accept-Ranges','bytes');
+ return new Response(data.slice(start,end+1),{status:206,headers});
+}
 self.addEventListener('fetch',event=>{const u=new URL(event.request.url);if(event.request.method!=='GET'||u.origin!==ROOT.origin||!u.pathname.startsWith(ROOT.pathname))return;
  if(aliasPaths[u.pathname])u.pathname=aliasPaths[u.pathname];
  if(u.pathname.endsWith('/sw.js')||u.pathname.endsWith('/offline-manifest.json'))return;
- event.respondWith((async()=>{const c=await caches.open(CACHE);u.search='';u.hash='';if(u.pathname===ROOT.pathname)u.pathname+='index.html';else if(!u.pathname.endsWith('/')&&!u.pathname.split('/').pop().includes('.'))u.pathname+='.html';const found=await c.match(u.href),asset=assetByUrl.get(u.href);if(found&&(!asset||await valid(found,asset)))return found.redirected?new Response(found.body,{status:found.status,statusText:found.statusText,headers:found.headers}):found;
+ event.respondWith((async()=>{const c=await caches.open(CACHE);u.search='';u.hash='';if(u.pathname===ROOT.pathname)u.pathname+='index.html';else if(!u.pathname.endsWith('/')&&!u.pathname.split('/').pop().includes('.'))u.pathname+='.html';const found=await c.match(u.href),asset=assetByUrl.get(u.href);if(found&&(!asset||await valid(found,asset)))return mediaRange(found.redirected?new Response(found.body,{status:found.status,statusText:found.statusText,headers:found.headers}):found,event.request);
   if(asset){state.phase='error';state.reason='integrity';state.completedPacks=(state.completedPacks||[]).filter(id=>id!==(asset.pack||'core'));await notify();}
-  try{const r=await fetch(event.request);if(asset){if(!await valid(r,asset))throw Error('integrity');await c.put(u.href,await tagged(r.clone(),asset));}else if(r.ok&&r.type==='basic')await c.put(u.href,r.clone());return r;}catch{if(event.request.mode==='navigate')return new Response('<meta charset="utf-8"><p>離線資料尚未完整，請連線後自動補下載。</p><a href="'+ROOT.pathname+'">回主城</a>',{headers:{'Content-Type':'text/html;charset=utf-8'}});throw Error('尚未快取');}
+  try{const r=await fetch(asset&&event.request.headers.has('Range')?new Request(u.href):event.request);if(asset){if(!await valid(r,asset))throw Error('integrity');await c.put(u.href,await tagged(r.clone(),asset));}else if(r.ok&&r.type==='basic')await c.put(u.href,r.clone());return asset?mediaRange(r,event.request):r;}catch{if(event.request.mode==='navigate')return new Response('<meta charset="utf-8"><p>離線資料尚未完整，請連線後自動補下載。</p><a href="'+ROOT.pathname+'">回主城</a>',{headers:{'Content-Type':'text/html;charset=utf-8'}});throw Error('尚未快取');}
  })());
 });
 let pending=null;

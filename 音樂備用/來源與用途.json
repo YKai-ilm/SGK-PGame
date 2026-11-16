@@ -1,0 +1,8 @@
+{
+  "status":"備用，未接入遊戲，不放入發布與離線下載清單。下載區原檔保留。",
+  "tracks":[
+    {"file":"asianoriental2.ogg","author":"Tozan","license":"CC0","source":"https://opengameart.org/content/asianoriental2"},
+    {"file":"Shangririver.ogg","author":"Tozan","license":"CC0","source":"https://opengameart.org/content/shangri-river"},
+    {"file":"battleThemeA.mp3","author":"cynicmusic","license":"CC0","source":"https://opengameart.org/content/battle-theme-a"}
+  ]
+}

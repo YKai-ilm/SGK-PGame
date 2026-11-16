@@ -1,0 +1,10 @@
+{
+  "license": "Pixabay Content License",
+  "licenseURL": "https://pixabay.com/service/license-summary/",
+  "selectedOn": "2026-11-17",
+  "tracks": [
+    {"file":"主頁.mp3","title":"田园乡村轻音乐01","author":"u_h3cciema81","source":"https://pixabay.com/zh/music/beats-01-490196/","usage":"主頁及分頁共用播放器循環"},
+    {"file":"劇情.mp3","title":"Atlas • China","author":"Vadim_Makes_Sound","source":"https://pixabay.com/music/orchestral-atlas-china-567494/","usage":"劇情探索循環"},
+    {"file":"戰鬥.mp3","title":"The Law Of The Samurai","author":"AyItsMatt","source":"https://pixabay.com/music/main-title-the-law-of-the-samurai-247993/","usage":"戰場循環，結束停止"}
+  ]
+}
