@@ -13,7 +13,8 @@ let battleDrawDirty=true;
 window.invalidateBattle=()=>{battleDrawDirty=true;};
 document.fonts?.ready.then(()=>window.invalidateBattle());
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)battleDrawDirty=true;});
-document.addEventListener('pointermove',()=>{if(document.querySelector('.drag-ghost'))battleDrawDirty=true;});
+let battleDragVisible=false;
+document.addEventListener('pointermove',()=>{const visible=!!document.querySelector('.drag-ghost');if(visible!==battleDragVisible){battleDragVisible=visible;battleDrawDirty=true;}});
 document.addEventListener('pointerup',()=>{battleDrawDirty=true;});
 let lastBattleInfoRefresh=-Infinity;
 function refreshBattleInfo(){const now=performance.now();if(now-lastBattleInfoRefresh>=100||ended){lastBattleInfoRefresh=now;sync();}}
