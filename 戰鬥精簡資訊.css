@@ -1,0 +1,8 @@
+/* 三行戰鬥資訊；長內容可橫向查看，詳情另開視窗。 */
+body .selection-row{flex-wrap:nowrap;white-space:nowrap;overflow-x:auto;min-height:20px}
+body .selection-row #selection{flex-shrink:0;white-space:nowrap;font-size:12px;line-height:20px}
+body .selection-row #materialProgress{white-space:nowrap;flex-shrink:0;font-size:11px}
+body #unitStats,body #skillLive{display:block;white-space:nowrap;overflow-x:auto;overflow-y:hidden;font-size:12px;line-height:22px;min-height:22px;margin:0;scrollbar-width:none}
+body #skillLive .compact-skill{display:inline;white-space:nowrap}
+body #skillLive .skill-details-link{display:inline;min-height:0;padding:0 2px;font:inherit;line-height:inherit}
+@media(max-aspect-ratio:4/3){body main>aside.panel,body.story-sweep main>aside.panel{flex:0 0 86px!important;height:86px!important;min-height:86px!important;max-height:86px!important;padding:8px;overflow:hidden}}
