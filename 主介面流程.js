@@ -118,7 +118,7 @@
   const E=EquipmentSystem,item=E.items(state,state.mode).find(i=>i.id===id);if(!item)return;
   const holder=E.owner(state,state.mode,id),eligible=roster.filter(p=>unlocked(p.name)&&(item.slot!=='weapon'||E.weaponType(p.name)&&E.weaponType(p.name)===item.weaponType));
   equipmentView={kind:'bag',id};
-  modal(item.name+' · 選擇武將','<p>'+esc(E.slots[item.slot])+' · '+(holder?'目前由 '+esc(holder)+' 裝備':'選擇要裝備的武將')+'</p>'+(holder?'<p class="small">先卸下即可交給其他武將使用。</p>'+btn('從'+esc(holder)+'身上卸下','bagUnequip','data-name="'+esc(holder)+'" data-slot="'+item.slot+'" data-item="'+esc(id)+'"','wide'):'')+(eligible.length?'<div class="equipment-options">'+eligible.map(p=>{const old=E.equipped(state,state.mode,p.name,item.slot);return '<button data-a="equipItem" data-name="'+esc(p.name)+'" data-slot="'+item.slot+'" data-item="'+esc(id)+'" '+(holder?'disabled':'')+'>'+esc(p.name)+'（'+esc(old?.name||'未裝備')+'）'+equipmentCompareHTML(item,old)+'</button>'}).join('')+'</div>':'<p>目前沒有已解鎖且可使用這件裝備的武將。</p>')+'<p class="small">戰力括號為換裝增減；較高為紅色、較低為藍色、相同為灰色。替換後舊裝備回到可用清單。</p>');
+  modal(item.name+' · 選擇武將','<p>'+esc(E.slots[item.slot])+' · '+(holder?'目前由 '+esc(holder)+' 裝備':'選擇要裝備的武將')+'</p>'+(holder?'<p class="small">先卸下即可交給其他武將使用。</p>'+btn('從'+esc(holder)+'身上卸下','bagUnequip','data-name="'+esc(holder)+'" data-slot="'+item.slot+'" data-item="'+esc(id)+'"','wide'):'')+(eligible.length?'<div class="equipment-options bag-hero-options" tabindex="0" role="region" aria-label="可裝備武將列表">'+eligible.map(p=>{const old=E.equipped(state,state.mode,p.name,item.slot);return '<button data-a="equipItem" data-name="'+esc(p.name)+'" data-slot="'+item.slot+'" data-item="'+esc(id)+'" '+(holder?'disabled':'')+'>'+'<strong>'+esc(p.name)+'</strong><small>'+esc(p.faction)+' · '+(holder===p.name?'已裝備此物品':'點擊裝備')+'</small>'+equipmentCompareHTML(item,old)+'</button>'}).join('')+'</div>':'<p>目前沒有已解鎖且可使用這件裝備的武將。</p>')+'<p class="small">戰力括號為換裝增減；較高為紅色、較低為藍色、相同為灰色。替換後舊裝備回到可用清單。</p>');
  }
  function commitEquipment(name,slot,id,fromBag=false){
   try{
@@ -177,7 +177,7 @@
  if(a==='equipmentSlot'){showEquipmentSlot(b.dataset.name,b.dataset.slot);return;}
  if(a==='itemFilter'){itemFilter=['general','battle','growth','quest'].includes(b.dataset.filter)?b.dataset.filter:'all';renderBag();return;}if(a==='equipmentFilter'){equipmentFilter=Object.hasOwn(EquipmentSystem.slots,b.dataset.filter)?b.dataset.filter:'all';renderBag();return;}
  if(a==='bagEquipment'){showBagEquipment(b.dataset.item);return;}
- if(a==='equipItem'){commitEquipment(b.dataset.name,b.dataset.slot,b.dataset.item);return;}
+ if(a==='equipItem'){commitEquipment(b.dataset.name,b.dataset.slot,b.dataset.item,equipmentView?.kind==='bag'?equipmentView.id:false);return;}
  if(a==='unequipItem'){commitEquipment(b.dataset.name,b.dataset.slot,null);return;}
  if(a==='bagUnequip'){commitEquipment(b.dataset.name,b.dataset.slot,null,b.dataset.item);return;}
  if(a==='box'){boxDetails(+b.dataset.tier);return;}
