@@ -10,6 +10,7 @@ function worker(version,files,packs,assignments={}){const handlers={},messages=[
  const two={...one,'battle.js':'battle-v2'};w=worker('v2',two);calls.length=0;unavailable='battle.js';await assert.rejects(w.event('install'));assert(stores.has('sgk-release-v1'));assert.deepEqual(calls,['battle.js']);
  unavailable=null;calls.length=0;w=worker('v2',two);await w.event('install');assert.deepEqual(calls,['battle.js']);await w.event('activate');assert(!stores.has('sgk-release-v1'));
  // 清除單張素材後只補那張；離線時已有完整資料仍可完成檢查。
+ const beforeQuery=w.messages.length;await w.event('message',{type:'OFFLINE_QUERY'});assert(w.messages.slice(beforeQuery).every(m=>m.phase==='ready'));
  unavailable='all';calls.length=0;await w.event('message',{type:'OFFLINE_SYNC'});assert.equal(w.messages.at(-1).phase,'ready');assert.equal(calls.length,0);
  stores.get('sgk-release-v2').delete(origin+'scene.png');await w.event('message',{type:'OFFLINE_SYNC'});assert.equal(w.messages.at(-1).phase,'error');unavailable=null;calls.length=0;await w.event('message',{type:'OFFLINE_SYNC'});assert.deepEqual(calls,['scene.png']);
  quota=true;w=worker('v3',{...two,'new.png':'new'});await assert.rejects(w.event('install'));assert.equal(w.messages.at(-1).reason,'storage');assert(stores.has('sgk-release-v2'));

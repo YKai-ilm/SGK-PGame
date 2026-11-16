@@ -33,7 +33,7 @@ try{FullSave.recover();}catch(e){document.documentElement.textContent='存檔恢
    });
    navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!controlled){controlled=true;return;}if(!reloading&&reg.active){reloading=true;location.reload();}});
    const report=()=>{const worker=reg.installing||reg.waiting||reg.active;worker?.postMessage({type:'OFFLINE_QUERY'});};
-   const sync=()=>{report();if(!reg.installing)(reg.waiting||reg.active)?.postMessage({type:'OFFLINE_SYNC'});};
+   const sync=()=>report();
    const check=()=>{if(reg.waiting&&GameUpdate.safe())reg.waiting.postMessage({type:'CHECK_UPDATE'});};
    const watch=()=>{const worker=reg.installing;if(worker)worker.addEventListener('statechange',()=>{check();if(worker.state==='activated'||worker.state==='installed')requestChapter();});};
    reg.addEventListener('updatefound',watch);watch();
