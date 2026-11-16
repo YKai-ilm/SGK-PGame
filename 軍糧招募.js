@@ -11,7 +11,7 @@ function update(){
  if(seconds){if(!badge){badge=document.createElement('span');badge.className='reserve-cooldown';b.append(badge);}const label='換位 '+seconds+'秒';if(badge.textContent!==label)badge.textContent=label;}
  else badge?.remove();
  });
- if(!enabled)return;$('foodCount').textContent='軍糧 '+food;$('refreshRecruit').textContent='刷新 '+(100+locks.size*5);$('lockRecruit').textContent=card!==null&&locks.has(card)?'取消保留':'保留選卡';$('lockRecruit').disabled=card===null||!deck[card];}
+ if(!enabled)return;setBattleText($('foodCount'),'軍糧 '+food);setBattleText($('refreshRecruit'),'刷新 '+(100+locks.size*5));setBattleText($('lockRecruit'),card!==null&&locks.has(card)?'取消保留':'保留選卡');$('lockRecruit').disabled=card===null||!deck[card];}
 function drawBatch(count){
  if(window.VillageDefense?.active)return Array.from({length:count},(_,i)=>VillageDefense.heroes[i]||'');
  // 每次刷新抽一次類型；各武將由當局七名候選中不重複抽出。
