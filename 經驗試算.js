@@ -14,7 +14,7 @@ window.ExperiencePreview=(()=>{
   const runId=window.VillageSweep?.save()?.runId;if(!runId)throw Error('缺少戰局識別');
   const key='three-kingdoms-interface-preview-v1',state=JSON.parse(localStorage.getItem(key)||'{}');state.chests??={};const mode=state.chests.story??={};mode.letterProgress??={};mode.experienceReceipts??={};
   if(mode.experienceReceipts[runId])return mode.experienceReceipts[runId];
-  const owned=new Set([...(state.unlocks?.story?.letters||[]),...(state.unlocks?.battle?.letters||[]),'刀','槍','弓']);
+  const owned=new Set([...(state.unlocks?.story?.letters||[]),...(state.unlocks?.battle?.letters||[]),...window.BasicTroops.types]);
   const result=calculate(report,owned,true),changes=[];
   for(const item of result.items){if(!item.owned||!item.amount)continue;const card=mode.letterProgress[item.letter]??={level:1,xp:0,quality:'青'};const before=card.level;card.xp+=item.amount;while(card.level<100&&card.xp>=100*card.level){card.xp-=100*card.level;card.level++;}if(card.level>=100)card.xp=0;changes.push({letter:item.letter,amount:item.amount,before,level:card.level,xp:card.xp});}
   const receipt={at:Date.now(),total:result.eligible,unowned:result.unowned,changes};mode.experienceReceipts[runId]=receipt;localStorage.setItem(key,JSON.stringify(state));return receipt;
