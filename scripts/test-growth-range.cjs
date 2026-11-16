@@ -44,3 +44,19 @@ fs.writeFileSync('波次戰後經驗結果.js','window.WaveSettlementStudy='+JSO
 console.log('PASS actual settlement allocator, per-wave totals and persistent-only XP');
 
 const milestones=U.milestones();assert.equal(milestones.length,20);assert.equal(U.demand(5),1000);assert.equal(U.demand(100),495000);assert.equal(milestones[1].segmentXP,3500);assert.equal(milestones.reduce((a,r)=>a+r.segmentXP,0),495000);assert.equal(milestones[9].fragments,5040);assert.equal(milestones[10].fragments,6640);assert.equal(milestones[19].fragments,14200);for(let l=1;l<=100;l++){const r=U.gain(1,0,U.demand(l));assert.equal(r.level,l);assert.equal(r.xp,0);}console.log('PASS cost-only milestones, chapter boundary continuity and XP inversion');
+
+// 整場經驗只分給持有的參戰字卡；不將經驗分給未參戰收藏。
+{
+ const calculate=allocCtx.window.ExperiencePreview.calculate;
+ const report={win:true,rewardXP:57,rows:[{name:'劉備',time:30,damage:80},{name:'關羽',time:20,damage:20}]};
+ for(const selected of [new Set(['劉']),new Set(['劉','關']),new Set(['劉','備','關','羽'])]){
+  const r=calculate(report,selected,true);assert.equal(r.eligible,57);assert.equal(r.unowned,0);assert.equal(r.unallocated,0);assert.equal(r.items.reduce((n,x)=>n+x.amount,0),57);assert(r.items.every(x=>Number.isInteger(x.amount)&&x.amount>=0&&(x.owned||x.amount===0)));
+ }
+ const split=calculate(report,new Set(['劉','關','張']),true);assert.deepEqual(JSON.parse(JSON.stringify(split.items.filter(x=>x.owned).map(x=>[x.letter,x.amount]))),[['劉',39],['關',18]]);
+ assert(!split.items.some(x=>x.letter==='張'));
+ const none=calculate(report,new Set(['張']),true);assert.equal(none.eligible,0);assert.equal(none.unallocated,57);
+ assert.equal(calculate({...report,win:false},new Set(['劉']),true).eligible,14);
+ assert.equal(calculate({...report,rewardXP:0},new Set(['劉']),true).eligible,0);
+ assert.equal(calculate({...report,rows:[]},new Set(['劉']),true).unallocated,57);
+ console.log('PASS full XP redistribution among owned participating letters, proportional rounding, no eligible targets and defeat');
+}
