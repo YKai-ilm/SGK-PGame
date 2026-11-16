@@ -1,8 +1,14 @@
 'use strict';
 (()=>{
  const script=document.currentScript,initial=script?.dataset.scene||'home';
+ // 舊書籤與直接入口也由固定外層承載；file:// 本機預覽保持原入口。
+ if(parent===window&&!window.GameAudioShell&&/^https?:$/.test(location.protocol)){
+  const page=decodeURIComponent(location.pathname.split('/').pop())+location.search+location.hash;
+  location.replace(new URL('index.html#page='+encodeURIComponent(page),location.href).href);return;
+ }
  // 同源教學 iframe 共用外層播放器，避免兩首音樂同時播放。
- try{if(parent!==window&&parent.GameMusic){window.GameMusic=parent.GameMusic;window.GameMusic.scene(initial);document.addEventListener('click',()=>window.GameMusic.unlock(),true);return;}}catch{}
+ function changeSettings(e){if(e.target.id==='musicEnabled'||e.target.id==='musicVolume')window.GameMusic.settings(document.getElementById('musicEnabled').checked,document.getElementById('musicVolume').value);}
+ try{if(parent!==window&&parent.GameMusic){window.GameMusic=parent.GameMusic;window.GameMusic.scene(initial);document.addEventListener('click',()=>window.GameMusic.unlock(),true);document.addEventListener('keydown',()=>window.GameMusic.unlock(),true);document.addEventListener('change',changeSettings);return;}}catch{}
  const tracks={home:'音樂/主頁.mp3',story:'音樂/劇情.mp3',battle:'音樂/戰鬥.mp3'};
  const audio=new Audio();audio.loop=true;audio.preload='metadata';
  let current='',paused=false,enabled=true,volume=.35,pendingSeek=null;
@@ -21,6 +27,6 @@
  document.addEventListener('click',play,true);document.addEventListener('keydown',play,true);
  document.addEventListener('visibilitychange',()=>{if(document.hidden){remember();audio.pause();}else play();});
  window.addEventListener('pagehide',()=>{remember();audio.pause();});window.addEventListener('pageshow',play);
- document.addEventListener('change',e=>{if(e.target.id==='musicEnabled'||e.target.id==='musicVolume')settings(document.getElementById('musicEnabled').checked,document.getElementById('musicVolume').value);});
+ document.addEventListener('change',changeSettings);
  scene(initial);
 })();
