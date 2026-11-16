@@ -64,7 +64,9 @@ if(a.kind==='arrow'){
 // 先將整把武器合成，再投下單一柔影，避免每條紋理各自產生黑邊。
 const weaponLayer=document.createElement('canvas');
 function weapon(c,u,time,s){
- if(!u.weapon)return;
+ const a=u.weapon;if(!a)return;
+ // 動畫外不必清除或帶陰影合成整張武器圖層；保留武器資料供戰局使用。
+ const p=(time-a.start)/a.duration;if(p<0||p>1)return;
  const size=Math.ceil(s*10),ratio=2;
  if(weaponLayer.width!==size*ratio){weaponLayer.width=size*ratio;weaponLayer.height=size*ratio;}
  const ink=weaponLayer.getContext('2d');ink.setTransform(ratio,0,0,ratio,0,0);ink.clearRect(0,0,size,size);
