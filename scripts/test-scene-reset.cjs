@@ -2,25 +2,26 @@ const assert=require('node:assert/strict');
 const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'C:/Users/user/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
 process.env.PORT='4188';const server=require('./serve.cjs');
 (async()=>{const browser=await chromium.launch({channel:'msedge',headless:true});try{
- const context=await browser.newContext({viewport:{width:430,height:839},serviceWorkers:'block'}),page=await context.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));
- await context.addInitScript(()=>{delete Navigator.prototype.serviceWorker;});
- const base='http://127.0.0.1:4188/';
- await page.goto(base+'場景重測.html');
- const original=await page.evaluate(()=>{localStorage.setItem('three-kingdoms-interface-preview-v1',JSON.stringify({version:1,mode:'story',tutorial:{status:'completed'},teams:{},unlocks:{},storyEvents:{yunlongBanditsDefeated:true},rewards:{wallet:{coins:999},claims:{yunlongTreeBag:true}}}));return localStorage.getItem('three-kingdoms-interface-preview-v1');});
- await page.locator('[data-scene="yunlong"]').click();
- async function game(name){await page.waitForTimeout(300);return page.frames().find(f=>decodeURIComponent(f.url()).split('?')[0].endsWith('/'+name));}
- let frame=await game('雲龍山場景預覽.html');assert(frame);
- assert(await frame.locator('#sceneTestBar').isVisible());assert(await frame.locator('#treeBag').isVisible());await page.screenshot({path:'.scene-reset-mobile.png'});
- await frame.locator('#treeBag').click();await frame.locator('#foundItem').waitFor({state:'visible'});assert(await frame.locator('#treeBag').isHidden());await frame.locator('#closeFound').click();
- await frame.locator('#cliffChest').click();await frame.locator('#foundItem').waitFor({state:'visible'});await frame.locator('#closeFound').click();
- assert(await frame.locator('#cliffChest').evaluate(e=>e.classList.contains('opened')));
- await frame.evaluate(()=>{localStorage.testProperty='yes';if(localStorage.testProperty!=='yes'||!Object.keys(localStorage).includes('testProperty'))throw Error('storage facade');delete localStorage.testProperty;});
- page.once('dialog',d=>d.accept());await frame.getByRole('button',{name:'恢復初始值',exact:true}).click();frame=await game('雲龍山場景預覽.html');assert(await frame.locator('#treeBag').isVisible());assert(!(await frame.locator('#cliffChest').evaluate(e=>e.classList.contains('opened'))));
- // 跨頁後仍維持測試資料；正式存檔由另一個獨立分頁驗證。
- await frame.evaluate(()=>location.href='徐州劇情.html');frame=await game('徐州劇情.html');assert(await frame.locator('#sceneTestBar').isVisible());
+ const context=await browser.newContext({viewport:{width:430,height:839},serviceWorkers:'block'});await context.addInitScript(()=>{delete Navigator.prototype.serviceWorker;});
+ const page=await context.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));const base='http://127.0.0.1:4188/';
+ await page.goto(base+'場景重測.html');const original=await page.evaluate(()=>{const v=JSON.stringify({version:1,mode:'story',tutorial:{status:'completed'},teams:{},unlocks:{},storyEvents:{yunlongBanditsDefeated:true},rewards:{wallet:{coins:999},claims:{yunlongTreeBag:true}}});localStorage.setItem('three-kingdoms-interface-preview-v1',v);return v;});
+ async function frameFor(name){for(let i=0;i<100;i++){const f=page.frames().find(f=>f!==page.mainFrame()&&decodeURIComponent(f.url()).split('?')[0].endsWith('/'+name));if(f){await f.waitForLoadState('domcontentloaded');if(await f.locator('#sceneTestBar').count())return f;}await page.waitForTimeout(50);}throw Error('missing '+name);}
+ async function enter(id,name){await page.goto(base+'場景重測.html?scene='+encodeURIComponent(id));return frameFor(name);}
+ async function conditions(f,stage,items=[]){await f.locator('#sceneTestBar details').evaluate(e=>e.open=true);await f.locator('#sceneTestStage').selectOption(stage);for(const id of items)await f.locator('#scene-item-'+id).check();await f.locator('#sceneTestApply').click();await page.waitForTimeout(200);return frameFor(decodeURIComponent(f.url()).split('/').at(-1).split('?')[0]);}
+ let f=await enter('chiefHome','桃園起兵.html');assert.equal(await f.locator('#place').innerText(),'村長家');
+ f=await conditions(f,'flower');await f.locator('[data-id="littleFlower"]').click();await page.waitForTimeout(120);assert.equal(await f.evaluate(()=>JSON.parse(localStorage.getItem('three-kingdoms-taoyuan-dialogue-v1')).active.id),'flowerWaiting');
+ f=await conditions(f,'flower',['rabbit']);await f.locator('[data-id="littleFlower"]').click();await page.waitForTimeout(120);assert.equal(await f.evaluate(()=>JSON.parse(localStorage.getItem('three-kingdoms-taoyuan-dialogue-v1')).active.id),'flowerReturn');
+ await f.locator('#closeTalk').click();await f.locator('[data-id="west"]').click();assert.equal(await f.locator('#place').innerText(),'村長家');assert.match(await f.locator('#sceneTestNotice').innerText(),/保留在原圖/);
+ page.once('dialog',d=>d.accept());await f.locator('#sceneTestReset').click();f=await frameFor('桃園起兵.html');assert.equal(await f.evaluate(()=>JSON.parse(localStorage.getItem('three-kingdoms-taoyuan-hidden-items-v1')||'{}').rabbitDoll),undefined);
+ f=await enter('xz-藥師家','徐州劇情.html');assert.equal(await f.locator('#place').innerText(),'藥師家');f=await conditions(f,'apprentice');await f.locator('[data-name="藥童"]').click();await f.locator('#nextLine').click();assert.equal(await f.evaluate(()=>JSON.parse(localStorage.getItem('three-kingdoms-xuzhou-story-v1')).active),null);f=await conditions(f,'apprentice',['candy']);await f.locator('[data-name="藥童"]').click();await f.locator('#nextLine').click();assert.match(await f.locator('#line').innerText(),/糖葫蘆/);
+ await f.locator('#closeTalk').click();await f.locator('[data-name="離開"]').click();assert.equal(await f.locator('#place').innerText(),'藥師家');
+ f=await enter('yunlong','雲龍山場景預覽.html');await f.locator('#treeBag').click();await f.locator('#foundItem').waitFor({state:'visible'});assert(await f.locator('#treeBag').isHidden());await f.locator('#closeFound').click();
+ f=await conditions(f,'collected');assert(await f.locator('#xiaoniu').isVisible());assert.equal(await f.evaluate(()=>YunlongRescue.progress().medicineUsed),undefined);
+ f=await conditions(f,'collected',['paste']);await f.locator('#sceneTestBar details').evaluate(e=>e.open=false);await page.screenshot({path:'.scene-guide-controls.png'});
+ await f.locator('a.exit-card').click();assert.match(await f.locator('#sceneTestNotice').innerText(),/保留在原圖/);
+ // 每個可測場所皆呈現真實場景，且出口留在原圖。
+ const routes=await f.evaluate(()=>SceneTest.routes);for(const [id,r]of Object.entries(routes)){f=await enter(id,r.url);assert(await f.locator('#sceneTestBar').isVisible());if(r.engine!=='yunlong')assert(await f.locator('#backdrop').evaluate(e=>e.getAttribute('src')?.length>0));}
  const real=await context.newPage();await real.goto(base+'場景重測.html');assert.equal(await real.evaluate(()=>localStorage.getItem('three-kingdoms-interface-preview-v1')),original);await real.close();
- await frame.evaluate(()=>addEventListener('pagehide',()=>localStorage.setItem('three-kingdoms-interface-preview-v1','UNLOAD MUST STAY ISOLATED')));
- await frame.getByRole('button',{name:'退出測試',exact:true}).click();await page.waitForTimeout(300);assert.equal(await page.evaluate(()=>localStorage.getItem('three-kingdoms-interface-preview-v1')),original);
- for(const id of ['taoyuan','xuzhou']){await page.locator('[data-scene="'+id+'"]').click();frame=await game(id==='taoyuan'?'桃園起兵.html':'徐州劇情.html');assert(await frame.locator('#sceneTestBar').isVisible());await frame.getByRole('button',{name:'退出測試',exact:true}).click();await page.waitForTimeout(300);}
- assert.deepEqual(errors,[]);console.log('PASS scene reset, repeated loot, cross-page isolation, real save preservation and three entrances');
+ await f.evaluate(()=>addEventListener('pagehide',()=>localStorage.setItem('three-kingdoms-interface-preview-v1','UNLOAD MUST STAY ISOLATED')));await f.locator('#sceneTestExit').click();await page.waitForTimeout(300);assert.match(decodeURIComponent(page.url()),/劇情場景圖鑑/);assert.equal(await page.evaluate(()=>localStorage.getItem('three-kingdoms-interface-preview-v1')),original);
+ assert(await page.locator('a[href*="scene=chiefHome"]').count());assert(await page.locator('a[href*="scene=xuzhou"]').count());assert.deepEqual(errors,[]);console.log('PASS all '+Object.keys(routes).length+' scenes, item dialogue branches, scene-locked exits, reset, guide links and real save isolation');
  }finally{await browser.close();server.close();}})().catch(e=>{console.error(e);process.exitCode=1;server.close();});
