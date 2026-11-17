@@ -81,3 +81,6 @@
 
 /* 背包選將固定標題，僅候選武將列表捲動。 */
 #modal[open]:has(.bag-hero-options){display:flex;flex-direction:column;overflow:hidden}#modal:has(.bag-hero-options)>header{flex-shrink:0}#modalBody:has(.bag-hero-options){display:flex;flex-direction:column;min-height:0;overflow:hidden}#modalBody:has(.bag-hero-options)>:not(.bag-hero-options){flex-shrink:0}.bag-hero-options{min-height:0;overscroll-behavior:contain;scrollbar-width:thin;flex:1 1 auto}.bag-hero-options button{flex-shrink:0}.bag-hero-options button>strong,.bag-hero-options button>small{display:block}.bag-hero-options button>small{margin-top:4px;color:#64725d}
+
+/* 主城與對戰主頁：上方文案上移，保留下方陣營標籤原位。 */
+.home-grid>.hero>:is(.eyebrow,h2,p){position:relative;top:-14px}
