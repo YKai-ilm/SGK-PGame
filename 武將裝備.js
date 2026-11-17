@@ -2,7 +2,7 @@
 // 裝備實例與配置按模式保存；僅已定案效果交由裝備戰鬥模組套用。
 window.EquipmentSystem=(()=>{
  const slots={weapon:'武器',armor:'防具',mount:'坐騎',accessory:'飾品'};
- const weaponLabels={spear:'槍',blade:'刀',sword:'劍',bow:'弓',staff:'策杖'};
+ const weaponLabels={spear:'槍',blade:'刀',sword:'劍',bow:'弓',fan:'扇',staff:'杖'};
  const fixed={劉備:'sword',關羽:'blade',張飛:'spear',趙雲:'spear',黃忠:'bow',馬超:'spear',諸葛亮:'staff',徐庶:'staff',陳宮:'staff',大喬:'staff',小喬:'staff'};
  function weaponType(name){if(fixed[name])return fixed[name];const label=window.TestRoster?.[name]?.weaponLabel;return ({長槍:'spear',槍:'spear',長刀:'blade',刀:'blade',劍:'sword',長劍:'sword',弓:'bow',策杖:'staff'})[label]||null;}
  function modeData(state,mode){return state.equipment?.[mode]||{};}
@@ -23,11 +23,29 @@ window.EquipmentSystem=(()=>{
   if(id===null)delete data.loadouts[name][slot];else data.loadouts[name][slot]=id;
   return item;
  }
- // combatPower 為裝備定義的綜合評分，不以攻擊力冒充；缺值不能當成零。
- function power(item){return item==null?0:typeof item.combatPower==='number'&&Number.isFinite(item.combatPower)&&item.combatPower>=0?Math.round(item.combatPower):null;}
+ // 戰力 v1：固定參考體質，同時計算輸出與有效生命；不讀存檔手填分數。
+ const statKeys=['hp','physical','magic','def','mdef','haste'];
+ function scoreStats(stats){
+  if(!stats||typeof stats!=='object'||Array.isArray(stats)||Object.entries(stats).some(([k,v])=>!statKeys.includes(k)||!Number.isFinite(v)||v<0))return null;
+  const {hp=0,physical=0,magic=0,def=0,mdef=0,haste=0}=stats;
+  const offense=(1+(physical+magic)/400)*(1+haste);
+  // 物理／謀略各占一半；沿用戰鬥的 100/(100+防禦) 減傷公式。
+  const incoming=.5*100/(150+def)+.5*100/(150+mdef);
+  const survival=(1+hp/4000)*(100/150)/incoming;
+  const value=1000*(Math.sqrt(offense*survival)-1);
+  return Number.isFinite(value)?Math.round(value):null;
+ }
+ function ratedStats(item){
+  if(!item)return {};
+  const live=effects(item);if(live)return live;
+  const groups={sword:['新兵木劍','短劍','青銅劍','鐵劍'],blade:['新兵短木刀','砍刀','青銅刀','鐵刀'],spear:['新兵木槍','長槍','青銅槍','鐵槍'],bow:['新兵木弓','獵弓','青銅弓','鐵弓'],fan:['新兵竹扇','羽扇','白羽扇','鶴羽扇','青玉扇','七星扇'],staff:['新兵木杖','竹節杖','銅飾杖','鐵芯杖','青玉杖','七星杖']};
+  const index=groups[item.weaponType]?.indexOf(item.name)??-1;
+  return item.slot==='weapon'&&index>=0?{[['fan','staff'].includes(item.weaponType)?'magic':'physical']:[20,40,80,150,250,400][index]}:null;
+ }
+ function power(item){return item==null?0:scoreStats(ratedStats(item));}
  function compare(item,current){const next=power(item),old=power(current),delta=next===null||old===null?null:next-old;return{next,old,delta,nextTone:delta===null||delta===0?'equal':delta>0?'higher':'lower',oldTone:delta===null||delta===0?'equal':delta>0?'lower':'higher'};}
  function effects(item){const hp={青銅項鍊:100,銀項鍊:250,金項鍊:500};return item?.slot==='accessory'&&Object.hasOwn(hp,item.name)?{hp:hp[item.name]}:null;}
- function effectText(item){if(!item)return '';const e=effects(item);return e?'最大生命＋'+e.hp:'能力數值尚未定案';}
- return {slots,weaponLabels,weaponType,items,owner,equipped,candidates,equip,power,compare,effects,effectText};
+ function effectText(item){if(!item)return '';const e=ratedStats(item);if(!e)return '能力數值尚未定案';const labels={hp:'最大生命',physical:'物攻',magic:'謀攻',def:'物防',mdef:'謀防',haste:'攻速'};return Object.entries(e).map(([k,v])=>labels[k]+'＋'+(k==='haste'?Math.round(v*100)+'%':v)).join('、')+(effects(item)?'':'（效果待接入戰鬥）');}
+ return {slots,weaponLabels,weaponType,items,owner,equipped,candidates,equip,power,compare,effects,effectText,scoreStats,ratedStats};
 })();
 
