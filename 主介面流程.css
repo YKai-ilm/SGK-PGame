@@ -88,3 +88,6 @@
 /* 旗桿以原圖 1536×1024 的屋脊 (1200,548) 為錨點，與 cover 底圖同步縮放。 */
 .home-grid>.hero .flag{top:auto;right:auto;height:240px;width:132px;border-left:6px solid #756546;padding-left:12px;transform-origin:left bottom;pointer-events:none}
 .home-grid>.hero .flag span{padding:18px 10px 30px;font-size:70px;line-height:1.15}
+
+/* 背包裝備：名稱靠左，類型在同一列靠右。 */
+.bag-equipment-heading{display:flex;align-items:baseline;justify-content:space-between;gap:8px;width:100%}.bag-equipment-heading>strong{min-width:0;flex:1}.bag-equipment-heading>.bag-equipment-type{margin:0;flex-shrink:0;text-align:right;font-size:11px;white-space:nowrap}
