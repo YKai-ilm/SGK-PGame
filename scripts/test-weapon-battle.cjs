@@ -16,3 +16,16 @@ c.location.search='?storySweep=1';E.reset();assert.equal(H.power(E.apply(make('�
 c.window.TutorialBattleConfig={};E.reset();assert.equal(H.power(E.apply(make('劉備'))),H.power(make('劉備')));
 assert.equal(S.typeText(state.equipment.story.items[0]),'武器/劍');assert.equal(S.typeText(state.equipment.story.items[2]),'飾品/項鍊');assert(!S.effectText(state.equipment.story.items[0]).includes('待接入'));
 console.log('PASS weapon physical/magic effects, fan compatibility, fixed level bonuses, healing isolation, immutable snapshots, mode/tutorial isolation and compact labels');
+
+// 名錄涵蓋所有基礎品項，每類每色至少兩款；同名不可重複。
+const catalog=S.weaponCatalog;assert.equal(new Set(catalog.map(e=>e.name)).size,catalog.length);
+const guide=fs.readFileSync('裝備道具建議清單.html','utf8');
+for(const type of ['sword','blade','spear','lance','halberd','axe','bow','fan','staff'])for(const quality of ['綠','藍','橘','紅','金'])assert(catalog.filter(e=>e.type===type&&e.quality===quality).length>=2,type+quality);
+for(const e of catalog){assert(guide.includes(e.name),e.name);const effect=S.effects({name:e.name,slot:'weapon',weaponType:e.type});if(e.attack==null)assert.equal(effect,null);else assert.equal(effect[['fan','staff'].includes(e.type)?'magic':'physical'],e.attack);}
+for(const [type,label,names]of [['halberd','戟',['新兵木戟','長戟','青銅戟','鐵戟']],['axe','斧',['新兵木斧','斧頭','青銅斧','鐵斧']]]){
+ const name='呂布';const prior=c.window.TestRoster[name];c.window.TestRoster[name]={...prior,weaponLabel:label};
+ delete c.window.TutorialBattleConfig;c.location.search='?storySweep=1';state={mode:'story',unlocks:{story:{heroes:[name]}},equipment:{story:{items:[],loadouts:{[name]:{weapon:'test'}}}}};
+ for(const [i,weapon]of names.entries()){const item={id:'test',name:weapon,slot:'weapon',weaponType:type};state.equipment.story.items=[item];assert(S.compatible(item,name,'weapon'));E.reset();const u=E.apply(make(name));assert.equal(u.equipmentPhysical,[20,40,80,150][i]);assert(E.validWeapons(E.saveWeapons()));}
+ c.window.TestRoster[name]=prior;
+}
+console.log('PASS unified 108-weapon catalog, all quality minimums, handbook coverage and halberd/axe battle effects');
