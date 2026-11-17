@@ -6,6 +6,7 @@ const E=c.window.EquipmentBattle,S=c.window.EquipmentSystem,unit=()=>({type:'劉
 for(const [name,hp] of [['青銅項鍊',100],['銀項鍊',250],['金項鍊',500]])assert.equal(S.effects({name,slot:'accessory'}).hp,hp);
 assert.equal(S.effects({name:'金項鍊',slot:'weapon'}),null);
 assert.equal(S.effects({name:'新兵木劍',slot:'weapon'}),null);
+assert.equal(S.effects({name:'新兵木劍',slot:'weapon',weaponType:'sword'}).physical,20);
 E.reset();let u=E.apply(unit());assert.equal(u.max,1500);E.apply(u);assert.equal(u.max,1500);
 let base=1000;for(let i=0;i<10;i++){base=Math.round(base*1.12);u.max=E.growHP(u);assert.equal(u.max,base+500);}
 assert.equal(E.apply({...unit(),hero:false}).max,1000);assert.equal(E.apply({...unit(),enemy:true}).max,1000);
