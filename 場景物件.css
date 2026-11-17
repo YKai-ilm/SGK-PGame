@@ -1,0 +1,10 @@
+/* 全遊戲場景共用物件：原始圖保存在 場景共用物件-v1.png。 */
+.map .treasure,.map .travel-bag{padding:0;border:0;background:transparent;aspect-ratio:1;height:auto;cursor:pointer;filter:none;isolation:isolate}
+.map .treasure{width:10%;min-width:52px;max-width:76px}
+.map .travel-bag{width:8%;min-width:48px;max-width:62px}
+.map .treasure::before,.map .travel-bag::before{content:"";position:absolute;inset:0;border:0;border-radius:0;box-shadow:none;background-image:url('場景共用物件-v1.png');background-size:300% 100%;background-repeat:no-repeat;background-position:0% 0%;pointer-events:none}
+.map .treasure.opened::before{background-position:50% 0%}
+.map .travel-bag::before{background-position:100% 0%}
+.map .treasure::after{content:none}.map .travel-bag img{display:none}
+.map .treasure:hover::before,.map .travel-bag:hover::before{filter:brightness(1.13)}
+.map .treasure:focus-visible,.map .travel-bag:focus-visible{outline:2px dashed #f5d478;outline-offset:2px}

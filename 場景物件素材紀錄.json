@@ -1,0 +1,13 @@
+{
+  "date": "2026-11-18",
+  "file": "場景共用物件-v1.png",
+  "source": "built-in imagegen",
+  "reference": "雲龍山縱向場景-v4.png",
+  "layout": "3 equal square cells: closed chest, open empty chest, travel bag",
+  "prompt": "Create a NEW transparent PNG game prop sprite sheet; reference image is ONLY art style guidance. Three equally sized cells in a wide 3:1 canvas. Left closed weathered ancient Chinese wooden chest with aged brass bands. Center exact same chest open and empty. Right fallen coarse olive-brown cloth pouch tied with hemp cord. Three-quarter high-angle, warm upper-left sunlight, painterly detailed miniature 3D illustration matching existing scenes, soft natural shadows, no text, no thick outlines, transparent alpha.",
+  "preserved": [
+    "行囊袋.svg",
+    "雲龍山縱向場景-v4.png"
+  ],
+  "usage": "場景物件.css shared by all story scene pages; opened class switches chest state"
+}
