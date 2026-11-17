@@ -9,10 +9,18 @@ process.env.PORT='4188';const server=require('./serve.cjs');
  async function enter(id,name){await page.goto(base+'場景重測.html?scene='+encodeURIComponent(id));return frameFor(name);}
  async function conditions(f,stage,items=[]){await f.locator('#sceneTestBar details').evaluate(e=>e.open=true);await f.locator('#sceneTestStage').selectOption(stage);for(const id of items)await f.locator('#scene-item-'+id).check();await f.locator('#sceneTestApply').click();await page.waitForTimeout(200);return frameFor(decodeURIComponent(f.url()).split('/').at(-1).split('?')[0]);}
  let f=await enter('chiefHome','桃園起兵.html');assert.equal(await f.locator('#place').innerText(),'村長家');
+ assert.deepEqual(await f.locator('#sceneTestItems label').allTextContents(),['小兔布偶','糖葫蘆','茯苓草本膏']);
  f=await conditions(f,'flower');await f.locator('[data-id="littleFlower"]').click();await page.waitForTimeout(120);assert.equal(await f.evaluate(()=>JSON.parse(localStorage.getItem('three-kingdoms-taoyuan-dialogue-v1')).active.id),'flowerWaiting');
  f=await conditions(f,'flower',['rabbit']);await f.locator('[data-id="littleFlower"]').click();await page.waitForTimeout(120);assert.equal(await f.evaluate(()=>JSON.parse(localStorage.getItem('three-kingdoms-taoyuan-dialogue-v1')).active.id),'flowerReturn');
  await f.locator('#closeTalk').click();await f.locator('[data-id="west"]').click();assert.equal(await f.locator('#place').innerText(),'村長家');assert.match(await f.locator('#sceneTestNotice').innerText(),/保留在原圖/);
  page.once('dialog',d=>d.accept());await f.locator('#sceneTestReset').click();f=await frameFor('桃園起兵.html');assert.equal(await f.evaluate(()=>JSON.parse(localStorage.getItem('three-kingdoms-taoyuan-hidden-items-v1')||'{}').rabbitDoll),undefined);
+ f=await enter('taoyuan','桃園起兵.html');f=await conditions(f,'homeRest');
+ assert.equal(await f.evaluate(()=>StoryMorale.canHomeRest()),true);await f.locator('[data-id="mother"]').click();
+ async function advanceMother(){await f.evaluate(()=>document.getElementById('nextLine').click());await f.evaluate(()=>document.getElementById('nextLine').click());}
+ await advanceMother();assert.equal(await f.evaluate(()=>JSON.parse(localStorage.getItem('three-kingdoms-taoyuan-dialogue-v1')).active.id),'motherRest');
+ await advanceMother();await advanceMother();assert.equal(await f.evaluate(()=>JSON.parse(localStorage.getItem('three-kingdoms-taoyuan-dialogue-v1')).active.id),'motherRested');assert.equal(await f.evaluate(()=>StoryMorale.status().value),100);assert.equal(await f.evaluate(()=>StoryMorale.canHomeRest()),false);
+ f=await conditions(f,'homeRested');assert.equal(await f.evaluate(()=>StoryMorale.canHomeRest()),false);
+ f=await conditions(f,'initial');assert.equal(await f.evaluate(()=>StoryMorale.canHomeRest()),false);
  f=await enter('xz-藥師家','徐州劇情.html');assert.equal(await f.locator('#place').innerText(),'藥師家');f=await conditions(f,'apprentice');await f.locator('[data-name="藥童"]').click();await f.locator('#nextLine').click();assert.equal(await f.evaluate(()=>JSON.parse(localStorage.getItem('three-kingdoms-xuzhou-story-v1')).active),null);f=await conditions(f,'apprentice',['candy']);await f.locator('[data-name="藥童"]').click();await f.locator('#nextLine').click();assert.match(await f.locator('#line').innerText(),/糖葫蘆/);
  await f.locator('#closeTalk').click();await f.locator('[data-name="離開"]').click();assert.equal(await f.locator('#place').innerText(),'藥師家');
  f=await enter('yunlong','雲龍山場景預覽.html');await f.locator('#treeBag').click();await f.locator('#foundItem').waitFor({state:'visible'});assert(await f.locator('#treeBag').isHidden());await f.locator('#closeFound').click();
