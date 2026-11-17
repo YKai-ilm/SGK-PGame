@@ -17,7 +17,7 @@
  // 完成訊息送出前關頁，也可從已保存的四段演練補回資格。
  try{const cp=JSON.parse(localStorage.getItem(trainingKey)||'null');if(state.tutorial.status==='progress'&&cp?.engine==='shared-battle-v2'&&cp.complete&&cp.stage===3&&cp.history?.length===4&&cp.history.every(x=>x===true)){state.tutorial={status:'completed',step:3,reward:'earned-pending',engine:1};localStorage.setItem(key,JSON.stringify(state));}}catch{}
  ProgressRewards.init(state);
- let rewardTab='task',taskReturn=false,bagTab='items',itemFilter='all',armoryTab='formation',equipmentFilter='all',weaponFilter='all',equipmentView=null,bagEquipmentFaction=null;
+ let rewardTab='task',taskReturn=false,bagTab='items',itemFilter='all',armoryTab='formation',equipmentFilter='all',weaponFilter='all',equipmentView=null,bagEquipmentFaction=null,bagEquipmentQuality='all';
  let page=state.page||'home',tab='heroes',search='',draft=null,pickSlot=null,pickFaction=state.libraryFaction,teachVisible=false,toastTimer;
  const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const btn=(text,a,extra='',cls='')=>`<button data-a="${a}" ${extra} class="${cls}">${text}</button>`;
@@ -122,12 +122,12 @@
   equipmentView={kind:'slot',name,slot};
   modal(name+' · '+E.slots[slot],btn('返回四格裝備','equipment','data-name="'+esc(name)+'"','quiet')+'<p>目前：'+esc(selected?.name||'未裝備')+' '+equipmentPowerHTML(selected)+'</p>'+(!unlocked(name)?'<p>武將尚未解鎖，無法裝備。</p>':(items.length?'<div class="equipment-options">'+items.map(i=>btn((selected?.id===i.id?'（已裝備）':'')+equipmentCompareHTML(i,selected),'equipItem','data-name="'+esc(name)+'" data-slot="'+slot+'" data-item="'+esc(i.id)+'"')).join('')+'</div>':'<p>背包內沒有可用的'+esc(slot==='weapon'?(E.weaponLabels[E.weaponType(name)]||'對應')+'類武器':E.slots[slot])+'。</p>')+(selected?btn('卸下裝備','unequipItem','data-name="'+esc(name)+'" data-slot="'+slot+'"','wide'):'')+'<p class="small">只列出符合欄位、且未被其他武將使用的背包裝備。</p>'));
  }
- function showBagEquipment(id,faction=bagEquipmentFaction){
+ function showBagEquipment(id,faction=bagEquipmentFaction,grade=bagEquipmentQuality){
   const E=EquipmentSystem,item=E.items(state,state.mode).find(i=>i.id===id);if(!item)return;
   const holder=E.owner(state,state.mode,id),eligible=roster.filter(p=>unlocked(p.name)&&E.compatible(item,p.name,item.slot));
-  if(!factions.includes(faction))faction=state.mode==='story'&&state.storyFaction?state.storyFaction:eligible[0]?.faction||'魏';bagEquipmentFaction=faction;const shown=eligible.filter(p=>p.faction===faction);
+  if(!factions.includes(faction))faction=state.mode==='story'&&state.storyFaction?state.storyFaction:eligible[0]?.faction||'魏';bagEquipmentFaction=faction;if(grade!=='all'&&!Object.hasOwn(quality.colors,grade))grade='all';bagEquipmentQuality=grade;const shown=eligible.filter(p=>p.faction===faction&&(grade==='all'||(quality.evaluate(p).quality||'青')===grade));
   equipmentView={kind:'bag',id};
-  modal(item.name+' · 選擇武將',(holder?'<p class="small">先卸下即可交給其他武將使用。</p>'+btn('從'+esc(holder)+'身上卸下','bagUnequip','data-name="'+esc(holder)+'" data-slot="'+item.slot+'" data-item="'+esc(id)+'"','wide'):'')+'<div class="bag-equipment-factions" role="group" aria-label="武將陣營">'+factions.map(f=>btn(f,'bagEquipmentFaction','data-faction="'+f+'" data-item="'+esc(id)+'" aria-pressed="'+(f===faction)+'"',f===faction?'active':'')).join('')+'</div>'+(shown.length?'<div class="equipment-options bag-hero-options" tabindex="0" role="region" aria-label="可裝備武將列表">'+shown.map(p=>{const old=E.equipped(state,state.mode,p.name,item.slot);return '<button data-a="equipItem" data-name="'+esc(p.name)+'" data-slot="'+item.slot+'" data-item="'+esc(id)+'" '+(holder?'disabled':'')+'>'+'<strong>'+esc(p.name)+'</strong>'+equipmentCompareHTML(item,old)+'</button>'}).join('')+'</div>':'<div class="equipment-options bag-hero-options"><p>此陣營目前沒有已解鎖且可使用這件裝備的武將。</p></div>')+'<p class="small">戰力括號為換裝增減；較高為紅色、較低為藍色、相同為灰色。替換後舊裝備回到可用清單。</p>');$('modal').classList.add('bag-equipment-dialog');
+  modal(item.name+' · 選擇武將',(holder?'<p class="small">先卸下即可交給其他武將使用。</p>'+btn('從'+esc(holder)+'身上卸下','bagUnequip','data-name="'+esc(holder)+'" data-slot="'+item.slot+'" data-item="'+esc(id)+'"','wide'):'')+'<div class="bag-equipment-factions" role="group" aria-label="武將陣營">'+factions.map(f=>btn(f,'bagEquipmentFaction','data-faction="'+f+'" data-item="'+esc(id)+'" aria-pressed="'+(f===faction)+'"',f===faction?'active':'')).join('')+'</div><div class="bag-equipment-qualities" role="group" aria-label="武將品質">'+['all',...Object.keys(quality.colors)].map(q=>btn(q==='all'?'全部':q,'bagEquipmentQuality','data-quality="'+q+'" data-item="'+esc(id)+'" aria-pressed="'+(q===grade)+'" style="--grade-color:'+(quality.colors[q]||'#dedfcd')+'"',q===grade?'active':'')).join('')+'</div>'+(shown.length?'<div class="equipment-options bag-hero-options" tabindex="0" role="region" aria-label="可裝備武將列表">'+shown.map(p=>{const old=E.equipped(state,state.mode,p.name,item.slot);return '<button data-a="equipItem" data-name="'+esc(p.name)+'" data-slot="'+item.slot+'" data-item="'+esc(id)+'" '+(holder?'disabled':'')+'>'+'<strong>'+esc(p.name)+'</strong>'+equipmentCompareHTML(item,old)+'</button>'}).join('')+'</div>':'<div class="equipment-options bag-hero-options"><p>目前陣營與品質下，沒有已解鎖且可使用這件裝備的武將。</p></div>')+'<p class="small">戰力括號為換裝增減；較高為紅色、較低為藍色、相同為灰色。替換後舊裝備回到可用清單。</p>');$('modal').classList.add('bag-equipment-dialog');
  }
  function commitEquipment(name,slot,id,fromBag=false){
   try{
@@ -185,6 +185,7 @@
  if(a==='equipment'){showEquipment(b.dataset.name);return;}
  if(a==='equipmentSlot'){showEquipmentSlot(b.dataset.name,b.dataset.slot);return;}
  if(a==='itemFilter'){itemFilter=['general','battle','growth','quest'].includes(b.dataset.filter)?b.dataset.filter:'all';renderBag();return;}if(a==='equipmentFilter'){equipmentFilter=Object.hasOwn(EquipmentSystem.slots,b.dataset.filter)?b.dataset.filter:'all';renderBag();return;}
+ if(a==='bagEquipmentQuality'){showBagEquipment(b.dataset.item,bagEquipmentFaction,b.dataset.quality);return;}
  if(a==='bagEquipmentFaction'){showBagEquipment(b.dataset.item,b.dataset.faction);return;}
  if(a==='bagEquipment'){showBagEquipment(b.dataset.item);return;}
  if(a==='equipItem'){commitEquipment(b.dataset.name,b.dataset.slot,b.dataset.item,equipmentView?.kind==='bag'?equipmentView.id:false);return;}
