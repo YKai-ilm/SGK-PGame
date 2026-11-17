@@ -47,12 +47,32 @@
   xuzhou:[['initial','一般／首次拜訪'],['apprentice','已初訪藥童（測糖葫蘆分支）'],['introduced','書吏已引薦糜竺'],['accepted','已接受護糧委託'],['steward','已見糧隊管事'],['slept','已住宿、次日查問'],['miElder','已聽糜太公心事'],['miZhen','已與糜貞交談、待說媒'],['rescued','雲龍山救援完成、華陀回家']],
   yunlong:[['initial','一般／盜賊未擊退'],['bandits','盜賊已擊退、大牛可對話'],['daniu','已與大牛交談、華陀出現'],['huatuo','已與華陀交談、可接大牛'],['collected','已接回大牛、準備救小牛'],['rescued','小牛已救醒、救援寶箱出現']]
  };
+ // 僅列出此圖人物、事件實際使用的前置條件。
+ const sceneConditions={
+  taoyuan:{stages:['initial','homeRest','homeRested'],flags:['Party']},
+  village:{stages:['initial','revealed','companions','banquet'],flags:['Party','Oath']},
+  east:{stages:['initial','jewelry'],flags:['Dream']},
+  west:{stages:['initial','jewelry']},
+  chiefHome:{stages:['initial','flower'],items:['rabbit']},
+  zhangHome:{stages:['initial','companions','banquet'],flags:['Party','Oath']},
+  xuzhouWest:{stages:['initial','accepted','steward','slept'],flags:['Party']},
+  'xz-城主府':{stages:['initial','introduced','accepted','miZhen'],flags:['Party','Oath']},
+  'xz-役所':{stages:['initial','introduced','accepted','steward','slept'],flags:['Party']},
+  'xz-客棧':{stages:['initial','steward','slept']},
+  'xz-糜家':{stages:['initial','miElder','miZhen'],flags:['Party']},
+  'xz-藥師家':{stages:['initial','apprentice','rescued'],items:['candy']},
+  yunlong:{stages:stages.yunlong.map(([id])=>id),items:['paste'],flags:['Dream']}
+ };
+ function conditions(){return sceneConditions[read().id]||{stages:['initial']};}
+ function availableItems(){return items.filter(([id])=>conditions().items?.includes(id));}
+ function availableStages(){return stages[current().engine].filter(([id])=>conditions().stages.includes(id));}
+ function flagChecked(id){return conditions().flags?.includes(id)&&document.getElementById('sceneTest'+id)?.checked;}
  function applyConditions(){
-  const route=current(),stage=document.getElementById('sceneTestStage').value;
+  const route=current(),stage=availableStages().some(([id])=>id===document.getElementById('sceneTestStage').value)?document.getElementById('sceneTestStage').value:'initial';
   let p=storeObject(mainKey),v=storeObject(villageKey),h=storeObject(hiddenKey),c=storeObject(cityKey);
   p.storyEvents={};v.seen=[];v.party=[];v.guanRevealed=false;v.zhangRevealed=false;v.active=null;c.flags={};c.active=null;c.sleepPending=false;
   delete h.flowerQuest;delete h.flowerVisits;delete h.huatuoCompleted;
-  if(document.getElementById('sceneTestParty').checked){v.party=['關羽','張飛'];}
+  if(flagChecked('Party')){v.party=['關羽','張飛'];}
   if(route.engine==='taoyuan'){
    p.storyMorale={value:100,homeRestCount:0,settled:{}};
    saveObject('three-kingdoms-village-journey-v1',{wins:[],visited:false});
@@ -78,10 +98,10 @@
    if(n>=4)p.storyEvents.yunlongRescue={daniuCollected:true};
    if(n>=5)Object.assign(p.storyEvents.yunlongRescue,{medicineUsed:true,rescued:true});
   }
-  if(document.getElementById('sceneTestOath').checked)p.storyEvents.peachOath=true;
-  if(document.getElementById('sceneTestDream').checked)p.storyEvents.dreamReincarnationTriggered=true;
+  if(flagChecked('Oath'))p.storyEvents.peachOath=true;
+  if(flagChecked('Dream'))p.storyEvents.dreamReincarnationTriggered=true;
   const objects={[mainKey]:p,[villageKey]:v,[hiddenKey]:h,[cityKey]:c};
-  for(const [id,,key,path,amount=1] of items)setPath(objects[key],path,document.getElementById('scene-item-'+id).checked?amount:0);
+  for(const [id,,key,path,amount=1] of availableItems())setPath(objects[key],path,document.getElementById('scene-item-'+id).checked?amount:0);
   // 道具持有與領取地點的已領取標記分開，方便測提前取得／交付分支。
   v.scene=route.engine==='taoyuan'?route.scene:v.scene;c.scene=route.engine==='xuzhou'?route.scene:c.scene;
   for(const [key,obj] of Object.entries(objects))saveObject(key,obj);
@@ -94,15 +114,18 @@
   const r=read();
   if(!r&&['共用室內場景預覽.html','徐州城內城預覽.html'].some(p=>decodeURIComponent(location.pathname).endsWith('/'+p))){const link=document.createElement('a');link.href='場景重測.html';link.textContent='場景劇情測試／電子攻略';link.style.cssText='display:inline-block;margin:8px;padding:6px 12px;background:#724b3a;color:#fff8e8;border-radius:6px';(document.querySelector('header')||document.body).append(link);}
   if(!r||window.GameAudioShell||decodeURIComponent(location.pathname).endsWith('/index.html'))return;
-  const style=document.createElement('style');style.textContent='.scene-guide-test>header a,.scene-guide-test>.story>header a{display:none}#sceneTestBar{flex-shrink:0;position:relative;z-index:100;background:#f4ecd7;color:#294236;border-bottom:2px solid #897456;padding:8px;font:14px sans-serif;max-height:40dvh;overflow:auto}#sceneTestBar .test-row{display:flex;gap:6px;align-items:center;flex-wrap:wrap}#sceneTestBar button,#sceneTestBar select{font:inherit;max-width:100%;padding:6px;border:1px solid #a69a7b;border-radius:5px;background:#fffaf0;color:#294236}#sceneTestBar details{margin-top:6px}#sceneTestBar summary{cursor:pointer}#sceneTestBar label{display:inline-flex;gap:4px;align-items:center;margin:6px}#sceneTestNotice{margin:5px 0 0;font-size:12px;line-height:1.5}';document.head.append(style);
+  const style=document.createElement('style');style.textContent='.scene-guide-test>header a,.scene-guide-test>.story>header a{display:none}#sceneTestBar{flex-shrink:0;position:relative;z-index:100;background:#f4ecd7;color:#294236;border-bottom:2px solid #897456;padding:8px;font:14px sans-serif;max-height:40dvh;overflow:auto}#sceneTestBar .test-row{display:flex;gap:6px;align-items:center;flex-wrap:wrap}#sceneTestBar button,#sceneTestBar select{font:inherit;max-width:100%;padding:6px;border:1px solid #a69a7b;border-radius:5px;background:#fffaf0;color:#294236}#sceneTestBar [hidden]{display:none!important}#sceneTestBar details{margin-top:6px}#sceneTestBar summary{cursor:pointer}#sceneTestBar label{display:inline-flex;gap:4px;align-items:center;margin:6px}#sceneTestNotice{margin:5px 0 0;font-size:12px;line-height:1.5}';document.head.append(style);
   const bar=document.createElement('aside');bar.id='sceneTestBar';
   bar.innerHTML='<div class="test-row"><strong>場景劇情測試</strong><select id="sceneTestSelect" aria-label="選擇測試場景"></select><button id="sceneTestReset">恢復初始值</button><button id="sceneTestExit">返回圖鑑</button></div><details><summary>劇情觸發道具／事件條件</summary><div id="sceneTestItems"></div><label>事件階段 <select id="sceneTestStage"></select></label><label><input type="checkbox" id="sceneTestParty">關羽、張飛同行</label><label><input type="checkbox" id="sceneTestOath">已桃園結義</label><label><input type="checkbox" id="sceneTestDream">已觸發夢輪迴</label><button id="sceneTestApply">套用條件</button><p>套用後結束當前對話，點人物卡測試分支；不會修改正式遊戲。</p></details><p id="sceneTestNotice" role="status">點人物／事件卡展開劇情；出口只提示去向，不離開此圖。所有獎勵僅供測試。</p>';
   document.body.classList.add('scene-guide-test');document.body.prepend(bar);
   const select=document.getElementById('sceneTestSelect');for(const [id,route] of Object.entries(routes)){const o=new Option(route.group+'・'+route.name,id);select.add(o);}select.value=r.id;select.onchange=()=>start(select.value);
   document.getElementById('sceneTestReset').onclick=()=>{if(confirm('恢復此場景初始狀態？測試道具與事件進度將清除，正式遊戲不受影響。'))start(r.id);};
   document.getElementById('sceneTestExit').onclick=()=>{const record=read();record.exiting=true;put(recordKey,JSON.stringify(record));window.top.location.href='場景重測.html?back=guide';};
-  for(const [id,label,key,path] of items){const wrap=document.createElement('label'),check=document.createElement('input');check.type='checkbox';check.id='scene-item-'+id;check.checked=!!getPath(storeObject(key),path);wrap.append(check,document.createTextNode(label));document.getElementById('sceneTestItems').append(wrap);}
-  const stageSelect=document.getElementById('sceneTestStage');for(const [id,label] of stages[current().engine])stageSelect.add(new Option(label,id));stageSelect.value=r.stage||'initial';
+  for(const [id,label,key,path] of availableItems()){const wrap=document.createElement('label'),check=document.createElement('input');check.type='checkbox';check.id='scene-item-'+id;check.checked=!!getPath(storeObject(key),path);wrap.append(check,document.createTextNode(label));document.getElementById('sceneTestItems').append(wrap);}
+  const stageSelect=document.getElementById('sceneTestStage');for(const [id,label] of availableStages())stageSelect.add(new Option(label,id));stageSelect.value=availableStages().some(([id])=>id===r.stage)?r.stage:'initial';
+  stageSelect.closest('label').hidden=availableStages().length<2;
+  for(const name of ['Party','Oath','Dream']){const check=document.getElementById('sceneTest'+name);check.disabled=!conditions().flags?.includes(name);check.closest('label').hidden=check.disabled;}
+  if(availableStages().length<2&&!availableItems().length&&!conditions().flags?.length)bar.querySelector('details').hidden=true;
   document.getElementById('sceneTestParty').checked=storeObject(villageKey).party?.length===2;
   document.getElementById('sceneTestOath').checked=!!storeObject(mainKey).storyEvents?.peachOath;
   document.getElementById('sceneTestDream').checked=!!storeObject(mainKey).storyEvents?.dreamReincarnationTriggered;
