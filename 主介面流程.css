@@ -97,3 +97,5 @@
 
 /* 背包裝備的屬性與戰力同列，使用咖啡紅；換裝比較仍保留增減色。 */
 .bag-equipment>.equipment-summary{display:flex;align-items:baseline;gap:4px;margin-top:8px;color:#8b4937;font-size:12px;white-space:nowrap}.bag-equipment>.equipment-summary>small,.bag-equipment>.equipment-summary>.equipment-power{display:inline;margin:0;color:inherit;font-size:inherit}
+
+.bag-equipment>.bag-equipment-owner{display:block;width:100%;margin-top:8px;color:#77816a;font-size:12px;white-space:normal}
