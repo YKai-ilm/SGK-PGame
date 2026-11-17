@@ -4,7 +4,7 @@ process.env.PORT='4184';const server=require('./serve.cjs');
 (async()=>{
  const browser=await chromium.launch({channel:'msedge',headless:true,args:['--autoplay-policy=user-gesture-required']});
  try{
-  const context=await browser.newContext({serviceWorkers:'block',viewport:{width:430,height:850}});
+  const context=await browser.newContext({serviceWorkers:'block',viewport:{width:430,height:839}});
   await context.addInitScript(()=>{if(window===top){const Original=Audio;window.__audioCount=0;window.Audio=function(...args){window.__audioCount++;window.__audio=new Original(...args);return window.__audio;};}});
   const page=await context.newPage();const url='http://127.0.0.1:4184/';
   await page.goto(url+'index.html');let frame=page.frames().find(f=>f!==page.mainFrame());
