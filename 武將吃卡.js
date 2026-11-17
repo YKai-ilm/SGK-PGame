@@ -11,7 +11,7 @@ function mergeBasic(source,target){
  if([material,existing].some(u=>u&&(u.root>elapsed||u.ready>elapsed))){say('卡片定身或換位冷卻中，暫時不能合成。');return true;}
  const u=existing||makeUnit(type(target),-1,-1),beforeLevel=u.level,own=basicValue(u),incoming=basicValue(material),ratio=((material?material.hp/material.max:1)*incoming+u.hp/u.max*own)/(own+incoming);
  u.basicStored=(u.basicStored||0)+incoming;
- while(u.basicStored>=2**(u.level-1)){u.basicStored-=2**(u.level-1);u.level++;u.max=Math.round(u.max*1.12);u.atk*=1.09;}
+ while(u.basicStored>=2**(u.level-1)){u.basicStored-=2**(u.level-1);u.level++;u.max=window.EquipmentBattle?EquipmentBattle.growHP(u):Math.round(u.max*1.12);u.atk*=1.09;}
  u.hp=Math.min(u.max,u.max*ratio);if(u.level>beforeLevel)u.xp=0;
  for(const prop of ['slow','stun','root','attackSlow','broken','ready','nextAttack'])u[prop]=Math.max(u[prop]||0,material?.[prop]||0);
  if(typeof source==='number')Recruit.consume(source);else{units=units.filter(v=>v!==source);shots=shots.filter(p=>p.target!==source);clearLetterWard(source);}
@@ -23,7 +23,7 @@ ensure(u);const ratio=material?Math.max(0,Math.min(1,material.hp/material.max)):
 for(const ch of letters){u.materialCounts[ch]++;u.materialRatios[ch].push(ratio);}
 // 散字先給當前剩餘血量；超過上限的部分不儲存，升級加成等材料齊備再給。
 if(sourceName!==name)u.hp=Math.min(u.max,u.hp+(material?material.hp:roster[sourceName].hp));
-while([...name].every(ch=>u.materialCounts[ch]>=u.materialTier+1)){const ratios=[...name].map(ch=>u.materialRatios[ch].shift()??1),before=u.max;u.materialTier++;u.level++;u.max=Math.round(u.max*1.12);u.atk*=1.09;u.hp=Math.min(u.max,u.hp+(u.max-before)*ratios.reduce((a,b)=>a+b,0)/ratios.length);u.xp=0;}
+while([...name].every(ch=>u.materialCounts[ch]>=u.materialTier+1)){const ratios=[...name].map(ch=>u.materialRatios[ch].shift()??1),before=u.max;u.materialTier++;u.level++;u.max=window.EquipmentBattle?EquipmentBattle.growHP(u):Math.round(u.max*1.12);u.atk*=1.09;u.hp=Math.min(u.max,u.hp+(u.max-before)*ratios.reduce((a,b)=>a+b,0)/ratios.length);u.xp=0;}
 // 保留目標技能冷卻，材料負面狀態不因吃卡消失。
 for(const prop of ['slow','stun','root','attackSlow','broken'])u[prop]=Math.max(u[prop]||0,material?.[prop]||0);
 if(typeof source==='number')Recruit.consume(source);else{units=units.filter(v=>v!==source);shots=shots.filter(p=>p.target!==source);}

@@ -1,5 +1,5 @@
 'use strict';
-// 裝備實例與裝備配置按模式保存；此模組不發放物品、不改戰鬥能力。
+// 裝備實例與配置按模式保存；僅已定案效果交由裝備戰鬥模組套用。
 window.EquipmentSystem=(()=>{
  const slots={weapon:'武器',armor:'防具',mount:'坐騎',accessory:'飾品'};
  const weaponLabels={spear:'槍',blade:'刀',sword:'劍',bow:'弓',staff:'策杖'};
@@ -26,6 +26,8 @@ window.EquipmentSystem=(()=>{
  // combatPower 為裝備定義的綜合評分，不以攻擊力冒充；缺值不能當成零。
  function power(item){return item==null?0:typeof item.combatPower==='number'&&Number.isFinite(item.combatPower)&&item.combatPower>=0?Math.round(item.combatPower):null;}
  function compare(item,current){const next=power(item),old=power(current),delta=next===null||old===null?null:next-old;return{next,old,delta,nextTone:delta===null||delta===0?'equal':delta>0?'higher':'lower',oldTone:delta===null||delta===0?'equal':delta>0?'lower':'higher'};}
- return {slots,weaponLabels,weaponType,items,owner,equipped,candidates,equip,power,compare};
+ function effects(item){const hp={青銅項鍊:100,銀項鍊:250,金項鍊:500};return item?.slot==='accessory'&&Object.hasOwn(hp,item.name)?{hp:hp[item.name]}:null;}
+ function effectText(item){if(!item)return '';const e=effects(item);return e?'最大生命＋'+e.hp:'能力數值尚未定案';}
+ return {slots,weaponLabels,weaponType,items,owner,equipped,candidates,equip,power,compare,effects,effectText};
 })();
 
