@@ -47,6 +47,6 @@ window.EquipmentSystem=(()=>{
  function effects(item){return item?ratedStats(item):null;}
  function effectText(item){if(!item)return '';const e=ratedStats(item);if(!e)return '能力數值尚未定案';const labels={hp:'最大生命',physical:'物攻',magic:'謀攻',def:'物防',mdef:'謀防',haste:'攻速'};return Object.entries(e).map(([k,v])=>labels[k]+'＋'+(k==='haste'?Math.round(v*100)+'%':v)).join('、');}
  function typeText(item){const sub=item.slot==='weapon'?(weaponLabels[item.weaponType]||'未分類'):item.slot==='accessory'?(['項鍊','指環','玉佩','護身符','護腕'].find(t=>item.name.includes(t))||''):item.slot==='armor'?(['重甲','輕甲','法袍'].find(t=>item.name.includes(t))||''):'';return (slots[item.slot]||'裝備')+(sub?'/'+sub:'');}
- return {typeText,slots,weaponLabels,weaponType,items,owner,equipped,candidates,equip,power,compare,effects,effectText,scoreStats,ratedStats};
+ return {compatible,typeText,slots,weaponLabels,weaponType,items,owner,equipped,candidates,equip,power,compare,effects,effectText,scoreStats,ratedStats};
 })();
 
