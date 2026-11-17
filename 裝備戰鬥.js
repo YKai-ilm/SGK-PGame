@@ -1,7 +1,8 @@
 'use strict';
 window.EquipmentBattle=(()=>{
  let current={},weapons={};
- function validWeapons(data){return !!data&&typeof data==='object'&&!Array.isArray(data)&&Object.entries(data).every(([name,e])=>Object.hasOwn(window.TestRoster||{},name)&&e&&typeof e==='object'&&!Array.isArray(e)&&Object.keys(e).length===1&&Object.entries(e).every(([k,v])=>['physical','magic'].includes(k)&&[20,40,80,150,250,400].includes(v)));}
+ function validWeaponBonus(k,v){return [...(window.EquipmentSystem?.weaponCatalog||[]),...(window.EquipmentSystem?.namedWeaponCatalog||[])].some(e=>e.attack===v&&(['fan','staff'].includes(e.type)?'magic':'physical')===k);}
+ function validWeapons(data){return !!data&&typeof data==='object'&&!Array.isArray(data)&&Object.entries(data).every(([name,e])=>Object.hasOwn(window.TestRoster||{},name)&&e&&typeof e==='object'&&!Array.isArray(e)&&Object.keys(e).length===1&&Object.entries(e).every(([k,v])=>['physical','magic'].includes(k)&&validWeaponBonus(k,v)));}
  function valid(data){return !!data&&typeof data==='object'&&!Array.isArray(data)&&Object.entries(data).every(([name,hp])=>Object.hasOwn(window.TestRoster||{},name)&&[100,250,500].includes(hp));}
  function reset(){
   current={};weapons={};if(window.TutorialBattleConfig)return;
@@ -21,5 +22,5 @@ window.EquipmentBattle=(()=>{
  function apply(u){if(!u.hero||u.enemy)return u;const hp=current[u.type]||0;if(hp&&u.equipmentHP===undefined){u.equipmentHP=hp;u.max+=hp;u.hp+=hp;}const attack=weapons[u.type];if(attack){if(attack.physical&&u.equipmentPhysical===undefined)u.equipmentPhysical=attack.physical;if(attack.magic&&u.equipmentMagic===undefined)u.equipmentMagic=attack.magic;}return u;}
  // 裝備固定值不隨局內升級乘上 12%，也不在讀檔時重複加入。
  function growHP(u,rate=1.12){const extra=u.equipmentHP||0;return Math.round((u.max-extra)*rate)+extra;}
- return {reset,apply,growHP,valid,validWeapons,saveWeapons:()=>JSON.parse(JSON.stringify(weapons)),loadWeapons(data){weapons=data!==undefined&&validWeapons(data)?JSON.parse(JSON.stringify(data)):{};},save:()=>({...current}),load(data){current=data===undefined?{}:valid(data)?{...data}:{};weapons={};}};
+ return {reset,apply,growHP,valid,validWeapons,validWeaponBonus,saveWeapons:()=>JSON.parse(JSON.stringify(weapons)),loadWeapons(data){weapons=data!==undefined&&validWeapons(data)?JSON.parse(JSON.stringify(data)):{};},save:()=>({...current}),load(data){current=data===undefined?{}:valid(data)?{...data}:{};weapons={};}};
 })();

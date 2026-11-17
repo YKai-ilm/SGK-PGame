@@ -42,3 +42,21 @@ assert(S.compatible({slot:'weapon',weaponType:'lance',name:'丈八蛇矛'},'趙�
 assert.equal(S.typeText({slot:'weapon',weaponType:'halberd',name:'短戟'}),'武器/短戟');
 for(const name of ['裂岳戰斧','霸海巨斧','刑天戰斧','蚩尤斧','龍膽亮銀槍','虎威湛金槍','丈八蛇矛','天穹破軍矛','落日神弓','養由基弓','后羿弓'])assert.equal(guide.split('>'+name+'<').length-1,1,name);
 console.log('PASS weapon compatibility groups, legacy short halberds and unique named weapons');
+
+const allWeapons=[...S.weaponCatalog,...S.namedWeaponCatalog];
+assert.equal(new Set(allWeapons.map(e=>e.name)).size,allWeapons.length);
+for(const entry of allWeapons){
+ const key=['fan','staff'].includes(entry.type)?'magic':'physical';
+ const item={id:'test',name:entry.name,slot:'weapon',weaponType:entry.type};
+ const effect=S.effects(item);assert.equal(effect[key],entry.attack);assert.equal(S.power(item),S.scoreStats(effect));
+ assert(E.validWeaponBonus(key,entry.attack));assert(E.validWeapons({劉備:{[key]:entry.attack}}));
+ E.loadWeapons({劉備:effect});const hero=E.apply(make('劉備'));assert.equal(hero[key==='magic'?'equipmentMagic':'equipmentPhysical'],entry.attack);
+ const saved=E.saveWeapons();E.loadWeapons(saved);assert.equal(E.saveWeapons().劉備[key],entry.attack);
+ assert(guide.includes(entry.name));
+}
+for(const [quality,max]of [['紅',600],['金',850],['紫金',1200]]){
+ const values=S.namedWeaponCatalog.filter(e=>e.quality===quality).map(e=>e.attack);assert.equal(Math.max(...values),max);assert(Math.min(...values)>=max*.85);
+}
+assert(!E.validWeaponBonus('physical',999));assert(!E.validWeaponBonus('physical',1201));assert(!E.validWeaponBonus('magic',1200));
+assert.equal(S.compare({name:'屠龍刀',slot:'weapon',weaponType:'blade'},{name:'鐵刀',slot:'weapon',weaponType:'blade'}).delta,827);
+console.log('PASS all weapon attack values, rarity caps, power comparison and high-value battle snapshot roundtrips');
