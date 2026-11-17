@@ -29,3 +29,16 @@ for(const [type,label,names]of [['halberd','戟',['新兵木戟','長戟','青�
  c.window.TestRoster[name]=prior;
 }
 console.log('PASS unified 108-weapon catalog, all quality minimums, handbook coverage and halberd/axe battle effects');
+
+// 通用組跨類型可裝備，其他組不得混入；舊存檔短戟也按短兵器判定。
+for(const group of [['spear','lance','halberd'],['shortHalberd','axe','whip','hammer'],['fan','staff'],['sword'],['blade'],['bow']]){
+ const labels={spear:'槍',lance:'矛',halberd:'長戟',shortHalberd:'短戟',axe:'斧',whip:'鞭',hammer:'錘',fan:'扇',staff:'杖',sword:'劍',blade:'刀',bow:'弓'};
+ for(const heroType of group){c.window.TestRoster.通用測試={weaponLabel:labels[heroType]};for(const type of Object.keys(labels))assert.equal(S.compatible({slot:'weapon',weaponType:type,name:'測試'},'通用測試','weapon'),group.includes(type),heroType+' / '+type);}
+}
+c.window.TestRoster.通用測試={weaponLabel:'斧'};
+assert(S.compatible({slot:'weapon',weaponType:'halberd',name:'短戟'},'通用測試','weapon'));
+assert(!S.compatible({slot:'weapon',weaponType:'halberd',name:'短戟'},'趙雲','weapon'));
+assert(S.compatible({slot:'weapon',weaponType:'lance',name:'丈八蛇矛'},'趙雲','weapon'));
+assert.equal(S.typeText({slot:'weapon',weaponType:'halberd',name:'短戟'}),'武器/短戟');
+for(const name of ['裂岳戰斧','霸海巨斧','刑天戰斧','蚩尤斧','龍膽亮銀槍','虎威湛金槍','丈八蛇矛','天穹破軍矛','落日神弓','養由基弓','后羿弓'])assert.equal(guide.split('>'+name+'<').length-1,1,name);
+console.log('PASS weapon compatibility groups, legacy short halberds and unique named weapons');
