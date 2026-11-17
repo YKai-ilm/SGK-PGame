@@ -94,3 +94,6 @@
 
 /* 裝備選將：陣營與標題固定，只捲動武將清單。 */
 #modal.bag-equipment-dialog[open]{display:flex;flex-direction:column;height:min(720px,85dvh);overflow:hidden}#modal.bag-equipment-dialog>header{flex-shrink:0}#modal.bag-equipment-dialog #modalBody{display:flex;flex-direction:column;min-height:0;flex:1;overflow:hidden}#modal.bag-equipment-dialog #modalBody>*{flex-shrink:0}#modal.bag-equipment-dialog #modalBody>.bag-hero-options{flex:1 1 auto;min-height:0;max-height:none;overflow:auto;overscroll-behavior:contain;align-content:start;grid-auto-rows:max-content;margin:10px 0}#modal.bag-equipment-dialog .bag-equipment-factions{display:flex;gap:5px}.bag-equipment-factions button{flex:1;min-width:0;padding:6px 2px;font-size:13px;white-space:nowrap}.bag-equipment-factions button.active{background:#2d5141;color:#fff7df;border-color:#2d5141}
+
+/* 背包裝備的屬性與戰力同列，使用咖啡紅；換裝比較仍保留增減色。 */
+.bag-equipment>.equipment-summary{display:flex;align-items:baseline;gap:4px;margin-top:8px;color:#8b4937;font-size:12px;white-space:nowrap}.bag-equipment>.equipment-summary>small,.bag-equipment>.equipment-summary>.equipment-power{display:inline;margin:0;color:inherit;font-size:inherit}
