@@ -26,3 +26,16 @@ math.random=()=>.05;const noCrit=unit();c.hurt(noCrit,170,false,eagle,false,fals
 math.random=()=>0;for(const flags of [[false,false,false],[true,false,true],[false,true,true]]){const t=unit();c.hurt(t,170,false,eagle,...flags);assert.equal(t.hp,9830);}
 let rolls=0;math.random=()=>{rolls++;return 0;};const dodged={...defender,shield:80};c.hurt(dodged,170,false,eagle,false,false,true);assert.equal(rolls,1);assert.equal(dodged.hp,10000);assert.equal(dodged.shield,80);
 console.log('PASS basic attacks, eagle critical boundaries, dodge-first order, skill isolation, shield/block preservation and snapshots');
+
+// Rattan armor: explicit fire only, including fixed burn, before shields.
+for(const fixed of [false,true])for(const element of [null,'fire']){
+ const t={...unit(),equipmentFireTaken:.5,shield:20};
+ c.hurt(t,100,true,null,fixed,false,false,element);
+ assert.equal(t.hp,10000-((element==='fire'?150:100)-20));assert.equal(t.shield,0);
+}
+vm.runInNewContext(src.slice(src.indexOf('function meteorImpact('),src.indexOf('function tick(dt)')),c);
+const fireTarget={...unit(),enemy:true,x:0,y:0,equipmentFireTaken:.5};c.enemies=[fireTarget];c.units=[attacker];
+c.meteorImpact({raw:100,source:attacker},0,0);assert.equal(fireTarget.hp,9850);
+c.elapsed=11;c.tickBurn(fireTarget);assert.equal(fireTarget.hp,9100);
+assert.equal(c.window.EquipmentSystem.power({name:'藤甲',slot:'armor'}),267);
+console.log('PASS explicit meteor/fire burn weakness, ordinary damage isolation and shield order');

@@ -3,8 +3,8 @@ let state={mode:'story',unlocks:{story:{heroes:['劉備','關羽']},battle:{hero
 const c={window:{TestRoster:{劉備:{},關羽:{}}},URLSearchParams,location:{search:''},localStorage:{getItem:()=>JSON.stringify(state)}};
 for(const file of ['武將裝備.js','裝備戰鬥.js'])vm.runInNewContext(fs.readFileSync(file,'utf8'),c);
 const E=c.window.EquipmentBattle,S=c.window.EquipmentSystem,unit=()=>({type:'劉備',hero:true,hp:1000,max:1000,def:50,mdef:50});
-assert.equal(S.armorCatalog.length,17);assert.equal(new Set(S.armorCatalog.map(a=>a.name)).size,17);
-for(const a of S.armorCatalog){state.equipment.story.items[0].name=a.name;E.reset();const u=E.apply(unit());assert.equal(u.def,50+a.def);assert.equal(u.mdef,50+a.mdef);E.apply(u);assert.equal(u.def,50+a.def);assert.equal(u.max,1000);assert.equal(S.power(state.equipment.story.items[0]),S.scoreStats({def:a.def,mdef:a.mdef}));assert.equal(S.typeText(state.equipment.story.items[0]),'防具/'+a.type);
+assert.equal(S.armorCatalog.length,18);assert.equal(new Set(S.armorCatalog.map(a=>a.name)).size,18);
+for(const a of S.armorCatalog){state.equipment.story.items[0].name=a.name;E.reset();const u=E.apply(unit());assert.equal(u.def,50+a.def);assert.equal(u.mdef,50+a.mdef);E.apply(u);assert.equal(u.def,50+a.def);assert.equal(u.max,1000);assert.equal(S.power(state.equipment.story.items[0]),S.scoreStats(S.ratedStats(state.equipment.story.items[0])));assert.equal(S.typeText(state.equipment.story.items[0]),'防具/'+a.type);
  const snap=E.saveArmors();assert(E.validArmors(snap));assert(E.validArmorUnit(u,snap));snap.劉備.def=999;assert(!E.validArmors(snap));assert.equal(E.saveArmors().劉備.def,a.def);
  const saved=E.saveArmors();E.load({});E.loadArmors(saved);const restored=E.apply(JSON.parse(JSON.stringify(u)));assert.equal(restored.def,u.def);assert.equal(E.apply(unit()).mdef,50+a.mdef);
  assert(!E.validArmorUnit({...u,equipmentDef:a.def+1},saved));assert(!E.validArmorUnit({...u,enemy:true},saved));assert(!E.validArmorUnit({...u,equipmentMdef:undefined},saved));
@@ -17,7 +17,7 @@ state.mode='battle';E.reset();assert.equal(E.apply(unit()).def,50);c.location.se
 state.equipment.story.loadouts.關羽={armor:'a'};E.reset();assert.equal(Object.keys(E.saveArmors()).length,1);
 assert.equal(E.apply({...unit(),hero:false}).def,50);assert.equal(E.apply({...unit(),enemy:true}).def,50);
 c.window.TutorialBattleConfig={};E.reset();assert.equal(E.apply(unit()).def,50);
-for(const a of ['藤甲'])assert.equal(S.effects({name:a,slot:'armor'}),null);
+assert.equal(S.effects({name:'未知甲',slot:'armor'}),null);assert(!E.validArmors({劉備:{def:275,mdef:49}}));
 for(const bad of [null,[],{不存在:{def:8,mdef:8}},{劉備:{def:8,mdef:9}},{劉備:{def:8,mdef:8,hp:1}},{劉備:{def:-1,mdef:8}}])assert(!E.validArmors(bad));
 assert.equal(S.effects({name:'布衣',slot:'accessory'}),null);
-console.log('PASS 17 armor effects, power, fixed application, immutable snapshots, legacy saves, mode isolation, duplicate ownership and pending special armor');
+console.log('PASS 18 armor effects, power, fixed application, immutable snapshots, legacy saves, mode isolation, duplicate ownership and pending special armor');
