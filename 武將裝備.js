@@ -44,9 +44,16 @@ window.EquipmentSystem=(()=>{
   const value=1000*(Math.sqrt(offense*survival)-1);
   return Number.isFinite(value)?Math.round(value):null;
  }
+ // 固定加值評分不變；百分比先以同一成長基準換成等效固定加值。
+ // 2026-11-19 全武將局內20級各能力中位數，固定版本，不隨持有人或名錄異動漂移。
+ const mountRatingReference=Object.freeze({level:20,hp:11512,physical:868,magic:1073,def:50,mdef:52,support:789});
+ function mountRatedStats(m,base=mountRatingReference){
+  const frequency=1+(m.haste||0),damage=1+(m.basicDamage||0),avoid=1-(m.basicDodge||0);
+  return {hp:base.hp*((1+(m.hpRate||0))/avoid-1),physical:base.physical*((1+(m.physicalRate||0))*frequency*damage-1),magic:base.magic*((1+(m.magicRate||0))*frequency*damage-1),def:base.def*(m.defRate||0),mdef:base.mdef*(m.mdefRate||0),support:base.support*(m.supportRate||0)};
+ }
  function ratedStats(item){
   if(!item)return {};
-  if(item.slot==='mount'){const m=mountCatalog.find(m=>m.name===item.name);return m?{haste:m.haste,...(m.hpRate?{hp:4000*m.hpRate}:{}),...(m.physicalRate?{physical:200*m.physicalRate}:{}),...(m.defRate?{def:50*m.defRate}:{}),...(m.mdefRate?{mdef:50*m.mdefRate}:{}),...(m.magicRate?{magic:200*m.magicRate}:{}),...(m.supportRate?{support:200*m.supportRate}:{}),...(m.basicDamage?{basicDamage:m.basicDamage}:{}),...(m.basicDodge?{basicDodge:m.basicDodge}:{})}:null;}
+  if(item.slot==='mount'){const m=mountCatalog.find(m=>m.name===item.name);return m?mountRatedStats(m):null;}
   if(item.slot==='armor'){const a=armorCatalog.find(a=>a.name===item.name);return a?{def:a.def,mdef:a.mdef}:null;}
   const accessory=accessoryCatalog.find(e=>e.name===item.name);if(item.slot==='accessory'&&accessory)return {...accessory.stats};
   const necklace=necklaceCatalog.find(e=>e.name===item.name);if(item.slot==='accessory'&&necklace)return {hp:necklace.hp};
@@ -58,6 +65,6 @@ window.EquipmentSystem=(()=>{
  function effects(item){if(item?.slot==='mount'){const m=mountCatalog.find(m=>m.name===item.name);if(!m)return null;const {name,...stats}=m;return stats;}return item?ratedStats(item):null;}
  function effectText(item){if(!item)return '';const e=effects(item);if(!e)return '能力數值尚未定案';const labels={basicDamage:'普攻傷害',basicDodge:'普攻閃避率',magicRate:'謀攻',supportRate:'輔助力',defRate:'物防',mdefRate:'謀防',hpRate:'最大生命',physicalRate:'物攻',hp:'最大生命',physical:'物攻',magic:'謀攻',def:'物防',mdef:'謀防',haste:'攻速'};return Object.entries(e).map(([k,v])=>labels[k]+'＋'+(['haste','hpRate','physicalRate','defRate','mdefRate','magicRate','supportRate','basicDamage','basicDodge'].includes(k)?Math.round(v*100)+'%':v)).join('、');}
  function typeText(item){const sub=item.slot==='weapon'?(item.weaponType==='halberd'&&['短戟','闇雙鐵戟'].includes(item.name)?'短戟':weaponLabels[item.weaponType]||'未分類'):item.slot==='accessory'?(accessoryCatalog.find(e=>e.name===item.name)?.type||['項鍊','指環','玉佩','護身符','護腕'].find(t=>item.name.includes(t))||''):item.slot==='armor'?(armorCatalog.find(a=>a.name===item.name)?.type||['重甲','輕甲','法袍'].find(t=>item.name.includes(t))||''):'';return (slots[item.slot]||'裝備')+(sub?'/'+sub:'');}
- return {accessoryCatalog,necklaceCatalog,validNecklaceHP,weaponCatalog,namedWeaponCatalog,armorCatalog,mountCatalog,compatible,typeText,slots,weaponLabels,weaponType,items,owner,equipped,candidates,equip,power,compare,effects,effectText,scoreStats,ratedStats};
+ return {mountRatingReference,mountRatedStats,accessoryCatalog,necklaceCatalog,validNecklaceHP,weaponCatalog,namedWeaponCatalog,armorCatalog,mountCatalog,compatible,typeText,slots,weaponLabels,weaponType,items,owner,equipped,candidates,equip,power,compare,effects,effectText,scoreStats,ratedStats};
 })();
 

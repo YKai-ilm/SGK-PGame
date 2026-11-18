@@ -10,10 +10,10 @@ const saved=E.saveMounts();assert(E.validMountUnit(u,saved));E.load({劉備:500}
 for(const bad of [{...u,equipmentHPRate:.5},{...u,equipmentPhysicalRate:.1},{...u,equipmentHaste:undefined}])assert(!E.validMountUnit(bad,saved));
 state.equipment.story.items[0].name='烏騅馬';E.reset();const v=E.apply(make());assert.equal(v.max,1500);assert(Math.abs(H.power(v)-240)<1e-10);assert.equal(H.power(v,true),300);assert.equal(H.power(v,false,false),200);assert.equal(H.support(v),120);E.apply(v);assert(Math.abs(H.power(v)-240)<1e-10);
 v.equipmentPhysical=1200;assert(Math.abs(H.power(v)-1420)<1e-10);v.atk*=1.09;assert(Math.abs(H.power(v)-(109*2*1.1+1200))<1e-10);
-for(const name of ['青鬃馬','烏騅馬'])assert.equal(S.power({slot:'mount',name}),45);
+for(const [name,power]of [['青鬃馬',169],['烏騅馬',192]])assert.equal(S.power({slot:'mount',name}),power);
 assert.match(S.effectText({slot:'mount',name:'青鬃馬'}),/最大生命＋5%/);assert.match(S.effectText({slot:'mount',name:'烏騅馬'}),/物攻＋10%/);
 E.load({});E.loadMounts({劉備:{haste:.03}});assert.equal(E.apply(make()).interval,2/1.03);E.loadMounts();assert.equal(E.apply(make()).interval,2);
-for(const [name,haste,hpRate,physicalRate,power] of [['汗血寶馬',.12,.10,0,110],['赤兔馬',.10,0,.24,110],['的盧',.06,.20,0,128],['烏雲踏雪',.08,.10,.10,117]]){
+for(const [name,haste,hpRate,physicalRate,power] of [['汗血寶馬',.12,.10,0,427],['赤兔馬',.10,0,.24,435],['的盧',.06,.20,0,426],['烏雲踏雪',.08,.10,.10,446]]){
  state.equipment.story.items[0].name=name;E.reset();const horse=E.apply(make());assert.equal(horse.interval,2/(1+haste));assert.equal(horse.max,Math.round(1000*(1+hpRate))+500);assert(Math.abs(H.power(horse)-(200*(1+physicalRate)+20))<1e-10);assert.equal(H.power(horse,true),300);assert.equal(H.support(horse),120);assert.equal(S.power({slot:'mount',name}),power);
  const snapshot=E.saveMounts(),before=JSON.stringify(horse);assert(E.validMounts(snapshot));assert(E.validMountUnit(horse,snapshot));E.load({劉備:500});E.loadWeapons({劉備:{physical:20}});E.loadMounts(snapshot);E.apply(horse);assert.equal(JSON.stringify(horse),before);assert.equal(JSON.stringify(E.apply(make())),before);
  for(const field of ['equipmentHaste',...(hpRate?['equipmentHPRate']:[]),...(physicalRate?['equipmentPhysicalRate']:[])]){const incomplete={...horse};delete incomplete[field];assert(!E.validMountUnit(incomplete,snapshot));assert(!E.validMountUnit({...horse,[field]:.99},snapshot));}
@@ -22,7 +22,7 @@ for(const [name,haste,hpRate,physicalRate,power] of [['汗血寶馬',.12,.10,0,1
 c.elapsed=0;c.roster={};c.letterMorale=()=>0;c.letterHit=()=>{};c.mark=()=>{};
 vm.runInNewContext(fs.readFileSync('角色戰鬥.js','utf8').split(/\r?\n/).find(l=>l.startsWith('function hurt(')),c);
 state.equipment.story.items.push({id:'a',name:'百鍊戰甲',slot:'armor'});state.equipment.story.loadouts.劉備.armor='a';
-for(const [name,haste,hpRate,defRate,mdefRate,power] of [['絕影',.08,0,.42,.42,110],['白鵠',.08,.12,.08,0,107],['驚帆',.14,0,.5,0,108]]){
+for(const [name,haste,hpRate,defRate,mdefRate,power] of [['絕影',.08,0,.42,.42,260],['白鵠',.08,.12,.08,0,376],['驚帆',.14,0,.5,0,345]]){
  state.equipment.story.items[0].name=name;E.reset();const u=E.apply(make());assert.equal(u.def,50*(1+defRate)+275);assert.equal(u.mdef,50*(1+mdefRate)+83);assert.equal(u.interval,2/(1+haste));assert.equal(u.max,Math.round(1000*(1+hpRate))+500);assert.equal(S.power({slot:'mount',name}),power);
  const mounts=E.saveMounts(),armors=E.saveArmors(),before=JSON.stringify(u);E.load({劉備:500});E.loadWeapons({劉備:{physical:20}});E.loadArmors(armors);E.loadMounts(mounts);E.apply(u);assert.equal(JSON.stringify(u),before);assert(E.validMountUnit(u,mounts));
  for(const field of ['equipmentDefRate',...(mdefRate?['equipmentMdefRate']:[])]){assert(!E.validMountUnit({...u,[field]:.99},mounts));const broken={...u};delete broken[field];assert(!E.validMountUnit(broken,mounts));}
@@ -33,7 +33,7 @@ for(const [name,haste,hpRate,defRate,mdefRate,power] of [['絕影',.08,0,.42,.42
 }
 c.elapsed=10;c.targets=()=>[];c.enemies=[];c.ring=()=>{};c.supportPower=u=>H.support(u);c.combatPower=(...args)=>H.power(...args);
 for(const prefix of ['function restoreHealth(','function skills('])vm.runInNewContext(fs.readFileSync('角色戰鬥.js','utf8').split(/\r?\n/).find(l=>l.startsWith(prefix)),c);
-for(const [name,haste,magicRate,supportRate,power]of [['爪黃飛電',.08,0,.30,109],['紫騂',.06,.12,.20,106]]){
+for(const [name,haste,magicRate,supportRate,power]of [['爪黃飛電',.08,0,.30,407],['紫騂',.06,.12,.20,424]]){
  state.equipment.story.items[0].name=name;E.reset();const u=E.apply({...make(),cool:[0,0],stun:0,healing:0,id:1});const expected=120*(1+supportRate);assert.equal(H.support(u),expected);assert.equal(H.power(u),220);assert.equal(H.power(u,true),300*(1+magicRate));assert.equal(u.interval,2/(1+haste));assert.equal(S.power({slot:'mount',name}),power);
  u.equipmentMagic=1200;assert.equal(H.power(u,true),300*(1+magicRate)+1200);assert.equal(H.power(u,true,false),300);assert.equal(H.support(u),expected);
  const snap=E.saveMounts();assert(E.validMountUnit(u,snap));const before=JSON.stringify(u);E.apply(u);assert.equal(JSON.stringify(u),before);E.load({});E.loadMounts(snap);assert.equal(H.support(E.apply(make())),expected);
