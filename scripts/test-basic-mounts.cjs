@@ -39,3 +39,13 @@ c.meteorImpact({raw:100,source:attacker},0,0);assert.equal(fireTarget.hp,9850);
 c.elapsed=11;c.tickBurn(fireTarget);assert.equal(fireTarget.hp,9100);
 assert.equal(c.window.EquipmentSystem.power({name:'藤甲',slot:'armor'}),267);
 console.log('PASS explicit meteor/fire burn weakness, ordinary damage isolation and shield order');
+
+// Timed consumables use battle time and add to equipment probabilities.
+c.elapsed=20;const buffed={...unit(),equipmentAccessory:{critChance:.05},itemCritUntil:30};
+math.random=()=>.249;let t=unit();c.hurt(t,100,false,buffed,false,false,true);assert.equal(t.hp,9850);
+math.random=()=>.25;t=unit();c.hurt(t,100,false,buffed,false,false,true);assert.equal(t.hp,9900);
+math.random=()=>.15;t={...unit(),equipmentBasicDodge:.1,itemDodgeUntil:30};c.hurt(t,100,false,null,false,false,true);assert.equal(t.hp,10000);
+math.random=()=>.2;t={...unit(),equipmentBasicDodge:.1,itemDodgeUntil:30};c.hurt(t,100,false,null,false,false,true);assert.equal(t.hp,9900);
+c.elapsed=30;math.random=()=>.15;t={...unit(),itemDodgeUntil:30};c.hurt(t,100,false,buffed,false,false,true);assert.equal(t.hp,9900);
+c.elapsed=20;math.random=()=>0;for(const flags of [[false,false,false],[true,false,true],[false,true,true]]){const v={...unit(),itemDodgeUntil:30};c.hurt(v,100,false,buffed,...flags);assert.equal(v.hp,9900);}
+console.log('PASS consumable crit/dodge additive probabilities, exact expiry and skill/fixed/extra exclusion');
