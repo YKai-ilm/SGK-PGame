@@ -6,10 +6,11 @@ window.BattleShortcuts=(()=>{
  function assign(current,index,id){if(!Number.isInteger(index)||index<0||index>4||id!==null&&!catalog.some(x=>x.id===id))throw Error('道具欄位無效。');if(id&&current.some((x,i)=>i!==index&&x===id))throw Error('同一種道具只需配置一格。');const next=Array.from({length:5},(_,i)=>current[i]||null);next[index]=id;return next;}
  const buffs={protectionSmoke:{field:'itemProtectionUntil',duration:3},criticalPill:{field:'itemCritUntil',duration:10},evasionPowder:{field:'itemDodgeUntil',duration:10}};
  function buffTargets(id,list,time){const b=buffs[id];return b?list.filter(u=>!u.enemy&&u.id!=='gate'&&u.hp>0&&!(u[b.field]>time)):[];}
+ function activeEffects(list,time){return Object.entries(buffs).flatMap(([id,b])=>{const times=list.filter(u=>!u.enemy&&u.id!=='gate'&&u.hp>0&&u[b.field]>time).map(u=>Math.ceil(u[b.field]-time));return times.length?[{id,name:catalog.find(x=>x.id===id).name,count:times.length,min:Math.min(...times),max:Math.max(...times)}]:[];});}
  function applyBuff(id,list,time){const targets=buffTargets(id,list,time);for(const u of targets)u[buffs[id].field]=time+buffs[id].duration;return targets;}
  const cleanseKeys=['stun','root','slow','attackSlow','lingSlow','letterSlow'];
  function cleanseTargets(list,time){return list.filter(u=>!u.enemy&&u.id!=='gate'&&u.hp>0&&cleanseKeys.some(k=>Number.isFinite(u[k])&&u[k]>time));}
  function cleanse(list,time){const targets=cleanseTargets(list,time);for(const u of targets)for(const k of cleanseKeys)if(u[k]>time){u[k]=0;delete u[k+'Owner'];}return targets;}
  function spend(mode,id){if(!['story','battle'].includes(mode)||!catalog.some(i=>i.id===id&&i.ready))return false;const key='three-kingdoms-interface-preview-v1',s=JSON.parse(localStorage.getItem(key)||'null');if(!s)return false;const n=count(s,mode,id);if(!n)return false;s[mode==='story'?'storyItems':'battleItems'][id]=n-1;localStorage.setItem(key,JSON.stringify(s));return true;}
- return {catalog,count,slots,assign,cleanseTargets,cleanse,spend,buffs,buffTargets,applyBuff};
+ return {catalog,count,slots,assign,cleanseTargets,cleanse,spend,buffs,buffTargets,applyBuff,activeEffects};
 })();

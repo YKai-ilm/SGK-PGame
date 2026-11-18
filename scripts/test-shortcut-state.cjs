@@ -11,3 +11,7 @@ console.log('PASS timed item eligibility, expiry boundary, no refresh and new de
 
 const smokeUnit={id:1,hp:100};assert.equal(S.applyBuff('protectionSmoke',[smokeUnit],10).length,1);assert.equal(smokeUnit.itemProtectionUntil,13);assert.equal(S.applyBuff('protectionSmoke',[smokeUnit],11).length,0);assert.equal(smokeUnit.itemProtectionUntil,13);assert.equal(S.buffTargets('protectionSmoke',[smokeUnit],13).length,1);assert(S.catalog.find(x=>x.id==='protectionSmoke').ready);
 console.log('PASS smoke three-second timing and existing item activation');
+
+const timed=[{id:1,hp:10,itemCritUntil:20},{id:2,hp:10,itemCritUntil:15},{id:3,hp:0,itemCritUntil:99},{id:4,hp:10,enemy:true,itemCritUntil:99},{id:'gate',hp:10,itemCritUntil:99}];
+assert.deepEqual(plain(S.activeEffects(timed,10)),[{id:'criticalPill',name:'會心丹',count:2,min:5,max:10}]);assert.deepEqual(plain(S.activeEffects(timed,15)),[{id:'criticalPill',name:'會心丹',count:1,min:5,max:5}]);assert.deepEqual(plain(S.activeEffects(timed,20)),[]);
+console.log('PASS visible effect counts, shortest/longest duration, living allies and expiry');

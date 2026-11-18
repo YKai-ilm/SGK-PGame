@@ -5,10 +5,15 @@ const {chromium}=require('C:/Users/user/.cache/codex-runtimes/codex-primary-runt
  await g.locator('#itemToggle').click();const buttons=g.locator('#itemChoices button');assert(await buttons.nth(0).isDisabled());
  await g.evaluate(()=>{running=true;});await g.locator('#itemToggle').click();
  for(const [i,id]of [[0,'criticalPill'],[1,'evasionPowder'],[2,'protectionSmoke']]){await buttons.nth(i).click();await g.waitForFunction(id=>JSON.parse(localStorage.getItem('three-kingdoms-interface-preview-v1')).battleItems[id]===1,id,{polling:50});assert(await buttons.nth(i).isDisabled());}
+ await g.waitForFunction(()=>document.getElementById('activeItemEffects').innerText.includes('護身煙 1人 · 3秒'),null,{polling:50});
+ assert.equal(await buttons.nth(0).locator('small').innerText(),'×1');assert(await buttons.nth(0).locator('small').isVisible());
+ const height=await g.locator('#activeItemEffects').evaluate(n=>n.getBoundingClientRect().height);assert.equal(height,22);
+ await p.screenshot({path:'.item-effects-mobile.png'});
+ await g.evaluate(()=>{running=false;units.push({...units[0],id:99,itemCritUntil:elapsed+4,itemDodgeUntil:0,itemProtectionUntil:0});});await g.locator('#itemToggle').click();assert.match(await g.locator('#activeItemEffects').innerText(),/會心丹 2人 · 暫停 4–10秒/);await g.evaluate(()=>units.pop());
  const r=await g.evaluate(()=>{running=false;const until=units[0].itemCritUntil,now=elapsed;elapsed+=1;const save=JSON.parse(JSON.stringify(BattleSave.capture()));BattleSave.validate(save);BattleSave.restore(JSON.parse(JSON.stringify(save)));const restored=units[0].itemCritUntil-elapsed,other=units[0].itemDodgeUntil-elapsed,protection=units[0].itemProtectionUntil-elapsed;
  const bad=JSON.parse(JSON.stringify(save));bad.state.entities.find(u=>u.type==='劉備').itemProtectionUntil=save.state.elapsed+4;let rejected=false;try{BattleSave.validate(bad);}catch{rejected=true;}
  const old=JSON.parse(JSON.stringify(save));for(const u of old.state.entities){delete u.itemCritUntil;delete u.itemDodgeUntil;delete u.itemProtectionUntil;}BattleSave.restore(old);const legacy=units[0].itemCritUntil===undefined;
  BattleSave.restore(JSON.parse(JSON.stringify(save)));elapsed=until;const expired=BattleShortcuts.buffTargets('criticalPill',units,elapsed).length;reset();const fresh=makeUnit('劉備',path[3].x,path[3].y);return {initial:until-now,restored,other,protection,rejected,legacy,expired,fresh:fresh.itemCritUntil===undefined};});
- assert.deepEqual(r,{initial:10,restored:9,other:9,protection:2,rejected:true,legacy:true,expired:1,fresh:true});
+ assert.deepEqual(r,{initial:10,restored:9,other:9,protection:2,rejected:true,legacy:true,expired:1,fresh:true});await g.locator('#itemToggle').click();assert.equal(await g.locator('#activeItemEffects').innerText(),'');assert.equal(await g.locator('#activeItemEffects').evaluate(n=>n.getBoundingClientRect().height),height);
  console.log('PASS mobile use, separate simultaneous buffs, no duplicate spending, remaining-time saves, invalid timer rejection and legacy/new-battle isolation');
  }finally{await browser?.close();server.close();}})().catch(e=>{console.error(e);process.exitCode=1;});
