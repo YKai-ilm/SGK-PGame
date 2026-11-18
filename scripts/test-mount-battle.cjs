@@ -9,6 +9,6 @@ for(const [name,h] of [['驛馬',.03],['良馬',.05],['戰馬',.08]]){state.equi
 }
 E.load({});E.loadMounts();assert.equal(E.apply(unit()).interval,2);assert(E.validMountUnit(unit()));state.mode='battle';E.reset();assert.equal(E.apply(unit()).interval,2);c.location.search='?storySweep=1';E.reset();assert.equal(E.apply(unit()).interval,2/1.08);assert.equal(E.apply({...unit(),hero:false}).interval,2);assert.equal(E.apply({...unit(),enemy:true}).interval,2);
 state.equipment.story.loadouts.關羽={mount:'m'};E.reset();assert.equal(Object.keys(E.saveMounts()).length,1);c.window.TutorialBattleConfig={};E.reset();assert.equal(E.apply(unit()).interval,2);
-for(const name of ['絕影','爪黃飛電','白鵠','燎原火','照夜玉獅子','驚帆','紫騂'])assert.equal(S.effects({slot:'mount',name}),null);
+for(const name of ['爪黃飛電','燎原火','照夜玉獅子','紫騂'])assert.equal(S.effects({slot:'mount',name}),null);
 for(const bad of [null,[],{不存在:{haste:.03}},{劉備:{haste:.04}},{劉備:{haste:.03,hp:2}}])assert(!E.validMounts(bad));
 console.log('PASS mount haste and power, no cooldown/movement changes, haste/slow stacking, snapshots, old saves and mode isolation');

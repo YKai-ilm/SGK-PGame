@@ -19,4 +19,16 @@ for(const [name,haste,hpRate,physicalRate,power] of [['汗血寶馬',.12,.10,0,1
  for(const field of ['equipmentHaste',...(hpRate?['equipmentHPRate']:[]),...(physicalRate?['equipmentPhysicalRate']:[])]){const incomplete={...horse};delete incomplete[field];assert(!E.validMountUnit(incomplete,snapshot));assert(!E.validMountUnit({...horse,[field]:.99},snapshot));}
  let base=1000;for(let i=0;i<30;i++){base=Math.round(base*1.12);horse.max=E.growHP(horse);assert.equal(horse.max,Math.round(base*(1+hpRate))+500);}
 }
-console.log('PASS mixed and named mounts: fixed gear excluded, 30 level-ups, scoring, snapshots, malformed fields and legacy mounts');
+c.elapsed=0;c.roster={};c.letterMorale=()=>0;c.letterHit=()=>{};c.mark=()=>{};
+vm.runInNewContext(fs.readFileSync('角色戰鬥.js','utf8').split(/\r?\n/).find(l=>l.startsWith('function hurt(')),c);
+state.equipment.story.items.push({id:'a',name:'百鍊戰甲',slot:'armor'});state.equipment.story.loadouts.劉備.armor='a';
+for(const [name,haste,hpRate,defRate,mdefRate,power] of [['絕影',.08,0,.42,.42,110],['白鵠',.08,.12,.08,0,107],['驚帆',.14,0,.5,0,108]]){
+ state.equipment.story.items[0].name=name;E.reset();const u=E.apply(make());assert.equal(u.def,50*(1+defRate)+275);assert.equal(u.mdef,50*(1+mdefRate)+83);assert.equal(u.interval,2/(1+haste));assert.equal(u.max,Math.round(1000*(1+hpRate))+500);assert.equal(S.power({slot:'mount',name}),power);
+ const mounts=E.saveMounts(),armors=E.saveArmors(),before=JSON.stringify(u);E.load({劉備:500});E.loadWeapons({劉備:{physical:20}});E.loadArmors(armors);E.loadMounts(mounts);E.apply(u);assert.equal(JSON.stringify(u),before);assert(E.validMountUnit(u,mounts));
+ for(const field of ['equipmentDefRate',...(mdefRate?['equipmentMdefRate']:[])]){assert(!E.validMountUnit({...u,[field]:.99},mounts));const broken={...u};delete broken[field];assert(!E.validMountUnit(broken,mounts));}
+ for(const magic of [false,true]){const target={...u,hp:10000,max:10000};c.hurt(target,600,magic,null);assert(Math.abs(10000-target.hp-600*100/(100+(magic?u.mdef:u.def)))<1e-9);}
+ const fixed={...u,hp:10000};c.hurt(fixed,600,false,null,true);assert.equal(fixed.hp,9400);
+ for(let i=0;i<20;i++){u.max=E.growHP(u);E.apply(u);assert.equal(u.def,50*(1+defRate)+275);assert.equal(u.mdef,50*(1+mdefRate)+83);}
+ assert.equal(E.apply({...make(),hero:false}).def,50);assert.equal(E.apply({...make(),enemy:true}).def,50);
+}
+console.log('PASS mixed and named mounts: fixed gear excluded, growth, actual damage, scoring, snapshots, malformed fields and legacy mounts');
