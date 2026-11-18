@@ -65,6 +65,7 @@
 
   if(state.mode==='story'&&bagTab==='items'&&state.storyItems?.letterXPBook120>0){const empty=$('content').querySelector('section.panel');if(empty?.textContent.includes('目前沒有道具'))empty.remove();$('content').insertAdjacentHTML('beforeend','<section class="panel bag-item"><strong>字卡經驗書（120經驗）</strong><span>×'+state.storyItems.letterXPBook120+'</span>'+btn('使用','useXPBook120')+'</section>');}
   if(state.mode==='story'&&bagTab==='items'&&Number.isSafeInteger(state.storyItems?.protectionSmoke)&&state.storyItems.protectionSmoke>0){const empty=$('content').querySelector('section.panel');if(empty?.textContent.includes('目前沒有道具'))empty.remove();$('content').insertAdjacentHTML('beforeend','<section class="panel bag-item" data-item-kind="battle"><span class="bag-item-mark">煙</span><span><strong>護身煙</strong><small>消耗道具</small></span><b>×'+state.storyItems.protectionSmoke+'</b></section>');}
+  if(bagTab==='items')for(const p of TeamPills.catalog){const count=TeamPills.count(state,state.mode,p.id);if(!count)continue;const empty=$('content').querySelector('section.panel');if(empty?.textContent.includes('目前沒有道具'))empty.remove();$('content').insertAdjacentHTML('beforeend','<section class="panel bag-item" data-item-kind="battle"><strong>'+p.name+'</strong><span>×'+count+'</span><small>隊伍裝備 · 不消耗 · 每5秒治療3名友軍各'+p.heal+'生命，於隊伍整備配置</small></section>');}
   layoutBag();
  }
  function layoutBag(){
@@ -87,6 +88,12 @@
  }
  function openTeam(){if(state.mode==='story'&&!state.storyFaction){toast('先選擇劇情陣營，再設定該路線的隊伍。');navigate('journey');return;}if(!draft)draft=JSON.parse(JSON.stringify(currentTeam()));page='armory';save();render();}
  function renderItemShortcuts(){
+  const panel=document.createElement('section');panel.className='panel';panel.id='teamPills';panel.innerHTML='<h3>隊伍裝備道具</h3><p class="small">同類型道具只能裝備一個。丹藥不消耗，每5秒恢復生命比例最低的3名存活友軍；儲存隊伍後於下一場生效。</p>';
+  const pillSelect=document.createElement('select');pillSelect.setAttribute('aria-label','恢復丹藥');pillSelect.style.cssText='width:100%;min-height:44px';pillSelect.add(new Option('不裝備',''));
+  for(const p of TeamPills.catalog)if(TeamPills.count(state,state.mode,p.id)>0)pillSelect.add(new Option(p.name+' · 每人恢復'+p.heal,p.id));
+  draft.healingPill=TeamPills.selected(state,state.mode,draft);pillSelect.value=draft.healingPill||'';
+  pillSelect.onchange=()=>{const id=pillSelect.value||null,old=TeamPills.catalog.find(p=>p.id===draft.healingPill),next=TeamPills.catalog.find(p=>p.id===id);if(old&&next&&!confirm('同類型道具只能裝備一個。目前已裝備'+old.name+'，是否替換為'+next.name+'？')){pillSelect.value=draft.healingPill;return;}draft.healingPill=id;};panel.append(pillSelect);$('content').append(panel);
+
   draft.itemShortcuts=BattleShortcuts.slots(state,state.mode,draft);const section=document.createElement('section');section.className='panel';section.id='teamItemShortcuts';const title=document.createElement('h3');title.textContent='戰場道具快捷欄';section.append(title);const note=document.createElement('p');note.className='small';note.textContent='預先配置五種主動使用道具；配置不扣數量，用完保留原格。劇情道具與隊伍裝備道具不列入。';section.append(note);
   const grid=document.createElement('div');grid.style.cssText='display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:8px';for(let i=0;i<5;i++){const label=document.createElement('label');label.textContent='道具 '+(i+1);const select=document.createElement('select');select.dataset.itemSlot=i;select.style.cssText='display:block;width:100%;min-height:44px';select.add(new Option('空位',''));for(const item of BattleShortcuts.catalog){const count=BattleShortcuts.count(state,state.mode,item.id);if(count||draft.itemShortcuts.includes(item.id)){const option=new Option(item.name+' ×'+count+(item.ready?'':'（效果待設定）'),item.id);option.disabled=draft.itemShortcuts.some((id,j)=>j!==i&&id===item.id);select.add(option);}}select.value=draft.itemShortcuts[i]||'';select.onchange=()=>{try{draft.itemShortcuts=BattleShortcuts.assign(draft.itemShortcuts,i,select.value||null);renderTeam();}catch(e){toast(e.message);select.value=draft.itemShortcuts[i]||'';}};label.append(select);grid.append(label);}section.append(grid);$('content').append(section);
  }
