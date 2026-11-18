@@ -8,3 +8,6 @@ console.log('PASS cleanse status scope, living allies only, persistent consumpti
 
 for(const id of ['criticalPill','evasionPowder']){const field=S.buffs[id].field,units=[{id:1,hp:10},{id:2,hp:0},{id:3,hp:20,enemy:true},{id:'gate',hp:20}];assert.equal(S.applyBuff(id,units,20).length,1);assert.equal(units[0][field],30);assert.equal(S.applyBuff(id,units,21).length,0);assert.equal(units[0][field],30);assert.equal(S.buffTargets(id,units,29.999).length,0);assert.equal(S.buffTargets(id,units,30).length,1);units.push({id:4,hp:10});assert.equal(S.applyBuff(id,units,25).length,1);assert.equal(units[0][field],30);assert.equal(units[4][field],35);}
 console.log('PASS timed item eligibility, expiry boundary, no refresh and new deployment isolation');
+
+const smokeUnit={id:1,hp:100};assert.equal(S.applyBuff('protectionSmoke',[smokeUnit],10).length,1);assert.equal(smokeUnit.itemProtectionUntil,13);assert.equal(S.applyBuff('protectionSmoke',[smokeUnit],11).length,0);assert.equal(smokeUnit.itemProtectionUntil,13);assert.equal(S.buffTargets('protectionSmoke',[smokeUnit],13).length,1);assert(S.catalog.find(x=>x.id==='protectionSmoke').ready);
+console.log('PASS smoke three-second timing and existing item activation');

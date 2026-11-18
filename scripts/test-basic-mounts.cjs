@@ -49,3 +49,11 @@ math.random=()=>.2;t={...unit(),equipmentBasicDodge:.1,itemDodgeUntil:30};c.hurt
 c.elapsed=30;math.random=()=>.15;t={...unit(),itemDodgeUntil:30};c.hurt(t,100,false,buffed,false,false,true);assert.equal(t.hp,9900);
 c.elapsed=20;math.random=()=>0;for(const flags of [[false,false,false],[true,false,true],[false,true,true]]){const v={...unit(),itemDodgeUntil:30};c.hurt(v,100,false,buffed,...flags);assert.equal(v.hp,9900);}
 console.log('PASS consumable crit/dodge additive probabilities, exact expiry and skill/fixed/extra exclusion');
+
+// Protection blocks every damage class before resources and on-hit callbacks.
+c.elapsed=20;const protectedUnit={...unit(),itemProtectionUntil:23,shield:80,blocks:2,letterWard:40,stun:25};const protectedBefore=JSON.stringify(protectedUnit);let protectedRolls=0;math.random=()=>{protectedRolls++;return 0;};
+for(const flags of [[false,false,false],[false,false,true],[true,false,false],[false,true,false]])for(const magic of [false,true])c.hurt(protectedUnit,100,magic,buffed,...flags,'fire');
+assert.equal(JSON.stringify(protectedUnit),protectedBefore);assert.equal(protectedRolls,0);
+c.elapsed=23;c.hurt(protectedUnit,100,false,null,true);assert.equal(protectedUnit.letterWard,0);assert.equal(protectedUnit.shield,20);assert.equal(protectedUnit.stun,25);
+const burning={...unit(),itemProtectionUntil:23,burn:{owner:attacker.id,end:24,next:21}};c.elapsed=21;c.tickBurn(burning);assert.equal(burning.hp,10000);assert.equal(burning.burn.next,22);c.elapsed=22;c.tickBurn(burning);assert.equal(burning.hp,10000);c.elapsed=23;c.tickBurn(burning);assert.equal(burning.hp,9500);
+console.log('PASS protection damage classes, untouched shields/blocks/control, exact expiry and continuing burn clock');
