@@ -13,4 +13,10 @@ v.equipmentPhysical=1200;assert(Math.abs(H.power(v)-1420)<1e-10);v.atk*=1.09;ass
 for(const name of ['青鬃馬','烏騅馬'])assert.equal(S.power({slot:'mount',name}),45);
 assert.match(S.effectText({slot:'mount',name:'青鬃馬'}),/最大生命＋5%/);assert.match(S.effectText({slot:'mount',name:'烏騅馬'}),/物攻＋10%/);
 E.load({});E.loadMounts({劉備:{haste:.03}});assert.equal(E.apply(make()).interval,2/1.03);E.loadMounts();assert.equal(E.apply(make()).interval,2);
-console.log('PASS mixed mounts: fixed gear excluded, 30 level-ups, scoring, snapshots, malformed fields and legacy mounts');
+for(const [name,haste,hpRate,physicalRate,power] of [['汗血寶馬',.12,.10,0,110],['赤兔馬',.10,0,.24,110],['的盧',.06,.20,0,128],['烏雲踏雪',.08,.10,.10,117]]){
+ state.equipment.story.items[0].name=name;E.reset();const horse=E.apply(make());assert.equal(horse.interval,2/(1+haste));assert.equal(horse.max,Math.round(1000*(1+hpRate))+500);assert(Math.abs(H.power(horse)-(200*(1+physicalRate)+20))<1e-10);assert.equal(H.power(horse,true),300);assert.equal(H.support(horse),120);assert.equal(S.power({slot:'mount',name}),power);
+ const snapshot=E.saveMounts(),before=JSON.stringify(horse);assert(E.validMounts(snapshot));assert(E.validMountUnit(horse,snapshot));E.load({劉備:500});E.loadWeapons({劉備:{physical:20}});E.loadMounts(snapshot);E.apply(horse);assert.equal(JSON.stringify(horse),before);assert.equal(JSON.stringify(E.apply(make())),before);
+ for(const field of ['equipmentHaste',...(hpRate?['equipmentHPRate']:[]),...(physicalRate?['equipmentPhysicalRate']:[])]){const incomplete={...horse};delete incomplete[field];assert(!E.validMountUnit(incomplete,snapshot));assert(!E.validMountUnit({...horse,[field]:.99},snapshot));}
+ let base=1000;for(let i=0;i<30;i++){base=Math.round(base*1.12);horse.max=E.growHP(horse);assert.equal(horse.max,Math.round(base*(1+hpRate))+500);}
+}
+console.log('PASS mixed and named mounts: fixed gear excluded, 30 level-ups, scoring, snapshots, malformed fields and legacy mounts');
