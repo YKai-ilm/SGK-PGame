@@ -7,7 +7,7 @@ window.EquipmentBattle=(()=>{
  function validArmors(data){return !!data&&typeof data==='object'&&!Array.isArray(data)&&Object.entries(data).every(([name,e])=>Object.hasOwn(window.TestRoster||{},name)&&e&&typeof e==='object'&&!Array.isArray(e)&&Object.keys(e).length===2&&Object.keys(e).every(k=>['def','mdef'].includes(k))&&(window.EquipmentSystem?.armorCatalog||[]).some(a=>a.def===e.def&&a.mdef===e.mdef));}
  function validArmorUnit(u,snapshot){const hasDef=u?.equipmentDef!==undefined,hasMdef=u?.equipmentMdef!==undefined;if(!hasDef&&!hasMdef)return true;return hasDef&&hasMdef&&!!u.hero&&!u.enemy&&validArmors({[u.type]:{def:u.equipmentDef,mdef:u.equipmentMdef}})&&snapshot?.[u.type]?.def===u.equipmentDef&&snapshot?.[u.type]?.mdef===u.equipmentMdef;}
  function validWeapons(data){return !!data&&typeof data==='object'&&!Array.isArray(data)&&Object.entries(data).every(([name,e])=>Object.hasOwn(window.TestRoster||{},name)&&e&&typeof e==='object'&&!Array.isArray(e)&&Object.keys(e).length===1&&Object.entries(e).every(([k,v])=>['physical','magic'].includes(k)&&validWeaponBonus(k,v)));}
- function valid(data){return !!data&&typeof data==='object'&&!Array.isArray(data)&&Object.entries(data).every(([name,hp])=>Object.hasOwn(window.TestRoster||{},name)&&[100,250,500].includes(hp));}
+ function valid(data){return !!data&&typeof data==='object'&&!Array.isArray(data)&&Object.entries(data).every(([name,hp])=>Object.hasOwn(window.TestRoster||{},name)&&window.EquipmentSystem.validNecklaceHP(hp));}
  function reset(){
   current={};weapons={};armors={};mounts={};if(window.TutorialBattleConfig)return;
   let s;try{s=JSON.parse(localStorage.getItem('three-kingdoms-interface-preview-v1')||'{}');}catch{return;}
