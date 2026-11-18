@@ -26,7 +26,7 @@ window.HeroCombat=(()=>{
  }
  // atk remains the primary attack for existing local level-up and save code.
  // Store the ratios on each unit so an older battle cannot change after roster edits.
- function power(u,magic=false,includeEquipment=true){return u.atk*(magic?(u.magicRatio??1):(u.physicalRatio??1))*(includeEquipment?1+(magic?u.equipmentMagicRate||0:u.equipmentPhysicalRate||0):1)+(includeEquipment?(magic?u.equipmentMagic||0:u.equipmentPhysical||0):0);}
+ function power(u,magic=false,includeEquipment=true){return u.atk*(magic?(u.magicRatio??1):(u.physicalRatio??1))*(includeEquipment?1+(magic?u.equipmentMagicRate||0:u.equipmentPhysicalRate||0):1)+(includeEquipment?(magic?(u.equipmentMagic||0)+(u.equipmentAccessory?.magic||0):(u.equipmentPhysical||0)+(u.equipmentAccessory?.physical||0)):0);}
  function support(u){return (u.supportRatio===undefined?180:u.atk*u.supportRatio*1.2)*(1+(u.equipmentSupportRate||0));}
  for(const [name,d] of Object.entries(window.TestRoster||{})){
   if(d.letter||!d.skills.length)continue;
