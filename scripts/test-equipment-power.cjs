@@ -3,7 +3,8 @@ vm.runInNewContext(fs.readFileSync('武將裝備.js','utf8'),c);
 const E=c.window.EquipmentSystem,S=E.scoreStats;
 assert.equal(S({}),0);assert.equal(S({physical:120}),140);assert.equal(S({magic:120}),140);assert.equal(S({physical:60,magic:60}),140);
 assert.equal(S({def:45,mdef:45}),140);
-for(const key of ['hp','physical','magic','def','mdef','haste']){let last=-1;for(let i=0;i<100;i++){const x=S({[key]:key==='haste'?i/100:i*10});assert(x>=last);last=x;}}
+for(const key of ['hp','physical','magic','def','mdef','haste','support']){let last=-1;for(let i=0;i<100;i++){const x=S({[key]:key==='haste'?i/100:i*10});assert(x>=last);last=x;}}
+assert.equal(S({support:60,haste:.08}),Math.round(1000*(Math.sqrt(1.08+.15)-1)));
 assert(S({hp:2000,def:100})>S({hp:2000})+S({def:100}),'HP and defense interact');
 assert(S({physical:200,haste:.5})>S({physical:200})+S({haste:.5}),'attack and haste interact');
 for(const bad of [null,[],{hp:-1},{hp:Infinity},{physical:NaN},{heal:10},{hp:'100'}])assert.equal(S(bad),null);

@@ -31,4 +31,15 @@ for(const [name,haste,hpRate,defRate,mdefRate,power] of [['絕影',.08,0,.42,.42
  for(let i=0;i<20;i++){u.max=E.growHP(u);E.apply(u);assert.equal(u.def,50*(1+defRate)+275);assert.equal(u.mdef,50*(1+mdefRate)+83);}
  assert.equal(E.apply({...make(),hero:false}).def,50);assert.equal(E.apply({...make(),enemy:true}).def,50);
 }
-console.log('PASS mixed and named mounts: fixed gear excluded, growth, actual damage, scoring, snapshots, malformed fields and legacy mounts');
+c.elapsed=10;c.targets=()=>[];c.enemies=[];c.ring=()=>{};c.supportPower=u=>H.support(u);c.combatPower=(...args)=>H.power(...args);
+for(const prefix of ['function restoreHealth(','function skills('])vm.runInNewContext(fs.readFileSync('角色戰鬥.js','utf8').split(/\r?\n/).find(l=>l.startsWith(prefix)),c);
+for(const [name,haste,magicRate,supportRate,power]of [['爪黃飛電',.08,0,.30,109],['紫騂',.06,.12,.20,106]]){
+ state.equipment.story.items[0].name=name;E.reset();const u=E.apply({...make(),cool:[0,0],stun:0,healing:0,id:1});const expected=120*(1+supportRate);assert.equal(H.support(u),expected);assert.equal(H.power(u),220);assert.equal(H.power(u,true),300*(1+magicRate));assert.equal(u.interval,2/(1+haste));assert.equal(S.power({slot:'mount',name}),power);
+ u.equipmentMagic=1200;assert.equal(H.power(u,true),300*(1+magicRate)+1200);assert.equal(H.power(u,true,false),300);assert.equal(H.support(u),expected);
+ const snap=E.saveMounts();assert(E.validMountUnit(u,snap));const before=JSON.stringify(u);E.apply(u);assert.equal(JSON.stringify(u),before);E.load({});E.loadMounts(snap);assert.equal(H.support(E.apply(make())),expected);
+ for(const field of ['equipmentSupportRate',...(magicRate?['equipmentMagicRate']:[])]){const bad={...u};delete bad[field];assert(!E.validMountUnit(bad,snap));assert(!E.validMountUnit({...u,[field]:.99},snap));}
+ const ally={type:'友軍',hp:100,max:1000,shield:0,x:0,y:0};u.hp=u.max;c.units=[u,ally];c.roster={劉備:{skills:[{id:'heal',name:'治療',cd:5},{id:'shield',name:'護盾',cd:7}]},友軍:{skills:[]}};c.skills(u);assert.equal(ally.hp,100+expected);assert.equal(ally.shield,expected);assert.deepEqual(u.cool,[15,17]);c.skills(u);assert.equal(ally.hp,100+expected);assert.equal(ally.shield,expected);
+ c.roster.劉備.skills=[];u.cool=[];ally.hp=100;ally.shield=0;c.skills(u);assert.equal(ally.hp,100);assert.equal(ally.shield,0);
+ u.atk*=1.09;assert(Math.abs(H.support(u)-expected*1.09)<1e-9);
+}
+console.log('PASS mixed and named mounts: damage, actual healing/shields, cooldown isolation, growth, scoring and snapshots');
