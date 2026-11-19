@@ -40,7 +40,7 @@ function compactSelection(){
  if(!d){setBattleText(stats,'');setBattleText($('selection'),'點選角色可查看血量與技能。');return;}
  const fmt=v=>Number.isFinite(v)?Math.round(v):'—',agi=window.HERO_COMBAT_DATA?.[type]?.abilities?.agi;
  setBattleText($('selection'),type+'（'+QualityArt.quality(type)+'）LV'+(u.level||1)+' · 射程'+u.range+'．攻速'+(1/basicInterval(u)).toFixed(2)+'/秒');
- setBattleText(stats,'血量'+fmt(u.hp)+'/'+fmt(u.max||u.hp)+'．物攻'+fmt(combatPower(u,false))+'．謀攻'+fmt(combatPower(u,true))+'．物防'+fmt(u.def)+'．謀防'+fmt(u.mdef)+'．敏捷'+fmt(agi));
+ setBattleText(stats,'血量'+fmt(u.hp)+'/'+fmt(u.max||u.hp)+'．物攻'+fmt(combatPower(u,false))+'．謀攻'+fmt(combatPower(u,true))+'．物防'+fmt(u.def)+'．謀防'+fmt(u.mdef)+'．敏捷'+fmt(agi)+(selected?.hp>0&&selected.poison?.end>=elapsed?'．中毒 '+(running?'':'暫停 ')+Math.max(0,Math.ceil(selected.poison.end-elapsed))+'秒':''));
 }
 let noticeTimer;function say(s){const el=$('status');el.textContent=s;el.classList.toggle('notice-visible',!s.startsWith('測試直出')&&!s.startsWith('選一張'));clearTimeout(noticeTimer);noticeTimer=setTimeout(()=>el.classList.remove('notice-visible'),2800);}
 function pos(t){const i=Math.min(Math.floor(t),path.length-1),a=path[i],b=path[Math.min(i+1,path.length-1)],f=t-i;return{x:a.x+(b.x-a.x)*f,y:a.y+(b.y-a.y)*f};}

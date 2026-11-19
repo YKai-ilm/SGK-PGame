@@ -12,7 +12,8 @@ window.BattleShortcuts=(()=>{
  function cleanseTargets(list,time){return list.filter(u=>!u.enemy&&u.id!=='gate'&&u.hp>0&&cleanseKeys.some(k=>Number.isFinite(u[k])&&u[k]>time));}
  function cleanse(list,time){const targets=cleanseTargets(list,time);for(const u of targets)for(const k of cleanseKeys)if(u[k]>time){u[k]=0;delete u[k+'Owner'];}return targets;}
  function poisonTargets(list,time){return list.filter(u=>!u.enemy&&u.id!=='gate'&&u.hp>0&&u.poison&&u.poison.end>=time);}
+ function poisonStatus(list,time){const times=poisonTargets(list,time).map(u=>Math.max(0,Math.ceil(u.poison.end-time)));return times.length?{id:'poison',name:'中毒',count:times.length,min:Math.min(...times),max:Math.max(...times)}:null;}
  function detox(list,time){const targets=poisonTargets(list,time);for(const u of targets)delete u.poison;return targets;}
  function spend(mode,id){if(!['story','battle'].includes(mode)||!catalog.some(i=>i.id===id&&i.ready))return false;const key='three-kingdoms-interface-preview-v1',s=JSON.parse(localStorage.getItem(key)||'null');if(!s)return false;const n=count(s,mode,id);if(!n)return false;s[mode==='story'?'storyItems':'battleItems'][id]=n-1;localStorage.setItem(key,JSON.stringify(s));return true;}
- return {poisonTargets,detox,catalog,count,slots,assign,cleanseTargets,cleanse,spend,buffs,buffTargets,applyBuff,activeEffects};
+ return {poisonStatus,poisonTargets,detox,catalog,count,slots,assign,cleanseTargets,cleanse,spend,buffs,buffTargets,applyBuff,activeEffects};
 })();

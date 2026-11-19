@@ -4,3 +4,9 @@ const ally={...u,burn:{end:9},stun:9},dead={...u,id:4,hp:0},enemy={...u,id:5,ene
 u=E.apply(make());u.shield=70;c.elapsed=0;P.apply(u,source,0,100,2);P.update(u,1,hit);assert.equal(u.shield,20);assert.equal(u.hp,1400);P.update(u,2,hit);assert.equal(u.hp,1370);
 u={...E.apply(make()),itemProtectionUntil:2};P.apply(u,source,0,100,2);c.elapsed=1;P.update(u,1,hit);assert.equal(u.hp,1400);c.elapsed=2;P.update(u,2,hit);assert.equal(u.hp,1350);u=E.apply(make());c.hurt(u,100,true,null,true,false,false,'fire');assert.equal(u.hp,1300);
 for(const bad of [{owner:0,damage:10,end:5,next:1},{owner:2,damage:-1,end:5,next:1},{owner:2,damage:10,end:100,next:1},{owner:2,damage:10,end:5,next:2},{owner:2,damage:NaN,end:5,next:1}])assert(!P.valid(bad,0));assert(!P.apply({...make(),id:'gate'},source,0,1,2));assert(!P.apply({...make(),hp:0},source,0,1,2));console.log('PASS poison: exact ticks, saved remainder, no stack/delay, anti-poison budget, shields/smoke/fire isolation, detox targets and consumption');
+
+const statusUnits=[{...make(),poison:{end:7}},{...make(),id:7,poison:{end:4.1}},{...make(),id:8,hp:0,poison:{end:20}},{...make(),id:9,enemy:true,poison:{end:20}},{...make(),id:'gate',poison:{end:20}},{...make(),id:10,poison:{end:1}}];
+assert.equal(JSON.stringify(B.poisonStatus(statusUnits,2)),JSON.stringify({id:'poison',name:'中毒',count:2,min:3,max:5}));
+
+assert.equal(B.poisonStatus(statusUnits,21),null);B.detox(statusUnits,2);assert.equal(B.poisonStatus(statusUnits,2),null);
+console.log('PASS poison display: living allies only, remaining combat seconds, expired/cleansed states removed');
