@@ -18,7 +18,7 @@ window.EquipmentSystem=(()=>{
  function modeData(state,mode){return state.equipment?.[mode]||{};}
  function items(state,mode){const seen=new Set();return (Array.isArray(modeData(state,mode).items)?modeData(state,mode).items:[]).filter(i=>{if(!i||typeof i.id!=='string'||!i.id||seen.has(i.id)||typeof i.name!=='string'||!i.name||!Object.hasOwn(slots,i.slot))return false;if(['新兵槍桿','新兵長桿'].includes(i.name))i.name='新兵木槍';seen.add(i.id);return true;});}
  function weaponGroup(type,name=''){if(type==='halberd'&&['短戟','闇雙鐵戟'].includes(name))type='shortHalberd';return ['spear','lance','halberd'].includes(type)?'long':['shortHalberd','axe','whip','hammer'].includes(type)?'heavy':['staff','fan'].includes(type)?'strategy':type;}
- function compatible(item,name,slot){const type=weaponType(name);return !!item&&item.slot===slot&&(slot!=='weapon'||!!weaponBond(item,name)||!!type&&weaponGroup(item.weaponType,item.name)===weaponGroup(type));}
+ function compatible(item,name,slot){const type=weaponType(name);return !!item&&item.slot===slot&&(slot!=='weapon'||window.PlayerOfficer?.is(name)||!!weaponBond(item,name)||!!type&&weaponGroup(item.weaponType,item.name)===weaponGroup(type));}
  function owner(state,mode,id){const loads=modeData(state,mode).loadouts||{};for(const [name,load] of Object.entries(loads)){for(const slot of Object.keys(slots))if(load?.[slot]===id)return name;}return null;}
  function equipped(state,mode,name,slot){const id=modeData(state,mode).loadouts?.[name]?.[slot];return items(state,mode).find(i=>i.id===id&&compatible(i,name,slot))||null;}
  function candidates(state,mode,name,slot){return items(state,mode).filter(i=>compatible(i,name,slot)&&(!owner(state,mode,i.id)||owner(state,mode,i.id)===name));}

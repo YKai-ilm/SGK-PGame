@@ -34,7 +34,8 @@ window.BubbleTraining=(()=>{
   if(!abandon&&now<g.deadline&&!g.board.every(Boolean))throw Error('訓練尚未結束。');
   const items=[],xp=abandon?0:20+Math.min(40,Math.floor(g.score/100)*5);
   if(!abandon){const pool=rewardPool(s,g.faction),total=pool.reduce((n,g)=>n+g.weight,0);if(!total)throw Error('無法結算獎勵。');const m=ChestSystem.init(s);for(let i=0;i<2;i++){let x=Math.random()*total,group=pool.at(-1);for(const p of pool){x-=p.weight;if(x<0){group=p;break;}}const name=pick(group.group).name;m.officerFragments[name]=(m.officerFragments[name]||0)+1;items.push({name,quality:group.quality,count:1});}s.chests.story.trainingXP=(s.chests.story.trainingXP||0)+xp;}
-  const receipt={id,score:g.score,matches:g.matches,items,xp,abandon,at:now};s.bubbleTraining.last=receipt;s.bubbleTraining.active=null;write(s);return receipt;
+  let playerFragments=0;const player=window.PlayerOfficer?.get(s);if(!abandon&&player){playerFragments=4+Math.min(2,Math.floor(g.score/300));if(!s.playerBubbleFirst){playerFragments+=10;s.playerBubbleFirst=true;}player.fragments+=playerFragments;}
+  const receipt={playerFragments,id,score:g.score,matches:g.matches,items,xp,abandon,at:now};s.bubbleTraining.last=receipt;s.bubbleTraining.active=null;write(s);return receipt;
  }
  function allocate(ch,amount){const s=read();ChestSystem.init(s);const m=s.chests.story;if(s.mode!=='story'||!s.unlocks.story.letters.includes(ch))throw Error('只能分配給已持有的劇情單字卡。');if(!Number.isSafeInteger(amount)||amount<=0||amount>(m.trainingXP||0))throw Error('可分配經驗不足。');const p=m.letterProgress[ch]??={level:1,xp:0,quality:'青'};if(p.level>=100)throw Error('字卡已滿級。');let max=0;for(let l=p.level;l<100;l++)max+=100*l;max-=p.xp;const used=Math.min(amount,max);p.xp+=used;while(p.level<100&&p.xp>=100*p.level){p.xp-=100*p.level;p.level++;}if(p.level===100)p.xp=0;m.trainingXP-=used;write(s);return s;}
  const locked=fn=>navigator.locks?navigator.locks.request('three-kingdoms-profile-training',fn):Promise.resolve().then(fn);

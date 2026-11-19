@@ -8,7 +8,7 @@ window.ChestSystem=(()=>{
  function init(s){syncUnlocked(s);s.chests??={};for(const mode of ['story','battle']){const m=s.chests[mode]??={};m.boxes??={};m.fragments??={};m.officerFragments??={};m.history??=[];m.letterProgress??={};m.letterCopies??={};}
  if(!s.chests.shared){const shared={boxes:{},fragments:{},officerFragments:{},letterCopies:{},history:[]};for(const mode of ['story','battle']){const m=s.chests[mode];for(const field of ['boxes','fragments','officerFragments','letterCopies'])for(const [name,n] of Object.entries(m[field]))shared[field][name]=(shared[field][name]||0)+n;shared.history.push(...m.history);}shared.history.sort((a,b)=>new Date(b.at)-new Date(a.at));s.chests.shared=shared;}
  for(const mode of ['story','battle'])for(const field of ['boxes','fragments','officerFragments','letterCopies','history'])s.chests[mode][field]=s.chests.shared[field];return s.chests[s.mode];}
- function roster(s){return OFFICER_PROPOSAL.entries;}
+ function roster(s){return OFFICER_PROPOSAL.entries.filter(p=>!p.playerCard);}
  function pool(s,tier){const list=roster(s),t=tiers[tier];if(!t)throw Error('寶箱不存在');const groups=colors.map(q=>list.filter(p=>OFFICER_QUALITY.evaluate(p).quality===q));const weights=t.rates.map((n,i)=>groups[i].length?n:0),sum=weights.reduce((a,b)=>a+b,0);return{list,groups,rates:weights.map(n=>sum?n/sum*100:0),letters:[...new Set(list.map(p=>p.name).join(''))]};}
  function random(){const a=new Uint32Array(1);crypto.getRandomValues(a);return a[0]/4294967296;}
  function sample(rng){const x=rng();if(!(x>=0&&x<1))throw Error('抽選失敗');return x;}

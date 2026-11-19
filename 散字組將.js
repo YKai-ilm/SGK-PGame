@@ -1,7 +1,7 @@
 'use strict';
 window.Assembly=(()=>{
 // 七名候選只決定招募來源；蜀國劇情可用共用字卡組成完整姓名。
-const heroes=()=>{const names=window.VillageSweep?window.ShuBattlePool?.names:window.Candidates?.heroes;return (names||['劉備','關羽','張飛','趙雲','黃忠','諸葛亮','徐庶']).filter(name=>roster[name]&&!roster[name].letter);};
+const heroes=()=>{const names=window.VillageSweep?window.ShuBattlePool?.names:window.Candidates?.heroes;return (names||['劉備','關羽','張飛','趙雲','黃忠','諸葛亮','徐庶']).filter(name=>roster[name]&&!roster[name].letter&&!window.PlayerOfficer?.is(name));};
 let pending=null;
 const button=document.createElement('button');button.textContent='組將';button.id='assemble';document.body.append(button);
 const dialog=document.createElement('dialog');dialog.id='assemblyDialog';document.body.append(dialog);

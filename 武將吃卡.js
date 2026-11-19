@@ -4,7 +4,7 @@ function type(ref){return typeof ref==='number'?deck[ref]:ref?.type;}
 function valid(ref){return typeof ref==='number'?!!deck[ref]:!!ref&&units.includes(ref)&&ref.hp>0;}
 const saved=ref=>typeof ref==='number'?Recruit.saved(ref):ref;
 function basicMatch(source,target){return ['刀','槍','弓'].includes(type(source))&&type(source)===type(target);}
-function matches(source,target){const name=type(source);return Recruit.enabled&&source!==target&&valid(source)&&valid(target)&&(basicMatch(source,target)||roster[type(target)]?.skills.length>0&&(name===type(target)||roster[name]?.letter&&type(target).includes(name)));}
+function matches(source,target){const name=type(source);return !window.PlayerOfficer?.is(name)&&!window.PlayerOfficer?.is(type(target))&&Recruit.enabled&&source!==target&&valid(source)&&valid(target)&&(basicMatch(source,target)||roster[type(target)]?.skills.length>0&&(name===type(target)||roster[name]?.letter&&type(target).includes(name)));}
 const basicValue=u=>2**((u?.level||1)-1)+(u?.basicStored||0);
 function mergeBasic(source,target){
  const material=saved(source),existing=saved(target);
@@ -30,7 +30,7 @@ if(typeof source==='number')Recruit.consume(source);else{units=units.filter(v=>v
 if(typeof target==='number'){Recruit.replace(target,u);selected=null;card=target;}else{selected=u;card=null;mark(u.x,u.y,u.level>beforeLevel?'升級':'補料','#f7e696');}
 sync();say(name+' · '+progress(u)+(u.level>beforeLevel?'；升至 Lv'+u.level+'，局內經驗歸零。':'；材料已累積，經驗保留。'));return true;}
 function ensure(u){u.materialTier??=1;u.materialCounts??=Object.fromEntries([...u.type].map(ch=>[ch,1]));u.materialRatios??=Object.fromEntries([...u.type].map(ch=>[ch,[]]));}
-function progress(u){if(['刀','槍','弓'].includes(u?.type))return '預儲 '+(u.basicStored||0)+'／'+2**(u.level-1)+'（升 LV'+(u.level+1)+'）';if(!u?.hero)return '';ensure(u);return [...u.type].map(ch=>ch+' '+u.materialCounts[ch]+'/'+u.materialTier).join(' · ');}
-function summary(){const u=selected||(card!==null?Recruit.saved(card):null);if(u?.hero||['刀','槍','弓'].includes(u?.type))return progress(u);if(card!==null&&['刀','槍','弓'].includes(deck[card]))return progress({type:deck[card],level:1});if(card!==null&&roster[deck[card]]?.skills.length)return [...deck[card]].map(ch=>ch+' 1/1').join(' · ');return '';}
+function progress(u){if(window.PlayerOfficer?.is(u?.type))return '玩家武將 · 不拆字、不接受餵卡';if(['刀','槍','弓'].includes(u?.type))return '預儲 '+(u.basicStored||0)+'／'+2**(u.level-1)+'（升 LV'+(u.level+1)+'）';if(!u?.hero)return '';ensure(u);return [...u.type].map(ch=>ch+' '+u.materialCounts[ch]+'/'+u.materialTier).join(' · ');}
+function summary(){if(window.PlayerOfficer?.is(selected?.type||(card!==null?deck[card]:null)))return '玩家武將 · 不拆字、不接受餵卡';const u=selected||(card!==null?Recruit.saved(card):null);if(u?.hero||['刀','槍','弓'].includes(u?.type))return progress(u);if(card!==null&&['刀','槍','弓'].includes(deck[card]))return progress({type:deck[card],level:1});if(card!==null&&roster[deck[card]]?.skills.length)return [...deck[card]].map(ch=>ch+' 1/1').join(' · ');return '';}
 function hint(source,target){if(basicMatch(source,target)){const u=saved(target),amount=(u?.basicStored||0)+basicValue(saved(source)),need=2**((u?.level||1)-1);return amount>=need?'可升級':'可預儲 '+amount+'/'+need;}const u=typeof target==='number'?Recruit.saved(target):target,name=type(target),sourceName=type(source),tier=u?.materialTier||1;return [...name].every(ch=>(u?.materialCounts?.[ch]||1)+(sourceName===name||ch===sourceName?1:0)>=tier+1)?'可升級':'可補料';}
 return{matches,feed,progress,summary,hint};})();
