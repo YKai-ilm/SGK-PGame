@@ -127,14 +127,14 @@ window.ShuSkills=(()=>{
   for(const [hitIndex,e] of list.entries()){if(s.shieldDispel)e.shield=(e.shield||0)*(1-s.shieldDispel);const extra=(s.controlledBonus&&controlled(e)?1+s.controlledBonus:1)*(s.shieldedBonus&&u.shield>0?1+s.shieldedBonus:1)*(s.selfLowBonus&&u.hp/u.max<s.selfLowThreshold?1+s.selfLowBonus:1)*(s.effect==='chainBolt'?s.falloff**hitIndex:1),before=e.hp;if(s.armorBreakDuration){e.shuArmorBreak=Math.max(e.shuArmorBreak||0,elapsed+s.armorBreakDuration);e.shuArmorBreakOwner=u.id;}if(s.effect==='break'||s.effect==='areaBreak'){e.broken=Math.max(e.broken||0,elapsed+s.duration);e.brokenOwner=u.id;}hurt(e,raw*extra*(s.executeBonus&&e.hp/e.max<s.threshold?s.executeBonus:1),magic,u);drained+=Math.max(0,before-e.hp);if(e.hp<=0)continue;
    if(s.effect==='hybridStrike')hurt(e,combatPower(u,true)*s.magicRatio,true,u);
    if(e.hp<=0)continue;
-   if(s.effect==='slow'||s.effect==='physicalSlow'||s.slowDuration){e.slow=Math.max(e.slow||0,elapsed+(s.slowDuration||s.duration));e.slowOwner=u.id;}
-   if(s.effect==='weaken'||s.effect==='weakenArea'){e.attackSlow=Math.max(e.attackSlow||0,elapsed+s.duration);e.attackSlowOwner=u.id;}
-   if(s.effect==='confuse'){e.shuConfused=Math.max(e.shuConfused||0,elapsed+s.duration);e.shuConfusedOwner=u.id;mark(e.x,e.y,'倒戈','#ecbfda');}
-   if(s.effect==='rootArea'||s.effect==='rootStrike'||s.effect==='physicalRoot'){e.root=Math.max(e.root||0,elapsed+s.duration);e.rootOwner=u.id;mark(e.x,e.y,'定身','#c5d7ad');}
+   if(s.effect==='slow'||s.effect==='physicalSlow'||s.slowDuration){e.slow=Math.max(e.slow||0,(window.EquipmentBattle?.controlEnd(e,elapsed,s.slowDuration||s.duration)??elapsed+(s.slowDuration||s.duration)));e.slowOwner=u.id;}
+   if(s.effect==='weaken'||s.effect==='weakenArea'){e.attackSlow=Math.max(e.attackSlow||0,(window.EquipmentBattle?.controlEnd(e,elapsed,s.duration)??elapsed+(s.duration)));e.attackSlowOwner=u.id;}
+   if(s.effect==='confuse'){e.shuConfused=Math.max(e.shuConfused||0,(window.EquipmentBattle?.controlEnd(e,elapsed,s.duration)??elapsed+(s.duration)));e.shuConfusedOwner=u.id;mark(e.x,e.y,'倒戈','#ecbfda');}
+   if(s.effect==='rootArea'||s.effect==='rootStrike'||s.effect==='physicalRoot'){e.root=Math.max(e.root||0,(window.EquipmentBattle?.controlEnd(e,elapsed,s.duration)??elapsed+(s.duration)));e.rootOwner=u.id;mark(e.x,e.y,'定身','#c5d7ad');}
    if(s.pushDistance){e.t=Math.max(0,e.t-s.pushDistance);Object.assign(e,pos(e.t));mark(e.x,e.y,'擊退','#d8ead0');}
    if(s.weakenPower){e.shuWeakens=(e.shuWeakens||[]).filter(v=>v.end>elapsed&&v.owner!==u.id);e.shuWeakens.push({owner:u.id,power:s.weakenPower,end:elapsed+s.weakenDuration});}
-   if(s.paralyzeDuration){e.stun=Math.max(e.stun||0,elapsed+s.paralyzeDuration);e.stunOwner=u.id;mark(e.x,e.y,'麻痺','#d9d0f5');}
-   if(s.effect==='stunBlast'||s.effect==='magicStunBlast'){e.stun=Math.max(e.stun||0,elapsed+s.duration);e.stunOwner=u.id;}
+   if(s.paralyzeDuration){e.stun=Math.max(e.stun||0,(window.EquipmentBattle?.controlEnd(e,elapsed,s.paralyzeDuration)??elapsed+(s.paralyzeDuration)));e.stunOwner=u.id;mark(e.x,e.y,'麻痺','#d9d0f5');}
+   if(s.effect==='stunBlast'||s.effect==='magicStunBlast'){e.stun=Math.max(e.stun||0,(window.EquipmentBattle?.controlEnd(e,elapsed,s.duration)??elapsed+(s.duration)));e.stunOwner=u.id;}
   }
   if(s.lifesteal&&drained>0)restoreHealth(u,Math.min(u.max*.05,drained*s.lifesteal),u);
   if(list.length&&s.damageBuffDuration)u.shuDamageBuff=Math.max(u.shuDamageBuff||0,elapsed+s.damageBuffDuration);
