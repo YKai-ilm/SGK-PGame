@@ -105,3 +105,5 @@
 .bag-equipment-qualities{display:flex;gap:4px;margin-top:8px}.bag-equipment-qualities button{flex:1;min-width:0;padding:7px 0;font-size:12px;white-space:nowrap;background:var(--grade-color);color:#243b32;border:1px solid #7e8975;border-radius:7px}.bag-equipment-qualities button.active{outline:2px solid #294234;outline-offset:1px;font-weight:bold;box-shadow:inset 0 -3px #294234}
 
 .player-points{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.player-points label{padding:8px;background:#e4e9d8}.player-points span{display:block;font-size:12px}.player-points input{width:60px;min-height:40px;font:inherit}.factions button{min-width:0;padding-inline:3px}
+
+#content.rewards-content{display:flex;flex-direction:column;overflow:hidden;min-height:0}.rewards-heading{flex:0 0 auto}.rewards-heading .reward-tabs{margin-bottom:10px}.rewards-scroll{flex:1;min-height:0;overflow-y:auto;overscroll-behavior-y:contain;scrollbar-width:thin;padding:0 2px 12px}.rewards-scroll>.panel:first-child{margin-top:0}
