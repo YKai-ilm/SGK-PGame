@@ -57,3 +57,10 @@ assert.equal(JSON.stringify(protectedUnit),protectedBefore);assert.equal(protect
 c.elapsed=23;c.hurt(protectedUnit,100,false,null,true);assert.equal(protectedUnit.letterWard,0);assert.equal(protectedUnit.shield,20);assert.equal(protectedUnit.stun,25);
 const burning={...unit(),itemProtectionUntil:23,burn:{owner:attacker.id,end:24,next:21}};c.elapsed=21;c.tickBurn(burning);assert.equal(burning.hp,10000);assert.equal(burning.burn.next,22);c.elapsed=22;c.tickBurn(burning);assert.equal(burning.hp,10000);c.elapsed=23;c.tickBurn(burning);assert.equal(burning.hp,9500);
 console.log('PASS protection damage classes, untouched shields/blocks/control, exact expiry and continuing burn clock');
+
+// Armor dodge stacks additively with the existing mount and timed item; skills stay unavoidable.
+for(const magic of [false,true]){math.random=()=>.099;const t={...unit(),equipmentArmorDodge:.1,shield:80,blocks:1};c.hurt(t,100,magic,null,false,false,true);assert.equal(t.hp,10000);assert.equal(t.shield,80);assert.equal(t.blocks,1);}
+for(const flags of [[false,false,false],[true,false,true],[false,true,true]]){math.random=()=>0;const t={...unit(),equipmentArmorDodge:.1};c.hurt(t,100,false,null,...flags);assert.equal(t.hp,9900);}
+for(const [roll,dodges]of [[.099,true],[.1,false]]){math.random=()=>roll;const t={...unit(),equipmentArmorDodge:.1};c.hurt(t,100,false,null,false,false,true);assert.equal(t.hp,dodges?10000:9900);}
+for(const [roll,dodges]of [[.299,true],[.301,false]]){math.random=()=>roll;const t={...unit(),equipmentArmorDodge:.1,equipmentBasicDodge:.1,itemDodgeUntil:c.elapsed+10};c.hurt(t,100,false,null,false,false,true);assert.equal(t.hp,dodges?10000:9900);}
+console.log('PASS flying robe dodge, mount/item stacking, exact standalone boundary, shield preservation and non-basic exclusions');
