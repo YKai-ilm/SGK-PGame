@@ -18,6 +18,7 @@
  const effectLabels=new Map([...Object.keys(BattleShortcuts.buffs),'poison'].map(id=>{const node=document.createElement('span');node.hidden=true;$('activeItemEffects').append(node);return [id,node];}));
  function update(){try{
   const effects=started&&!ended?BattleShortcuts.activeEffects(units,elapsed):[];
+  const cleanseCount=started&&!ended?BattleShortcuts.cleanseTargets(units,elapsed).length:0;
   const poison=started&&!ended?BattleShortcuts.poisonStatus(units,elapsed):null;if(poison)effects.push(poison);
   for(const [id,node]of effectLabels){const e=effects.find(e=>e.id===id);node.hidden=!e;if(e)setText(node,e.name+' '+e.count+'人 · '+(running?'':'暫停 ')+(e.min===e.max?e.max:e.min+'–'+e.max)+'秒');}
   $('tacticChoices').hidden=panel!=='tactic';$('itemChoices').hidden=panel!=='item';
@@ -29,7 +30,7 @@
   }else if(panel==='item'){
    const {s,mode,team}=profile(),slots=BattleShortcuts.slots(s,mode,team);
    itemButtons.forEach((b,i)=>{const item=BattleShortcuts.catalog.find(v=>v.id===slots[i]),n=item?BattleShortcuts.count(s,mode,item.id):0;
-    setText(b.querySelector('span'),item?item.name:'空位');setText(b.querySelector('small'),item?'×'+n+(item.ready?'':' · 待設定')+(item.id==='antidotePowder'?' · '+(poison?'可解毒'+poison.count+'人':'無人中毒'):''):'未配置');
+    setText(b.querySelector('span'),item?item.name:'空位');setText(b.querySelector('small'),item?'×'+n+(item.ready?'':' · 待設定')+(item.id==='antidotePowder'?' · '+(poison?'可解毒'+poison.count+'人':'無人中毒'):'')+(item.id==='clearMindPowder'?' · '+(cleanseCount?'可解除'+cleanseCount+'人':'無可解除狀態'):'')+(BattleShortcuts.buffs[item.id]?' · 可作用'+(started&&!ended?BattleShortcuts.buffTargets(item.id,units,elapsed).length:0)+'人':''):'未配置');
     b.disabled=busy||!item||!n||!item.ready||ended||!!window.BattleSave?.pending||(BattleShortcuts.buffs[item?.id]?(!running||!started||!BattleShortcuts.buffTargets(item.id,units,elapsed).length):item?.id==='antidotePowder'?(!running||!started||!BattleShortcuts.poisonTargets(units,elapsed).length):item?.id==='clearMindPowder'?(!running||!started||!BattleShortcuts.cleanseTargets(units,elapsed).length):(mode!=='story'||!Recruit.enabled));b.title=item?.description||'請到隊伍整備配置道具。';});
   }
  }catch{status('無法讀取道具配置，請檢查存檔。');}}

@@ -3,10 +3,10 @@ const {chromium}=require('C:/Users/user/.cache/codex-runtimes/codex-primary-runt
  await p.goto('http://127.0.0.1:4189/'+encodeURIComponent('戰場直版.html'));await p.waitForFunction(()=>document.querySelector('#gamePage')?.contentWindow?.BattleSave);const g=await(await p.$('#gamePage')).contentFrame();
  await g.evaluate(()=>{reset();window.requestAnimationFrame=()=>0;const u=makeUnit('劉備',path[3].x,path[3].y);u.cool=u.cool.map(()=>999);u.nextAttack=999;units.push(u);started=true;running=false;});
  await g.locator('#itemToggle').click();const buttons=g.locator('#itemChoices button');assert(await buttons.nth(0).isDisabled());
- await g.evaluate(()=>{running=true;});await g.locator('#itemToggle').click();
+ assert.equal(await buttons.nth(0).locator('small').innerText(),'×2 · 可作用1人');await g.evaluate(()=>{running=true;});await g.locator('#itemToggle').click();
  for(const [i,id]of [[0,'criticalPill'],[1,'evasionPowder'],[2,'protectionSmoke']]){await buttons.nth(i).click();await g.waitForFunction(id=>JSON.parse(localStorage.getItem('three-kingdoms-interface-preview-v1')).battleItems[id]===1,id,{polling:50});assert(await buttons.nth(i).isDisabled());}
  await g.waitForFunction(()=>document.getElementById('activeItemEffects').innerText.includes('護身煙 1人 · 3秒'),null,{polling:50});
- assert.equal(await buttons.nth(0).locator('small').innerText(),'×1');assert(await buttons.nth(0).locator('small').isVisible());
+ assert.equal(await buttons.nth(0).locator('small').innerText(),'×1 · 可作用0人');assert(await buttons.nth(0).locator('small').isVisible());
  const height=await g.locator('#activeItemEffects').evaluate(n=>n.getBoundingClientRect().height);assert.equal(height,22);
  await p.screenshot({path:'.item-effects-mobile.png'});
  await g.evaluate(()=>{running=false;units.push({...units[0],id:99,itemCritUntil:elapsed+4,itemDodgeUntil:0,itemProtectionUntil:0});});await g.locator('#itemToggle').click();assert.match(await g.locator('#activeItemEffects').innerText(),/會心丹 2人 · 暫停 4–10秒/);await g.evaluate(()=>units.pop());

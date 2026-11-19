@@ -25,3 +25,7 @@ const scenarios=[];for(const [name,magic] of [['關羽',false],['張飛',false],
  assert(before/after>1);scenarios.push({name,singleAttackGain:((single-1)*100).toFixed(1)+'%',dualAttackGain:((dual-1)*100).toFixed(1)+'%',dualDefenseSurvivalGain:((before/after-1)*100).toFixed(1)+'%'});
 }
 console.log('PASS score v1: formulas, interactions, monotonicity, invalid values, authoritative catalog, signed comparisons and same-tier tolerance');console.log(scenarios);
+
+for(const [catalog,slot]of [['weaponCatalog','weapon'],['namedWeaponCatalog','weapon'],['armorCatalog','armor'],['mountCatalog','mount'],['accessoryCatalog','accessory'],['necklaceCatalog','accessory']])for(const x of E[catalog]){const item={name:x.name,slot,weaponType:x.type};assert(E.effects(item),x.name);assert(Number.isFinite(E.power(item)),x.name);assert(!/undefined|NaN/.test(E.effectText(item)),x.name);if(slot==='mount'){assert(E.effectDetails(item).includes('不縮短技能冷卻'));assert(E.effectDetails(item).includes('下一場戰鬥'));}}
+assert(E.effectDetails({slot:'accessory',name:'鷹眼佩'}).includes('每個受擊目標獨立判定'));assert.equal(E.effectDetails({slot:'mount',name:'不存在'}),'');
+console.log('PASS full equipment catalog: effects, numeric power, clean display text and mount/critical details');

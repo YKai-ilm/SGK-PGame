@@ -9,11 +9,12 @@ window.BattleShortcuts=(()=>{
  function activeEffects(list,time){return Object.entries(buffs).flatMap(([id,b])=>{const times=list.filter(u=>!u.enemy&&u.id!=='gate'&&u.hp>0&&u[b.field]>time).map(u=>Math.ceil(u[b.field]-time));return times.length?[{id,name:catalog.find(x=>x.id===id).name,count:times.length,min:Math.min(...times),max:Math.max(...times)}]:[];});}
  function applyBuff(id,list,time){const targets=buffTargets(id,list,time);for(const u of targets)u[buffs[id].field]=time+buffs[id].duration;return targets;}
  const cleanseKeys=['stun','root','slow','attackSlow','lingSlow','letterSlow'];
+ function controlStatus(u,time){if(!u||u.hp<=0||u.id==='gate')return [];return [['暈眩',['stun']],['定身',['root']],['緩速',['slow','lingSlow','letterSlow']],['降攻速',['attackSlow']]].flatMap(([name,keys])=>{const end=Math.max(time,...keys.map(k=>Number.isFinite(u[k])?u[k]:time));return end>time?[{name,seconds:Math.ceil(end-time)}]:[];});}
  function cleanseTargets(list,time){return list.filter(u=>!u.enemy&&u.id!=='gate'&&u.hp>0&&cleanseKeys.some(k=>Number.isFinite(u[k])&&u[k]>time));}
  function cleanse(list,time){const targets=cleanseTargets(list,time);for(const u of targets)for(const k of cleanseKeys)if(u[k]>time){u[k]=0;delete u[k+'Owner'];}return targets;}
  function poisonTargets(list,time){return list.filter(u=>!u.enemy&&u.id!=='gate'&&u.hp>0&&u.poison&&u.poison.end>=time);}
  function poisonStatus(list,time){const times=poisonTargets(list,time).map(u=>Math.max(0,Math.ceil(u.poison.end-time)));return times.length?{id:'poison',name:'中毒',count:times.length,min:Math.min(...times),max:Math.max(...times)}:null;}
  function detox(list,time){const targets=poisonTargets(list,time);for(const u of targets)delete u.poison;return targets;}
  function spend(mode,id){if(!['story','battle'].includes(mode)||!catalog.some(i=>i.id===id&&i.ready))return false;const key='three-kingdoms-interface-preview-v1',s=JSON.parse(localStorage.getItem(key)||'null');if(!s)return false;const n=count(s,mode,id);if(!n)return false;s[mode==='story'?'storyItems':'battleItems'][id]=n-1;localStorage.setItem(key,JSON.stringify(s));return true;}
- return {poisonStatus,poisonTargets,detox,catalog,count,slots,assign,cleanseTargets,cleanse,spend,buffs,buffTargets,applyBuff,activeEffects};
+ return {controlStatus,poisonStatus,poisonTargets,detox,catalog,count,slots,assign,cleanseTargets,cleanse,spend,buffs,buffTargets,applyBuff,activeEffects};
 })();
