@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "node scripts/build.cjs && node scripts/test-assets.cjs",
-    "test": "node scripts/test-backup.cjs && node scripts/test-local-update.cjs && node scripts/test-offline.cjs && node scripts/test-mi-family.cjs && node scripts/test-rescue-state.cjs && node scripts/test-shortcut-state.cjs",
+    "test": "node scripts/test-backup.cjs && node scripts/test-local-update.cjs && node scripts/test-offline.cjs && node scripts/test-mi-family.cjs && node scripts/test-rescue-state.cjs && node scripts/test-shortcut-state.cjs && node scripts/test-battle-settlement.cjs",
     "preview": "node scripts/serve.cjs",
     "release": "node scripts/release.cjs"
   },
