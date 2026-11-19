@@ -36,7 +36,7 @@
   if(action==='steward')state.flags.steward=true;
   if(action==='missing')state.flags.missing=true;
   if(action==='apprenticeFirst')state.flags.apprenticeFirst=true;
-  if(action==='sleep'){state.sleepPending=true;end();sleep();return;}
+  if(action==='sleep'){end();startStay(0);return;}
   end();
   if(action==='accept')menu('城西護糧','是否前往城西接應糧車？',[['願往接應',()=>{state.flags.accepted=true;save();}],['稍作準備',()=>{}]]);
   else if(action==='apprenticeSecond'&&VillageHiddenItems.candyOwned())huatuo();
@@ -57,14 +57,16 @@
   const c=XuzhouNpcPlacement[id];if(c)talk([[c.npc,c.line]],'service:'+id);
  }
  function service(id){const leave=['離開',()=>{}];
-  if(id==='客棧'){const free=state.flags.steward&&!state.flags.slept;if(free)menu('確認住宿','此次住宿費用：0 金幣。是否住宿？',[['是',()=>talk([['客棧掌櫃','糜別駕已有照會，貴客此次住宿不用花費。']],'sleep')],['否',()=>{}]]);else notice('一般住宿尚未開放。');return;}
+  if(id==='客棧'){const q=TownLodging.quote(),free=TownLodging.freeAvailable(),cost=free?0:q.total;menu('確認住宿',`編制 ${q.count} 名武將。${free?'此次劇情招待免費住宿。':`基本 ${q.base}＋每人 ${q.perMember}，共 ${cost} 金幣。`}住宿後士氣恢復至 100。是否住宿？`,[['是',()=>free?talk([['客棧掌櫃','糜別駕已有照會，貴客此次住宿不用花費。']],'sleep'):startStay(cost)],['否',()=>{}]]);return;}
   if(id==='酒樓'){menu('店小二','',[['花費10金幣，聽取小道消息。',()=>notice('無相關消息')],leave]);return;}
   if(['武器店','防具店','道具店'].includes(id)){const type=id.replace('店','');menu(id,'',[['買'+type,()=>notice('商品尚未上架。')],['賣'+type,()=>notice('收購服務尚未開放。')],leave]);return;}
   if(id==='編輯所'){menu('編籍吏','',[['進入編輯候選隊伍',()=>{sessionStorage.setItem('three-kingdoms-story-return','徐州劇情.html');if(!window.SceneTest?.holdNavigation('主介面流程預覽.html?storyTeam=1'))location.href='主介面流程預覽.html?storyTeam=1';}],leave]);return;}
   if(id==='訓練店'){menu('教頭','字卡泡泡球：45秒，組成武將名字取得積分與獎勵。',[['花費100金幣訓練（小遊戲）',()=>{if(!window.SceneTest?.holdNavigation('字卡泡泡球.html'))location.href='字卡泡泡球.html';}],['花費50金幣訓練（可分配經驗）',()=>{},true],leave]);return;}
   if(id==='驛站')menu('驛丞','',[['查看可前往城鎮',()=>notice('暫無路線')],leave]);
  }
- async function sleep(){if(busy)return;busy=true;stop();document.querySelector('main').inert=true;const fade=$('fade');fade.classList.add('busy');try{await new Promise(r=>setTimeout(r,30));fade.style.opacity='1';await new Promise(r=>setTimeout(r,1300));state.flags.slept=true;state.sleepPending=false;save();await new Promise(r=>setTimeout(r,500));fade.style.opacity='0';await new Promise(r=>setTimeout(r,1050));}catch(e){$('saveWarning').hidden=false;}finally{fade.style.opacity='0';fade.classList.remove('busy');document.querySelector('main').inert=false;busy=false;render();}}
+ async function startStay(cost){if(busy)return;busy=true;try{await TownLodging.begin(cost);busy=false;await sleep();}catch(e){busy=false;notice(e.message);}}
+ async function sleep(){if(busy)return;busy=true;stop();document.querySelector('main').inert=true;const fade=$('fade');fade.classList.add('busy');let failed=false;try{let stay=TownLodging.pending();if(!stay&&state.sleepPending)stay=await TownLodging.begin(0);if(!stay)return;await new Promise(r=>setTimeout(r,30));fade.style.opacity='1';await new Promise(r=>setTimeout(r,1300));if(stay.free)state.flags.slept=true;state.sleepPending=false;state.active=null;save();await TownLodging.complete(stay.id);await new Promise(r=>setTimeout(r,500));fade.style.opacity='0';await new Promise(r=>setTimeout(r,1050));}catch(e){failed=true;$('saveWarning').hidden=false;}finally{fade.style.opacity='0';fade.classList.remove('busy');document.querySelector('main').inert=false;busy=false;render();if(failed)menu('住宿尚未完成','請接續這次住宿，不會重複扣款。',[['繼續住宿',()=>sleep()]]);}}
+
  function rescueAchievement(){menu('仁心救援','完成華陀初現・救援達成！取得成就「仁心救援」，鑽石 ×2。',[['收下',()=>YunlongRescue.dismissAchievement()]]);}
  async function rescueStay(){if(busy)return;busy=true;stop();document.querySelector('main').inert=true;const fade=$('fade');fade.classList.add('busy');try{await new Promise(r=>setTimeout(r,30));fade.style.opacity='1';await new Promise(r=>setTimeout(r,1300));state.scene='客棧';save();render();await new Promise(r=>setTimeout(r,500));fade.style.opacity='0';await new Promise(r=>setTimeout(r,1050));YunlongRescue.stay();rescueAchievement();}catch(e){$('saveWarning').hidden=false;menu('留宿尚未完成','進度尚未保存，請重試。',[['重試',()=>rescueStay()]]);}finally{fade.style.opacity='0';fade.classList.remove('busy');document.querySelector('main').inert=false;busy=false;}}
  function rescueArrival(){state.scene='內城';save();render();menu('救援達成','完成華陀初現劇情，救援達成。大牛與小牛招待大家留宿一晚。',[['前往客棧',()=>rescueStay()]]);}
@@ -74,5 +76,5 @@
  $('recall').onclick=()=>{stop();$('historyBody').replaceChildren();for(const h of state.history){const p=document.createElement('p');p.textContent=`${h.scene}・${h.speaker}：${h.line}`;$('historyBody').append(p);}$('history').showModal();};$('closeHistory').onclick=()=>$('history').close();$('history').addEventListener('close',()=>{if(state.active&&!$('dialogue').hidden)protect(show);});
  document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();else if(state.active&&!$('dialogue').hidden)protect(show);});
  sessionStorage.setItem('three-kingdoms-story-return','徐州劇情.html');
- protect(()=>{render();if(YunlongRescue.progress().returnPending)rescueArrival();else if(YunlongRescue.progress().achievementNotice)rescueAchievement();else if(state.sleepPending)sleep();else if(state.active)show();});
+ protect(()=>{render();if(YunlongRescue.progress().returnPending)rescueArrival();else if(YunlongRescue.progress().achievementNotice)rescueAchievement();else if(state.sleepPending||TownLodging.pending())sleep();else if(state.active)show();});
 })();
