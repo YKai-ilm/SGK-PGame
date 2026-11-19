@@ -5,7 +5,7 @@ window.QingnangCombat=(()=>{
 
  const button=document.createElement('button');button.id='restoreBody';button.title='消耗4計策值：治療生命比例最低的存活武將400，續療每秒150共3秒，冷卻5秒。';document.getElementById('tactics')?.append(button);
  function reset(){let s={};try{s=JSON.parse(localStorage.getItem(key)||'{}');}catch{}
-  const mode=window.VillageSweep||window.VillageDefense?.active||new URLSearchParams(location.search).has('yunlongBandits')?'story':s.mode==='battle'?'battle':'story',team=s.teams?.[mode==='story'?'story:'+(s.storyFaction||'蜀'):'battle'],eq=s.equipment?.[mode];
+  const mode=window.BattleContext?.mode||(window.VillageSweep||window.VillageDefense?.active||new URLSearchParams(location.search).has('yunlongBandits')?'story':s.mode==='battle'?'battle':'story'),team=s.teams?.[window.BattleContext?.teamKey||(mode==='story'?'story:'+(s.storyFaction||'蜀'):'battle')],eq=s.equipment?.[mode];
   const holders=Object.entries(eq?.loadouts||{}).filter(([name,l])=>s.unlocks?.[mode]?.heroes?.includes(name)&&eq.items?.some(i=>i.id===l.accessory&&i.slot==='accessory'&&i.effect==='qingnangRemnant')).map(([n])=>n);
   const candidate=team?.slots?.[5],strategist=s.unlocks?.[mode]?.heroes?.includes(candidate)&&window.StrategyPoints.canAppoint(candidate)?candidate:null,maxPoints=window.StrategyPoints.capacity(strategist);data={holders:window.TutorialBattleConfig?[]:holders,strategist,maxPoints,points:Number.isSafeInteger(s.strategyPoints?.[mode]?.current)&&s.strategyPoints[mode].current>=0?s.strategyPoints[mode].current:maxPoints,ready:0,passive:{},hot:[]};pointMode=mode;hadStoredPoints=Number.isSafeInteger(s.strategyPoints?.[mode]?.current);if(strategist&&!window.TutorialBattleConfig)persistPoints();sync();
  }

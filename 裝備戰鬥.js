@@ -18,7 +18,7 @@ window.EquipmentBattle=(()=>{
   let s;try{s=JSON.parse(localStorage.getItem('three-kingdoms-interface-preview-v1')||'{}');}catch{return;}
   if(!s||typeof s!=='object')return;
   const q=new URLSearchParams(location.search),story=['storySweep','villageDefense','villageRescue','yunlongBandits'].some(k=>q.has(k))||window.VillageSweep||window.VillageDefense?.active;
-  const mode=story?'story':s.mode==='battle'?'battle':'story',used=new Set();
+  const mode=window.BattleContext?.mode||(story?'story':s.mode==='battle'?'battle':'story'),used=new Set();
   const heroes=s.unlocks?.[mode]?.heroes;if(!Array.isArray(heroes))return;
   for(const name of heroes){
    if(!Object.hasOwn(window.TestRoster||{},name))continue;

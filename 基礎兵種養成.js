@@ -22,7 +22,7 @@ window.BasicTroops=(()=>{
   if(window.TutorialBattleConfig)return {};
   let s={};try{s=JSON.parse(localStorage.getItem(key)||'{}');}catch{}
   const query=new URLSearchParams(location.search),story=['storySweep','villageDefense','yunlongBandits'].some(k=>query.has(k));
-  const mode=story||window.VillageSweep||window.VillageDefense?.active?'story':s.mode==='battle'?'battle':'story';
+  const mode=window.BattleContext?.mode||(story||window.VillageSweep||window.VillageDefense?.active?'story':s.mode==='battle'?'battle':'story');
   return Object.fromEntries(types.map(type=>[type,progress(s,mode,type)]));
  }
  function apply(unit,snapshot){
