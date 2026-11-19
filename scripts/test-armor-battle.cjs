@@ -3,7 +3,7 @@ let state={mode:'story',unlocks:{story:{heroes:['劉備','關羽']},battle:{hero
 const c={window:{TestRoster:{劉備:{},關羽:{}}},URLSearchParams,location:{search:''},localStorage:{getItem:()=>JSON.stringify(state)}};
 for(const file of ['武將裝備.js','裝備戰鬥.js'])vm.runInNewContext(fs.readFileSync(file,'utf8'),c);
 const E=c.window.EquipmentBattle,S=c.window.EquipmentSystem,unit=()=>({type:'劉備',hero:true,hp:1000,max:1000,def:50,mdef:50});
-assert.equal(S.armorCatalog.length,26);assert.equal(new Set(S.armorCatalog.map(a=>a.name)).size,26);
+assert.equal(S.armorCatalog.length,27);assert.equal(new Set(S.armorCatalog.map(a=>a.name)).size,27);
 for(const a of S.armorCatalog){state.equipment.story.items[0].name=a.name;E.reset();const u=E.apply(unit());assert.equal(u.def,50+a.def);assert.equal(u.mdef,50+a.mdef);E.apply(u);assert.equal(u.def,50+a.def);assert.equal(u.max,1000);assert.equal(S.power(state.equipment.story.items[0]),S.scoreStats(S.ratedStats(state.equipment.story.items[0])));assert.equal(S.typeText(state.equipment.story.items[0]),'防具/'+a.type);
  const snap=E.saveArmors();assert(E.validArmors(snap));assert(E.validArmorUnit(u,snap));snap.劉備.def=999;assert(!E.validArmors(snap));assert.equal(E.saveArmors().劉備.def,a.def);
  const saved=E.saveArmors();E.load({});E.loadArmors(saved);const restored=E.apply(JSON.parse(JSON.stringify(u)));assert.equal(restored.def,u.def);assert.equal(E.apply(unit()).mdef,50+a.mdef);
@@ -20,7 +20,7 @@ c.window.TutorialBattleConfig={};E.reset();assert.equal(E.apply(unit()).def,50);
 assert.equal(S.effects({name:'未知甲',slot:'armor'}),null);assert(!E.validArmors({劉備:{def:275,mdef:49}}));
 for(const bad of [null,[],{不存在:{def:8,mdef:8}},{劉備:{def:8,mdef:9}},{劉備:{def:8,mdef:8,hp:1}},{劉備:{def:-1,mdef:8}}])assert(!E.validArmors(bad));
 assert.equal(S.effects({name:'布衣',slot:'accessory'}),null);
-console.log('PASS 26 armor effects, power, fixed application, immutable snapshots, legacy saves, mode isolation, duplicate ownership and pending special armor');
+console.log('PASS 27 armor effects, power, fixed application, immutable snapshots, legacy saves, mode isolation, duplicate ownership and pending special armor');
 
 const high=[{"name":"無雙戰鎧","quality":"紅","type":"重甲","def":425,"mdef":128},{"name":"紫綬仙衣","quality":"紅","type":"法袍","def":128,"mdef":425},{"name":"霸王吞雲鎧","quality":"金","type":"重甲","def":622,"mdef":187},{"name":"龍膽銀鱗甲","quality":"金","type":"輕甲","def":319,"mdef":319},{"name":"麒麟聖鎧","quality":"紫金","type":"輕甲","def":450,"mdef":450},{"name":"太極仙衣","quality":"紫金","type":"法袍","def":270,"mdef":899}];const guide=fs.readFileSync('裝備道具建議清單.html','utf8');for(const a of high){assert.deepEqual(JSON.parse(JSON.stringify(S.armorCatalog.find(x=>x.name===a.name))),a);assert(guide.includes('<td>'+a.name+'</td>'));const score=S.power({name:a.name,slot:'armor'}),target=S.scoreStats({physical:{紅:600,金:850,紫金:1200}[a.quality]});assert(Math.abs(score-target)<=1);assert.deepEqual(JSON.parse(JSON.stringify(S.effects({name:a.name,slot:'armor'}))),{def:a.def,mdef:a.mdef});}console.log('PASS six named high armors, approved stats, same-tier power and no unapproved special effects');
 
