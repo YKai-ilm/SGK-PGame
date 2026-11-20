@@ -24,7 +24,7 @@ window.GrainQuestUI=(()=>{
  if(id==='cargo'){if(p.cargoChecked)talk([['劉備','糧車已清點，回城請管事派人接運。']]);else talk([['劉備','車轅刻記與管事所說相符，糧袋大致完好。先守住此地，再通知城西接運。']],'cargoChecked');return true;}
  if(id==='steward'&&p.cargoChecked){talk([['糧隊管事',p.cargoVerified?'糧車已安排接回，請向糜別駕覆命。':'刻記、數目都對得上！我這便派人接回糧車，還請到城主府覆命。']],p.cargoVerified?null:'cargoVerified');return true;}
  if(id==='steward'&&p.trailKnown){talk([['糧隊管事','車尾都有徐州糧隊的記號。若找到車隊，還請先護住糧食，莫讓賊人毀了。'],['糧隊管事','記號是兩道斜刻，糧袋繫著青布條。沿谷關盡頭的車轍走，便能找到黑風寨。']],p.marksKnown?null:'marksKnown');return true;}
- if(id==='steward'&&api.state.flags.missing){talk([['糧隊管事','從城西這條路出去，就是糧道谷關。路旁有間茶站，可以先向歇腳的鄉親打聽。']],p.routeKnown?null:'routeKnown');return true;}
+ if(id==='steward'&&api.state.flags.missing){talk([['劉備','書吏說護衛隊長至今未歸。我欲沿路查探，還請管事告知運糧隊所走的路線。'],['糧隊管事','從城西下方這條路出去，便是糧道谷關。運糧隊平日都走這條山道，沿著地上的車轍前行便是。'],['糧隊管事','路旁有一間茶站，往來運糧的護軍常在那裡歇腳。壯士可先去問問店家與歇腳的鄉親，或許有人見過隊長。'],['劉備','多謝指點，我先往茶站打聽，再沿糧道尋人。'],['糧隊管事','山路近來不太平，還請多加小心。若尋到隊長，務必先救人！']],p.routeKnown?null:'routeKnown');return true;}
  if(id==='城主府一'&&p.cargoVerified&&!p.completed){talk([['糜竺','糧車已平安送回，城中百姓總算能安心。這次救人護糧，多虧壯士。'],['陶謙','有勇有義，才堪護民。往後義勇成軍之事，還望壯士相助。'],['劉備','能盡綿薄之力，備不敢辭。']],'completed');return true;}
  if(id==='城主府一'&&p.captainGift&&!p.reported){talk(reportLines,'reported');return true;}
  if(id==='城主府一'&&p.reported&&!p.completed){talk([['糜竺',p.marksKnown?'請循車轍前往盜糧匪寨，奪回糧車。':'請先向客棧的隊長問明線索，再找城西管事核對糧車標記。']]);return true;}
