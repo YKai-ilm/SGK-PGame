@@ -9,17 +9,22 @@ assert.equal(Q.advance('heardMing'),false);assert.equal(Q.advance('routeKnown'),
  ui.GrainQuestUI.install({state:{flags:{missing:true}},talk:(lines,action)=>{spoken={text:lines.map(line=>line[1]).join(' '),action};}});
  const check=(id,pattern,action=null)=>{spoken=null;assert(ui.GrainQuestUI.npc(id));assert.match(spoken.text,pattern);assert.equal(spoken.action,action);};
  check('steward',/至今未歸/,'grain:routeKnown');
- progress.routeKnown=true;check('steward',/茶站/);
+ progress.heardMing=true;progress.routeKnown=true;check('steward',/茶站/);
  progress.captainBriefed=true;check('steward',/先救人/);
  progress.rescueWon=true;progress.rescueShown=true;
  check('steward',/隊長能獲救/);check('役所',/已獲救/);
  progress.captainGift=true;check('steward',/城主府/);check('役所',/覆命/);
  progress.reported=true;check('steward',/客棧休養/);check('役所',/客棧養傷/);
+ check('taoqian',/客棧養傷/);
  progress.trailKnown=true;check('steward',/兩道斜刻/,'grain:marksKnown');
+ check('taoqian',/核對糧車標記/);check('城主府一',/核對糧車標記/);
  progress.marksKnown=true;check('steward',/記號已核對/);
  progress.campWon=true;check('steward',/先查看寨內糧車/);check('城主府一',/先查看寨內糧車/);
+ check('taoqian',/查看寨內糧車/);check('役所',/查看寨內糧車/);
  progress.cargoChecked=true;check('steward',/派人接回/,'grain:cargoVerified');check('城主府一',/先找城西管事/);
  progress.cargoVerified=true;check('steward',/請向糜別駕覆命/);check('城主府一',/平安送回/,'grain:completed');
- progress.completed=true;check('steward',/已平安接回/);check('役所',/平安接回/);check('captain',/安心養傷/);
+ check('captain',/最後覆命/);check('cargo',/已交代妥當/);check('taoqian',/最後覆命/);
+ progress.completed=true;check('steward',/已平安接回/);check('役所',/平安接回/);check('captain',/安心養傷/);check('taoqian',/糧道重通/);assert.doesNotMatch(spoken.text,/糧道未安/);check('cargo',/已交代妥當/);
  console.log('PASS grain NPC dialogue precedence with retained missing flag across rescue, report, clues, carts and completion');
 }
+
