@@ -31,3 +31,5 @@ const old=fresh();old.storyEvents.peachOath=true;old.rewards.history.push({key:'
  const sub=fresh();sub.storyEvents.peachOath=true;assert.equal(R.claim(sub,'chapter-1-2').chestCount,0);assert.equal(sub.chests?.shared?.boxes?.[2]||0,0);sub.mode='battle';assert(!R.rows(sub).some(x=>x.chestCount));
  console.log('PASS main chapter tier-2 chest, separate old-save top-up, no duplicate fragments/chests, history recovery and no subchapter chest');
 }
+
+{const s=fresh();s.storyEvents.yellowOpening={outpostWon:true,hqWon:true,reported:true};assert.equal(R.claim(s,'chapter-3-1'),null);s.storyEvents.yellowOpening.completed=true;const reward=R.claim(s,'chapter-3-1');assert.equal(reward.playerFragments,10);assert.equal(reward.chestCount||0,0);assert.equal(R.claim(s,'chapter-3-1'),null);assert(!R.rows(s).some(r=>r.id==='chapter-3'));}

@@ -31,6 +31,7 @@
   if(id==='xz-客棧'){profile.rewards={wallet:{coins:100,diamonds:0}};profile.storyMorale={value:50};}
   local[villageKey]=JSON.stringify({scene:route.engine==='taoyuan'?route.scene:'home',party:[],seen:[],active:null});
   local[cityKey]=JSON.stringify({scene:route.engine==='xuzhou'?route.scene:'內城',flags:{},history:[],active:null});
+  if(id.startsWith('yellow-')){const flags=['launched','briefed','scouted','outpostBriefed','outpostWon','outpostShown','hqKnown'];const last=id==='yellow-camp'?0:id==='yellow-outpost'?2:6;profile.storyEvents={grainRoute:{completed:true,armyFormed:true,captainGift:true},yellowOpening:Object.fromEntries(flags.slice(0,last+1).map(f=>[f,true]))};}
   local[mainKey]=JSON.stringify(profile);
   put(recordKey,JSON.stringify({id,local,session:{}}));
   window.top.location.href=route.url;
@@ -68,7 +69,13 @@
   'xz-藥師家':{stages:['initial','apprentice','rescued'],items:['candy']},
   yunlong:{stages:stages.yunlong.map(([id])=>id),items:['paste'],flags:['Dream']}
  };
- function conditions(){return sceneConditions[read().id]||{stages:['initial']};}
+ const yellowStages=["launched","briefed","scouted","outpostBriefed","outpostWon","outpostShown","hqKnown","hqBriefed","hqWon","hqShown","reported","completed"];
+stages.xuzhou.push(...yellowStages.map((flag,i)=>['yellow-'+flag,['已聽出征','軍吏任務已聽','前哨已開放','鄧茂已交談','前哨勝利待演出','鄧茂已撤退','主營已查明','程遠志已交談','主營勝利待演出','程遠志已撤退','軍吏回報完成','陶謙覆命完成'][i]]));
+sceneConditions['yellow-camp']={stages:['yellow-launched','yellow-briefed','yellow-scouted','yellow-outpostShown','yellow-hqKnown','yellow-hqShown','yellow-reported','yellow-completed']};
+sceneConditions['yellow-outpost']={stages:['yellow-scouted','yellow-outpostBriefed','yellow-outpostWon','yellow-outpostShown']};
+sceneConditions['yellow-hq']={stages:['yellow-hqKnown','yellow-hqBriefed','yellow-hqWon','yellow-hqShown','yellow-completed']};
+sceneConditions['xz-城主府'].stages.push('yellow-launched','yellow-reported','yellow-completed');
+function conditions(){return sceneConditions[read().id]||{stages:['initial']};}
  function availableItems(){return items.filter(([id])=>conditions().items?.includes(id));}
  function availableStages(){return stages[current().engine].filter(([id])=>conditions().stages.includes(id));}
  function flagChecked(id){return conditions().flags?.includes(id)&&document.getElementById('sceneTest'+id)?.checked;}
@@ -90,6 +97,7 @@
   }
   if(route.engine==='xuzhou'){
    delete p.townLodging;
+   if(stage.startsWith('yellow-')){p.storyEvents.grainRoute={completed:true,armyFormed:true,captainGift:true};p.storyEvents.yellowOpening=Object.fromEntries(yellowStages.slice(0,yellowStages.indexOf(stage.slice(7))+1).map(f=>[f,true]));c.flags.volunteerArmyFormed=true;}
    if(current()===routes['xz-客棧']){p.rewards??={};p.rewards.wallet={coins:100,diamonds:0};p.storyMorale={...(p.storyMorale||{}),value:50};}
    const grainStages=['grainRoute','grainMing','grainSaved','grainGift','grainReport','grainTrail','grainCamp','grainWon','grainChecked','grainVerified','grainDone','grainArmy'];
    const gn=grainStages.indexOf(stage);
@@ -145,7 +153,7 @@
   document.getElementById('sceneTestReset').onclick=()=>{if(confirm('恢復此場景初始狀態？測試道具與事件進度將清除，正式遊戲不受影響。'))start(r.id);};
   document.getElementById('sceneTestExit').onclick=()=>{const record=read();record.exiting=true;put(recordKey,JSON.stringify(record));window.top.location.href='場景重測.html?back=guide';};
   for(const [id,label,key,path] of availableItems()){const wrap=document.createElement('label'),check=document.createElement('input');check.type='checkbox';check.id='scene-item-'+id;check.checked=!!getPath(storeObject(key),path);wrap.append(check,document.createTextNode(label));document.getElementById('sceneTestItems').append(wrap);}
-  const stageSelect=document.getElementById('sceneTestStage');for(const [id,label] of availableStages())stageSelect.add(new Option(label,id));stageSelect.value=availableStages().some(([id])=>id===r.stage)?r.stage:'initial';
+  const stageSelect=document.getElementById('sceneTestStage');for(const [id,label] of availableStages())stageSelect.add(new Option(label,id));stageSelect.value=availableStages().some(([id])=>id===r.stage)?r.stage:availableStages()[0]?.[0]||'initial';
   stageSelect.closest('label').hidden=availableStages().length<2;
   for(const name of ['Party','Oath','Dream']){const check=document.getElementById('sceneTest'+name);check.disabled=!conditions().flags?.includes(name);check.closest('label').hidden=check.disabled;}
   if(availableStages().length<2&&!availableItems().length&&!conditions().flags?.length)bar.querySelector('details').hidden=true;

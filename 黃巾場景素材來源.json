@@ -1,0 +1,35 @@
+{
+  "date": "2026-11-21",
+  "tool": "imagegen",
+  "prompts": [
+    {
+      "id": "camp",
+      "prompt": "Generate one original game background PNG, portrait 1024x1536. Match the two previously viewed game backgrounds' high angled isometric miniature ancient Chinese environment illustration, finely rendered wood/stone/soil and lush vegetation, warm natural daylight, clear silhouettes, soft realistic shadows, painterly detail, NOT pixel art or plastic cartoon. It is a Three Kingdoms RPG exploration backdrop. No people, no character cards, no UI, no text, no lettering, no watermarks. Keep open ground for separately overlaid NPC labels. Do not copy or replace the existing Black Wind stockade. A friendly frontline volunteer army camp beside the official dirt road. Broad road runs from bottom center exit to upper center continuing north. On upper-left a modest command canvas tent, orderly cream tents and supply barrels along sides, blue-green plain pennants, wooden weapon racks, a planning table around 40% width 48% height for military clerk, open place at 72% width 52% height near a scout shelter. Fences partial not full fortress, green trees and rocks around edges. Clear navigable foreground. Military calm, no battles."
+    },
+    {
+      "id": "outpost",
+      "prompt": "Generate one original game background PNG, portrait 1024x1536. Match the two previously viewed game backgrounds' high angled isometric miniature ancient Chinese environment illustration, finely rendered wood/stone/soil and lush vegetation, warm natural daylight, clear silhouettes, soft realistic shadows, painterly detail, NOT pixel art or plastic cartoon. It is a Three Kingdoms RPG exploration backdrop. No people, no character cards, no UI, no text, no lettering, no watermarks. Keep open ground for separately overlaid NPC labels. Do not copy or replace the existing Black Wind stockade. A threatening Yellow Turban outpost blocking an official road between wooded rocky slopes. Bottom-center broad road entrance, rutted road climbs through a rough wooden open barricade at upper-middle. Small rugged tents, yellow ragged plain pennants, sharpened stakes and lookout platforms to sides; open ground around center (50%,48%) for Deng Mao label. Strong military menace without gore. Warm daylight and green trees consistent with nearby Xuzhou, not desaturated horror. Road visibly passes the outpost toward distance."
+    },
+    {
+      "id": "hq",
+      "prompt": "Generate one original game background PNG, portrait 1024x1536. Match the two previously viewed game backgrounds' high angled isometric miniature ancient Chinese environment illustration, finely rendered wood/stone/soil and lush vegetation, warm natural daylight, clear silhouettes, soft realistic shadows, painterly detail, NOT pixel art or plastic cartoon. It is a Three Kingdoms RPG exploration backdrop. No people, no character cards, no UI, no text, no lettering, no watermarks. Keep open ground for separately overlaid NPC labels. Do not copy or replace the existing Black Wind stockade. Cheng Yuanzhi's Yellow Turban main military camp, distinct from Black Wind stockade: large ochre command tent at upper center, rows of smaller worn canvas tents upper sides, many yellow ragged unlettered pennants, spear racks, stacked sacks and shields, palisade around edges, two wooden lookout towers flanking wide OPEN entrance near bottom quarter. Broad open dusty courtyard at center and toward entrance for enemy commander card around (50%,55%). Road at bottom-center is exit. Martial imposing composition, warm daylight in wooded countryside, no people or text."
+    }
+  ],
+  "files": [
+    {
+      "id": "camp",
+      "file": "黃巾前線營地-v1.png",
+      "source": "exec-4e57a8d8-e023-4877-9617-95e4101acf6a.png"
+    },
+    {
+      "id": "outpost",
+      "file": "黃巾前哨-v1.png",
+      "source": "exec-6e3b086a-14ea-4a18-b358-e72e475b0bff.png"
+    },
+    {
+      "id": "hq",
+      "file": "黃巾主營-v1.png",
+      "source": "exec-6168cf46-854c-46b8-a01d-2d81a2727d8b.png"
+    }
+  ]
+}

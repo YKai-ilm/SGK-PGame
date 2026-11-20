@@ -16,8 +16,8 @@ window.BattleSave=(()=>{
   const s=save.state,finite=n=>typeof n==='number'&&Number.isFinite(n),list=(a,max)=>Array.isArray(a)&&a.length<=max;
   if(s?.playerBattle!==undefined&&!window.PlayerBattle?.valid(s.playerBattle))throw Error('玩家戰場資料不符');
   if(s?.battleContext!==undefined){const c=s.battleContext;if(!c||Array.isArray(c)||Object.keys(c).length!==2||!['story','battle'].includes(c.mode)||(c.mode==='battle'?c.faction!==null:!['魏','蜀','吳','群雄','東漢'].includes(c.faction)))throw Error('戰場模式資料無效');if(window.BattleContext&&(c.mode!==BattleContext.mode||c.faction!==BattleContext.faction))throw Error('請切換至存檔原本的模式與陣營後載入');}
-  if((s?.storySweep?.mission||null)!==(window.GrainBattle?.mission||window.YunlongBattle?.mission||(window.VillageDefense?.active?VillageDefense.mission:null)))throw Error('請在對應的劇情關卡載入此存檔');
-  if(s?.storySweep?.mission&&(s.storySweep.waves!==(window.GrainBattle?.waves||window.YunlongBattle?.waves||window.VillageDefense.waves)||s.storySweep.encounterId!=='rabble'))throw Error('首戰配置無效');
+  if((s?.storySweep?.mission||null)!==(window.YellowBattle?.mission||window.GrainBattle?.mission||window.YunlongBattle?.mission||(window.VillageDefense?.active?VillageDefense.mission:null)))throw Error('請在對應的劇情關卡載入此存檔');
+  if(s?.storySweep?.mission&&(s.storySweep.waves!==(window.YellowBattle?.waves||window.GrainBattle?.waves||window.YunlongBattle?.waves||window.VillageDefense.waves)||s.storySweep.encounterId!=='rabble'))throw Error('首戰配置無效');
   if(s?.equipmentAccessories!==undefined&&(!window.EquipmentBattle?.validAccessories(s.equipmentAccessories)||Object.keys(s.equipmentAccessories).some(name=>s.equipment?.[name]!==undefined)))throw Error('飾品快照無效');
   if(s?.equipmentMounts!==undefined&&!window.EquipmentBattle?.validMounts(s.equipmentMounts))throw Error('坐騎快照無效');
   if(s?.equipmentArmors!==undefined&&!window.EquipmentBattle?.validArmors(s.equipmentArmors))throw Error('防具快照無效');
@@ -29,7 +29,7 @@ window.BattleSave=(()=>{
   if(s.ling!==undefined){if(!s.ling||Array.isArray(s.ling)||typeof s.ling!=='object')throw Error('凌氏狀態無效');for(const [name,r] of Object.entries(s.ling))if(!['凌操','凌統'].includes(name)||!r||!['end','next'].every(k=>finite(r[k])&&r[k]>=0)||typeof r.dead!=='boolean'||typeof r.firstUsed!=='boolean')throw Error('凌氏計時無效');}
   if(s.storySweep!=null&&(!s.storySweep||typeof s.storySweep.runId!=='string'||!/^[a-zA-Z0-9-]{1,80}$/.test(s.storySweep.runId)))throw Error('掃蕩場次資料無效');
   if(s.storySweep?.morale!==undefined&&(!finite(s.storySweep.morale)||s.storySweep.morale<0||s.storySweep.morale>100))throw Error('出戰士氣無效');
-  if(s.storySweep?.waves!==undefined&&!(window.GrainBattle?[GrainBattle.waves]:[1,3,6]).includes(s.storySweep.waves))throw Error('游擊波數無效');
+  if(s.storySweep?.waves!==undefined&&!(window.YellowBattle?[YellowBattle.waves]:window.GrainBattle?[GrainBattle.waves]:[1,3,6]).includes(s.storySweep.waves))throw Error('游擊波數無效');
   if(s.storySweep?.encounterId!==undefined&&!['rabble','deng','cheng'].includes(s.storySweep.encounterId))throw Error('游擊遭遇無效');
   if(s.storySweep?.combatVersion!==undefined&&![1,2,3,4].includes(s.storySweep.combatVersion))throw Error('游擊能力版本無效');
   if(s.storySweep?.combatVersion===4){const d=s.storySweep.enemyOfficer,leader={rabble:null,deng:'鄧茂',cheng:'程遠志'}[s.storySweep.encounterId];if(leader===undefined||leader===null&&d!==null||leader!==null&&(!d||d.name!==leader||!['青','綠','藍','橘','紅','紫'].includes(d.quality)||!Number.isInteger(d.stars)||d.stars<1||d.stars>10||!Number.isInteger(d.level)||d.level<1||d.level>100||!['hp','atk','magicAttack','def','mdef','interval'].every(k=>finite(d[k])&&d[k]>=0)||d.hp<=0||d.interval<=0))throw Error('敵將星級與能力快照無效');}

@@ -9,3 +9,5 @@ for(const name of ['城主府','役所','驛站','客棧','酒樓','武器店','
 SceneTestGuideIDs['徐州城主府一']='xz-城主府';SceneTestGuideIDs['城主府一']='xz-城主府';SceneTestGuideIDs['城西']='xuzhouWest';
 
 for(const name of ['糧道谷關','茶站','盜糧匪寨']){const id='xz-'+name;SceneTestScenes[id]={name,scene:name,group:'徐州',engine:'xuzhou',url:'徐州劇情.html'};SceneTestGuideIDs[name]=id;}
+
+for(const [id,name] of [['yellow-camp','前線營地'],['yellow-outpost','黃巾前哨'],['yellow-hq','黃巾主營']]){SceneTestScenes[id]={name,scene:name,group:'黃巾烽火',engine:'xuzhou',url:'黃巾前線.html'};SceneTestGuideIDs[name]=id;}

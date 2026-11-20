@@ -15,7 +15,7 @@
  function menu(title,text,choices){stop();$('menuTitle').textContent=title;$('menuText').textContent=text;$('menuButtons').replaceChildren();for(const [label,fn,disabled]of choices){const b=document.createElement('button');b.textContent=label;b.disabled=!!disabled;b.onclick=()=>protect(()=>{$('menu').close();fn();});$('menuButtons').append(b);}$('menu').showModal();}
  const notice=text=>menu('提示',text,[['關閉',()=>{}]]);
  function go(scene){if(window.SceneTest?.holdNavigation(scene))return;if(busy)return;stop();state.scene=scene;state.active=null;save();render();}
- function render(){stop();$('dialogue').hidden=true;$('resume').hidden=!state.active;$('hotspots').inert=false;$('hotspots').replaceChildren();$('place').textContent=state.scene==='內城'?'徐州城':state.scene==='城西'?'徐州城西':state.scene;let image,points=[];const grainScene=GrainQuestUI.scene(state.scene);
+ function render(){stop();$('dialogue').hidden=true;$('resume').hidden=!state.active;$('hotspots').inert=false;$('hotspots').replaceChildren();$('place').textContent=state.scene==='內城'?'徐州城':state.scene==='城西'?'徐州城西':state.scene;let image,points=[];const grainScene=YellowQuestUI.scene(state.scene)||GrainQuestUI.scene(state.scene);
   if(grainScene){image=grainScene.image;points=grainScene.points;}else if(state.scene==='內城'){image='徐州城內城-v3-王宮役所對調.png';points=city.map(([n,x,y])=>[n,x,y,()=>go(n)]);points.push(['離開',48,96,exitCity]);}
   else if(state.scene==='城西'){const c=XuzhouNpcPlacement['城西'];image=c.image;points.push([c.npc,c.npcX,c.npcY,()=>npc('steward')],['回內城',c.exitX,c.exitY,()=>go('內城')]);for(const p of c.places||[]){if(p.hidden)continue;points.push([p.name,p.x,p.y,()=>houses[p.name]?go(p.name):notice('此處尚未開放。')]);}}
   else if(houses[state.scene]){const h=houses[state.scene];image=h.image;points=h.points.map(([n,x,y,id])=>[n,x,y,()=>npc(id)]);if(state.scene==='藥師家'&&YunlongRescue.progress().completed)points.push(['華陀',42,24,'returnedHuatuo'].map((v,i)=>i===3?()=>npc(v):v));points.push(['離開',50,89,()=>go('城西')]);}
@@ -27,7 +27,7 @@
  function next(){stop();if(!state.active||$('dialogue').hidden||$('history').open)return;const a=state.active;if(a.index<a.lines.length-1){a.index++;save();show();return;}finish(a.action);}
  function end(){state.active=null;save();$('dialogue').hidden=true;$('hotspots').inert=false;$('resume').hidden=true;}
  function finish(action){
-  if(GrainQuestUI.finish(action))return;
+  if(YellowQuestUI.finish(action)||GrainQuestUI.finish(action))return;
   if(action==='huatuoGift'){YunlongRescue.gift();end();notice('取得青囊書（殘）×1。可在武將裝備的飾品格裝備。');return;}
   if(action==='miElderHeard')state.flags.miElderHeard=true;
   if(action==='miZhenAwaitingMarriage'){state.flags.miZhenAwaitingMarriage=true;state.flags.miZhenVisitors=state.active?.visitors||[];}
@@ -46,7 +46,7 @@
  }
  function huatuo(){talk([['劉備','我這裡有隻糖葫蘆，很甜唷，送給您吧，再勞煩轉知華藥師，吾誠心來訪，恰逢藥師外出，未能見上一面實屬可惜！'],['藥童','好的，若藥師提早回來，我會轉知！不過你們也可以去城外南郊的雲龍山看看，藥師曾說那個地方的靈芝甚有靈性，此次應會去那邊採藥才是。']],'huatuo');}
  function npc(id){
-  if(GrainQuestUI.npc(id))return;
+  if(YellowQuestUI.npc(id)||GrainQuestUI.npc(id))return;
   if(id==='returnedHuatuo'){if(!YunlongRescue.progress().completed)return;talk(YunlongRescue.progress().bookGiven?[['華陀','黃巾作亂，百姓多苦多難，也不知能救下多少人。']]:YunlongRescueDialogue.gift,YunlongRescue.progress().bookGiven?null:'huatuoGift');return;}
   if(id==='apprentice'){if(VillageHiddenItems.huatuoDone())talk([['藥童','我還有好多草藥要磨，何時才到頭呢？']]);else if(!state.flags.apprenticeFirst)talk([['藥童','華藥師外出採藥，通常要數週不等，爾等日後再來吧！我會轉達有客來訪。']],'apprenticeFirst');else talk([['藥童','每天都在這邊磨藥，吃的藥湯都是苦的，好想吃點甜的東西唷！']],'apprenticeSecond');return;}
   if(id==='caobao'){talk([['曹豹','現今世道黃巾猖獗，陶太守隨朝廷號召義勇兵，希望能盡快平定禍亂吧！']]);return;}
@@ -72,12 +72,12 @@
  function rescueAchievement(){menu('仁心救援','完成華陀初現・救援達成！取得成就「仁心救援」，鑽石 ×2。',[['收下',()=>YunlongRescue.dismissAchievement()]]);}
  async function rescueStay(){if(busy)return;busy=true;stop();document.querySelector('main').inert=true;const fade=$('fade');fade.classList.add('busy');try{await new Promise(r=>setTimeout(r,30));fade.style.opacity='1';await new Promise(r=>setTimeout(r,1300));state.scene='客棧';save();render();await new Promise(r=>setTimeout(r,500));fade.style.opacity='0';await new Promise(r=>setTimeout(r,1050));YunlongRescue.stay();rescueAchievement();}catch(e){$('saveWarning').hidden=false;menu('留宿尚未完成','進度尚未保存，請重試。',[['重試',()=>rescueStay()]]);}finally{fade.style.opacity='0';fade.classList.remove('busy');document.querySelector('main').inert=false;busy=false;}}
  function rescueArrival(){state.scene='內城';save();render();menu('救援達成','完成華陀初現劇情，救援達成。大牛與小牛招待大家留宿一晚。',[['前往客棧',()=>rescueStay()]]);}
- function exitCity(){if(window.SceneTest?.holdNavigation('離開徐州城'))return;const choices=[['返回桃源村',()=>{sessionStorage.removeItem('three-kingdoms-story-return');if(!window.SceneTest?.holdNavigation('桃園起兵.html'))location.href='桃園起兵.html';}]];if(VillageHiddenItems.huatuoDone())choices.push(['前往雲龍山',()=>{if(!window.SceneTest?.holdNavigation('雲龍山場景預覽.html'))location.href='雲龍山場景預覽.html';}]);choices.push(['留下',()=>{}]);menu('離開徐州城','請選擇去向。',choices);}
+ function exitCity(){if(window.SceneTest?.holdNavigation('離開徐州城'))return;const choices=[['返回桃源村',()=>{sessionStorage.removeItem('three-kingdoms-story-return');if(!window.SceneTest?.holdNavigation('桃園起兵.html'))location.href='桃園起兵.html';}]];if(VillageHiddenItems.huatuoDone())choices.push(['前往雲龍山',()=>{if(!window.SceneTest?.holdNavigation('雲龍山場景預覽.html'))location.href='雲龍山場景預覽.html';}]);if(YellowQuest.progress().launched)choices.push(['前往黃巾前線',()=>YellowQuestUI.enter()]);choices.push(['留下',()=>{}]);menu('離開徐州城','請選擇去向。',choices);}
  document.addEventListener('click',e=>{if(e.target.closest('#sceneTestBar'))return;if(!state.active||$('dialogue').hidden||document.querySelector('dialog[open]'))return;if(e.target.closest('#dialogue button,#dialogue a,#dialogue input,#dialogue select'))return;e.preventDefault();e.stopImmediatePropagation();protect(next);},true);
  $('nextLine').onclick=()=>protect(next);$('closeTalk').onclick=()=>{stop();$('dialogue').hidden=true;$('hotspots').inert=false;$('resume').hidden=!state.active;};$('resume').onclick=()=>protect(show);
  $('recall').onclick=()=>{stop();$('historyBody').replaceChildren();for(const h of state.history){const p=document.createElement('p');p.textContent=`${h.scene}・${h.speaker}：${h.line}`;$('historyBody').append(p);}$('history').showModal();};$('closeHistory').onclick=()=>$('history').close();$('history').addEventListener('close',()=>{if(state.active&&!$('dialogue').hidden)protect(show);});
  document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();else if(state.active&&!$('dialogue').hidden)protect(show);});
  sessionStorage.setItem('three-kingdoms-story-return','徐州劇情.html');
- GrainQuestUI.install({state,save,render,talk,end,menu,notice,go,setBusy:value=>{busy=value;document.querySelector('main').inert=value;}});
- protect(()=>{render();if((GrainQuest.progress().rescueWon&&!GrainQuest.progress().rescueShown)||(GrainQuest.progress().campWon&&!GrainQuest.progress().campShown)){GrainQuestUI.arrival();return;}if(YunlongRescue.progress().returnPending)rescueArrival();else if(YunlongRescue.progress().achievementNotice)rescueAchievement();else if(state.sleepPending||TownLodging.pending())sleep();else if(state.active)show();});
+ const questContext={state,save,render,talk,end,menu,notice,go,setBusy:value=>{busy=value;document.querySelector('main').inert=value;}};GrainQuestUI.install(questContext);YellowQuestUI.install(questContext);
+ protect(()=>{render();if(YellowQuestUI.pending()){YellowQuestUI.arrival();return;}if((GrainQuest.progress().rescueWon&&!GrainQuest.progress().rescueShown)||(GrainQuest.progress().campWon&&!GrainQuest.progress().campShown)){GrainQuestUI.arrival();return;}if(YunlongRescue.progress().returnPending)rescueArrival();else if(YunlongRescue.progress().achievementNotice)rescueAchievement();else if(state.sleepPending||TownLodging.pending())sleep();else if(state.active)show();});
 })();

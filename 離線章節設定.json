@@ -13,6 +13,10 @@
     {
       "id": "xuzhou",
       "name": "第二章・徐州點兵（含共用店鋪）"
+    },
+    {
+      "id": "yellow-turban",
+      "name": "第三章・黃巾烽火"
     }
   ],
   "pages": {
@@ -20,7 +24,8 @@
     "徐州劇情.html": "xuzhou",
     "徐州城入口.html": "xuzhou",
     "徐州城內城預覽.html": "xuzhou",
-    "雲龍山場景預覽.html": "xuzhou"
+    "雲龍山場景預覽.html": "xuzhou",
+    "黃巾前線.html": "yellow-turban"
   },
   "sceneRules": [
     {
@@ -52,6 +57,14 @@
         "雲龍山",
         "糧道谷關",
         "盜糧匪寨"
+      ]
+    },
+    {
+      "pack": "yellow-turban",
+      "prefixes": [
+        "黃巾前線營地",
+        "黃巾前哨",
+        "黃巾主營"
       ]
     }
   ]

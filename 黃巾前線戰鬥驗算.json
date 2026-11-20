@@ -1,0 +1,221 @@
+{
+  "note": "Actual engine simulation with three already-deployed LV1 heroes, no manual tactics or replacement. Tests combat stats only, not recruitment availability or full player experience.",
+  "results": [
+    {
+      "kind": "outpost",
+      "armor": "無裝備",
+      "win": true,
+      "gate": 3000,
+      "seconds": 136,
+      "kills": 48,
+      "before": [
+        {
+          "name": "張飛",
+          "hp": 2212,
+          "atk": 366.12800000000004,
+          "def": 78.2920845,
+          "armor": 0
+        },
+        {
+          "name": "關羽",
+          "hp": 2136,
+          "atk": 366.12800000000004,
+          "def": 80.291862,
+          "armor": 0
+        },
+        {
+          "name": "劉備",
+          "hp": 1913,
+          "atk": 272.23199999999997,
+          "def": 70.10594999999999,
+          "armor": 0
+        }
+      ],
+      "survivors": [
+        "張飛",
+        "關羽",
+        "劉備"
+      ]
+    },
+    {
+      "kind": "outpost",
+      "armor": "厚布衣",
+      "win": true,
+      "gate": 3000,
+      "seconds": 136,
+      "kills": 48,
+      "before": [
+        {
+          "name": "張飛",
+          "hp": 2212,
+          "atk": 366.12800000000004,
+          "def": 93.2920845,
+          "armor": 15
+        },
+        {
+          "name": "關羽",
+          "hp": 2136,
+          "atk": 366.12800000000004,
+          "def": 95.291862,
+          "armor": 15
+        },
+        {
+          "name": "劉備",
+          "hp": 1913,
+          "atk": 272.23199999999997,
+          "def": 85.10594999999999,
+          "armor": 15
+        }
+      ],
+      "survivors": [
+        "張飛",
+        "關羽",
+        "劉備"
+      ]
+    },
+    {
+      "kind": "outpost",
+      "armor": "皮甲",
+      "win": true,
+      "gate": 3000,
+      "seconds": 136,
+      "kills": 48,
+      "before": [
+        {
+          "name": "張飛",
+          "hp": 2212,
+          "atk": 366.12800000000004,
+          "def": 108.2920845,
+          "armor": 30
+        },
+        {
+          "name": "關羽",
+          "hp": 2136,
+          "atk": 366.12800000000004,
+          "def": 110.291862,
+          "armor": 30
+        },
+        {
+          "name": "劉備",
+          "hp": 1913,
+          "atk": 272.23199999999997,
+          "def": 100.10594999999999,
+          "armor": 30
+        }
+      ],
+      "survivors": [
+        "張飛",
+        "關羽",
+        "劉備"
+      ]
+    },
+    {
+      "kind": "hq",
+      "armor": "無裝備",
+      "win": true,
+      "gate": 3000,
+      "seconds": 139,
+      "kills": 48,
+      "before": [
+        {
+          "name": "張飛",
+          "hp": 2212,
+          "atk": 366.12800000000004,
+          "def": 78.2920845,
+          "armor": 0
+        },
+        {
+          "name": "關羽",
+          "hp": 2136,
+          "atk": 366.12800000000004,
+          "def": 80.291862,
+          "armor": 0
+        },
+        {
+          "name": "劉備",
+          "hp": 1913,
+          "atk": 272.23199999999997,
+          "def": 70.10594999999999,
+          "armor": 0
+        }
+      ],
+      "survivors": [
+        "張飛",
+        "關羽",
+        "劉備"
+      ]
+    },
+    {
+      "kind": "hq",
+      "armor": "厚布衣",
+      "win": true,
+      "gate": 3000,
+      "seconds": 139,
+      "kills": 48,
+      "before": [
+        {
+          "name": "張飛",
+          "hp": 2212,
+          "atk": 366.12800000000004,
+          "def": 93.2920845,
+          "armor": 15
+        },
+        {
+          "name": "關羽",
+          "hp": 2136,
+          "atk": 366.12800000000004,
+          "def": 95.291862,
+          "armor": 15
+        },
+        {
+          "name": "劉備",
+          "hp": 1913,
+          "atk": 272.23199999999997,
+          "def": 85.10594999999999,
+          "armor": 15
+        }
+      ],
+      "survivors": [
+        "張飛",
+        "關羽",
+        "劉備"
+      ]
+    },
+    {
+      "kind": "hq",
+      "armor": "皮甲",
+      "win": true,
+      "gate": 3000,
+      "seconds": 139,
+      "kills": 48,
+      "before": [
+        {
+          "name": "張飛",
+          "hp": 2212,
+          "atk": 366.12800000000004,
+          "def": 108.2920845,
+          "armor": 30
+        },
+        {
+          "name": "關羽",
+          "hp": 2136,
+          "atk": 366.12800000000004,
+          "def": 110.291862,
+          "armor": 30
+        },
+        {
+          "name": "劉備",
+          "hp": 1913,
+          "atk": 272.23199999999997,
+          "def": 100.10594999999999,
+          "armor": 30
+        }
+      ],
+      "survivors": [
+        "張飛",
+        "關羽",
+        "劉備"
+      ]
+    }
+  ]
+}

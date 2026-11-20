@@ -19,7 +19,10 @@ const cityPlaces=[['城主府',57,17.5,'糜竺'],['役所',22,92,'書吏'],['驛
 StoryGuidePoints['徐州內城']=cityPlaces.map(([name,x,y,npc])=>{const key='xzPlace:'+name;XuzhouGuideNotes[key]=name+'：'+npc+'位於'+(name==='城西'?'城西糧車旁。':'室內，請查看下方對應場景的人物字卡。');return [name,x,y,13.5,3.6,key];});
 StoryGuidePoints['徐州內城'].push(['離開',48,96,12,3.6,'xzCityExit']);
 XuzhouGuideNotes.xzCityExit='由下方主道離開徐州城；目前可返回桃源村。';
-const groups=['桃園','徐州','共用室內','保留備用'],captions={'桃園':'已接入的故事起點','徐州':'內城、城西與室內 NPC 字卡配置','共用室內':'各城可重用，人物與事件另配','保留備用':'使用者指定保存，日後直接取用'};
+
+// 初戰黃巾：圖鑑標示與正式場景相同，字卡條件另附說明。
+for(const [name,rows] of Object.entries({'前線營地':[['軍吏',40,48,'先交代任務；主營戰後再向他回報。'],['斥候',72,52,'聽完軍吏後開前哨；鄧茂撤退後開主營。'],['黃巾前哨',50,15,'首次斥候對話結束後出現。'],['黃巾主營',76,23,'前哨勝利，回營地找斥候確認後出現。'],['離開',50,93,'返回徐州城。']],'黃巾前哨':[['鄧茂',50,48,'交談後開始六波戰鬥；勝利後撤退消失。'],['離開',50,93,'返回前線營地。']],'黃巾主營':[['程遠志',50,55,'交談後開始六波戰鬥；勝利後敗退，不判定死亡。'],['離開',50,93,'返回前線營地。']]})){StoryGuidePoints[name]=rows.map(([label,x,y,note],i)=>{const key='yellowGuide:'+name+':'+i;XuzhouGuideNotes[key]=note;return [label,x,y,13.5,3.6,key];});}
+const groups=['桃園','徐州','黃巾烽火','共用室內','保留備用'],captions={'黃巾烽火':'前線營地、官道前哨與黃巾主營','桃園':'已接入的故事起點','徐州':'內城、城西與室內 NPC 字卡配置','共用室內':'各城可重用，人物與事件另配','保留備用':'使用者指定保存，日後直接取用'};
 let filter='全部',restoreDetails=[];
 for(const g of ['全部',...groups]){const b=document.createElement('button');b.textContent=g;b.dataset.filter=g;b.onclick=()=>{filter=g;render()};$('filters').append(b)}
 function render(){
