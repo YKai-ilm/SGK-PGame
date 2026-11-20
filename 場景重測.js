@@ -45,7 +45,7 @@
  ];
  const stages={
   taoyuan:[['initial','一般／未觸發'],['revealed','關羽、張飛已現身（尚未加入）'],['companions','關羽、張飛已加入'],['flower','已聽村長介紹、接下小花任務'],['jewelry','已接下樵夫首飾任務'],['banquet','飲宴完成、可以結義'],['homeRest','戰後可回家休息'],['homeRested','已在家休息一晚']],
-  xuzhou:[['grainRoute','糧道已問路'],['grainMing','已聽明叔、隊長出現'],['grainSaved','救援演出完成、待贈禮'],['grainGift','已領皮甲、待回城覆命'],['grainReport','已回城覆命、客棧問隊長'],['grainTrail','客棧已取得隊長線索、待管事確認'],['grainCamp','已核對刻記、可進匪寨'],['grainWon','奪糧已勝、待清點'],['grainDone','護糧覆命完成'],['initial','一般／首次拜訪'],['apprentice','已初訪藥童（測糖葫蘆分支）'],['introduced','書吏已引薦糜竺'],['accepted','已接受護糧委託'],['steward','已見糧隊管事'],['slept','已住宿、次日查問'],['missing','已知護軍失聯、待問糧道路線'],['miElder','已聽糜太公心事'],['miZhen','已與糜貞交談、待說媒'],['rescued','雲龍山救援完成、華陀回家']],
+  xuzhou:[['grainRoute','糧道已問路'],['grainMing','已聽明叔、隊長出現'],['grainSaved','救援演出完成、待贈禮'],['grainGift','已領皮甲、待回城覆命'],['grainReport','已回城覆命、客棧問隊長'],['grainTrail','客棧已取得隊長線索、待管事確認'],['grainCamp','已核對刻記、可進匪寨'],['grainWon','奪糧已勝、待清點'],['grainChecked','糧車已查驗、待管事接運'],['grainVerified','已安排接運、待最後覆命'],['grainDone','護糧覆命完成'],['initial','一般／首次拜訪'],['apprentice','已初訪藥童（測糖葫蘆分支）'],['introduced','書吏已引薦糜竺'],['accepted','已接受護糧委託'],['steward','已見糧隊管事'],['slept','已住宿、次日查問'],['missing','已知護軍失聯、待問糧道路線'],['miElder','已聽糜太公心事'],['miZhen','已與糜貞交談、待說媒'],['rescued','雲龍山救援完成、華陀回家']],
   yunlong:[['initial','一般／盜賊未擊退'],['bandits','盜賊已擊退、大牛可對話'],['daniu','已與大牛交談、華陀出現'],['huatuo','已與華陀交談、可接大牛'],['collected','已接回大牛、準備救小牛'],['rescued','小牛已救醒、救援寶箱出現']]
  };
  // 僅列出此圖人物、事件實際使用的前置條件。
@@ -56,13 +56,13 @@
   west:{stages:['initial','jewelry']},
   chiefHome:{stages:['initial','flower'],items:['rabbit']},
   zhangHome:{stages:['initial','companions','banquet'],flags:['Party','Oath']},
-  xuzhouWest:{stages:['initial','accepted','steward','slept','missing','grainRoute','grainReport','grainTrail','grainCamp','grainWon','grainDone'],flags:['Party']},
-  'xz-城主府':{stages:['initial','introduced','accepted','grainGift','grainReport','grainDone','miZhen'],flags:['Party','Oath']},
-  'xz-役所':{stages:['initial','introduced','accepted','steward','slept'],flags:['Party']},
-  'xz-客棧':{stages:['initial','steward','slept','grainReport','grainCamp']},
-  'xz-糧道谷關':{stages:['grainRoute','grainMing','grainSaved','grainReport','grainCamp','grainWon','grainDone']},
+  xuzhouWest:{stages:['initial','accepted','steward','slept','missing','grainRoute','grainSaved','grainGift','grainReport','grainTrail','grainCamp','grainWon','grainChecked','grainVerified','grainDone'],flags:['Party']},
+  'xz-城主府':{stages:['initial','introduced','accepted','grainSaved','grainGift','grainReport','grainTrail','grainCamp','grainWon','grainChecked','grainVerified','grainDone','miZhen'],flags:['Party','Oath']},
+  'xz-役所':{stages:['initial','introduced','accepted','steward','slept','missing','grainSaved','grainGift','grainReport','grainTrail','grainCamp','grainWon','grainChecked','grainVerified','grainDone'],flags:['Party']},
+  'xz-客棧':{stages:['initial','steward','slept','grainReport','grainTrail','grainCamp','grainWon','grainChecked','grainVerified','grainDone']},
+  'xz-糧道谷關':{stages:['grainRoute','grainMing','grainSaved','grainGift','grainReport','grainTrail','grainCamp','grainWon','grainChecked','grainVerified','grainDone']},
   'xz-茶站':{stages:['grainRoute','grainMing']},
-  'xz-盜糧匪寨':{stages:['grainCamp','grainWon','grainDone']},
+  'xz-盜糧匪寨':{stages:['grainCamp','grainWon','grainChecked','grainVerified','grainDone']},
   'xz-防具店':{stages:['initial','grainReport']},
   'xz-糜家':{stages:['initial','miElder','miZhen'],flags:['Party']},
   'xz-藥師家':{stages:['initial','apprentice','rescued'],items:['candy']},
@@ -91,9 +91,16 @@
   if(route.engine==='xuzhou'){
    delete p.townLodging;
    if(current()===routes['xz-客棧']){p.rewards??={};p.rewards.wallet={coins:100,diamonds:0};p.storyMorale={...(p.storyMorale||{}),value:50};}
-   const grainStages=['grainRoute','grainMing','grainSaved','grainReport','grainCamp','grainWon','grainDone'],gn=grainStages.indexOf(stage);if(gn>=0){c.flags={introduced:true,accepted:true,steward:true,slept:true,missing:true};const g=p.storyEvents.grainRoute={routeKnown:true};if(gn>=1)g.heardMing=true;if(gn>=2)Object.assign(g,{captainBriefed:true,rescueWon:true,rescueShown:true});if(gn>=3){Object.assign(g,{captainGift:true,reported:true});p.storyItems??={};p.storyItems.damagedLeatherArmor=1;}if(gn>=4)Object.assign(g,{trailKnown:true,marksKnown:true});if(gn>=5)Object.assign(g,{campBriefed:true,campWon:true,campShown:true});if(gn>=6)Object.assign(g,{cargoChecked:true,cargoVerified:true,completed:true});p.rewards??={};p.rewards.wallet={coins:100,diamonds:0};}
-   if(stage==='grainTrail'){c.flags={introduced:true,accepted:true,steward:true,slept:true,missing:true};p.storyEvents.grainRoute={routeKnown:true,heardMing:true,captainBriefed:true,rescueWon:true,rescueShown:true,captainGift:true,reported:true,trailKnown:true};}
-   if(stage==='grainGift'){c.flags={introduced:true,accepted:true,steward:true,slept:true,missing:true};p.storyEvents.grainRoute={routeKnown:true,heardMing:true,captainBriefed:true,rescueWon:true,rescueShown:true,captainGift:true};p.storyItems??={};p.storyItems.damagedLeatherArmor=1;}
+   const grainStages=['grainRoute','grainMing','grainSaved','grainGift','grainReport','grainTrail','grainCamp','grainWon','grainChecked','grainVerified','grainDone'];
+   const gn=grainStages.indexOf(stage);
+   if(gn>=0){
+    c.flags={introduced:true,accepted:true,steward:true,slept:true,missing:true};
+    const g=p.storyEvents.grainRoute={};
+    const milestones=[['routeKnown'],['heardMing'],['captainBriefed','rescueWon','rescueShown'],['captainGift'],['reported'],['trailKnown'],['marksKnown'],['campBriefed','campWon','campShown'],['cargoChecked'],['cargoVerified'],['completed']];
+    for(const flags of milestones.slice(0,gn+1))for(const flag of flags)g[flag]=true;
+    if(g.captainGift){p.storyItems??={};p.storyItems.damagedLeatherArmor=1;}
+    p.rewards??={};p.rewards.wallet={coins:100,diamonds:0};
+   }
    if(stage==='apprentice')c.flags.apprenticeFirst=true;
    const chain=['introduced','accepted','steward','slept','missing'];const n=chain.indexOf(stage);chain.forEach((k,i)=>{if(i<=n)c.flags[k]=true;});
    if(stage==='miElder'||stage==='miZhen')c.flags.miElderHeard=true;
