@@ -28,6 +28,7 @@
   const local=entries(nativeLocal),route=routes[id];
   for(const k of Object.keys(local))if(k.startsWith('three-kingdoms-')||k.startsWith('tk-save-'))delete local[k];
   const profile={version:1,mode:'story',storyFaction:'蜀',libraryFaction:'蜀',page:'home',tutorial:{status:'skipped',step:0},teams:{},unlocks:{story:{heroes:[],letters:[]},battle:{heroes:[],letters:[]}},storyEvents:{},storyItems:{}};
+  if(id==='xz-客棧'){profile.rewards={wallet:{coins:100,diamonds:0}};profile.storyMorale={value:50};}
   local[villageKey]=JSON.stringify({scene:route.engine==='taoyuan'?route.scene:'home',party:[],seen:[],active:null});
   local[cityKey]=JSON.stringify({scene:route.engine==='xuzhou'?route.scene:'內城',flags:{},history:[],active:null});
   local[mainKey]=JSON.stringify(profile);
@@ -84,6 +85,8 @@
    if(stage==='banquet')v.seen=['banquet'];
   }
   if(route.engine==='xuzhou'){
+   delete p.townLodging;
+   if(current()===routes['xz-客棧']){p.rewards??={};p.rewards.wallet={coins:100,diamonds:0};p.storyMorale={...(p.storyMorale||{}),value:50};}
    if(stage==='apprentice')c.flags.apprenticeFirst=true;
    const chain=['introduced','accepted','steward','slept'];const n=chain.indexOf(stage);chain.forEach((k,i)=>{if(i<=n)c.flags[k]=true;});
    if(stage==='miElder'||stage==='miZhen')c.flags.miElderHeard=true;
@@ -118,6 +121,7 @@
   const bar=document.createElement('aside');bar.id='sceneTestBar';
   bar.innerHTML='<div class="test-row"><strong>場景劇情測試</strong><select id="sceneTestSelect" aria-label="選擇測試場景"></select><button id="sceneTestReset">恢復初始值</button><button id="sceneTestExit">返回圖鑑</button></div><details><summary>劇情觸發道具／事件條件</summary><div id="sceneTestItems"></div><label>事件階段 <select id="sceneTestStage"></select></label><label><input type="checkbox" id="sceneTestParty">關羽、張飛同行</label><label><input type="checkbox" id="sceneTestOath">已桃園結義</label><label><input type="checkbox" id="sceneTestDream">已觸發夢輪迴</label><button id="sceneTestApply">套用條件</button><p>套用後結束當前對話，點人物卡測試分支；不會修改正式遊戲。</p></details><p id="sceneTestNotice" role="status">點人物／事件卡展開劇情；出口只提示去向，不離開此圖。所有獎勵僅供測試。</p>';
   document.body.classList.add('scene-guide-test');document.body.prepend(bar);
+  if(r.id==='xz-客棧')notice('住宿重測：初始／套用條件設為測試金幣 100、士氣 50。可重測付費與劇情免費住宿；不影響正式存檔。');
   const select=document.getElementById('sceneTestSelect');for(const [id,route] of Object.entries(routes)){const o=new Option(route.group+'・'+route.name,id);select.add(o);}select.value=r.id;select.onchange=()=>start(select.value);
   document.getElementById('sceneTestReset').onclick=()=>{if(confirm('恢復此場景初始狀態？測試道具與事件進度將清除，正式遊戲不受影響。'))start(r.id);};
   document.getElementById('sceneTestExit').onclick=()=>{const record=read();record.exiting=true;put(recordKey,JSON.stringify(record));window.top.location.href='場景重測.html?back=guide';};
