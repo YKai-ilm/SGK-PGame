@@ -17,3 +17,5 @@ const old=fresh();old.storyEvents.peachOath=true;old.rewards.history.push({key:'
 }
 
 {const s=fresh();s.storyEvents.grainRoute={completed:true};assert.equal(R.claim(s,'chapter-2-2'),null);s.storyEvents.grainRoute.armyFormed=true;assert.equal(R.claim(s,'chapter-2-2').playerFragments,10);assert.equal(R.claim(s,'chapter-2-2'),null);}
+
+{const s=fresh();s.storyEvents.grainRoute={completed:true,armyFormed:true};assert.equal(R.claim(s,'chapter-2-3'),null);s.storyEvents.grainRoute.miRecruited=true;assert.equal(R.claim(s,'chapter-2-3').playerFragments,10);assert.equal(R.claim(s,'chapter-2-3'),null);}

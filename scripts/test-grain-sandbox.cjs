@@ -22,4 +22,16 @@ for(const stage of ['grainSaved','grainGift','grainTrail']){
  assert.equal(state.rescueShown,true);assert.equal(!!state.captainGift,stage!=='grainSaved');
  assert.equal(!!state.reported,stage==='grainTrail');assert.equal(!!state.trailKnown,stage==='grainTrail');assert.equal(!!state.marksKnown,false);
 }
+await g.evaluate(()=>SceneTest.start('xz-城主府'));g=await frame();
+for(const stage of ['miZhen','miMatchReady','miMatchDone']){
+ await g.locator('#sceneTestBar').evaluate(e=>e.style.display='');
+ await g.locator('#sceneTestBar details').evaluate(e=>e.open=true);await g.locator('#sceneTestStage').selectOption(stage);
+ await Promise.all([g.waitForNavigation(),g.locator('#sceneTestApply').click()]);
+ const flags=await g.evaluate(()=>JSON.parse(localStorage.getItem('three-kingdoms-xuzhou-story-v1')).flags);
+ assert.equal(await g.evaluate(flags=>MiFamilyStory.canMatchmake(flags),flags),stage==='miMatchReady');
+ if(stage==='miMatchReady'){await g.locator('#sceneTestBar').evaluate(e=>e.style.display='none');await g.locator('[data-name="糜竺"]').click();assert.equal(await g.evaluate(()=>JSON.parse(localStorage.getItem('three-kingdoms-xuzhou-story-v1')).active.action),'miMatchmakingDiscussed');}
+}
+await g.locator('#sceneTestBar').evaluate(e=>e.style.display='none');
+await g.locator('[data-name="糜竺"]').click();assert.equal(await g.evaluate(()=>JSON.parse(localStorage.getItem('three-kingdoms-xuzhou-story-v1')).active.action),'grain:miRecruited');await g.locator('#nextLine').click();assert.equal(await g.evaluate(()=>!!GrainQuest.progress().miRecruited),false);
+for(let i=0;i<10&&await g.locator('#dialogue').isVisible();i++)await g.locator('#nextLine').click();assert.equal(await g.evaluate(()=>GrainQuest.progress().miRecruited),true);await g.getByRole('button',{name:'關閉',exact:true}).click();await g.locator('[data-name="糜竺"]').click();assert.equal(await g.evaluate(()=>JSON.parse(localStorage.getItem('three-kingdoms-xuzhou-story-v1')).active.action),null);
 await g.evaluate(()=>SceneTest.exit());await p.waitForURL('**/'+encodeURIComponent('場景重測.html'));await p.waitForFunction(()=>!SceneTest.active());assert.equal(await p.evaluate(key=>localStorage.getItem(key),key),original);console.log('PASS grain sandbox stages and original profile preserved');}finally{await b?.close();server.close();}})().catch(e=>{console.error(e);process.exitCode=1;});
