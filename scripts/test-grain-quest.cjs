@@ -24,7 +24,15 @@ assert.equal(Q.advance('heardMing'),false);assert.equal(Q.advance('routeKnown'),
  progress.cargoChecked=true;check('steward',/派人接回/,'grain:cargoVerified');check('城主府一',/先找城西管事/);
  progress.cargoVerified=true;check('steward',/請向糜別駕覆命/);check('城主府一',/平安送回/,'grain:completed');
  check('captain',/最後覆命/);check('cargo',/已交代妥當/);check('taoqian',/最後覆命/);
- progress.completed=true;check('steward',/已平安接回/);check('役所',/平安接回/);check('captain',/安心養傷/);check('taoqian',/糧道重通/);assert.doesNotMatch(spoken.text,/糧道未安/);check('cargo',/已交代妥當/);
+ progress.completed=true;check('steward',/已平安接回/);check('役所',/平安接回/);check('captain',/安心養傷/);check('taoqian',/正式成軍/,'grain:armyFormed');progress.armyFormed=true;check('taoqian',/糧道重通/);assert.doesNotMatch(spoken.text,/糧道未安/);check('cargo',/已交代妥當/);check('城主府一',/義勇已正式成軍/);ui.MiFamilyStory={canMatchmake:()=>true};assert.equal(ui.GrainQuestUI.npc('城主府一'),false);
  console.log('PASS grain NPC dialogue precedence with retained missing flag across rescue, report, clues, carts and completion');
 }
 
+
+{
+ const saved=map.get(K);map.set(K,JSON.stringify({storyEvents:{grainRoute:{cargoVerified:true}}}));assert.equal(Q.formArmy(),false);assert(!read().unlocks);
+ map.set(K,saved);const state=read();state.unlocks={story:{heroes:['劉備'],letters:['劉']},battle:{heroes:[],letters:[]}};state.chests.story.letterProgress={劉:{level:25,xp:50,quality:'綠'}};map.set(K,JSON.stringify(state));
+ assert(Q.formArmy());const formed=read();assert(formed.storyEvents.grainRoute.armyFormed);assert.deepEqual(formed.unlocks.story.heroes,['劉備','關羽','張飛']);assert.deepEqual(formed.unlocks.battle.heroes,['劉備','關羽','張飛']);assert.deepEqual(formed.unlocks.story.letters,['劉']);assert.equal(formed.chests.story.letterProgress.劉.level,25);assert.deepEqual(formed.equipment.story.items.slice(-3).map(i=>i.name),['厚布衣','皮甲','硬皮甲']);const committed=map.get(K);assert.equal(Q.formArmy(),false);assert.equal(map.get(K),committed);
+ const set=ctx.localStorage.setItem;map.set(K,saved);ctx.localStorage.setItem=()=>{throw Error('disk full');};assert.throws(()=>Q.formArmy(),/disk full/);assert.equal(map.get(K),saved);ctx.localStorage.setItem=set;assert(Q.formArmy());
+ console.log('PASS army reward gate, old-save claim, full hero unlocks, growth preservation, once-only equipment and atomic save failure');
+}

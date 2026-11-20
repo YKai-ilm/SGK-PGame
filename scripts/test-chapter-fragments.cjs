@@ -15,3 +15,5 @@ const old=fresh();old.storyEvents.peachOath=true;old.rewards.history.push({key:'
  restored.mode='battle';assert(!R.rows(restored).some(x=>x.id==='chapter-2-1'));
  console.log('PASS grain objectives, final-report reward boundary, 10 fragments once, history fallback and mode isolation');
 }
+
+{const s=fresh();s.storyEvents.grainRoute={completed:true};assert.equal(R.claim(s,'chapter-2-2'),null);s.storyEvents.grainRoute.armyFormed=true;assert.equal(R.claim(s,'chapter-2-2').playerFragments,10);assert.equal(R.claim(s,'chapter-2-2'),null);}

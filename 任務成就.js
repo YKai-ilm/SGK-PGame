@@ -29,6 +29,7 @@ window.ProgressRewards=(()=>{
    ['1-3','桃園首戰','sub',farewell,'完成護村、森林救援與劉母正式餞行。'],
    ['1','桃園聚義','main',oath&&farewell,'完成本章故事並向劉母正式辭行；掃蕩離村不代替完成。'],
    ['2-1','運糧護衛','sub',!!s.storyEvents?.grainRoute?.completed,grainObjective(s)],
+   ['2-2','義勇成軍','sub',!!s.storyEvents?.grainRoute?.armyFormed,'完成護軍後，與陶謙完整交談並領取成軍防具與劉關張武將卡。'],
    ['2-4','華陀初現','sub',!!s.storyEvents?.yunlongRescue?.bookGiven,'完成救援、回徐州留宿，再與華陀完成贈書對話。']
   ];
   return entries.map(([chapter,name,type,done,desc])=>({id:'chapter-'+chapter,kind:'achievement',name:(type==='main'?'主章節':'副章節')+'・'+name,desc:desc+' 首次獎勵，可補領，原有獎勵不變。',value:+done,goal:1,coins:0,diamonds:0,playerFragments:chapterAmounts[type],targetMode:'story',global:true,rewardKey:'chapter:'+chapter+':player-fragments-v1'}));
