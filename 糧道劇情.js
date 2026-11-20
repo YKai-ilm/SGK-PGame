@@ -17,16 +17,26 @@ window.GrainQuestUI=(()=>{
  async function start(kind){if(animating)return;animating=true;api.setBusy(true);try{const runId=GrainQuest.begin(kind);if(kind==='rescue'){showBandit=true;api.render();await sleep(700);}const fade=document.getElementById('fade');fade.classList.add('busy');fade.style.opacity='1';await sleep(1400);api.state.scene=kind==='rescue'?'糧道谷關':'盜糧匪寨';api.state.active=null;api.save();const url='戰場直版.html?grainBattle='+kind+'&run='+encodeURIComponent(runId)+'&returnTo='+encodeURIComponent('徐州劇情.html');if(window.SceneTest?.holdNavigation(url)){fade.style.opacity='0';fade.classList.remove('busy');return;}location.href=url;}catch(e){document.getElementById('fade').style.opacity='0';api.notice(e.message);}finally{animating=false;api.setBusy(false);}}
  function npc(id){const p=q();if(dialogue[id]){talk(dialogue[id],id==='ming'?'heardMing':null);return true;}
  if(id==='taoqian'){if(!p.captainGift)return true;if(!p.reported)talk(reportLines,'reported');else talk([['陶謙','聞壯士救回護軍，特來相見。危急之時仍以人命為先，難能可貴。'],['劉備','備只是盡力而為。只是糧道未安，往來百姓恐仍受其害。'],['陶謙',p.completed?'壯士已使糧道重通，百姓得以安生，此功我記下了。':p.marksKnown?'請先護住百姓的糧食，莫讓賊人毀糧。':'請再向客棧休養的護衛隊長問明賊人去向，並與城西糧隊管事確認記號。']]);return true;}
+ if(id==='役所'&&p.rescueWon){talk([['書吏',p.completed?'護軍得救，糧車也已平安接回，這次辛苦壯士了。':p.reported?'隊長現於客棧養傷。糧車追查之事，請與隊長及城西管事商議。':p.captainGift?'護衛隊長已獲救，請先到城主府向糜別駕覆命。':'護衛隊長已獲救，還請先照看茶站旁的隊長，再向糜別駕報平安。']]);return true;}
+ if(id==='captain'&&p.completed){talk([['護衛隊長','糧車能平安送回，我也終於能安心養傷了。救命與護糧之恩，沒齒難忘！']]);return true;}
  if(id==='captain'){if(!p.heardMing)return true;if(p.rescueWon&&!p.rescueShown)return true;if(p.rescueShown&&!p.captainGift)talk([['受傷隊長','多謝壯士出手！方才被賊兵追趕，若非相救，恐怕性命難保。'],['受傷隊長','這套皮甲雖已破損，還能請城裡防具舖的修復師縫補。請收下，聊表謝意。'],['劉備','隊長先在茶站休養，我回城向糜別駕報個平安。']],'captainGift');else if(p.reported&&!p.trailKnown)talk([['受傷隊長','賊人帶著糧車往西面山道去了。我記得他們轉入一處舊營地，路口有棵折斷的大樹。'],['受傷隊長','那一帶如今被賊人占作黑風寨，沿糧道盡頭的車轍便能追過去。'],['劉備','我先向管事核對標記，再循車轍追查。']],'trailKnown');else if(p.captainGift)talk([['受傷隊長',p.trailKnown?'核對車上的刻記，便不會認錯糧車。':'請代我向糜別駕覆命，我就在茶站養傷。']]);else if(p.captainBriefed)choice('rescue');else talk([['受傷隊長','救命……我是徐州運糧隊的護衛隊長。糧車被劫，同伴也被打散了！'],['劉備','莫慌，先退到路旁，讓我看看傷勢。'],['受傷隊長','賊兵就在後頭！還請壯士替我擋住他們，讓我逃到茶站！']],'captainBriefed');return true;}
  if(id==='bandit')return true;
  if(id==='repair'){if(p.armorRepaired)talk([['修復師','皮甲已替您修好了，出門前記得穿戴妥當。']]);else if(p.captainGift)api.menu('修復師','修復破損皮甲需要 30 金幣，修好後獲得皮甲一套。',[['修復（30 金幣）',()=>{try{api.notice(GrainQuest.repair()?'破損皮甲已修復，皮甲已放入裝備背包。':'目前沒有可修復的破損皮甲。');}catch(e){api.notice(e.message);}}],['稍後再來',()=>{}]]);else talk([['修復師','皮甲若有破損，可以帶來讓我瞧瞧。']]);return true;}
  if(id==='deng'){if(p.campWon)return true;if(p.campBriefed)choice('camp');else talk([['鄧茂','追到這裡來了？這些糧車如今歸我，識相便走！'],['劉備','這是百姓活命的糧食，豈容你奪去！放下糧車！'],['鄧茂','有本事便來拿！弟兄們，給我上！']],'campBriefed');return true;}
  if(id==='cargo'){if(p.cargoChecked)talk([['劉備','糧車已清點，回城請管事派人接運。']]);else talk([['劉備','車轅刻記與管事所說相符，糧袋大致完好。先守住此地，再通知城西接運。']],'cargoChecked');return true;}
+ if(id==='steward'&&p.completed){talk([['糧隊管事','糧車已平安接回，護衛隊長也在客棧安心養傷。多虧壯士相助，這趟糧運總算有了交代！']]);return true;}
  if(id==='steward'&&p.cargoChecked){talk([['糧隊管事',p.cargoVerified?'糧車已安排接回，請向糜別駕覆命。':'刻記、數目都對得上！我這便派人接回糧車，還請到城主府覆命。']],p.cargoVerified?null:'cargoVerified');return true;}
+ if(id==='steward'&&p.campWon){talk([['糧隊管事','聽聞寨中賊兵已被擊退，辛苦了！還請先查看寨內糧車的記號與糧袋，確認無誤再回來，我好安排接運。']]);return true;}
+ if(id==='steward'&&p.marksKnown){talk([['糧隊管事','糧車記號已核對：車尾兩道斜刻，糧袋繫青布條。請往黑風寨救回糧車，記得先護住糧食。']]);return true;}
  if(id==='steward'&&p.trailKnown){talk([['劉備','我已在客棧問過隊長。賊人將糧車帶往西面山道的舊營地，如今喚作黑風寨。出發前，想再向管事確認糧車的記號。'],['糧隊管事','車尾都有徐州糧隊的記號，是兩道斜刻；糧袋則繫著青布條。兩樣都對得上，便是我們失去的糧車。'],['糧隊管事','若找到車隊，還請先護住糧食，莫讓賊人毀了。這些都是百姓賴以度日的口糧啊！'],['劉備','記下了。我會循著車轍前往黑風寨，先保住糧車，再設法擊退賊人。'],['糧隊管事','沿糧道谷關走到盡頭，便是通往寨子的路。待壯士奪回糧車，我會安排人手接運，還請平安歸來！']],p.marksKnown?null:'marksKnown');return true;}
+ if(id==='steward'&&p.reported){talk([['糧隊管事','隊長已回城，在客棧休養。請先向他問清糧車被劫往何處，再來找我核對記號。']]);return true;}
+ if(id==='steward'&&p.rescueWon){talk([['糧隊管事','隊長能獲救，真是太好了！他的傷勢可還穩當？'],['糧隊管事',p.captainGift?'請先到城主府向糜別駕報個平安，再安排隊長回客棧養傷。':'他既已退到茶站旁，還請先去看看他，再回城向糜別駕覆命。']]);return true;}
+ if(id==='steward'&&p.captainBriefed){talk([['糧隊管事','原來隊長受傷困在糧道上！請先救人，糧車的事待他平安後再商議。']]);return true;}
+ if(id==='steward'&&p.routeKnown){talk([['糧隊管事','沿城西道路前往糧道谷關，路旁茶站可以打聽消息。請沿途留意隊長的下落。']]);return true;}
  if(id==='steward'&&api.state.flags.missing){talk([['劉備','書吏說護衛隊長至今未歸。我欲沿路查探，還請管事告知運糧隊所走的路線。'],['糧隊管事','從城西下方這條路出去，便是糧道谷關。運糧隊平日都走這條山道，沿著地上的車轍前行便是。'],['糧隊管事','路旁有一間茶站，往來運糧的護軍常在那裡歇腳。壯士可先去問問店家與歇腳的鄉親，或許有人見過隊長。'],['劉備','多謝指點，我先往茶站打聽，再沿糧道尋人。'],['糧隊管事','山路近來不太平，還請多加小心。若尋到隊長，務必先救人！']],p.routeKnown?null:'routeKnown');return true;}
  if(id==='城主府一'&&p.cargoVerified&&!p.completed){talk([['糜竺','糧車已平安送回，城中百姓總算能安心。這次救人護糧，多虧壯士。'],['陶謙','有勇有義，才堪護民。往後義勇成軍之事，還望壯士相助。'],['劉備','能盡綿薄之力，備不敢辭。']],'completed');return true;}
  if(id==='城主府一'&&p.captainGift&&!p.reported){talk(reportLines,'reported');return true;}
+ if(id==='城主府一'&&p.campWon&&!p.cargoVerified){talk([['糜竺',p.cargoChecked?'糧車已查驗，請先找城西管事清點並安排接運，再回來覆命。':'既已擊退賊兵，請先查看寨內糧車，再請城西管事清點接運。']]);return true;}
  if(id==='城主府一'&&p.reported&&!p.completed){talk([['糜竺',p.marksKnown?'請循車轍前往盜糧匪寨，奪回糧車。':'請先向客棧的隊長問明線索，再找城西管事核對糧車標記。']]);return true;}
  if(id==='城主府一'&&p.completed&&!api.state.flags.volunteerArmyFormed){talk([['糜竺','運糧護衛已辦妥，下一步便是籌組義勇。先整備隊伍，待軍務安排。']]);return true;}
  return false;}
