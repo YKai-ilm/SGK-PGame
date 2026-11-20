@@ -33,7 +33,7 @@ window.ProgressRewards=(()=>{
    ['2-3','糜家小女','sub',!!s.storyEvents?.grainRoute?.miRecruited,'完成護軍與糜竺說媒後，再次交談，取得糜竺相助。此階段尚未成婚。'],
    ['2-4','華陀初現','sub',!!s.storyEvents?.yunlongRescue?.bookGiven,'完成救援、回徐州留宿，再與華陀完成贈書對話。']
   ];
-  return entries.map(([chapter,name,type,done,desc])=>({id:'chapter-'+chapter,kind:'achievement',name:(type==='main'?'主章節':'副章節')+'・'+name,desc:desc+' 首次獎勵，可補領，原有獎勵不變。',value:+done,goal:1,coins:0,diamonds:0,playerFragments:chapterAmounts[type],targetMode:'story',global:true,rewardKey:'chapter:'+chapter+':player-fragments-v1'}));
+  return entries.map(([chapter,name,type,done,desc])=>({id:'chapter-'+chapter,kind:'achievement',name:(type==='main'?'主章節':'副章節')+'・'+name,desc:desc+' 首次獎勵，可補領，原有獎勵不變。',value:+done,goal:1,coins:0,diamonds:0,playerFragments:chapterAmounts[type],chestCount:type==='main'?1:0,chestRewardKey:type==='main'?'chapter:'+chapter+':tier2-chest-v1':null,targetMode:'story',global:true,rewardKey:'chapter:'+chapter+':player-fragments-v1'}));
  }
  function rows(s){const r=sync(s),m=r.modes[s.mode],done=s.tutorial.status==='completed',skipped=s.tutorial.status==='skipped';return [
  {id:'tutorial',kind:'task',name:done?'完整教學獎勵':'首次入城獎勵',desc:done?'完成四段演練。舊版完成資格也可領取。':skipped?'跳過教學，領取基本獎勵。':'完成教學或確認跳過後領取。',value:done||skipped?1:0,goal:1,coins:done?200:100,letterCount:done?2:0,targetMode:'story',global:true},
@@ -46,7 +46,7 @@ window.ProgressRewards=(()=>{
  {id:'yunlongRescue',kind:'achievement',name:'仁心救援',desc:'於雲龍山協助華陀救醒小牛，與大牛、小牛回徐州留宿。',value:+!!s.storyEvents?.yunlongRescue?.completed,goal:1,coins:0,diamonds:2,targetMode:'story',global:true},
  {id:'collect1',kind:'achievement',name:'初識名將',desc:'累計解鎖一名武將。',value:s.unlocks[s.mode].heroes.length,goal:1,coins:0,diamonds:2},
  {id:'collect3',kind:'achievement',name:'群英初聚',desc:'累計解鎖三名不同武將。',value:s.unlocks[s.mode].heroes.length,goal:3,coins:0,diamonds:5}
- ,...chapterRows(s)].filter(x=>s.mode==='story'||['factions','team'].includes(x.id)).filter(x=>x.id!=='tutorialLetters'||(done&&r.claims.tutorial&&!r.claims.tutorial.letters?.length&&!r.claims.tutorialLetters)).map(x=>{const key=x.rewardKey||((x.global?x.id:s.mode+':'+x.id)+(x.kind==='achievement'?':diamonds-v1':''));const legacyKey=key.replace(/:diamonds-v1$/,'');const claimed=!!r.claims[key]||!!r.claims[legacyKey]||r.history.some(h=>h.key===key||h.key===legacyKey);return {...x,name:(s.mode==='battle'?'對戰 · ':'')+x.name,diamonds:x.diamonds||0,key,claimed};});}
+ ,...chapterRows(s)].filter(x=>s.mode==='story'||['factions','team'].includes(x.id)).filter(x=>x.id!=='tutorialLetters'||(done&&r.claims.tutorial&&!r.claims.tutorial.letters?.length&&!r.claims.tutorialLetters)).map(x=>{const key=x.rewardKey||((x.global?x.id:s.mode+':'+x.id)+(x.kind==='achievement'?':diamonds-v1':''));const legacyKey=key.replace(/:diamonds-v1$/,'');const claimed=!!r.claims[key]||!!r.claims[legacyKey]||r.history.some(h=>h.key===key||h.key===legacyKey);const chestClaimed=x.chestRewardKey&&(!!r.claims[x.chestRewardKey]||r.history.some(h=>h.key===x.chestRewardKey||h.chestRewardKey===x.chestRewardKey));const topUp=!!x.chestRewardKey&&claimed&&!chestClaimed;return {...x,name:(s.mode==='battle'?'對戰 · ':'')+x.name,desc:x.desc+(topUp?' 已領玩家碎片，本次僅補領二級寶箱。':''),playerFragments:topUp?0:x.playerFragments,chestCount:chestClaimed&&!claimed?0:x.chestCount,diamonds:x.diamonds||0,key:topUp?x.chestRewardKey:key,claimed:x.chestRewardKey?claimed&&chestClaimed:claimed};});}
 
  function drawLetters(s,mode,count){
   const pool=[...new Set(OFFICER_PROPOSAL.entries.filter(p=>p.faction==='蜀').map(p=>p.name).join(''))];
@@ -60,9 +60,11 @@ window.ProgressRewards=(()=>{
   return picked;
  }
  function claim(s,id){const item=rows(s).find(x=>x.id===id);if(!item||item.claimed||item.value<item.goal)return null;const r=s.rewards,mode=item.targetMode||s.mode,m=window.SharedWallet.init(s);
+  const chestBag=item.chestCount?window.ChestSystem.init(s):null;if(chestBag&&!Number.isSafeInteger((chestBag.boxes[2]||0)+item.chestCount))throw Error('寶箱數量超出範圍');
   const letters=item.letterCount?drawLetters(s,mode,item.letterCount):[];
   if(item.playerFragments){const player=window.PlayerOfficer?.get(s);if(!player)return null;if(!Number.isSafeInteger(player.fragments+item.playerFragments))throw Error('玩家碎片數值超出範圍');player.fragments+=item.playerFragments;}
+  if(chestBag)chestBag.boxes[2]=(chestBag.boxes[2]||0)+item.chestCount;
   m.coins+=item.coins;m.diamonds+=item.diamonds;
-  const record={key:item.key,name:item.name,mode,coins:item.coins,diamonds:item.diamonds,playerFragments:item.playerFragments||0,letters,at:new Date().toISOString()};r.claims[item.key]=record;r.history.unshift(record);if(id==='tutorial')s.tutorial.reward='claimed';return record;}
+  const record={key:item.key,name:item.name,mode,coins:item.coins,diamonds:item.diamonds,playerFragments:item.playerFragments||0,chestCount:item.chestCount||0,chestRewardKey:item.chestCount?item.chestRewardKey:null,letters,at:new Date().toISOString()};r.claims[item.key]=record;if(item.chestCount)r.claims[item.chestRewardKey]=record;r.history.unshift(record);if(id==='tutorial')s.tutorial.reward='claimed';return record;}
  return{init,sync,rows,claim,chapterAmounts};
 })();
