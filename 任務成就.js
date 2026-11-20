@@ -4,6 +4,21 @@ window.ProgressRewards=(()=>{
  function init(s){s.rewards??={};const r=s.rewards;window.SharedWallet.init(s);r.claims??={};r.history=Array.isArray(r.history)?r.history:[];r.modes??={};for(const mode of ['story','battle']){const m=r.modes[mode]??={};m.visited=Array.isArray(m.visited)?[...new Set(m.visited)]:[];m.teamReady=!!m.teamReady;}return r;}
  function sync(s){window.ChestSystem?.syncUnlocked(s);const r=init(s);for(const mode of ['story','battle']){if(Object.entries(s.teams).some(([k,t])=>(mode==='battle'?k==='battle':k.startsWith('story:'))&&t.slots?.some(n=>s.unlocks[mode].heroes.includes(n))))r.modes[mode].teamReady=true;}return r;}
  const chapterAmounts=Object.freeze({main:20,sub:10});
+ function grainObjective(s){
+  const g=s.storyEvents?.grainRoute||{};
+  if(g.completed)return '運糧護衛已完成：隊長獲救、糧車接回，已向糜竺覆命。';
+  if(g.cargoVerified)return '目前：回徐州城主府向糜竺作最後覆命，完成運糧護衛。';
+  if(g.cargoChecked)return '目前：到徐州城西找糧隊管事清點糧車，安排接運。';
+  if(g.campWon)return '目前：查看黑風寨內的糧車，確認刻記與糧袋。';
+  if(g.marksKnown)return '目前：由糧道谷關前往黑風寨，擊退鄧茂、奪回糧車。';
+  if(g.trailKnown)return '目前：到徐州城西找糧隊管事確認糧車標記。';
+  if(g.reported)return '目前：到徐州客棧找護衛隊長，詢問追糧線索。';
+  if(g.captainGift)return '目前：回徐州城主府向糜竺報平安，安排隊長到客棧休養。';
+  if(g.rescueWon)return '目前：與糧道茶站旁的受傷隊長交談，領取贈禮後回城覆命。';
+  if(g.heardMing)return '目前：與糧道上的受傷隊長交談，開始救援。';
+  if(g.routeKnown)return '目前：前往糧道谷關的茶站，向明叔打聽消息。';
+  return '救回隊長、奪回糧車，經管事核對後完成糜竺覆命。';
+ }
  function chapterRows(s){
   if(!window.PlayerOfficer?.get(s))return [];
   let party=[];try{party=JSON.parse(localStorage.getItem('three-kingdoms-taoyuan-dialogue-v1')||'{}').party||[];}catch{}
@@ -13,7 +28,7 @@ window.ProgressRewards=(()=>{
    ['1-2','桃園三結義','sub',oath,'完成桃園結義演出。'],
    ['1-3','桃園首戰','sub',farewell,'完成護村、森林救援與劉母正式餞行。'],
    ['1','桃園聚義','main',oath&&farewell,'完成本章故事並向劉母正式辭行；掃蕩離村不代替完成。'],
-   ['2-1','運糧護衛','sub',!!s.storyEvents?.grainRoute?.completed,'救回隊長、奪回糧車，經管事核對後完成糜竺覆命。'],
+   ['2-1','運糧護衛','sub',!!s.storyEvents?.grainRoute?.completed,grainObjective(s)],
    ['2-4','華陀初現','sub',!!s.storyEvents?.yunlongRescue?.bookGiven,'完成救援、回徐州留宿，再與華陀完成贈書對話。']
   ];
   return entries.map(([chapter,name,type,done,desc])=>({id:'chapter-'+chapter,kind:'achievement',name:(type==='main'?'主章節':'副章節')+'・'+name,desc:desc+' 首次獎勵，可補領，原有獎勵不變。',value:+done,goal:1,coins:0,diamonds:0,playerFragments:chapterAmounts[type],targetMode:'story',global:true,rewardKey:'chapter:'+chapter+':player-fragments-v1'}));
