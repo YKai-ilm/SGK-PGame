@@ -65,6 +65,7 @@
   if(state.mode==='story'&&bagTab==='items'&&state.storyItems?.waterBucket){if(!count&&!VillageHiddenItems.owned()&&!VillageHiddenItems.candyOwned()&&!VillageHiddenItems.pasteOwned())$('content').querySelector('.panel')?.remove();$('content').insertAdjacentHTML('beforeend','<button class="panel bag-item" data-a="waterBucket"><span class="bag-item-mark">水</span><span><strong>一桶水</strong><small>道具 · 最多持有一份</small></span></button>');}
 
 
+  if(state.mode==='story'&&bagTab==='items'&&state.storyItems?.damagedLeatherArmor>0){const empty=$('content').querySelector('section.panel');if(empty?.textContent.includes('目前沒有道具'))empty.remove();$('content').insertAdjacentHTML('beforeend','<section class="panel bag-item"><strong>破損皮甲 ×1</strong><small>劇情道具・到徐州防具店找修復師，花費30金幣修復。</small></section>');}
   if(state.mode==='story'&&bagTab==='items'&&state.storyItems?.letterXPBook120>0){const empty=$('content').querySelector('section.panel');if(empty?.textContent.includes('目前沒有道具'))empty.remove();$('content').insertAdjacentHTML('beforeend','<section class="panel bag-item"><strong>字卡經驗書（120經驗）</strong><span>×'+state.storyItems.letterXPBook120+'</span>'+btn('使用','useXPBook120')+'</section>');}
   if(bagTab==='items'){
    for(const item of [...BattleShortcuts.catalog.filter(p=>p.id!=='foodVoucher'),...TeamPills.catalog]){

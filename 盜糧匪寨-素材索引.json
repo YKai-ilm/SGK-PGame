@@ -1,0 +1,25 @@
+{
+  "name": "盜糧匪寨",
+  "file": "盜糧匪寨-v2-黑風寨.png",
+  "source": "OpenAI built-in image_gen",
+  "reference": "糧道谷關-v1.png",
+  "prompt": "Generate a new portrait 2:3 game background: small stolen-grain bandit stockade inside the rocky wooded valley of reference. Reference image is STYLE and LOCATION continuity only, do not copy its layout. Match high oblique overhead miniature ancient Chinese illustration, lush foliage, warm daylight, natural grey rock and wood textures. Modest rough timber palisade surrounds an open dirt courtyard; main OPEN stockade entrance clearly at bottom center, accessible footpath enters from bottom. Two stationary wooden grain carts loaded with tied burlap sacks prominently parked at upper right, with paired wooden-wheel ruts leading from gate. A few rough timber huts with simple straw or grey tile roofs along upper and left boundary, supplies and barrels clustered by walls. Leave the center and area just inside entrance open for an independently overlaid Deng Mao NPC name card, clear walkable routes to grain carts. Mountain rock slopes and green trees outside enclosure. Small believable bandit hideout, not a huge military fortress. NO people, no horses, no battle, no text, signage, UI, arrows or labels, no modern items. Full bleed coherent illustration.",
+  "points": [
+    {
+      "name": "鄧茂",
+      "x": 50,
+      "y": 52
+    },
+    {
+      "name": "糧車",
+      "x": 77,
+      "y": 34
+    },
+    {
+      "name": "離開",
+      "x": 49,
+      "y": 75
+    }
+  ],
+  "status": "第二版黑風寨已接入；第一版原圖保留"
+}

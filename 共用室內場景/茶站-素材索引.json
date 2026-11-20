@@ -1,0 +1,51 @@
+{
+  "name": "茶站",
+  "file": "共用室內場景/茶站-v1.png",
+  "status": "已接入徐州糧道劇情",
+  "preview": "糧道谷關-美術預覽.html",
+  "source": "OpenAI built-in image_gen",
+  "references": [
+    "共用室內場景/客棧-v1.png",
+    "糧道谷關-v1.png"
+  ],
+  "prompt": "Create a single portrait 2:3 ancient Chinese roadside tea rest stop INTERIOR game background. Reference 1 is the existing inn interior, use its high oblique overhead cutaway view and warm richly detailed miniature painted wood/stone material style ONLY, not its beds or stairs. Reference 2 is the valley exterior; this interior belongs to the SMALL lower-left rustic tiled-roof roadside house in that valley. A humble single-floor wayside tea shop where travelers drink tea and rest, compact and welcoming, no palace or lavish restaurant. Four simple low wooden tea tables with stools or low benches, each with a modest earthenware teapot and tea bowls. Clear central walking aisle from front entrance, small back serving counter with shelves of bowls and ceramic tea jars, a practical clay charcoal water-boiling stove and kettle safely beside the back wall, firewood stack and covered water jar. Weathered timber posts, plaster walls, simple lattice windows, warm daylight and glimpses of green valley vegetation outside. Roof removed in clean game cutaway convention, front doorway visible at bottom; match existing indoor scene camera and crisp soft painterly detail, more rustic than the inn. No people, no text, no cards, no UI, no bedrooms, no stairs, no modern items. Full bleed coherent scene.",
+  "npc": {
+    "name": "店小二",
+    "x": 29,
+    "y": 28,
+    "cardStyle": "土金色一般 NPC",
+    "dialogue": [
+      "方圓十里，就我們一間茶水站，客官您歇息一下再上路吧！"
+    ]
+  },
+  "guests": [
+    {
+      "name": "秀蘭",
+      "x": 25,
+      "y": 38,
+      "cardStyle": "土金色一般 NPC",
+      "dialogue": [
+        "走了半天山路，總算能坐下喝口茶了。這山風吹著舒服，我還想再歇一會兒呢。"
+      ]
+    },
+    {
+      "name": "大力",
+      "x": 39,
+      "y": 46,
+      "cardStyle": "土金色一般 NPC",
+      "dialogue": [
+        "我原想一口氣走到徐州城，誰知聞到茶香，腿就不肯往前走了。哈哈，喝完這碗再趕路！"
+      ]
+    },
+    {
+      "name": "明叔",
+      "x": 63,
+      "y": 46,
+      "cardStyle": "土金色一般 NPC",
+      "dialogue": [
+        "糧道上總有點不太平，偶而會有些賊匪劫盜路上的運糧隊伍，老天保佑！"
+      ]
+    }
+  ],
+  "game": "徐州劇情.html"
+}

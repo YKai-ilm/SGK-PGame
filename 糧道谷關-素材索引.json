@@ -1,0 +1,19 @@
+{
+  "name": "糧道谷關",
+  "version": 1,
+  "status": "已接入徐州糧道劇情",
+  "file": "糧道谷關-v1.png",
+  "preview": "糧道谷關-美術預覽.html",
+  "source": "OpenAI built-in image_gen",
+  "reference": "徐州城西-v1.png",
+  "prompt": "Create one new portrait 2:3 game background titled conceptually 糧道谷關 (NO text in image). Use the referenced existing 徐州城西 scene strictly as visual style reference, not a scene to edit: same high oblique overhead camera, richly detailed miniature ancient Chinese landscape illustration, warm daylight, lush green foliage, muted grey rocks, soft natural shadows, tactile painted wood and soil, clear scale. New subject: an ancient grain-transport route through a rocky wooded valley, suitable as an explorable Three Kingdoms game stage. A broad compacted earth road winds gently from bottom foreground toward a narrow upper-center valley pass between modest rocky slopes. Clearly visible TWO PARALLEL shallow wooden cart wheel ruts run continuously along the dirt road, follow every curve with consistent axle spacing, subtly uneven and worn by heavy grain carts; NO railroad rails, no sleepers, no modern tire tread. Keep main road open and legible and wide enough for grain wagons. Natural rounded weathered stone outcrops, shrubs and trees frame the sides; small clear roadside patch for future NPC cards. Valley pass is a natural narrow route, not a huge castle. Keep scene grounded and calm, no battle happening yet. No people, NPCs, animals, vehicles, UI, labels, arrows, border, or writing. Match reference's sharp but not harsh detail and warm lush game-world aesthetic, not photorealism, pixel art, flat vector, or dark cinematic landscape. Full bleed single coherent background.",
+  "exit": {
+    "label": "離開",
+    "x": 50,
+    "y": 94,
+    "destination": "徐州城",
+    "scene": "城西",
+    "status": "正式出口返回徐州城西"
+  },
+  "game": "徐州劇情.html"
+}

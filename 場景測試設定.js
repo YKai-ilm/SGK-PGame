@@ -7,3 +7,5 @@ SceneTestScenes.yunlong={name:'雲龍山',scene:'雲龍山',group:'徐州',engin
 window.SceneTestGuideIDs={'劉備家':'taoyuan','桃園村':'village','桃源村東':'east','桃源村西':'west','村長家':'chiefHome','張飛家':'zhangHome','徐州內城':'xuzhou','徐州城西':'xuzhouWest','雲龍山':'yunlong'};
 for(const name of ['城主府','役所','驛站','客棧','酒樓','武器店','防具店','訓練店','編輯所','道具店','曹豹家','糜家','藥師家']){SceneTestGuideIDs[name]='xz-'+name;SceneTestGuideIDs['徐州'+name]='xz-'+name;}
 SceneTestGuideIDs['徐州城主府一']='xz-城主府';SceneTestGuideIDs['城主府一']='xz-城主府';SceneTestGuideIDs['城西']='xuzhouWest';
+
+for(const name of ['糧道谷關','茶站','盜糧匪寨']){const id='xz-'+name;SceneTestScenes[id]={name,scene:name,group:'徐州',engine:'xuzhou',url:'徐州劇情.html'};SceneTestGuideIDs[name]=id;}
