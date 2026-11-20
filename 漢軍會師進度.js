@@ -1,0 +1,14 @@
+'use strict';
+window.HanQuest=(()=>{
+ const key='three-kingdoms-interface-preview-v1';
+ const chain=['departed','luHeard','routeKnown','reliefBriefed','reliefWon','reliefShown','dispatched','huangHeard','zhuHeard','fireBriefed','fireWon','fireShown','fireReported','escortHeard','southOrdered','completed'];
+ const read=()=>JSON.parse(localStorage.getItem(key)||'{}'),progress=()=>read().storyEvents?.hanCampaign||{};
+ function change(fn){const s=read();s.storyEvents??={};const p=s.storyEvents.hanCampaign??={};const result=fn(s,p);if(result!==false)localStorage.setItem(key,JSON.stringify(s));return result;}
+ function advance(flag){if(!chain.includes(flag)||flag.endsWith('Won'))return false;return change((s,p)=>{const i=chain.indexOf(flag);if(p[flag]||i>0&&!p[chain[i-1]]||i===0&&!s.storyEvents.yellowOpening?.completed)return false;p[flag]=true;return true;});}
+ function allowed(kind,p=progress()){return ['relief','fire'].includes(kind)&&!!p[kind+'Briefed']&&!p[kind+'Won'];}
+ function begin(kind){return change((s,p)=>{if(!allowed(kind,p))throw Error('請先完成本場軍情對話');return (p.pending={kind,runId:crypto.randomUUID()}).runId;});}
+ function complete(kind,runId){return change((s,p)=>{if(!['relief','fire'].includes(kind))return false;if(p[kind+'Won'])return p[kind+'Run']===runId;if(!allowed(kind,p)||p.pending?.kind!==kind||p.pending.runId!==runId)return false;const coins=kind==='relief'?200:300,w=SharedWallet.init(s);if(!Number.isSafeInteger(w.coins+coins))throw Error('金幣超出範圍');w.coins+=coins;s.rewards.history??=[];s.rewards.history.unshift({key:'han-campaign:'+kind,name:kind==='relief'?'廣宗接應':'長社解圍',mode:'story',coins,diamonds:0,at:new Date().toISOString()});p[kind+'Won']=true;p[kind+'Run']=runId;delete p.pending;return true;});}
+ const sceneGate={'盧植軍營':'departed','廣宗外圍':'routeKnown','長社營地':'dispatched','長社側翼':'zhuHeard','驛道探訊':'fireReported','南陽軍前':'southOrdered'};
+ function collect(id){return change((s,p)=>{const required=id==='medicine'?'zhuHeard':id==='armor'?'fireReported':null;if(!required||!p[required]||p.loot?.[id])return false;if(id==='medicine'){s.storyItems??={};const count=Number(s.storyItems.antidotePowder||0);if(!Number.isSafeInteger(count)||count<0||!Number.isSafeInteger(count+1))throw Error('道具數量無效');s.storyItems.antidotePowder=count+1;}else{s.equipment??={};const bag=s.equipment.story??={items:[],loadouts:{}};bag.items??=[];if(!bag.items.some(i=>i.id==='han-campaign-armor'))bag.items.push({id:'han-campaign-armor',name:'硬皮甲',slot:'armor',source:'長社戰後軍需配發'});}p.loot??={};p.loot[id]=true;return true;});}
+ return {chain,sceneGate,progress,advance,allowed,begin,complete,collect,canEnter:name=>!!progress()[sceneGate[name]]};
+})();

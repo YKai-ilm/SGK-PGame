@@ -4,7 +4,7 @@ function type(ref){return typeof ref==='number'?deck[ref]:ref?.type;}
 function valid(ref){return typeof ref==='number'?!!deck[ref]:!!ref&&units.includes(ref)&&ref.hp>0;}
 const saved=ref=>typeof ref==='number'?Recruit.saved(ref):ref;
 function basicMatch(source,target){return ['刀','槍','弓'].includes(type(source))&&type(source)===type(target);}
-function matches(source,target){const name=type(source);return !window.PlayerOfficer?.is(name)&&!window.PlayerOfficer?.is(type(target))&&Recruit.enabled&&source!==target&&valid(source)&&valid(target)&&(basicMatch(source,target)||roster[type(target)]?.skills.length>0&&(name===type(target)||roster[name]?.letter&&type(target).includes(name)));}
+function matches(source,target){const name=type(source);return !saved(source)?.storySupport&&!saved(target)?.storySupport&&!window.PlayerOfficer?.is(name)&&!window.PlayerOfficer?.is(type(target))&&Recruit.enabled&&source!==target&&valid(source)&&valid(target)&&(basicMatch(source,target)||roster[type(target)]?.skills.length>0&&(name===type(target)||roster[name]?.letter&&type(target).includes(name)));}
 const basicValue=u=>2**((u?.level||1)-1)+(u?.basicStored||0);
 function mergeBasic(source,target){
  const material=saved(source),existing=saved(target);

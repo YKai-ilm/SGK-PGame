@@ -11,3 +11,7 @@ SceneTestGuideIDs['徐州城主府一']='xz-城主府';SceneTestGuideIDs['城主
 for(const name of ['糧道谷關','茶站','盜糧匪寨']){const id='xz-'+name;SceneTestScenes[id]={name,scene:name,group:'徐州',engine:'xuzhou',url:'徐州劇情.html'};SceneTestGuideIDs[name]=id;}
 
 for(const [id,name] of [['yellow-camp','前線營地'],['yellow-outpost','黃巾前哨'],['yellow-hq','黃巾主營']]){SceneTestScenes[id]={name,scene:name,group:'黃巾烽火',engine:'xuzhou',url:'黃巾前線.html'};SceneTestGuideIDs[name]=id;}
+
+window.HanSceneStages=["departed","luHeard","routeKnown","reliefBriefed","reliefWon","reliefShown","dispatched","huangHeard","zhuHeard","fireBriefed","fireWon","fireShown","fireReported","escortHeard","southOrdered","completed"];
+window.HanTestScenes=[["lu","盧植軍營","departed","黃巾前線營地-v1.png","盧植、傳令兵","拜會盧植後向傳令兵問路；廣宗接應勝利後回盧植處領受軍情書。"],["relief","廣宗外圍","routeKnown","漢軍驛道-v1.png","接應軍士、車隊","四波接應戰，盧植第二波前到達；勝利回營覆命。"],["camp","長社營地","dispatched","黃巾前線營地-v1.png","皇甫嵩、朱儁、軍需吏","先向皇甫嵩遞書，再問朱儁開側翼；軍需行囊給解毒散，戰後回報可領硬皮甲。"],["fire","長社側翼","zhuHeard","漢軍長社側翼-v1.png","朱儁、皇甫嵩","六波守側翼，朱儁部署階段可用，皇甫嵩第四波前到達。勝利後找皇甫嵩回報。"],["road","驛道探訊","fireReported","漢軍驛道-v1.png","盧植、押解軍士","長社戰後才開；完整對話後車隊離去，再回朱儁處。無戰鬥。"],["south","南陽軍前","southOrdered","黃巾前線營地-v1.png","朱儁、斥候、軍需吏","聽完宛城軍情完成漢軍會師。宛城討伐與勸降書支線尚未開放。"]];
+for(const [id,name]of HanTestScenes){SceneTestScenes["han-"+id]={name,scene:name,group:"黃巾烽火",engine:"xuzhou",url:"漢軍會師.html"};SceneTestGuideIDs[name]="han-"+id;}

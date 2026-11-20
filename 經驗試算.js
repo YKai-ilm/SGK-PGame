@@ -2,7 +2,7 @@
 window.ExperiencePreview=(()=>{
  const categories=[{weight:.4,value:r=>r.damage||0},{weight:.25,value:r=>r.absorbed||0},{weight:.25,value:r=>(r.healing||0)+(r.shieldSupport||0)},{weight:.1,value:r=>r.control||0}];
  function calculate(report,owned,stamina=true){
-  const rows=report.rows,total=Math.floor((report.rewardXP||0)*(report.win?1:.25)*(stamina?1:.2)),time=rows.map(r=>Math.max(0,r.time)*(roster[r.name]?.skills.length?4:1)),timeSum=time.reduce((a,b)=>a+b,0);
+  const rows=report.rows.filter(r=>!r.storySupport),total=Math.floor((report.rewardXP||0)*(report.win?1:.25)*(stamina?1:.2)),time=rows.map(r=>Math.max(0,r.time)*(roster[r.name]?.skills.length?4:1)),timeSum=time.reduce((a,b)=>a+b,0);
   const active=categories.map(c=>({...c,sum:rows.reduce((sum,r)=>sum+Math.max(0,c.value(r)),0)})).filter(c=>c.sum>0),weight=active.reduce((sum,c)=>sum+c.weight,0);
   const contribution=rows.map(r=>active.reduce((sum,c)=>sum+(c.weight/weight)*Math.max(0,c.value(r))/c.sum,0)),parts=new Map();
   rows.forEach((r,i)=>{const base=timeSum?time[i]/timeSum:contribution[i]||0,score=weight?contribution[i]:base,amount=total*(.6*base+.4*score),letters=window.PlayerOfficer?.is(r.name)?[r.name]:[...r.name];for(const ch of letters)parts.set(ch,(parts.get(ch)||0)+amount/letters.length);});

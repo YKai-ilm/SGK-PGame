@@ -25,7 +25,8 @@
     "徐州城入口.html": "xuzhou",
     "徐州城內城預覽.html": "xuzhou",
     "雲龍山場景預覽.html": "xuzhou",
-    "黃巾前線.html": "yellow-turban"
+    "黃巾前線.html": "yellow-turban",
+    "漢軍會師.html": "yellow-turban"
   },
   "sceneRules": [
     {
@@ -64,7 +65,9 @@
       "prefixes": [
         "黃巾前線營地",
         "黃巾前哨",
-        "黃巾主營"
+        "黃巾主營",
+        "漢軍驛道",
+        "漢軍長社側翼"
       ]
     }
   ]

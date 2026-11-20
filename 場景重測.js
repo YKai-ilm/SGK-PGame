@@ -32,6 +32,7 @@
   local[villageKey]=JSON.stringify({scene:route.engine==='taoyuan'?route.scene:'home',party:[],seen:[],active:null});
   local[cityKey]=JSON.stringify({scene:route.engine==='xuzhou'?route.scene:'內城',flags:{},history:[],active:null});
   if(id.startsWith('yellow-')){const flags=['launched','briefed','scouted','outpostBriefed','outpostWon','outpostShown','hqKnown'];const last=id==='yellow-camp'?0:id==='yellow-outpost'?2:6;profile.storyEvents={grainRoute:{completed:true,armyFormed:true,captainGift:true},yellowOpening:Object.fromEntries(flags.slice(0,last+1).map(f=>[f,true]))};}
+  if(id.startsWith('han-')){const row=HanTestScenes.find(r=>'han-'+r[0]===id);profile.storyEvents={grainRoute:{armyFormed:true,captainGift:true,completed:true},yellowOpening:{completed:true},hanCampaign:Object.fromEntries(HanSceneStages.slice(0,HanSceneStages.indexOf(row[2])+1).map(f=>[f,true]))};}
   local[mainKey]=JSON.stringify(profile);
   put(recordKey,JSON.stringify({id,local,session:{}}));
   window.top.location.href=route.url;
@@ -77,6 +78,10 @@ sceneConditions['yellow-hq']={stages:['yellow-hqKnown','yellow-hqBriefed','yello
 sceneConditions['xz-城主府'].stages.push('yellow-launched','yellow-reported','yellow-completed');
 stages.xuzhou.push(['yellow-looted','全段完成／探索物品已領']);for(const id of ['yellow-camp','yellow-outpost','yellow-hq'])sceneConditions[id].stages.push('yellow-looted');
 function conditions(){return sceneConditions[read().id]||{stages:['initial']};}
+ const hanLabels=['已啟程','已拜會盧植','已問接應道路','接應戰前對話完','接應勝利待演出','車隊入營','已奉書赴長社','已向皇甫嵩遞書','朱儁軍令已聽','長社戰前對話完','長社勝利待演出','賊軍已退','長社回報完成','已送別盧植','朱儁下令南下','南陽軍情已聽'];
+ stages.xuzhou.push(...HanSceneStages.map((f,i)=>['han-'+f,hanLabels[i]]));
+ for(const [id,name,first]of HanTestScenes){const end={lu:'dispatched',relief:'reliefShown',camp:'completed',fire:'fireReported',road:'escortHeard',south:'completed'}[id];sceneConditions['han-'+id]={stages:HanSceneStages.slice(HanSceneStages.indexOf(first),HanSceneStages.indexOf(end)+1).map(f=>'han-'+f)};}
+ sceneConditions['xz-城主府'].stages.push('han-departed','han-completed');
  function availableItems(){return items.filter(([id])=>conditions().items?.includes(id));}
  function availableStages(){return stages[current().engine].filter(([id])=>conditions().stages.includes(id));}
  function flagChecked(id){return conditions().flags?.includes(id)&&document.getElementById('sceneTest'+id)?.checked;}
@@ -98,6 +103,7 @@ function conditions(){return sceneConditions[read().id]||{stages:['initial']};}
   }
   if(route.engine==='xuzhou'){
    delete p.townLodging;
+   if(stage.startsWith('han-')){p.storyEvents={grainRoute:{armyFormed:true,captainGift:true,completed:true},yellowOpening:{completed:true},hanCampaign:Object.fromEntries(HanSceneStages.slice(0,HanSceneStages.indexOf(stage.slice(4))+1).map(f=>[f,true]))};delete p.storyItems?.antidotePowder;if(p.equipment?.story?.items)p.equipment.story.items=p.equipment.story.items.filter(i=>i.id!=='han-campaign-armor');}
    if(stage==='yellow-looted'){p.storyEvents.grainRoute={completed:true,armyFormed:true,captainGift:true};p.storyEvents.yellowOpening={...Object.fromEntries(yellowStages.map(f=>[f,true])),hqPillGranted:true,loot:{campBag:true,outpostChest:true,hqChest:true}};}
    if(stage.startsWith('yellow-')&&stage!=='yellow-looted'){p.storyEvents.grainRoute={completed:true,armyFormed:true,captainGift:true};p.storyEvents.yellowOpening=Object.fromEntries(yellowStages.slice(0,yellowStages.indexOf(stage.slice(7))+1).map(f=>[f,true]));c.flags.volunteerArmyFormed=true;}
    if(current()===routes['xz-客棧']){p.rewards??={};p.rewards.wallet={coins:100,diamonds:0};p.storyMorale={...(p.storyMorale||{}),value:50};}

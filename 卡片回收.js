@@ -7,6 +7,7 @@ window.CardRecycle=(()=>{
  function value(type,level=1){const base=roster[type]?.skills.length?10:3;return Math.floor(base*(1+.2*(level-1))*.5+1e-8);}
  function request(source){if(!Recruit.enabled||!actionAllowed())return;const slot=typeof source==='number',u=slot?Recruit.saved(source):source,type=slot?deck[source]:u?.type;
  if(!type||!slot&&(!units.includes(u)||u.hp<=0))return say('請先選擇要回收的卡片。');
+ if(u?.storySupport)return say('劇情援軍不可回收。');
  if(window.PlayerOfficer?.is(type))return say('玩家卡不可回收。');
  if(u&&(u.ready>elapsed||u.root>elapsed))return say('定身或換位冷卻中，暫時不能回收。');
  const level=u?.level||1,amount=value(type,level),revision=Recruit.snapshot().revision;

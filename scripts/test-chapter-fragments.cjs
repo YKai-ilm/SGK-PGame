@@ -33,3 +33,5 @@ const old=fresh();old.storyEvents.peachOath=true;old.rewards.history.push({key:'
 }
 
 {const s=fresh();s.storyEvents.yellowOpening={outpostWon:true,hqWon:true,reported:true};assert.equal(R.claim(s,'chapter-3-1'),null);s.storyEvents.yellowOpening.completed=true;const reward=R.claim(s,'chapter-3-1');assert.equal(reward.playerFragments,10);assert.equal(reward.chestCount||0,0);assert.equal(R.claim(s,'chapter-3-1'),null);assert(!R.rows(s).some(r=>r.id==='chapter-3'));}
+
+{const state=fresh();state.storyEvents.hanCampaign={fireWon:true,southOrdered:true};assert.equal(R.claim(state,'chapter-han-campaign'),null);state.storyEvents.hanCampaign.completed=true;assert.equal(R.claim(state,'chapter-han-campaign').playerFragments,10);assert.equal(R.claim(state,'chapter-han-campaign'),null);assert.equal(R.claim(state,'chapter-3'),null);console.log('PASS Han final-report fragment boundary and no early main-chapter reward');}
