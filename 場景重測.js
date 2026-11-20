@@ -75,6 +75,7 @@ sceneConditions['yellow-camp']={stages:['yellow-launched','yellow-briefed','yell
 sceneConditions['yellow-outpost']={stages:['yellow-scouted','yellow-outpostBriefed','yellow-outpostWon','yellow-outpostShown']};
 sceneConditions['yellow-hq']={stages:['yellow-hqKnown','yellow-hqBriefed','yellow-hqWon','yellow-hqShown','yellow-completed']};
 sceneConditions['xz-城主府'].stages.push('yellow-launched','yellow-reported','yellow-completed');
+stages.xuzhou.push(['yellow-looted','全段完成／探索物品已領']);for(const id of ['yellow-camp','yellow-outpost','yellow-hq'])sceneConditions[id].stages.push('yellow-looted');
 function conditions(){return sceneConditions[read().id]||{stages:['initial']};}
  function availableItems(){return items.filter(([id])=>conditions().items?.includes(id));}
  function availableStages(){return stages[current().engine].filter(([id])=>conditions().stages.includes(id));}
@@ -97,7 +98,8 @@ function conditions(){return sceneConditions[read().id]||{stages:['initial']};}
   }
   if(route.engine==='xuzhou'){
    delete p.townLodging;
-   if(stage.startsWith('yellow-')){p.storyEvents.grainRoute={completed:true,armyFormed:true,captainGift:true};p.storyEvents.yellowOpening=Object.fromEntries(yellowStages.slice(0,yellowStages.indexOf(stage.slice(7))+1).map(f=>[f,true]));c.flags.volunteerArmyFormed=true;}
+   if(stage==='yellow-looted'){p.storyEvents.grainRoute={completed:true,armyFormed:true,captainGift:true};p.storyEvents.yellowOpening={...Object.fromEntries(yellowStages.map(f=>[f,true])),loot:{campBag:true,outpostChest:true,hqChest:true}};}
+   if(stage.startsWith('yellow-')&&stage!=='yellow-looted'){p.storyEvents.grainRoute={completed:true,armyFormed:true,captainGift:true};p.storyEvents.yellowOpening=Object.fromEntries(yellowStages.slice(0,yellowStages.indexOf(stage.slice(7))+1).map(f=>[f,true]));c.flags.volunteerArmyFormed=true;}
    if(current()===routes['xz-客棧']){p.rewards??={};p.rewards.wallet={coins:100,diamonds:0};p.storyMorale={...(p.storyMorale||{}),value:50};}
    const grainStages=['grainRoute','grainMing','grainSaved','grainGift','grainReport','grainTrail','grainCamp','grainWon','grainChecked','grainVerified','grainDone','grainArmy'];
    const gn=grainStages.indexOf(stage);
