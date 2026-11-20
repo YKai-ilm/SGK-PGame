@@ -15,5 +15,11 @@
     "scene": "城西",
     "status": "正式出口返回徐州城西"
   },
-  "game": "徐州劇情.html"
+  "game": "徐州劇情.html",
+  "teaEntrance": {
+    "label": "茶站",
+    "x": 44,
+    "y": 53,
+    "location": "屋前空地，使用者圈選位置"
+  }
 }
