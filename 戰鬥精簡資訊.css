@@ -6,3 +6,12 @@ body #unitStats,body #skillLive{display:block;white-space:nowrap;overflow-x:auto
 body #skillLive .compact-skill{display:inline;white-space:nowrap}
 body #skillLive .skill-details-link{display:inline;min-height:0;padding:0 2px;font:inherit;line-height:inherit}
 @media(max-aspect-ratio:4/3){body main>aside.panel,body.story-sweep main>aside.panel{flex:0 0 86px!important;height:86px!important;min-height:86px!important;max-height:86px!important;padding:8px;overflow:hidden}}
+
+/* 劇情關卡共用頂列，避免沿用本文大字與手機自動放大。 */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+.story-battle-bar{min-width:0;font-size:11px;line-height:1.3}
+.story-battle-bar>button,.story-battle-bar>select{font-size:11px;min-height:28px;padding:3px 5px;white-space:nowrap}
+.story-battle-title{min-width:0;font-size:11px;line-height:1.3}
+@media(max-width:540px){main>header .story-battle-bar{flex-wrap:nowrap!important;gap:3px!important}.story-battle-bar>button{flex:none;padding:3px}.story-battle-bar #speed{width:44px;min-width:44px}.story-battle-title{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+
+.story-battle-title{display:flex;align-items:center}.story-battle-title>span:first-child{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.story-battle-title>span:last-child{flex:none;white-space:nowrap}@media(max-width:540px){.story-battle-bar>button,.story-battle-title{font-size:10px!important}}
