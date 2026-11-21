@@ -20,6 +20,16 @@ window.YellowTurbanEncounter=(()=>{
   Object.assign(e,{type:kind,name:kind==='刀'?'黃巾刀兵':kind==='槍'?'黃巾槍兵':kind==='弓'?'黃巾弓兵':'黃巾隊長',hp:100+w*18,max:100+w*18,atk:14+w*3,def:kind==='刀'?12:8,mdef:8,range:kind==='弓'?3.5:kind==='槍'?1.6:1,speed:kind==='刀'?.85:kind==='槍'?.8:.75,interval:kind==='弓'?1.8:1.5,foodValue:4,xp:10+w*2,yellowTurban:true,enemyAttacks:0,settlementXP:1});
   if(boss){const d=officers.find(o=>o.name===encounter.leader);Object.assign(e,d?{name:d.name,hp:d.hp,max:d.hp,atk:d.atk,def:d.def,mdef:d.mdef,range:d.range,interval:d.interval,speed:d.speed,enemySkill:d.skill}:{hp:650,max:650,atk:32,def:18,mdef:10,range:1.2,interval:1.6,speed:.75});if(d&&VillageSweep.combatVersion>=2){const stats=VillageSweep.combatVersion>=4?VillageSweep.enemyOfficer:combatStats(d.name,finalWave,VillageSweep.combatVersion);if(!stats||VillageSweep.combatVersion>=4&&stats.name!==d.name)throw Error('缺少本場敵將能力快照');Object.assign(e,stats,{max:stats.hp,combatVersion:VillageSweep.combatVersion});}e.foodValue=12;e.xp=50;e.settlementXP=VillageSweep.rewardVersion===1?3:6;}
  }
+ // 劇情固定敵將，不套用玩家持有卡的等級或裝備。
+ function storyOfficer(e,name){
+  const stats={賊匪頭目:[650,32,18,12],黃巾頭目:[650,32,18,12],鄧茂:[900,42,20,12],程遠志:[1150,38,22,12],韓忠:[1500,48,26,16],張曼成:[1250,44,22,18],馬元義:[1050,38,18,22],張寶:[2100,58,26,24]}[name];
+  if(!stats)throw Error('未設定的劇情敵將：'+name);
+  const [hp,atk,def,mdef]=stats;
+  Object.assign(e,{name,type:'將',hp,max:hp,atk,def,mdef,range:1.6,interval:1.6,speed:.75,foodValue:12,xp:60,settlementXP:6,yellowOfficer:name});
+  if(name==='鄧茂')e.enemySkill='奮力突刺：每第4次普攻造成150%物理傷害。';
+  if(name==='程遠志')e.enemySkill='黃巾號令：周圍2格其他敵軍傷害增加5%。';
+  return e;
+ }
  function damageBonus(source){if(!current()||!source?.enemy)return 0;return enemies.some(e=>e!==source&&e.name==='程遠志'&&e.hp>0&&e.stun<=elapsed&&Math.hypot(e.x-source.x,e.y-source.y)<=2)?.05:0;}
- return {officers,encounters,stageScales,combatStats,fromRunId,current,apply,damageBonus};
+ return {storyOfficer,officers,encounters,stageScales,combatStats,fromRunId,current,apply,damageBonus};
 })();
