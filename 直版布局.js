@@ -14,7 +14,7 @@
  `;document.head.append(style);
  const horizontal=matchMedia('(min-aspect-ratio:4/3)'),aside=document.querySelector('main>aside.panel');
  const movable=[document.querySelector('.supply'),$('cards')].filter(Boolean).map(el=>{const anchor=document.createComment('直版原位');el.before(anchor);return{el,anchor};});
- function layout(){for(const {el,anchor}of movable){if(horizontal.matches)aside.append(el);else anchor.after(el);}const shortcuts=document.getElementById('battleShortcuts');if(shortcuts)$('cards').after(shortcuts);requestAnimationFrame(()=>window.fitBattle?.());}
+ function layout(){for(const {el,anchor}of movable){if(horizontal.matches)aside.append(el);else anchor.after(el);}const support=document.getElementById('hanSupport');if(support)$('cards').after(support);const shortcuts=document.getElementById('battleShortcuts');if(shortcuts)(support||$('cards')).after(shortcuts);requestAnimationFrame(()=>window.fitBattle?.());}
  horizontal.addEventListener('change',layout);layout();
  const note=document.querySelector('.supply small');if(note)document.querySelector('.supply').title=note.textContent;
  window.fitBattle=()=>{const ratio=canvas.width/canvas.height,w=Math.max(0,Math.min(board.clientWidth,board.clientHeight*ratio));const width=Math.floor(w*100)/100,height=Math.floor(width/ratio*100)/100;if(canvas.style.width!==width+'px'||canvas.style.height!==height+'px'){canvas.style.width=width+'px';canvas.style.height=height+'px';window.invalidateBattle?.();}window.BoardObjectScale=.65*(n+1)/10;};
