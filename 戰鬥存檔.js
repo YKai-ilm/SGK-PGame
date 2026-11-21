@@ -17,6 +17,7 @@ window.BattleSave=(()=>{
   if(s?.playerBattle!==undefined&&!window.PlayerBattle?.valid(s.playerBattle))throw Error('玩家戰場資料不符');
   if(s?.battleContext!==undefined){const c=s.battleContext;if(!c||Array.isArray(c)||Object.keys(c).length!==2||!['story','battle'].includes(c.mode)||(c.mode==='battle'?c.faction!==null:!['魏','蜀','吳','群雄','東漢'].includes(c.faction)))throw Error('戰場模式資料無效');if(window.BattleContext&&(c.mode!==BattleContext.mode||c.faction!==BattleContext.faction))throw Error('請切換至存檔原本的模式與陣營後載入');}
   if((s?.storySweep?.mission||null)!==(window.HanBattle?.mission||window.YellowBattle?.mission||window.GrainBattle?.mission||window.YunlongBattle?.mission||(window.VillageDefense?.active?VillageDefense.mission:null)))throw Error('請在對應的劇情關卡載入此存檔');
+  if(window.HanBattle?.kind==='wancheng'&&s?.storySweep?.battleRoute!==HanBattle.battleRoute)throw Error('宛城作戰路線不符');
   if(s?.storySweep?.mission&&(s.storySweep.waves!==(window.HanBattle?.waves||window.YellowBattle?.waves||window.GrainBattle?.waves||window.YunlongBattle?.waves||window.VillageDefense.waves)||s.storySweep.encounterId!=='rabble'))throw Error('首戰配置無效');
   if(s?.equipmentAccessories!==undefined&&(!window.EquipmentBattle?.validAccessories(s.equipmentAccessories)||Object.keys(s.equipmentAccessories).some(name=>s.equipment?.[name]!==undefined)))throw Error('飾品快照無效');
   if(s?.equipmentMounts!==undefined&&!window.EquipmentBattle?.validMounts(s.equipmentMounts))throw Error('坐騎快照無效');

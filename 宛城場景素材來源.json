@@ -1,0 +1,18 @@
+{
+  "tool": "built-in image_gen",
+  "date": "2026-11-21",
+  "assets": [
+    {
+      "file": "宛城外圍-v1.png",
+      "reference": "徐州城西-v1.png",
+      "prompt": "Create a portrait 1024x1536 game background, ancient Chinese Wancheng outskirts. Match the supplied reference ONLY for visual style: high oblique overhead miniature diorama illustration, warm sun, gray tiles, textured earth, lush but natural vegetation, realistic miniature scale. NEW composition: distant closed fortified gray city gate centered at upper 18%, long open dusty road with cart tracks to bottom center. Left middle 30%,52% a deserted rustic tea shelter with empty low tables; right middle 74%,57% a wooden refugee handcart with modest bundles. Harvested fields, grasses and scattered trees at sides, not picturesque dense village. Wartime quiet without destruction/gore. Keep clear ground in front of shelter and cart for independent clickable labels. No people, text, signs, treasure chests, loot bags or UI. Full bleed image.",
+      "source": "Generated images are saved to C:\\Users\\user\\.codex\\generated_images\\01a1953c-9d2a-7db2-aecd-7a0b2dcdabd0 as C:\\Users\\user\\.codex\\generated_images\\01a1953c-9d2a-7db2-aecd-7a0b2dcdabd0\\exec-8807c6ef-4583-4ebd-ab02-d5d788045094.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "file": "宛城城門-v1.png",
+      "reference": "宛城外圍-v1.png",
+      "prompt": "New portrait 1024x1536 ancient Chinese Wancheng city gate close scene. Use supplied image only as architectural and visual-style reference. Same warm golden high oblique overhead miniature diorama illustration, gray brick ramparts, tiled gate tower, realistic tiny textured stone/earth, softly lit vegetation. New closer composition: imposing gatehouse upper third, wooden double doors OPEN halfway with dark passage, yellow plain torn military pennants on battlements (no symbols), barricades and weapon racks on sides. Broad dusty stone courtyard occupies middle and bottom, empty walkable center, leave positions at 50%,48% and 74%,54% clear for independent NPC cards. Bottom central road exits frame. Some battle scuffs but no fire, bodies, characters or gore. No UI/text/sign labels/chests/bags. Full bleed. Match preceding outskirts architecture, not another settlement.",
+      "source": "Generated images are saved to C:\\Users\\user\\.codex\\generated_images\\01a1953c-9d2a-7db2-aecd-7a0b2dcdabd0 as C:\\Users\\user\\.codex\\generated_images\\01a1953c-9d2a-7db2-aecd-7a0b2dcdabd0\\exec-b0b1ee64-4bf7-48ff-a672-d22c19acaa61.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    }
+  ]
+}
