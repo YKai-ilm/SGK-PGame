@@ -3,9 +3,9 @@
  if(!VillageDefense.requested)return;
  if(!VillageDefense.active){location.replace('桃園起兵.html');return;}
  let runId=crypto.randomUUID();
- window.VillageSweep={mission:VillageDefense.mission,waves:VillageDefense.waves,encounterId:'rabble',combatVersion:4,rewardVersion:2,enemyOfficer:null,goldReward:0,damageMultiplier:()=>1,save:()=>({runId,mission:VillageDefense.mission,morale:100,waves:VillageDefense.waves,encounterId:'rabble',rewardVersion:2,combatVersion:4,enemyOfficer:null}),load(s){if(s?.mission!==VillageDefense.mission)throw Error('不是本劇情關卡存檔');runId=s.runId;}};
+ window.VillageSweep={mission:VillageDefense.mission,waves:VillageDefense.waves,encounterId:'rabble',combatVersion:7,rewardVersion:2,enemyOfficer:null,goldReward:0,damageMultiplier:()=>1,save:()=>({runId,mission:VillageDefense.mission,morale:100,waves:VillageDefense.waves,encounterId:'rabble',rewardVersion:2,combatVersion:VillageSweep.combatVersion,enemyOfficer:null}),load(s){if(s?.mission!==VillageDefense.mission)throw Error('不是本劇情關卡存檔');VillageSweep.combatVersion=s.combatVersion||4;runId=s.runId;}};
  const originalReset=BattleResults.reset,originalFinish=BattleResults.finish;
- BattleResults.reset=function(...args){runId=crypto.randomUUID();Recruit.activateStory();return originalReset.apply(this,args);};
+ BattleResults.reset=function(...args){runId=crypto.randomUUID();Recruit.activateStory();VillageSweep.combatVersion=7;return originalReset.apply(this,args);};
  function saveVictory(){if(BattleResults.result?.win&&BattleResults.result?.outcome!=='retreat'){try{if(VillageDefense.rescue)VillageDefense.completeRescue(runId);else VillageDefense.complete(runId);}catch{say('劇情戰鬥進度未能保存，請重新開啟戰報重試。');}}}
  BattleResults.finish=function(win,reason){originalFinish.call(this,win,reason);saveVictory();};
  $('battleReport').addEventListener('click',saveVictory);

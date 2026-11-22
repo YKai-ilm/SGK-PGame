@@ -33,6 +33,7 @@ window.YellowTurbanEncounter=(()=>{
   if(name==='程遠志')e.enemySkill='黃巾號令：周圍2格其他敵軍傷害增加5%。';
   return e;
  }
+ function sharedInfantry(e){if(['刀','槍','弓'].includes(e.type)){Object.assign(e,BasicTroops.combatStats(e.type,1));e.max=e.hp;}return e;}
  function damageBonus(source){if(!current()||!source?.enemy)return 0;return enemies.some(e=>e!==source&&e.name==='程遠志'&&e.hp>0&&e.stun<=elapsed&&Math.hypot(e.x-source.x,e.y-source.y)<=2)?.05:0;}
- return {waveCount,storyOfficer,officers,encounters,stageScales,combatStats,fromRunId,current,apply,damageBonus};
+ return {sharedInfantry,waveCount,storyOfficer,officers,encounters,stageScales,combatStats,fromRunId,current,apply,damageBonus};
 })();
