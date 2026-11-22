@@ -2,15 +2,14 @@
 window.WorldTravel=(()=>{
  const key='three-kingdoms-interface-preview-v1',read=()=>JSON.parse(localStorage.getItem(key)||'{}');
  const towns={桃源村:{province:'幽州',url:'桃園起兵.html'},徐州:{province:'徐州',url:'徐州劇情.html'},長社:{province:'豫州',url:'漢軍會師.html?town='+encodeURIComponent('長社'),gate:'dispatched'},廣宗:{province:'冀州',url:'漢軍會師.html?town='+encodeURIComponent('廣宗'),gate:'reliefShown'}};
- // Only implemented, story-authorized roads are traversable. Add future towns and their quest gates together.
- const roads=[['桃源村','徐州'],['桃源村','廣宗'],['徐州','長社']];
+ // Mission shortcuts are handled by their story pages, never by map adjacency.
  // Fare corridors are a geographic design draft; transit stops do not unlock playable towns.
  const fareStops=[['桃源村','幽州',420,55],['冀州','冀州',420,155],['廣宗','冀州',180,155],['平原','青州',660,155],['小沛','豫州',660,285],['徐州','徐州',900,285],['陳留','兗州',420,285],['許昌','豫州',180,285],['長社','豫州',180,415]];
  const fareRoads=[['桃源村','冀州'],['冀州','廣宗'],['冀州','平原'],['平原','小沛'],['小沛','徐州'],['小沛','陳留'],['陳留','許昌'],['許昌','長社']];
  function enabled(){return read().storyEvents?.grainRoute?.armyFormed===true;}
  function unlocked(name){return enabled()&&Object.hasOwn(towns,name)&&(!towns[name].gate||read().storyEvents?.hanCampaign?.[towns[name].gate]===true);}
  function current(){const n=read().worldTravel?.current;return Object.hasOwn(towns,n)?n:'徐州';}
- function canWalk(name){const from=current();return unlocked(name)&&name!==from&&roads.some(([a,b])=>a===from&&b===name||b===from&&a===name);}
+ function canWalk(name){const from=current();return unlocked(from)&&unlocked(name)&&name!==from&&fareRoads.some(([a,b])=>a===from&&b===name||b===from&&a===name);}
  function status(name){return name===current()?'所在位置':canWalk(name)?'可沿道路前往':unlocked(name)?'非相鄰地點・請經沿途城鎮或使用驛站':'尚未開放';}
  function remember(name){if(!unlocked(name))throw Error('大地圖須在義勇成軍後開放。');const s=read();s.worldTravel={...s.worldTravel,current:name};localStorage.setItem(key,JSON.stringify(s));}
  function open(name,station=false){if(window.SceneTest?.holdNavigation('前往'+(station?'驛站傳送':'大地圖')))return;remember(name);location.href=station?'驛站傳送.html':'三國大地圖.html';}
