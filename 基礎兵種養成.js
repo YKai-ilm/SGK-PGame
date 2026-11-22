@@ -25,10 +25,15 @@ window.BasicTroops=(()=>{
   const mode=window.BattleContext?.mode||(story||window.VillageSweep||window.VillageDefense?.active?'story':s.mode==='battle'?'battle':'story');
   return Object.fromEntries(types.map(type=>[type,progress(s,mode,type)]));
  }
+ function combatStats(type,level=1){
+  if(!types.includes(type)||!Number.isInteger(level)||level<1||level>100)throw Error('基礎兵種或等級不正確');
+  const d=window.TestRoster[type],growth=window.CardGrowth.stats(type,level);
+  return {...growth,def:d.def,mdef:d.mdef,range:d.range,interval:d.interval,kind:d.kind,group:d.group,level,quality:'青'};
+ }
  function apply(unit,snapshot){
   if(!types.includes(unit.type))return unit;
-  const p=snapshot?.[unit.type]||{level:1,xp:0},stats=window.CardGrowth.stats(unit.type,p.level);
-  unit.level=p.level;unit.xp=p.xp;unit.hp=unit.max=stats.hp;unit.atk=stats.atk;return unit;
+  const p=snapshot?.[unit.type]||{level:1,xp:0},stats=combatStats(unit.type,p.level);
+  Object.assign(unit,stats);unit.xp=p.xp;unit.hp=unit.max=stats.hp;return unit;
  }
- return {types,names,progress,allocate,snapshot,apply};
+ return {types,names,progress,allocate,snapshot,combatStats,apply};
 })();

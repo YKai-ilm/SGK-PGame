@@ -16,9 +16,11 @@ window.YellowTurbanEncounter=(()=>{
  function combatStats(name,waves,version=4){if(version>=4)return HeroCombat.encounter(name,{stars:1,baseLevel:1},waves);const base=window.HeroCombat?.stats(name),scale=version===2?stageScales[waves]:[1,3,6].includes(waves)?{hp:1,attack:1,defense:1,interval:1}:null;if(!base||!scale)throw Error('缺少敵將能力或掃蕩波數');return {hp:Math.round(base.hp*scale.hp),atk:base.physical*scale.attack,magicAttack:base.magic*scale.attack,def:base.def*scale.defense,mdef:base.mdef*scale.defense,interval:base.interval*scale.interval,quality:base.quality};}
  function fromRunId(id,legacy=false){if(!id)return null;let hash=0;for(const c of id)hash=(hash*31+c.charCodeAt(0))>>>0;const roll=hash%10;return encounters[legacy?hash%encounters.length:roll<6?0:roll<8?1:2];}
  function current(){return window.VillageSweep?encounters.find(e=>e.id===VillageSweep.encounterId)||null:null;}
- function apply(e,w,k){const encounter=current();if(!encounter)return;const finalWave=window.VillageSweep?.waves||6,boss=(!!encounter.leader||VillageSweep.rewardVersion===1)&&w===finalWave&&k===6+w-1;const kind=boss?'將':encounter.id==='deng'?(k%3===0?'槍':k%5===4?'弓':'刀'):(k%4===3?'弓':k%3===2?'槍':'刀');
+ function waveCount(w,version=window.VillageSweep?.combatVersion||1){return version>=6?[3,4,4,5,5,6][w-1]:6+w;}
+ function apply(e,w,k){const encounter=current();if(!encounter)return;const finalWave=window.VillageSweep?.waves||6,boss=(!!encounter.leader||VillageSweep.rewardVersion===1)&&w===finalWave&&k===waveCount(w)-1;const kind=boss?'將':encounter.id==='deng'?(k%3===0?'槍':k%5===4?'弓':'刀'):(k%4===3?'弓':k%3===2?'槍':'刀');
   Object.assign(e,{type:kind,name:kind==='刀'?'黃巾刀兵':kind==='槍'?'黃巾槍兵':kind==='弓'?'黃巾弓兵':'黃巾隊長',hp:100+w*18,max:100+w*18,atk:14+w*3,def:kind==='刀'?12:8,mdef:8,range:kind==='弓'?3.5:kind==='槍'?1.6:1,speed:kind==='刀'?.85:kind==='槍'?.8:.75,interval:kind==='弓'?1.8:1.5,foodValue:4,xp:10+w*2,yellowTurban:true,enemyAttacks:0,settlementXP:1});
-  if(!boss&&VillageSweep.combatVersion>=5){const health=270+w*35;Object.assign(e,{hp:Math.round(health*(kind==='弓'?.7:kind==='槍'?.85:1)),atk:22+w*3});e.max=e.hp;}
+  if(!boss&&VillageSweep.combatVersion===5){const health=270+w*35;Object.assign(e,{hp:Math.round(health*(kind==='弓'?.7:kind==='槍'?.85:1)),atk:22+w*3});e.max=e.hp;}
+  if(!boss&&VillageSweep.combatVersion>=6){Object.assign(e,BasicTroops.combatStats(kind,1));e.max=e.hp;}
   if(boss){const d=officers.find(o=>o.name===encounter.leader);Object.assign(e,d?{name:d.name,hp:d.hp,max:d.hp,atk:d.atk,def:d.def,mdef:d.mdef,range:d.range,interval:d.interval,speed:d.speed,enemySkill:d.skill}:{hp:650,max:650,atk:32,def:18,mdef:10,range:1.2,interval:1.6,speed:.75});if(d&&VillageSweep.combatVersion>=2){const stats=VillageSweep.combatVersion>=4?VillageSweep.enemyOfficer:combatStats(d.name,finalWave,VillageSweep.combatVersion);if(!stats||VillageSweep.combatVersion>=4&&stats.name!==d.name)throw Error('缺少本場敵將能力快照');Object.assign(e,stats,{max:stats.hp,combatVersion:VillageSweep.combatVersion});}e.foodValue=12;e.xp=50;e.settlementXP=VillageSweep.rewardVersion===1?3:6;}
  }
  // 劇情固定敵將，不套用玩家持有卡的等級或裝備。
@@ -32,5 +34,5 @@ window.YellowTurbanEncounter=(()=>{
   return e;
  }
  function damageBonus(source){if(!current()||!source?.enemy)return 0;return enemies.some(e=>e!==source&&e.name==='程遠志'&&e.hp>0&&e.stun<=elapsed&&Math.hypot(e.x-source.x,e.y-source.y)<=2)?.05:0;}
- return {storyOfficer,officers,encounters,stageScales,combatStats,fromRunId,current,apply,damageBonus};
+ return {waveCount,storyOfficer,officers,encounters,stageScales,combatStats,fromRunId,current,apply,damageBonus};
 })();
