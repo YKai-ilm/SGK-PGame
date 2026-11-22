@@ -9,3 +9,12 @@ for(const route of ['letter','direct']){c.VillageSweep={mission:'han-wancheng',w
 // The new runtime must still reproduce old tenfold routes when restoring them.
 for(const version of [4,7,8]){c.VillageSweep={mission:'han-wancheng',waves:6,combatVersion:version};for(const stage of ['han','zhang'])for(let k=0;k<8;k++){const a={},b={};c.WanCombat.apply(a,6,k,'letter',stage);c.WanCombat.apply(b,6,k,'direct',stage);assert.equal(b.hp,a.hp*10);assert.equal(b.atk,a.atk*10);}}
 console.log('PASS explicit chapter phases, short sweeps, shared troop growth, independent officer levels, elite route without stacked multipliers, legacy 10x preservation');
+// Current strong assault deliberately multiplies the same baseline by ten.
+c.VillageSweep={mission:'han-wancheng',waves:6,combatVersion:10};
+for(const stage of ['han','zhang'])for(let w=1;w<=6;w++)for(let k=0;k<8;k++){
+ const a={},b={};c.HanBattle={kind:'wancheng',battleRoute:'letter'};c.WanCombat.apply(a,w,k,'letter',stage);
+ c.HanBattle.battleRoute='direct';c.WanCombat.apply(b,w,k,'direct',stage);
+ assert.equal(b.hp,a.hp*10);assert.equal(b.max,b.hp);assert.equal(b.atk,a.atk*10);
+ for(const key of ['level','stars','quality','def','mdef','interval','speed','name','type','enemySkill','xp','settlementXP','foodValue'])assert.equal(b[key],a[key]);
+}
+console.log('PASS current assault: exactly 10x HP/attack for every soldier/captain/officer in both battles, no additional level bonus or reward changes');
