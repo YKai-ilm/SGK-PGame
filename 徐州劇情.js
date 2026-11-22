@@ -59,15 +59,15 @@
   if(id==='steward'){if(!state.flags.accepted)talk([['糧隊管事','這裡是等候接應的城西糧車，接應事宜請先向糜別駕詢問。']]);else if(state.flags.steward)talk([['糧隊管事',state.flags.slept?'請到役所向書吏打聽護衛隊長的消息。':'今日天色已晚，請先到客棧歇息，明日再尋書吏。']]);else talk([['糧隊管事',`糜別駕已派人知會。城西糧車的接應，便請${address()}多費心了。`],['糧隊管事',`今日天色已晚，前次運送糧車的護衛隊長尚未回城，請${address()}可先至客棧歇息，明日再去書吏那尋訪。`]],'steward');return;}
   const c=XuzhouNpcPlacement[id];if(c)talk([[c.npc,c.line]],'service:'+id);
  }
- function service(id){const leave=['離開',()=>{}];
-  if(id==='客棧'){const q=TownLodging.quote(),free=TownLodging.freeAvailable(),cost=free?0:q.total;menu('確認住宿',`編制 ${q.count} 名武將。${free?'此次劇情招待免費住宿。':`基本 ${q.base}＋每人 ${q.perMember}，共 ${cost} 金幣。`}住宿後士氣恢復至 100。是否住宿？`,[['是',()=>free?talk([['客棧掌櫃','糜別駕已有照會，貴客此次住宿不用花費。']],'sleep'):startStay(cost)],['否',()=>{}]]);return;}
+ function service(id,city='xuzhou'){const leave=['離開',()=>{}];
+  if(id==='客棧'){const q=TownLodging.quote(city),free=city==='xuzhou'&&TownLodging.freeAvailable(),cost=free?0:q.total;menu('確認住宿',`編制 ${q.count} 名武將。${free?'此次劇情招待免費住宿。':`基本 ${q.base}＋每人 ${q.perMember}，共 ${cost} 金幣。`}住宿後士氣恢復至 100。是否住宿？`,[['是',()=>free?talk([['客棧掌櫃','糜別駕已有照會，貴客此次住宿不用花費。']],'sleep'):startStay(cost,city)],['否',()=>{}]]);return;}
   if(id==='酒樓'){menu('店小二','',[['花費10金幣，聽取小道消息。',()=>notice('無相關消息')],leave]);return;}
   if(['武器店','防具店','道具店'].includes(id)){const type=id.replace('店','');menu(id,'',[['買'+type,()=>notice('商品尚未上架。')],['賣'+type,()=>notice('收購服務尚未開放。')],leave]);return;}
   if(id==='編輯所'){menu('編籍吏','',[['進入編輯候選隊伍',()=>{sessionStorage.setItem('three-kingdoms-story-return',window.HanQuest?.canEnter(state.scene)?'漢軍會師.html':'徐州劇情.html');if(!window.SceneTest?.holdNavigation('主介面流程預覽.html?storyTeam=1'))location.href='主介面流程預覽.html?storyTeam=1';}],leave]);return;}
   if(id==='訓練店'){menu('教頭','字卡泡泡球：45秒，組成武將名字取得積分與獎勵。',[['花費100金幣訓練（小遊戲）',()=>{if(!window.SceneTest?.holdNavigation('字卡泡泡球.html'))location.href='字卡泡泡球.html';}],['花費50金幣訓練（可分配經驗）',()=>{},true],leave]);return;}
   if(id==='驛站')menu('驛丞','先選州，再選擇已開放的目的地。',[['查看可前往城鎮',()=>WorldTravel.enabled()?WorldTravel.open('徐州',true):notice('義勇成軍後開放驛站路線。')],leave]);
  }
- async function startStay(cost){if(busy)return;busy=true;try{await TownLodging.begin(cost);busy=false;await sleep();}catch(e){busy=false;notice(e.message);}}
+ async function startStay(cost,city='xuzhou'){if(busy)return;busy=true;try{await TownLodging.begin(cost,city);busy=false;await sleep();}catch(e){busy=false;notice(e.message);}}
  async function sleep(){if(busy)return;busy=true;stop();document.querySelector('main').inert=true;const fade=$('fade');fade.classList.add('busy');let failed=false;try{let stay=TownLodging.pending();if(!stay&&state.sleepPending)stay=await TownLodging.begin(0);if(!stay)return;await new Promise(r=>setTimeout(r,30));fade.style.opacity='1';await new Promise(r=>setTimeout(r,1300));if(stay.free)state.flags.slept=true;state.sleepPending=false;state.active=null;save();await TownLodging.complete(stay.id);await new Promise(r=>setTimeout(r,500));fade.style.opacity='0';await new Promise(r=>setTimeout(r,1050));}catch(e){failed=true;$('saveWarning').hidden=false;}finally{fade.style.opacity='0';fade.classList.remove('busy');document.querySelector('main').inert=false;busy=false;render();if(failed)menu('住宿尚未完成','請接續這次住宿，不會重複扣款。',[['繼續住宿',()=>sleep()]]);}}
 
  function rescueAchievement(){menu('仁心救援','完成華陀初現・救援達成！取得成就「仁心救援」，鑽石 ×2。',[['收下',()=>YunlongRescue.dismissAchievement()]]);}
@@ -79,6 +79,6 @@
  $('recall').onclick=()=>{stop();$('historyBody').replaceChildren();for(const h of state.history){const p=document.createElement('p');p.textContent=`${h.scene}・${h.speaker}：${h.line}`;$('historyBody').append(p);}$('history').showModal();};$('closeHistory').onclick=()=>$('history').close();$('history').addEventListener('close',()=>{if(state.active&&!$('dialogue').hidden)protect(show);});
  document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();else if(state.active&&!$('dialogue').hidden)protect(show);});
  sessionStorage.setItem('three-kingdoms-story-return','徐州劇情.html');
- const questContext={state,save,render,talk,end,menu,notice,go,setBusy:value=>{busy=value;document.querySelector('main').inert=value;}};window.WanQuestUI?.install(questContext);window.HanQuestUI?.install(questContext);GrainQuestUI.install(questContext);YellowQuestUI.install(questContext);
+ const questContext={service,state,save,render,talk,end,menu,notice,go,setBusy:value=>{busy=value;document.querySelector('main').inert=value;}};window.WanQuestUI?.install(questContext);window.HanQuestUI?.install(questContext);GrainQuestUI.install(questContext);YellowQuestUI.install(questContext);
  protect(()=>{render();if(window.WanQuestUI?.pending()){WanQuestUI.arrival();return;}if(window.HanQuestUI?.pending()){HanQuestUI.arrival();return;}if(YellowQuestUI.pending()){YellowQuestUI.arrival();return;}if((GrainQuest.progress().rescueWon&&!GrainQuest.progress().rescueShown)||(GrainQuest.progress().campWon&&!GrainQuest.progress().campShown)){GrainQuestUI.arrival();return;}if(YunlongRescue.progress().returnPending)rescueArrival();else if(YunlongRescue.progress().achievementNotice)rescueAchievement();else if(state.sleepPending||TownLodging.pending())sleep();else if(state.active)show();});
 })();
