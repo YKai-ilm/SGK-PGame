@@ -12,7 +12,10 @@ window.WorldTravel=(()=>{
  function current(){const n=normalizeName(read().worldTravel?.current);return Object.hasOwn(towns,n)?n:'徐州';}
  function canWalk(name){const from=current();return !window.WorldJourney?.pending()&&unlocked(from)&&unlocked(name)&&name!==from&&fareRoads.some(([a,b])=>a===from&&b===name||b===from&&a===name);}
  function status(name){return name===current()?'所在位置':canWalk(name)?'可沿道路前往':unlocked(name)?'非相鄰地點・請經沿途城鎮或使用驛站':'無此地點';}
- function remember(name){if(!unlocked(name))throw Error('大地圖須在義勇成軍後開放。');const s=read();s.worldTravel={...s.worldTravel,current:name};localStorage.setItem(key,JSON.stringify(s));}
+ const resumePages=new Set(['桃園起兵.html','徐州劇情.html','漢軍會師.html','黃巾前線.html','三國大地圖.html',towns['長社'].url,towns['廣宗'].url]);
+ function recordScene(url){if(!resumePages.has(url)||window.SceneTest?.active())return;const s=read();s.worldTravel={...s.worldTravel,resumeUrl:url};localStorage.setItem(key,JSON.stringify(s));}
+ function resumeUrl(){const s=read();if(resumePages.has(s.worldTravel?.resumeUrl))return s.worldTravel.resumeUrl;if(enabled()&&Object.hasOwn(towns,normalizeName(s.worldTravel?.current)))return towns[normalizeName(s.worldTravel.current)].url;const legacy=sessionStorage.getItem('three-kingdoms-story-return');return resumePages.has(legacy)?legacy:'桃園起兵.html';}
+ function remember(name){if(!unlocked(name))throw Error('大地圖須在義勇成軍後開放。');const s=read();s.worldTravel={...s.worldTravel,current:name,resumeUrl:towns[name].url};localStorage.setItem(key,JSON.stringify(s));}
  function open(name,station=false){window.WorldJourney?.assertIdle();if(window.SceneTest?.holdNavigation('前往'+(station?'驛站傳送':'大地圖')))return;remember(name);location.href=station?'驛站傳送.html':'三國大地圖.html';}
  function travel(name,station=false){window.WorldJourney?.assertIdle();if(!enabled()||!unlocked(name)||(!station&&!canWalk(name)))throw Error('此地尚未開放，或不是目前可走的相鄰地點。');if(window.SceneTest?.holdNavigation(name))return false;
  if(!station){if(!window.WorldJourney)throw Error('行旅計時尚未載入，請重新整理。');WorldJourney.begin(current(),name);return true;}
@@ -28,5 +31,5 @@ window.WorldTravel=(()=>{
  function finishWalk(){const j=window.WorldJourney?.pending();if(!j||WorldJourney.remaining()>0)return false;if(!unlocked(j.to))throw Error('目的地目前未開放，請取消行程返回出發地。');sessionStorage.setItem('three-kingdoms-world-arrival',j.to);remember(j.to);WorldJourney.arriving(towns[j.to].url);location.href=towns[j.to].url;return true;}
  function cancelWalk(){const j=window.WorldJourney?.pending();if(!j)return false;if(WorldJourney.remaining()===0&&unlocked(j.to))return finishWalk();remember(j.from);WorldJourney.clear();return true;}
  function hasScene(name){return !!towns[name]?.scene;}
- return {normalizeName,hasScene,finishWalk,cancelWalk,fare,fareNetwork,enabled,unlocked,current,canWalk,status,open,travel,back,consumeArrival,destinations,arrive,returnStation};
+ return {recordScene,resumeUrl,normalizeName,hasScene,finishWalk,cancelWalk,fare,fareNetwork,enabled,unlocked,current,canWalk,status,open,travel,back,consumeArrival,destinations,arrive,returnStation};
 })();

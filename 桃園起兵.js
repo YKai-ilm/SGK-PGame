@@ -116,6 +116,7 @@
  function openVillageExit(){stopTimers();$('goWorld').hidden=!WorldTravel.enabled();$('goXuzhou').hidden=false;$('rescueVillagers').hidden=!(VillageDefense.rescueEligible()&&!VillageDefense.rescueCompleted());const p=VillageJourney.status();$('goXuzhou').textContent='任務：前往徐州城'+(p.visited?'':'（滅敵 '+Math.min(10,p.wins)+'/10）');$('goXuzhou').disabled=!p.unlocked;$('villageExit').showModal();}
  $('rescueVillagers').onclick=()=>{if(!VillageDefense.rescueEligible()||VillageDefense.rescueCompleted())return;state.scene='village';state.active=null;save();if(!window.SceneTest?.holdNavigation('戰場直版.html?villageRescue=1&returnTo='+encodeURIComponent('桃園起兵.html')))location.href='戰場直版.html?villageRescue=1&returnTo='+encodeURIComponent('桃園起兵.html');};
  $('goWorld').onclick=()=>WorldTravel.open('桃源村');$('stayVillage').onclick=()=>$('villageExit').close();
+ WorldTravel.recordScene('桃園起兵.html');
  if(WorldTravel.consumeArrival('桃源村')){state.scene='village';state.active=null;save();}
  $('closeExit').onclick=()=>$('villageExit').close();
  $('startSweep').onclick=()=>{state.scene='village';state.active=null;save();if(!window.SceneTest?.holdNavigation('戰場直版.html?storySweep=1&returnTo='+encodeURIComponent('桃園起兵.html')))location.href='戰場直版.html?storySweep=1&returnTo='+encodeURIComponent('桃園起兵.html');};
