@@ -43,7 +43,18 @@ function signature(c,u,p){
  }
  return true;
 }
+function playerWeapon(c,u,p){const type=u.playerWeaponType;if(!type||u.weapon.kind!==u.kind||['bow','fan','spear','blade'].includes(type))return false;const pulse=Math.sin(p*Math.PI);
+ if(['lance','halberd'].includes(type)){c.translate(.1+pulse*.45,.06);shaft(c,.7);metal(c,[[.62,-.035],[1.04,0],[.62,.035]]);if(type==='halberd')metal(c,[[.66,-.02],[.85,-.24],[.94,-.16],[.79,.04]]);else{line(c,[[.64,0],[.76,-.04],[.88,.035],[1.02,0]],'#455d50',.014);}return true;}
+ c.rotate(-1.05+p*2.1);
+ if(type==='staff'){shaft(c,.58);c.strokeStyle='#b9a363';c.lineWidth=.035;c.beginPath();c.arc(.65,0,.15,0,Math.PI*2);c.stroke();c.fillStyle='#a3daca';c.beginPath();c.arc(.65,0,.075,0,Math.PI*2);c.fill();return true;}
+ if(type==='whip'){line(c,[[.08,0],[.34,0]],'#6a4930',.07);line(c,[[.34,0],[.47,-pulse*.1],[.64,-pulse*.22],[.84,-pulse*.12]],'#b4b4a0',.055);for(let i=0;i<6;i++){const x=.38+i*.08;line(c,[[x,-.045-pulse*.1],[x,.035-pulse*.1]],'#4c5146',.018);}return true;}
+ if(type==='hammer'){shaft(c,.62);metal(c,[[.48,-.19],[.78,-.19],[.85,0],[.78,.19],[.48,.19],[.42,0]]);return true;}
+ if(type==='axe'||type==='shortHalberd'){shaft(c,.67);metal(c,[[.56,-.03],[.73,-.25],[.9,-.2],[.96,.13],[.77,.21],[.6,.04]]);if(type==='shortHalberd')metal(c,[[.61,-.03],[.97,0],[.61,.03]]);return true;}
+ if(type==='sword'){line(c,[[.05,0],[.32,0]],'#6a4930',.065);line(c,[[.31,-.1],[.31,.1]],'#b8a064',.035);metal(c,[[.34,-.045],[.88,-.035],[1.03,0],[.88,.035],[.34,.045]]);line(c,[[.36,0],[.97,0]],'#fff1cf',.012);return true;}
+ return false;
+}
 function drawWeapon(c,u,time,s){const a=u.weapon;if(!a)return;const p=(time-a.start)/a.duration;if(p<0||p>1)return;c.save();c.translate((u.x+.5)*s,(u.y+.5)*s);if(!u.enemy){const dx=Math.cos(a.angle),dy=Math.sin(a.angle);if(Math.abs(dx)>=Math.abs(dy))c.translate(Math.sign(dx)*.53*s,0);else c.translate(0,Math.sign(dy)*.436*s);}c.rotate(a.angle);const scale=s*(window.BoardObjectScale||.65)*.85*.7*2;c.scale(scale,scale);c.lineCap='round';const pulse=Math.sin(p*Math.PI);c.globalAlpha=Math.min(1,(1-p)*5);
+if(playerWeapon(c,u,p)){c.restore();return;}
 if(signature(c,u,p)){c.restore();return;}
 if(a.kind==='arrow'){
  const bend=.12+.2*Math.sin(Math.min(p/.4,1)*Math.PI);c.strokeStyle='#513923';c.lineWidth=.065;c.beginPath();c.moveTo(.28,-.38);c.quadraticCurveTo(.68,-.05,.28,.38);c.stroke();const wood=c.createLinearGradient(.28,0,.5,0);wood.addColorStop(0,'#4b3120');wood.addColorStop(.45,'#a5834d');wood.addColorStop(.7,'#dac38c');wood.addColorStop(1,'#6b482b');c.strokeStyle=wood;c.lineWidth=.04;c.stroke();
