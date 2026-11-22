@@ -18,3 +18,5 @@ for(const [id,name]of HanTestScenes){SceneTestScenes["han-"+id]={name,scene:name
 
 window.WanSceneStages=["ordered","elder","worker","letter","sent","divided","won","shown","settled","completed"];
 for(const [id,name]of [["wan-outside","宛城外圍"],["wan-gate","宛城城門"]]){SceneTestScenes[id]={name,scene:name,group:"黃巾烽火",engine:"xuzhou",url:"漢軍會師.html"};SceneTestGuideIDs[name]=id;}
+
+for(const [id,name,gate] of [['han-changshe','長社','dispatched'],['han-guangzong','廣宗','reliefShown']]){SceneTestScenes[id]={name,scene:name,group:'黃巾烽火',engine:'xuzhou',url:'漢軍會師.html'};SceneTestGuideIDs[name]=id;HanTestScenes.push([id.slice(4),name,gate,'徐州城內城-v3-王宮役所對調.png','軍營入口、驛站','先到城鎮地點，再進軍營。']);}

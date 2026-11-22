@@ -1,11 +1,11 @@
 'use strict';
 window.WorldTravel=(()=>{
  const key='three-kingdoms-interface-preview-v1',read=()=>JSON.parse(localStorage.getItem(key)||'{}');
- const towns={桃源村:{province:'幽州',url:'桃園起兵.html'},徐州:{province:'徐州',url:'徐州劇情.html'}};
+ const towns={桃源村:{province:'幽州',url:'桃園起兵.html'},徐州:{province:'徐州',url:'徐州劇情.html'},長社:{province:'豫州',url:'漢軍會師.html?town='+encodeURIComponent('長社'),gate:'dispatched'},廣宗:{province:'冀州',url:'漢軍會師.html?town='+encodeURIComponent('廣宗'),gate:'reliefShown'}};
  // Only implemented, story-authorized roads are traversable. Add future towns and their quest gates together.
- const roads=[['桃源村','徐州']];
+ const roads=[['桃源村','徐州'],['桃源村','廣宗'],['徐州','長社']];
  function enabled(){return read().storyEvents?.grainRoute?.armyFormed===true;}
- function unlocked(name){return enabled()&&Object.hasOwn(towns,name);}
+ function unlocked(name){return enabled()&&Object.hasOwn(towns,name)&&(!towns[name].gate||read().storyEvents?.hanCampaign?.[towns[name].gate]===true);}
  function current(){const n=read().worldTravel?.current;return Object.hasOwn(towns,n)?n:'徐州';}
  function canWalk(name){const from=current();return unlocked(name)&&name!==from&&roads.some(([a,b])=>a===from&&b===name||b===from&&a===name);}
  function status(name){return name===current()?'所在位置':canWalk(name)?'可沿道路前往':unlocked(name)?'非相鄰地點・請經沿途城鎮或使用驛站':'尚未開放';}
@@ -15,7 +15,9 @@ window.WorldTravel=(()=>{
  // A one-shot arrival signal resets only the scene; quest data remain untouched.
  sessionStorage.setItem('three-kingdoms-world-arrival',name);remember(name);location.href=towns[name].url;return true;}
  function back(){if(!enabled()){location.href='主介面流程預覽.html';return;}const name=current();if(window.SceneTest?.holdNavigation(name))return;sessionStorage.setItem('three-kingdoms-world-arrival',name);location.href=towns[name].url;}
+ function arrive(name){if(unlocked(name)&&current()!==name&&!window.SceneTest?.active())remember(name);}
+ function returnStation(){if(!enabled()){back();return;}location.href=towns[current()].url;}
  function consumeArrival(name){const k='three-kingdoms-world-arrival';if(sessionStorage.getItem(k)!==name)return false;sessionStorage.removeItem(k);return true;}
  function destinations(){return Object.entries(towns).filter(([name])=>unlocked(name)&&name!==current()).map(([name,t])=>({name,province:t.province}));}
- return {enabled,unlocked,current,canWalk,status,open,travel,back,consumeArrival,destinations};
+ return {enabled,unlocked,current,canWalk,status,open,travel,back,consumeArrival,destinations,arrive,returnStation};
 })();
