@@ -6,7 +6,7 @@
 
 .city[hidden]{display:none}#placesButton{min-height:36px;font-size:12px}#placeDialog{max-height:80dvh;overflow:auto}#placeDialog h2{font-size:23px}#placeDialog label{display:block;font-size:12px;margin:10px 0}#placeSearch,#placeType{display:block;width:100%;padding:9px;border:1px solid #b8baa4;border-radius:5px;font:inherit;background:#fffdf4;color:#294538;margin-top:5px}#closePlaces{float:right;font-size:24px;border:0}#placeResults{display:grid;grid-template-columns:1fr 1fr;gap:7px}#placeResults button{min-height:44px;padding:8px;font-size:12px}#searchCount{font-size:11px}.map-caption{max-width:230px}
 
-.quick-places{display:flex;gap:6px}.quick-places button{flex:1;min-height:36px;background:#e5ebd7}#placeResults{padding-bottom:8px}
+#placeResults{padding-bottom:8px}
 
 .artwork-mode #layoutTerrain,.artwork-mode #markers,.artwork-mode #routes{display:block}.artwork-mode #routes[hidden]{display:none}.artwork-mode #terrainDraft{display:none}.map-building{pointer-events:auto;cursor:pointer}.map-building:hover{filter:brightness(1.18)}.artwork-mode .city{background:#f8f1dbeF;box-shadow:0 2px 7px #17321d70}.artwork-mode .city.current{background:#284c3e}.artwork-mode #journey{stroke:#fff1ae;filter:drop-shadow(0 1px 2px #4c3d27)}
 
