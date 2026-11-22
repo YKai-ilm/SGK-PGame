@@ -4,6 +4,9 @@ window.WorldTravel=(()=>{
  const towns={桃源村:{province:'幽州',url:'桃園起兵.html'},徐州:{province:'徐州',url:'徐州劇情.html'},長社:{province:'豫州',url:'漢軍會師.html?town='+encodeURIComponent('長社'),gate:'dispatched'},廣宗:{province:'冀州',url:'漢軍會師.html?town='+encodeURIComponent('廣宗'),gate:'reliefShown'}};
  // Only implemented, story-authorized roads are traversable. Add future towns and their quest gates together.
  const roads=[['桃源村','徐州'],['桃源村','廣宗'],['徐州','長社']];
+ // Fare corridors are a geographic design draft; transit stops do not unlock playable towns.
+ const fareStops=[['桃源村','幽州',420,55],['冀州','冀州',420,155],['廣宗','冀州',180,155],['平原','青州',660,155],['小沛','豫州',660,285],['徐州','徐州',900,285],['陳留','兗州',420,285],['許昌','豫州',180,285],['長社','豫州',180,415]];
+ const fareRoads=[['桃源村','冀州'],['冀州','廣宗'],['冀州','平原'],['平原','小沛'],['小沛','徐州'],['小沛','陳留'],['陳留','許昌'],['許昌','長社']];
  function enabled(){return read().storyEvents?.grainRoute?.armyFormed===true;}
  function unlocked(name){return enabled()&&Object.hasOwn(towns,name)&&(!towns[name].gate||read().storyEvents?.hanCampaign?.[towns[name].gate]===true);}
  function current(){const n=read().worldTravel?.current;return Object.hasOwn(towns,n)?n:'徐州';}
@@ -19,7 +22,7 @@ window.WorldTravel=(()=>{
  function returnStation(){if(!enabled()){back();return;}location.href=towns[current()].url;}
  function consumeArrival(name){const k='three-kingdoms-world-arrival';if(sessionStorage.getItem(k)!==name)return false;sessionStorage.removeItem(k);return true;}
  function destinations(){return Object.entries(towns).filter(([name])=>unlocked(name)&&name!==current()).map(([name,t])=>({name,province:t.province}));}
- function fare(from,to){if(!Object.hasOwn(towns,from)||!Object.hasOwn(towns,to))return null;const queue=[[from]],seen=new Set([from]);for(let i=0;i<queue.length;i++){const path=queue[i],last=path[path.length-1];if(last===to)return {path,segments:path.length-1,coins:(path.length-1)*20};for(const [a,b]of roads){const next=a===last?b:b===last?a:null;if(next&&!seen.has(next)){seen.add(next);queue.push([...path,next]);}}}return null;}
- function fareNetwork(){return {perSegment:20,towns:Object.entries(towns).map(([name,t])=>({name,province:t.province})),roads:roads.map(r=>r.slice())};}
+ function fare(from,to){if(!fareStops.some(t=>t[0]===from)||!fareStops.some(t=>t[0]===to))return null;const queue=[[from]],seen=new Set([from]);for(let i=0;i<queue.length;i++){const path=queue[i],last=path[path.length-1];if(last===to)return {path,segments:path.length-1,coins:(path.length-1)*20};for(const [a,b]of fareRoads){const next=a===last?b:b===last?a:null;if(next&&!seen.has(next)){seen.add(next);queue.push([...path,next]);}}}return null;}
+ function fareNetwork(){return {perSegment:20,status:'歷史地理參考／遊戲驛路草案',towns:fareStops.map(([name,province,x,y])=>({name,province,x,y,transitOnly:!Object.hasOwn(towns,name)})),roads:fareRoads.map(r=>r.slice())};}
  return {fare,fareNetwork,enabled,unlocked,current,canWalk,status,open,travel,back,consumeArrival,destinations,arrive,returnStation};
 })();
