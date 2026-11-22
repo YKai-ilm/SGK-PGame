@@ -19,5 +19,7 @@ window.WorldTravel=(()=>{
  function returnStation(){if(!enabled()){back();return;}location.href=towns[current()].url;}
  function consumeArrival(name){const k='three-kingdoms-world-arrival';if(sessionStorage.getItem(k)!==name)return false;sessionStorage.removeItem(k);return true;}
  function destinations(){return Object.entries(towns).filter(([name])=>unlocked(name)&&name!==current()).map(([name,t])=>({name,province:t.province}));}
- return {enabled,unlocked,current,canWalk,status,open,travel,back,consumeArrival,destinations,arrive,returnStation};
+ function fare(from,to){if(!Object.hasOwn(towns,from)||!Object.hasOwn(towns,to))return null;const queue=[[from]],seen=new Set([from]);for(let i=0;i<queue.length;i++){const path=queue[i],last=path[path.length-1];if(last===to)return {path,segments:path.length-1,coins:(path.length-1)*20};for(const [a,b]of roads){const next=a===last?b:b===last?a:null;if(next&&!seen.has(next)){seen.add(next);queue.push([...path,next]);}}}return null;}
+ function fareNetwork(){return {perSegment:20,towns:Object.entries(towns).map(([name,t])=>({name,province:t.province})),roads:roads.map(r=>r.slice())};}
+ return {fare,fareNetwork,enabled,unlocked,current,canWalk,status,open,travel,back,consumeArrival,destinations,arrive,returnStation};
 })();
