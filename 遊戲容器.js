@@ -5,7 +5,7 @@
  let downloadBar;
  window.GameShowOfflineStatus=(summary,s)=>{
   if(!downloadBar){downloadBar=document.createElement('aside');downloadBar.id='shellOfflineDownload';downloadBar.style.cssText='flex:none;padding:8px 12px;background:#e8eddb;color:#294234;border-bottom:1px solid #b7bea8;font:13px/1.5 system-ui';const label=document.createElement('span');label.setAttribute('role','status');const progress=document.createElement('progress');progress.style.cssText='display:block;width:100%;height:5px;margin-top:5px';downloadBar.append(label,progress);frame.before(downloadBar);}
-  downloadBar.hidden=s.phase==='ready';downloadBar.firstElementChild.textContent=summary;const progress=downloadBar.lastElementChild;progress.max=Math.max(1,s.totalBytes||0);progress.value=s.bytes||0;progress.hidden=s.phase==='ready'||s.phase==='error';
+  downloadBar.hidden=s.phase==='ready'&&s.version===window.APP_VERSION;downloadBar.firstElementChild.textContent=summary;const progress=downloadBar.lastElementChild;progress.max=Math.max(1,s.totalBytes||0);progress.value=s.bytes||0;progress.hidden=s.phase==='ready'||s.phase==='error';
  };
  function route(value){try{const u=new URL(value||'主介面流程預覽.html',base),name=decodeURIComponent(u.pathname.slice(base.pathname.length));if(u.origin!==base.origin||new URL('.',u).href!==base.href||!name.endsWith('.html')||name==='index.html')return null;return u;}catch{return null;}}
  function requested(){return route(new URLSearchParams(location.hash.slice(1)).get('page'))||route('主介面流程預覽.html');}

@@ -10,7 +10,7 @@ window.GameOffline=(()=>{
   let shell=false;try{if(parent!==window&&typeof parent.GameShowOfflineStatus==='function'){parent.GameShowOfflineStatus(summary,s);shell=true;}}catch{}
   if(!shell){
    if(!bar){bar=document.createElement('aside');bar.id='offlineDownload';bar.style.cssText='position:relative;padding:8px 16px;background:#e8eddb;color:#294234;font:13px/1.5 system-ui';text=document.createElement('span');text.setAttribute('role','status');progress=document.createElement('progress');progress.style.cssText='display:block;width:100%;height:5px;margin-top:5px';bar.append(text,progress);document.body.prepend(bar);}
-   bar.hidden=s.phase==='ready';text.textContent=summary;progress.max=Math.max(1,s.totalBytes);progress.value=s.bytes;progress.hidden=s.phase==='ready'||s.phase==='error';
+   bar.hidden=s.phase==='ready'&&s.version===window.APP_VERSION;text.textContent=summary;progress.max=Math.max(1,s.totalBytes);progress.value=s.bytes;progress.hidden=s.phase==='ready'||s.phase==='error';
   }else if(bar){bar.remove();bar=null;}
   const detail=document.getElementById('offlineSummary');if(detail)detail.textContent=summary;
   window.dispatchEvent(new CustomEvent('game-offline-status',{detail:s}));
