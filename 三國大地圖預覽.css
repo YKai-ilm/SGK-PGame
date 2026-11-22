@@ -15,3 +15,11 @@
 .artwork-mode .city{transform:translate(-50%,-50%) scale(var(--label-scale, .6));font:17px serif;padding:6px 12px;min-height:36px;border:2px solid #9e895c}.artwork-mode .city[aria-pressed="true"]{background:#315944;color:#fff5db}
 
 .game-map .studio{display:block;padding:0}.game-map .phone{width:100%;max-width:1100px;margin:auto;border:0;border-radius:0;height:100dvh}.game-map .phone-top,.game-map .home-indicator{display:none}.game-map .map-shell{flex:1;min-height:220px}.game-map .city.travel-locked{background:#d0d0c5;color:#77786f;border-color:#8b8d84}.game-map .city.travel-current{outline:4px solid #ffce35;outline-offset:3px;background:#fff4ce;color:#294b3b}.game-map #returnTown{flex:none;padding:10px}.game-map #travelNow{padding:12px;background:#315944;color:#fff7db;border-radius:6px}
+
+/* 搜尋輸入不觸發手機自動放大；只有地圖使用自訂雙指縮放。 */
+#placeSearch,#placeType{font-size:16px}
+.game-map{height:100dvh;min-height:0;overflow:hidden;touch-action:pan-x pan-y}
+.game-map .studio,.game-map .phone{height:100%;min-height:0}
+.game-map .map-shell{min-height:0}
+.game-map .location{max-height:38dvh;overflow:auto;overscroll-behavior:contain}
+.game-map dialog{max-height:85dvh;overflow:auto;overscroll-behavior:contain}
