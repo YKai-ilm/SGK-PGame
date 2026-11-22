@@ -1,0 +1,11 @@
+const fs=require('fs'),vm=require('vm'),assert=require('assert/strict');let now=100000,fail=false;const store=new Map(),sessions=new Map();const storage=m=>({getItem:k=>m.get(k)||null,setItem:(k,v)=>{if(fail)throw Error('disk full');m.set(k,v);},removeItem:k=>{if(fail)throw Error('disk full');m.delete(k);}});const c={localStorage:storage(store),sessionStorage:storage(sessions),location:{href:''},Date:{now:()=>now},Event:class{},dispatchEvent(){}};c.window=c;vm.createContext(c);vm.runInContext(fs.readFileSync('行旅等待.js','utf8'),c);
+// A synthetic adjacent road tests the timer without enabling any production town or shortcut.
+const travel=fs.readFileSync('大地圖通行.js','utf8').replace("const fareRoads=[","const fareRoads=[['徐州','長社'],");vm.runInContext(travel,c);
+const key='three-kingdoms-interface-preview-v1',W=c.WorldTravel,J=c.WorldJourney;store.set(key,JSON.stringify({storyEvents:{grainRoute:{armyFormed:true},hanCampaign:{dispatched:true}},worldTravel:{current:'徐州'},rewards:{wallet:{coins:123}},sentinel:77}));
+W.travel('長社');assert.equal(J.remaining(),30);assert.equal(W.current(),'徐州');assert.equal(c.location.href,'');assert.throws(()=>W.travel('桃源村',true));assert.throws(()=>W.open('徐州',true));assert.throws(()=>W.back());assert(!W.finishWalk());
+now+=10000;vm.runInContext(fs.readFileSync('行旅等待.js','utf8'),c);assert.equal(c.WorldJourney.remaining(),20);W.cancelWalk();assert(!J.pending());assert.equal(W.current(),'徐州');
+W.travel('長社');now+=31000;assert(W.finishWalk());assert.equal(W.current(),'長社');assert(J.pending().arrivalUrl);J.clear();assert(!J.pending());assert.equal(sessions.get('three-kingdoms-world-arrival'),'長社');assert(!W.finishWalk());assert.equal(JSON.parse(store.get(key)).rewards.wallet.coins,123);assert.equal(JSON.parse(store.get(key)).sentinel,77);
+W.arrive('徐州');fail=true;assert.throws(()=>W.travel('長社'));fail=false;assert(!J.pending());assert.equal(W.current(),'徐州');
+W.travel('長社');now+=30000;fail=true;assert.throws(()=>W.finishWalk());fail=false;assert(J.pending());assert(W.finishWalk());assert(J.pending().arrivalUrl);J.clear();assert(!J.pending());
+assert(W.canWalk('徐州'));W.travel('桃源村',true);assert(!J.pending());assert.equal(W.current(),'桃源村');
+console.log('PASS 30-second walk, reload/offline deadline, cancel, no second move, free/idempotent arrival, failed-save retry, instant station; production roads unchanged');
