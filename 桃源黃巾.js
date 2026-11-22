@@ -20,7 +20,7 @@ window.YellowTurbanEncounter=(()=>{
  function apply(e,w,k){const encounter=current();if(!encounter)return;const finalWave=window.VillageSweep?.waves||6,boss=(!!encounter.leader||VillageSweep.rewardVersion===1)&&w===finalWave&&k===waveCount(w)-1;const kind=boss?'將':encounter.id==='deng'?(k%3===0?'槍':k%5===4?'弓':'刀'):(k%4===3?'弓':k%3===2?'槍':'刀');
   Object.assign(e,{type:kind,name:kind==='刀'?'黃巾刀兵':kind==='槍'?'黃巾槍兵':kind==='弓'?'黃巾弓兵':'黃巾隊長',hp:100+w*18,max:100+w*18,atk:14+w*3,def:kind==='刀'?12:8,mdef:8,range:kind==='弓'?3.5:kind==='槍'?1.6:1,speed:kind==='刀'?.85:kind==='槍'?.8:.75,interval:kind==='弓'?1.8:1.5,foodValue:4,xp:10+w*2,yellowTurban:true,enemyAttacks:0,settlementXP:1});
   if(!boss&&VillageSweep.combatVersion===5){const health=270+w*35;Object.assign(e,{hp:Math.round(health*(kind==='弓'?.7:kind==='槍'?.85:1)),atk:22+w*3});e.max=e.hp;}
-  if(!boss&&VillageSweep.combatVersion>=6){Object.assign(e,BasicTroops.combatStats(kind,1));e.max=e.hp;}
+  if(!boss&&VillageSweep.combatVersion>=6){sharedInfantry(e,w);}
   if(boss){const d=officers.find(o=>o.name===encounter.leader);Object.assign(e,d?{name:d.name,hp:d.hp,max:d.hp,atk:d.atk,def:d.def,mdef:d.mdef,range:d.range,interval:d.interval,speed:d.speed,enemySkill:d.skill}:{hp:650,max:650,atk:32,def:18,mdef:10,range:1.2,interval:1.6,speed:.75});if(d&&VillageSweep.combatVersion>=2){const stats=VillageSweep.combatVersion>=4?VillageSweep.enemyOfficer:combatStats(d.name,finalWave,VillageSweep.combatVersion);if(!stats||VillageSweep.combatVersion>=4&&stats.name!==d.name)throw Error('缺少本場敵將能力快照');Object.assign(e,stats,{max:stats.hp,combatVersion:VillageSweep.combatVersion});}e.foodValue=12;e.xp=50;e.settlementXP=VillageSweep.rewardVersion===1?3:6;}
  }
  // 劇情固定敵將，不套用玩家持有卡的等級或裝備。
@@ -33,8 +33,17 @@ window.YellowTurbanEncounter=(()=>{
   if(name==='程遠志')e.enemySkill='黃巾號令：周圍2格其他敵軍傷害增加5%。';
   return applyStoryStats(e,wave);
  }
- function applyStoryStats(e,wave){if(window.VillageSweep?.combatVersion>=8&&window.HERO_COMBAT_DATA?.[e.name]){const stats=HeroCombat.encounter(e.name,{stars:1,level:wave},wave);Object.assign(e,stats,{max:stats.hp,combatVersion:8});}return e;}
- function sharedInfantry(e){if(['刀','槍','弓'].includes(e.type)){Object.assign(e,BasicTroops.combatStats(e.type,1));e.max=e.hp;}return e;}
+ function applyStoryStats(e,wave){if(window.VillageSweep?.combatVersion>=8&&window.HERO_COMBAT_DATA?.[e.name]){const stats=HeroCombat.encounter(e.name,{stars:1,level:VillageSweep.combatVersion>=9?officerLevel(e.name):wave},wave);Object.assign(e,stats,{max:stats.hp,combatVersion:VillageSweep.combatVersion});}return e;}
+ // Each chapter has explicit phases; short encounters do not inherit six-wave finals.
+ const stageLevels={
+  'taoyuan-defense':[1],'taoyuan-rescue':[1,1,2],'yunlong-bandits':[2],
+  'grain-rescue':[2,2,3],'grain-camp':[2,2,3,3,4],
+  'yellow-outpost':[3,3,4,4,5,5],'yellow-hq':[4,4,5,5,6,6],
+  'han-relief':[4,4,5,5],'han-fire':[4,4,5,5,6,6],'han-wancheng':[5,5,6,6,7,7]
+ };
+ function infantryLevel(w,mission=window.VillageSweep?.mission,waves=window.VillageSweep?.waves||6,route=window.HanBattle?.battleRoute){const levels=mission?stageLevels[mission]:{1:[1],3:[1,1,2],6:[1,1,2,2,3,3]}[waves];if(!levels||!Number.isInteger(w)||w<1||w>levels.length)throw Error('未設定的敵軍波段');return levels[w-1]+(mission==='han-wancheng'&&route==='direct'?1:0);}
+ function officerLevel(name,mission=window.VillageSweep?.mission,waves=window.VillageSweep?.waves||6,route=window.HanBattle?.battleRoute){if(!mission){const level={1:2,3:3,6:4}[waves];if(!level)throw Error('未設定的掃蕩頭目等級');return level;}const level={'grain-camp':5,'yellow-outpost':6,'yellow-hq':7,'han-wancheng':name==='張寶'?9:8}[mission];if(!level)throw Error('未設定的劇情敵將等級');return level+(mission==='han-wancheng'&&route==='direct'?1:0);}
+ function sharedInfantry(e,w=1){if(['刀','槍','弓'].includes(e.type)){Object.assign(e,BasicTroops.combatStats(e.type,window.VillageSweep?.combatVersion>=9?infantryLevel(w):1));e.max=e.hp;}return e;}
  function damageBonus(source){if(!current()||!source?.enemy)return 0;return enemies.some(e=>e!==source&&e.name==='程遠志'&&e.hp>0&&e.stun<=elapsed&&Math.hypot(e.x-source.x,e.y-source.y)<=2)?.05:0;}
- return {applyStoryStats,sharedInfantry,waveCount,storyOfficer,officers,encounters,stageScales,combatStats,fromRunId,current,apply,damageBonus};
+ return {stageLevels,infantryLevel,officerLevel,applyStoryStats,sharedInfantry,waveCount,storyOfficer,officers,encounters,stageScales,combatStats,fromRunId,current,apply,damageBonus};
 })();
