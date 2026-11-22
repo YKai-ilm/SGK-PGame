@@ -7,12 +7,12 @@
  const artAnchors=Object.fromEntries(nodes.map(n=>[n.name,n.artPosition]));
  const featured=new Set(nodes.filter(n=>n.featured).map(n=>n.name));
  const game=!!window.WorldTravel;const currentIndex=nodes.findIndex(n=>n.name===(game?WorldTravel.current():'宛城'));
- if(game){$('returnTown').onclick=()=>WorldTravel.back();$('locate').textContent='◎ 所在位置';}
+ if(game){$('returnTown').hidden=!WorldTravel.hasScene(WorldTravel.current());$('returnTown').onclick=()=>WorldTravel.back();$('locate').textContent='◎ 所在位置';}
  const ns='http://www.w3.org/2000/svg',terrain=document.createElementNS(ns,'svg');terrain.id='layoutTerrain';terrain.setAttribute('viewBox','0 0 1536 1024');
  terrain.innerHTML='<g id="cityBuildings"></g>';
  $('terrain').after(terrain);
  cities.forEach((c,i)=>{if(!artAnchors[c[0]])return;const g=document.createElementNS(ns,'g');g.setAttribute('transform','translate('+c[1]+' '+c[2]+')');g.dataset.mapCity=i;g.classList.add('map-building');const hit=document.createElementNS(ns,'circle');hit.setAttribute('r',featured.has(c[0])?'28':'16');hit.setAttribute('fill','transparent');hit.classList.add('city-hit');g.append(hit);terrain.querySelector('#cityBuildings').append(g);});
- $('journey').setAttribute('d',['桃源村','徐州','廣宗','長社','南陽','宛城'].map(name=>cities.find(c=>c[0]===name)).map((c,i)=>(i?'L':'M')+c[1]+' '+c[2]).join(' '));
+ $('journey').setAttribute('d',game?WorldTravel.fareNetwork().roads.map(([a,b])=>{const p=artAnchors[a],q=artAnchors[b];return 'M'+p[0]+' '+p[1]+' L'+q[0]+' '+q[1];}).join(' '):'');
  document.body.classList.add('layout-mode','artwork-mode');let showAll=game;
  const mapImage=$('terrain');
  mapImage.onload=()=>{mapImage.dataset.ready='true';};
@@ -23,7 +23,7 @@
  const leaders=[];
  layout.forEach((d,i)=>{const [cx,cy]=[cities[i][1],cities[i][2]],[dx,dy]=labelOffsets[i],line=document.createElementNS(ns,'line');for(const [k,v] of Object.entries({x1:cx,y1:cy,x2:cx+dx,y2:cy+dy,stroke:'#7b876a','stroke-width':1}))line.setAttribute(k,v);terrain.append(line);leaders.push(line);});
  let selected=currentIndex,scale=1,x=0,y=0,minScale=.2,oldWidth=0,oldHeight=0;
- const pins=cities.map((c,i)=>{const b=document.createElement('button');b.className='city '+c[3];b.dataset.city=i;b.style.left=(c[1]+labelOffsets[i][0])+'px';b.style.top=(c[2]+labelOffsets[i][1])+'px';b.textContent=c[0];b.style.setProperty('--label-scale',nodes[i].labelSize/100);b.setAttribute('aria-label',c[0]+'，'+nodes[i].status);b.addEventListener('click',e=>{if(e.detail===0)select(i);});$('markers').append(b);return b;});
+ const pins=cities.map((c,i)=>{const b=document.createElement('button');b.className='city '+c[3];b.dataset.city=i;b.style.left=(c[1]+labelOffsets[i][0])+'px';b.style.top=(c[2]+labelOffsets[i][1])+'px';b.textContent=c[0];b.style.setProperty('--label-scale',nodes[i].labelSize/100);b.setAttribute('aria-label',c[0]+'，'+(game?WorldTravel.status(c[0]):nodes[i].status));b.addEventListener('click',e=>{if(e.detail===0)select(i);});$('markers').append(b);return b;});
 
  // Use estimated label boxes, avoiding layout reads during dragging; selected place has priority.
  function updateLabels(){let count=0;cities.forEach((c,i)=>{const visible=showAll||i===selected||featured.has(c[0]);if(game){pins[i].classList.toggle('travel-current',WorldTravel.enabled()&&c[0]===WorldTravel.current());pins[i].classList.toggle('travel-locked',!WorldTravel.enabled()||(!WorldTravel.canWalk(c[0])&&c[0]!==WorldTravel.current()));}pins[i].hidden=!visible;leaders[i].style.display='none';if(visible)count++;});$('nodeCount').textContent='74 個地點 · 顯示 '+count+' 處';}
@@ -37,10 +37,10 @@
  function render(){clamp();world.style.transform=`translate(${x}px,${y}px) scale(${scale})`;$('zoomValue').textContent=Math.round(scale*100)+'%';$('zoomIn').disabled=scale>=2;$('zoomOut').disabled=scale<=minScale+.001;updateLabels();}
  function zoom(value,cx=view.clientWidth/2,cy=view.clientHeight/2){const next=Math.min(2,Math.max(minScale,value)),ratio=next/scale;x=cx-(cx-x)*ratio;y=cy-(cy-y)*ratio;scale=next;render();}
  function center(i,detail=true){if(!artAnchors[cities[i][0]])return;if(detail)scale=Math.max(minScale,1.05);x=view.clientWidth/2-cities[i][1]*scale;y=view.clientHeight/2-cities[i][2]*scale;render();}
- function select(i){selected=i;const c=cities[i],n=nodes[i];pins.forEach((b,j)=>b.setAttribute('aria-pressed',String(j===i)));$('locationName').textContent=n.name;$('locationStatus').textContent=game?(WorldTravel.enabled()?WorldTravel.status(n.name):'義勇成軍後開放大地圖'):n.type+' · '+n.status;$('locationDescription').textContent=n.description;$('chapterName').textContent=n.chapter;$('locationNumber').textContent=String(i+1).padStart(2,'0');updateLabels();}
+ function select(i){selected=i;const c=cities[i],n=nodes[i];pins.forEach((b,j)=>b.setAttribute('aria-pressed',String(j===i)));$('locationName').textContent=n.name;$('locationStatus').textContent=game?(WorldTravel.enabled()?WorldTravel.status(n.name):'義勇成軍後開放大地圖'):n.type+' · '+n.status;$('locationDescription').textContent=game?(WorldTravel.hasScene(n.name)?'可沿相鄰道路抵達城鎮；城內任務依原有進度進行。':'可沿相鄰道路抵達此地；目前停留大地圖，可繼續前往鄰近地點。當地場景與探索物品待配置。'):n.description;$('chapterName').textContent=n.chapter;$('locationNumber').textContent=String(i+1).padStart(2,'0');updateLabels();}
  function fit(){scale=minScale;x=(view.clientWidth-W*scale)/2;y=(view.clientHeight-H*scale)/2;render();}
  new ResizeObserver(()=>{const w=view.clientWidth,h=view.clientHeight;minScale=Math.min(w/W,h/H)*.96;if(!oldWidth)center(currentIndex);else{x+=(w-oldWidth)/2;y+=(h-oldHeight)/2;scale=Math.max(scale,minScale);render();}oldWidth=w;oldHeight=h;}).observe(view);
- $('zoomIn').onclick=()=>zoom(scale*1.25);$('zoomOut').onclick=()=>zoom(scale/1.25);$('fit').onclick=fit;$('locate').onclick=()=>{select(currentIndex);center(4);};$('routeToggle').onclick=()=>{const hidden=!$('routes').hasAttribute('hidden');$('routes').toggleAttribute('hidden',hidden);$('routeToggle').setAttribute('aria-pressed',String(!hidden));};
+ $('zoomIn').onclick=()=>zoom(scale*1.25);$('zoomOut').onclick=()=>zoom(scale/1.25);$('fit').onclick=fit;$('locate').onclick=()=>{select(currentIndex);center(currentIndex);};$('routeToggle').onclick=()=>{const hidden=!$('routes').hasAttribute('hidden');$('routes').toggleAttribute('hidden',hidden);$('routeToggle').setAttribute('aria-pressed',String(!hidden));};
  const pointers=new Map();let drag=null,pinch=null;
  const distance=()=>{const [a,b]=[...pointers.values()];return Math.hypot(a.x-b.x,a.y-b.y);};
  const midpoint=()=>{const [a,b]=[...pointers.values()],r=view.getBoundingClientRect();return {x:(a.x+b.x)/2-r.left,y:(a.y+b.y)/2-r.top};};
@@ -50,7 +50,7 @@
  view.addEventListener('pointerup',end);view.addEventListener('pointercancel',end);
  view.addEventListener('wheel',e=>{e.preventDefault();const r=view.getBoundingClientRect();zoom(scale*Math.exp(-e.deltaY*.0015),e.clientX-r.left,e.clientY-r.top);$('hint').classList.add('dismissed');},{passive:false});
  view.addEventListener('keydown',e=>{if(e.target!==view)return;const steps={ArrowLeft:[70,0],ArrowRight:[-70,0],ArrowUp:[0,70],ArrowDown:[0,-70]};if(steps[e.key]){e.preventDefault();x+=steps[e.key][0];y+=steps[e.key][1];render();}else if(['+','=','-'].includes(e.key)){e.preventDefault();zoom(scale*(e.key==='-'?.8:1.25));}});
- $('chapterButton').onclick=()=>{const c=cities[selected];$('dialogTitle').textContent=c[0]+' · '+c[4];$('dialogText').textContent=c[5];$('dialogSteps').replaceChildren(...c[6].map(t=>{const li=document.createElement('li');li.textContent=t;return li;}));if(game){$('dialogSteps').replaceChildren(...['目前所在：'+WorldTravel.current(),'前往狀態：'+(WorldTravel.enabled()?WorldTravel.status(c[0]):'義勇成軍後開放'),'步行每段30秒、免費；途中可取消並返回出發地。任務入口立即抵達，不受此倒數影響。'].map(t=>{const li=document.createElement('li');li.textContent=t;return li;}));$('travelNow').hidden=!WorldTravel.canWalk(c[0]);$('travelError').textContent='';$('travelNow').onclick=()=>{try{WorldTravel.travel(c[0]);$('chapterDialog').close();updateLabels();}catch(e){$('travelError').textContent=e.message;}};}$('chapterDialog').showModal();};$('closeDialog').onclick=()=>$('chapterDialog').close();
+ $('chapterButton').onclick=()=>{const c=cities[selected];$('dialogTitle').textContent=c[0]+' · '+c[4];$('dialogText').textContent=game?(WorldTravel.hasScene(c[0])?'抵達後進入城鎮，任務仍依原有進度進行。':'抵達後停留大地圖，可繼續前往鄰近地點；當地場景與探索物品待配置。'):c[5];$('dialogSteps').replaceChildren(...c[6].map(t=>{const li=document.createElement('li');li.textContent=t;return li;}));if(game){$('dialogSteps').replaceChildren(...['目前所在：'+WorldTravel.current(),'前往狀態：'+(WorldTravel.enabled()?WorldTravel.status(c[0]):'義勇成軍後開放'),'步行每段30秒、免費；途中可取消並返回出發地。任務入口立即抵達，不受此倒數影響。'].map(t=>{const li=document.createElement('li');li.textContent=t;return li;}));$('travelNow').hidden=!WorldTravel.canWalk(c[0]);$('travelError').textContent='';$('travelNow').onclick=()=>{try{WorldTravel.travel(c[0]);$('chapterDialog').close();updateLabels();}catch(e){$('travelError').textContent=e.message;}};}$('chapterDialog').showModal();};$('closeDialog').onclick=()=>$('chapterDialog').close();
  $('chapterDialog').addEventListener('click',e=>{if(e.target===$('chapterDialog')){const r=e.target.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)e.target.close();}});
- select(4);
+ select(currentIndex);
 })();
