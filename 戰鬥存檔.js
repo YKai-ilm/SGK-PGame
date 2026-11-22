@@ -32,7 +32,7 @@ window.BattleSave=(()=>{
   if(s.storySweep?.morale!==undefined&&(!finite(s.storySweep.morale)||s.storySweep.morale<0||s.storySweep.morale>100))throw Error('出戰士氣無效');
   if(s.storySweep?.waves!==undefined&&!(window.HanBattle?[HanBattle.waves]:window.YellowBattle?[YellowBattle.waves]:window.GrainBattle?[GrainBattle.waves]:[1,3,6]).includes(s.storySweep.waves))throw Error('游擊波數無效');
   if(s.storySweep?.encounterId!==undefined&&!['rabble','deng','cheng'].includes(s.storySweep.encounterId))throw Error('游擊遭遇無效');
-  if(s.storySweep?.combatVersion!==undefined&&![1,2,3,4,5,6].includes(s.storySweep.combatVersion))throw Error('游擊能力版本無效');
+  if(s.storySweep?.combatVersion!==undefined&&![1,2,3,4,5,6,7].includes(s.storySweep.combatVersion))throw Error('游擊能力版本無效');
   if(s.storySweep?.combatVersion>=4){const d=s.storySweep.enemyOfficer,leader={rabble:null,deng:'鄧茂',cheng:'程遠志'}[s.storySweep.encounterId];if(leader===undefined||leader===null&&d!==null||leader!==null&&(!d||d.name!==leader||!['青','綠','藍','橘','紅','紫'].includes(d.quality)||!Number.isInteger(d.stars)||d.stars<1||d.stars>10||!Number.isInteger(d.level)||d.level<1||d.level>100||!['hp','atk','magicAttack','def','mdef','interval'].every(k=>finite(d[k])&&d[k]>=0)||d.hp<=0||d.interval<=0))throw Error('敵將星級與能力快照無效');}
   if(s.storySweep?.rewardVersion!==undefined&&![1,2,3].includes(s.storySweep.rewardVersion))throw Error('游擊獎勵版本無效');
   window.QingnangCombat?.validate(s.qingnang);window.TeamPills?.validate(s.teamPill,s.elapsed);
