@@ -2,7 +2,7 @@
 window.TownLodging=(()=>{
  const key='three-kingdoms-interface-preview-v1';
  // 城鎮各自定價，不依血量、裝備或金幣餘額調價。
- const prices=Object.freeze({xuzhou:Object.freeze({base:20,perMember:2}),changshe:Object.freeze({base:22,perMember:2})});
+ const prices=Object.freeze({xuzhou:Object.freeze({base:20,perMember:2}),changshe:Object.freeze({base:22,perMember:2}),guangzong:Object.freeze({base:22,perMember:2})});
  const read=()=>JSON.parse(localStorage.getItem(key)||'{}');
  function quote(city='xuzhou',s=read()){
   const price=prices[city];if(!price)throw Error('此城鎮尚未開放住宿。');
