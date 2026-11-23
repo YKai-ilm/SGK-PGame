@@ -17,14 +17,23 @@ window.WorldTravel=(()=>{
  function resumeUrl(){const s=read();if(resumePages.has(s.worldTravel?.resumeUrl))return s.worldTravel.resumeUrl;if(enabled()&&Object.hasOwn(towns,normalizeName(s.worldTravel?.current)))return towns[normalizeName(s.worldTravel.current)].url;const legacy=sessionStorage.getItem('three-kingdoms-story-return');return resumePages.has(legacy)?legacy:'桃園起兵.html';}
  function remember(name){if(!unlocked(name))throw Error('大地圖須在義勇成軍後開放。');const s=read();s.worldTravel={...s.worldTravel,current:name,resumeUrl:towns[name].url};localStorage.setItem(key,JSON.stringify(s));}
  function open(name,station=false){window.WorldJourney?.assertIdle();if(window.SceneTest?.holdNavigation('前往'+(station?'驛站傳送':'大地圖')))return;remember(name);location.href=station?'驛站傳送.html':'三國大地圖.html';}
- function travel(name,station=false){window.WorldJourney?.assertIdle();if(!enabled()||!unlocked(name)||(!station&&!canWalk(name)))throw Error('此地尚未開放，或不是目前可走的相鄰地點。');if(window.SceneTest?.holdNavigation(name))return false;
+ function travel(name,station=false,expectedFrom){window.WorldJourney?.assertIdle();if(!enabled()||!unlocked(name)||(!station&&!canWalk(name)))throw Error('此地尚未開放，或不是目前可走的相鄰地點。');if(window.SceneTest?.holdNavigation(name))return false;
  if(!station){if(!window.WorldJourney)throw Error('行旅計時尚未載入，請重新整理。');WorldJourney.begin(current(),name);return true;}
- // A one-shot arrival signal resets only the scene; quest data remain untouched.
- sessionStorage.setItem('three-kingdoms-world-arrival',name);remember(name);location.href=towns[name].url;return true;}
+ const from=current();if(name===from)return false;
+ if(expectedFrom!==undefined&&expectedFrom!==from)throw Error('所在位置已變更，請重新選擇目的地。');
+ const quote=fare(from,name);if(!quote)throw Error('目前沒有可用驛路。');
+ if(!window.SharedWallet)throw Error('金幣資料尚未載入，請重新整理。');
+ const s=read(),wallet=window.SharedWallet.init(s);if(wallet.coins<quote.coins)throw Error('金幣不足，需要 '+quote.coins+' 金幣，目前持有 '+wallet.coins+' 金幣。');
+ wallet.coins-=quote.coins;
+ s.worldTravel={...s.worldTravel,current:name,resumeUrl:towns[name].url,stationArrival:name,lastStationTrip:{from,to:name,coins:quote.coins,segments:quote.segments}};
+ // Currency and destination commit together; failed storage never charges or navigates.
+ localStorage.setItem(key,JSON.stringify(s));
+ try{sessionStorage.setItem('three-kingdoms-world-arrival',name);}catch{}
+ location.href=towns[name].url;return true;}
  function back(){window.WorldJourney?.assertIdle();if(!enabled()){location.href='主介面流程預覽.html';return;}const name=current();if(window.SceneTest?.holdNavigation(name))return;sessionStorage.setItem('three-kingdoms-world-arrival',name);location.href=towns[name].url;}
  function arrive(name){if(!window.WorldJourney?.pending()&&unlocked(name)&&current()!==name&&!window.SceneTest?.active())remember(name);}
  function returnStation(){window.WorldJourney?.assertIdle();if(!enabled()){back();return;}location.href=towns[current()].url;}
- function consumeArrival(name){const k='three-kingdoms-world-arrival';if(sessionStorage.getItem(k)!==name)return false;sessionStorage.removeItem(k);return true;}
+ function consumeArrival(name){const k='three-kingdoms-world-arrival',s=read(),durable=s.worldTravel?.stationArrival===name;if(!durable&&sessionStorage.getItem(k)!==name)return false;if(durable){delete s.worldTravel.stationArrival;localStorage.setItem(key,JSON.stringify(s));}sessionStorage.removeItem(k);return true;}
  function destinations(){return Object.entries(towns).filter(([name])=>unlocked(name)&&name!==current()).map(([name,t])=>({name,province:t.province}));}
  function fare(from,to){from=normalizeName(from);to=normalizeName(to);if(!fareStops.some(t=>t[0]===from)||!fareStops.some(t=>t[0]===to))return null;const queue=[[from]],seen=new Set([from]);for(let i=0;i<queue.length;i++){const path=queue[i],last=path[path.length-1];if(last===to)return {path,segments:path.length-1,coins:(path.length-1)*20};for(const [a,b]of fareRoads){const next=a===last?b:b===last?a:null;if(next&&!seen.has(next)){seen.add(next);queue.push([...path,next]);}}}return null;}
  function fareNetwork(){return {perSegment:20,status:'歷史地理參考／遊戲驛路草案',towns:fareStops.map(([name,province,x,y])=>({name,province,x,y,transitOnly:!towns[name].scene})),roads:fareRoads.map(r=>r.slice())};}
