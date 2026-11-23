@@ -6,4 +6,4 @@ StorySceneGuide.places.push(...[{"id":"宛城外圍","name":"宛城外圍","imag
 
 for(const [name,id,gate]of [['長社','han-changshe','盧植交付赴長社軍令'],['廣宗','han-guangzong','廣宗外圍救援及戰後演出完成']])StorySceneGuide.places.push({id:name,name,image:name==='長社'?'長社縣城-v1.png':'廣宗縣城-v2.png',group:name,status:name==='長社'?'已接入／縣城場景':'已接入／廣宗專用外景',desc:'獨立地點入口，不直接進軍營。',npc:'縣衙、驛站、客棧、道具鋪、武器鋪、防具鋪、編輯所；軍營入口依劇情出現'+(name==='廣宗'?'；民房住戶：農婦、老農':''),guide:'義勇成軍後可自由抵達與使用基本設施；住宿恢復士氣至100。商店交易尚未開放，軍營依劇情開放。離開可前往大地圖。',preview:'場景重測.html?scene='+id});
 
-StorySceneGuide.places.push({"id":"宛城城內","name":"宛城城內","image":"宛城城內-v1.png","group":"宛城","status":"底圖完成／入口配置預覽","desc":"主街銜接城門與橫街，商住街坊分布兩側；設施融入既有街屋。","npc":"預定設施：縣衙、驛站、客棧、道具鋪、武器鋪、防具鋪、編輯所。","guide":"目前僅完成底圖與預定入口位置，城內探索及服務尚未接入。既有宛城外圍、城門戰鬥、安置百姓與覆命流程維持原狀。圖中不預設額外軍營或後續任務出口。","preview":"宛城城內-v1.png","previewOnly":true});
+StorySceneGuide.places.push({"id":"宛城城內","name":"宛城城內","image":"宛城城內-v1.png","group":"宛城","status":"底圖已採用／入口配置預覽","desc":"主街銜接城門與橫街，商住街坊分布兩側；設施融入既有街屋。","npc":"預定設施：縣衙、驛站、客棧、道具鋪、武器鋪、防具鋪、編輯所。","guide":"目前僅完成底圖與預定入口位置，城內探索及服務尚未接入。既有宛城外圍、城門戰鬥、安置百姓與覆命流程維持原狀。圖中不預設額外軍營或後續任務出口。","preview":"宛城城內-v1.png","previewOnly":true});
