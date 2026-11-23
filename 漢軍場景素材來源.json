@@ -16,8 +16,13 @@
     {
       "file": "廣宗縣城-v1.png",
       "source": "廣宗縣城-素材來源.json",
-      "status": "廣宗專用外景，已接入；七項設施及少量民房",
+      "status": "舊版保留，不再作為正式外景",
       "sha256": "4c8a1aab40967a76ec077c122b86dc08d5a613cd87cacf33cda1eeeaf3d7383c"
+    },
+    {
+      "file": "廣宗縣城-v2.png",
+      "source": "廣宗縣城-v2-素材來源.json",
+      "status": "重新構圖，街坊優先，已接入"
     }
   ]
 }

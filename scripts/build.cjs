@@ -36,7 +36,7 @@ const guideOriginals=new Map(guideNames.map(f=>[f,fs.readFileSync(path.join(out,
 for(const name of guideNames){fs.writeFileSync(path.join(out,name),'<!doctype html><html lang="zh-Hant"><meta charset="utf-8"><title>開啟行旅手冊</title><script>location.replace("guide/"+location.pathname.split("/").pop()+location.search+location.hash)</script><a href="guide/'+name+'">開啟新版攻略</a></html>');}
 fs.writeFileSync(path.join(out,'app-version.js'),`window.APP_VERSION=${JSON.stringify(version)};`);files.push('app-version.js');
 // 保留候選圖仍發布供手冊查看，但不自動下載。
-const assets=files.filter(f=>!/(書院候選|煉丹房候選)/.test(f)).map(file=>{const b=fs.readFileSync(path.join(out,file));return {file,bytes:b.length,hash:crypto.createHash('sha256').update(b).digest('hex')};});
+const assets=files.filter(f=>!/(書院候選|煉丹房候選)/.test(f)&&f!=='廣宗縣城-v1.webp').map(file=>{const b=fs.readFileSync(path.join(out,file));return {file,bytes:b.length,hash:crypto.createHash('sha256').update(b).digest('hex')};});
 const config=JSON.parse(fs.readFileSync(path.join(root,'離線章節設定.json'),'utf8'));
 for(const a of assets){a.pack='core';if(a.file.endsWith('.webp')){const rule=config.sceneRules.find(r=>r.prefixes.some(p=>a.file.startsWith(p)));if(!rule)throw Error('請指定場景所屬章節：'+a.file);a.pack=rule.pack;}}
 const packs=config.packs.map(p=>({...p,bytes:assets.filter(a=>a.pack===p.id).reduce((n,a)=>n+a.bytes,0)}));

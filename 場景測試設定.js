@@ -19,7 +19,7 @@ for(const [id,name]of HanTestScenes){SceneTestScenes["han-"+id]={name,scene:name
 window.WanSceneStages=["ordered","elder","worker","letter","sent","divided","won","shown","settled","completed"];
 for(const [id,name]of [["wan-outside","宛城外圍"],["wan-gate","宛城城門"]]){SceneTestScenes[id]={name,scene:name,group:"黃巾烽火",engine:"xuzhou",url:"漢軍會師.html"};SceneTestGuideIDs[name]=id;}
 
-for(const [id,name,gate] of [['han-changshe','長社','dispatched'],['han-guangzong','廣宗','reliefShown']]){SceneTestScenes[id]={name,scene:name,group:'黃巾烽火',engine:'xuzhou',url:'漢軍會師.html'};SceneTestGuideIDs[name]=id;HanTestScenes.push([id.slice(4),name,gate,name==='長社'?'長社縣城-v1.png':'廣宗縣城-v1.png','軍營入口、驛站','先到城鎮地點，再進軍營。']);}
+for(const [id,name,gate] of [['han-changshe','長社','dispatched'],['han-guangzong','廣宗','reliefShown']]){SceneTestScenes[id]={name,scene:name,group:'黃巾烽火',engine:'xuzhou',url:'漢軍會師.html'};SceneTestGuideIDs[name]=id;HanTestScenes.push([id.slice(4),name,gate,name==='長社'?'長社縣城-v1.png':'廣宗縣城-v2.png','軍營入口、驛站','先到城鎮地點，再進軍營。']);}
 
 for(const [town,prefix]of [['長社','changshe'],['廣宗','guangzong']]){
  SceneTestScenes['han-'+prefix].group=town;
