@@ -34,9 +34,22 @@ const edgeKey=(a,b)=>[a,b].sort().join('|'),colors=new Map();for(const [,color,s
 const degree=Object.fromEntries(names.map(n=>[n,0]));for(const [a,b]of network.roads){degree[a]++;degree[b]++;}
 // Route on a schematic grid, avoiding other station circles and name labels.
 const unit=10,W=174,H=163,occupied=new Set(),used=new Map();
-for(const p of Object.values(positions))for(let x=-5;x<=5;x++)for(let y=-4;y<=1;y++)occupied.add((p.x/unit+x)+','+(p.y/unit+y));
+const verticalStops=new Set(network.roads.filter(([a,b])=>positions[a].x===positions[b].x).flat());
+const obstacles=new Map();
+for(const [n,p]of Object.entries(positions)){
+ const cells=new Set(),side=verticalStops.has(n);
+ for(let x=-1;x<=1;x++)for(let y=-1;y<=1;y++)cells.add((p.x/unit+x)+','+(p.y/unit+y));
+ for(let x=side?2:-5;x<=(side?10:5);x++)for(let y=-4;y<=-1;y++)cells.add((p.x/unit+x)+','+(p.y/unit+y));
+ obstacles.set(n,cells);for(const k of cells)occupied.add(k);
+}
 function routeEdge(a,b){
  const start=positions[a],end=positions[b],sx=start.x/unit,sy=start.y/unit,ex=end.x/unit,ey=end.y/unit;
+ // Clear aligned segments stay straight, regardless of previous edge routing.
+ if(sx===ex||sy===ey){
+  const cells=[],dx=Math.sign(ex-sx),dy=Math.sign(ey-sy);let clear=true;
+  for(let x=sx,y=sy;;x+=dx,y+=dy){const k=x+','+y;cells.push(k);for(const [n,blocked]of obstacles)if(n!==a&&n!==b&&blocked.has(k))clear=false;if(x===ex&&y===ey)break;}
+  if(clear){for(const k of cells)used.set(k,(used.get(k)||0)+1);return [[start.x,start.y],[end.x,end.y]];}
+ }
  const id=(x,y)=>x+','+y, heuristic=(x,y)=>Math.abs(x-ex)+Math.abs(y-ey),queue=[{x:sx,y:sy,g:0,f:0,dir:-1}],best=new Map([[id(sx,sy),0]]),parents=new Map();
  let found=false;
  while(queue.length){queue.sort((a,b)=>b.f-a.f);const cur=queue.pop();if(cur.g>best.get(id(cur.x,cur.y)))continue;if(cur.x===ex&&cur.y===ey){found=true;break;}
@@ -44,8 +57,7 @@ function routeEdge(a,b){
    const x=cur.x+dx,y=cur.y+dy,k=id(x,y);if(x<2||x>W||y<2||y>H)continue;
    const nearStart=Math.abs(x-sx)<=5&&Math.abs(y-sy)<=4,nearEnd=Math.abs(x-ex)<=5&&Math.abs(y-ey)<=4;
    if(occupied.has(k)&&!nearStart&&!nearEnd)continue;
-   // Names sit above stops; approach through the sides or from below.
-   if((nearStart&&y<sy)||(nearEnd&&y<ey)){if(occupied.has(k))continue;}
+
    const g=cur.g+1+(cur.dir!==d&&cur.dir!==-1?2:0)+(used.get(k)||0)*5;
    if(g>=(best.get(k)??Infinity))continue;best.set(k,g);parents.set(k,id(cur.x,cur.y));queue.push({x,y,g,f:g+heuristic(x,y),dir:d});
   }
@@ -65,7 +77,7 @@ function drawNetwork(q,from,to){
  for(const n of names){const p=positions[n],endpoint=n===from||n===to,active=q?.path.includes(n),g=svg('g',{'data-station':n,opacity:focus&&!active?'.3':'1'});
   g.append(svg('circle',{cx:p.x,cy:p.y,r:degree[n]>2?10:7,fill:'#fffdf6',stroke:degree[n]>2?'#263e36':'#627779','stroke-width':degree[n]>2?4:3}));
   if(endpoint)g.append(svg('circle',{cx:p.x,cy:p.y,r:4,fill:n===from?'#bf3348':'#2878aa'}));
-  const label=svg('text',{x:p.x,y:p.y-17,'text-anchor':'middle','font-size':19,'font-weight':endpoint?'750':'550',stroke:'#fffdf6','stroke-width':6,'paint-order':'stroke'},n);g.append(label);
+  const label=svg('text',{x:p.x+(verticalStops.has(n)?18:0),y:p.y-17,'text-anchor':verticalStops.has(n)?'start':'middle','font-size':19,'font-weight':endpoint?'750':'550',stroke:'#fffdf6','stroke-width':6,'paint-order':'stroke'},n);g.append(label);
   if(endpoint)g.append(svg('text',{x:p.x,y:p.y+29,'text-anchor':'middle','font-size':15,stroke:'#fffdf6','stroke-width':5,'paint-order':'stroke'},from===to?'起訖':n===from?'起點':'終點'));root.append(g);
  }
 }
