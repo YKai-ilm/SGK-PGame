@@ -28,7 +28,8 @@
   const local=entries(nativeLocal),route=routes[id];
   for(const k of Object.keys(local))if(k.startsWith('three-kingdoms-')||k.startsWith('tk-save-'))delete local[k];
   const profile={version:1,mode:'story',storyFaction:'蜀',libraryFaction:'蜀',page:'home',tutorial:{status:'skipped',step:0},teams:{},unlocks:{story:{heroes:[],letters:[]},battle:{heroes:[],letters:[]}},storyEvents:{},storyItems:{}};
-  if(id==='xz-客棧'){profile.rewards={wallet:{coins:100,diamonds:0}};profile.storyMorale={value:50};}
+  if(id.startsWith('town-')){profile.storyEvents={grainRoute:{armyFormed:true}};profile.worldTravel={current:route.group};}
+  if(id==='xz-客棧'||id.startsWith('town-')){profile.rewards={wallet:{coins:100,diamonds:0}};profile.storyMorale={value:50};}
   local[villageKey]=JSON.stringify({scene:route.engine==='taoyuan'?route.scene:'home',party:[],seen:[],active:null});
   local[cityKey]=JSON.stringify({scene:route.engine==='xuzhou'?route.scene:'內城',flags:{},history:[],active:null});
   if(id.startsWith('yellow-')){const flags=['launched','briefed','scouted','outpostBriefed','outpostWon','outpostShown','hqKnown'];const last=id==='yellow-camp'?0:id==='yellow-outpost'?2:6;profile.storyEvents={grainRoute:{completed:true,armyFormed:true,captainGift:true},yellowOpening:Object.fromEntries(flags.slice(0,last+1).map(f=>[f,true]))};}
