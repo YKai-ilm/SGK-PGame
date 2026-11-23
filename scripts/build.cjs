@@ -21,6 +21,13 @@ const files=[];let originalImages=0,packedImages=0;for(const f of inputs){let bu
    .replace('href="驛站票價圖.html"','href="../驛站票價圖.html"');
   buf=Buffer.from(page);
  }
+ if(f==='tools/驛站收費圖表.html'){
+  let page=fs.readFileSync(path.join(root,'驛站票價圖.html'),'utf8');
+  page=page.replace(/<script src="([^"]+)"><\/script>/g,(_,src)=>'<script>'+fs.readFileSync(path.join(root,src),'utf8')+'</script>')
+   .replace(/href="(?!https?:)([^"]+)"/g,(_,href)=>'href="../'+href+'"')
+   .replace('</body>','<script>if("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js",{scope:"./",updateViaCache:"none"}).then(r=>r.update()).catch(()=>{});</script></body>');
+  buf=Buffer.from(page);
+ }
  if(f.endsWith('.html')&&!f.startsWith('tools/')){let s=buf.toString();const prefix=path.posix.relative(path.posix.dirname(f),'.')||'.';const boot=f==='index.html'?`<script src="${prefix}/app-version.js"></script>`:`<meta name="theme-color" content="#294234"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="${prefix}/manifest.webmanifest"><link rel="apple-touch-icon" href="${prefix}/app-icon-192.png"><script src="${prefix}/app-version.js"></script><script src="${prefix}/完整存檔.js"></script><script src="${prefix}/離線資料狀態.js"></script><script src="${prefix}/手機執行環境.js"></script>`;s=s.replace(/<script src="(?:場景測試設定|場景重測)\.js"><\/script>/g,'');s=s.replace(/<head([^>]*)>/i,'<head$1><script src="'+prefix+'/場景測試設定.js"></script><script src="'+prefix+'/場景重測.js"></script>');s=s.replace('<script src="本機版本.js"></script>','').replace('<script src="本機自動更新.js"></script>','').replace('<script src="本機GM設定.js"></script>','').replace('<script src="完整存檔.js"></script>','').replace('</head>',boot+'</head>');buf=Buffer.from(s);}
  fs.mkdirSync(path.dirname(path.join(out,output)),{recursive:true});fs.writeFileSync(path.join(out,output),buf);files.push(output);
 }

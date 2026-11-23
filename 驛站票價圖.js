@@ -20,6 +20,9 @@ const rows=[
  [25,[[1,'雲南'],[10,'交趾'],[16,'南海']]]
 ];
 const positions={};for(const [y,items]of rows)for(const [x,n]of items)positions[n]={x:60+x*70,y:30+y*60};
+// User-arranged southwestern region: schematic layout only.
+const regional=[["綿虒",180,1140,"w"],["葭萌",300,900,"e"],["涪城",300,980,"e"],["樊城",900,980,"e"],["成都",300,1140,"sw"],["雒城",300,1060,"e"],["白帝城",540,1220,"s"],["襄陽",900,1060,"e"],["長坂坡",900,1140,"e"],["江陽",300,1220,"w"],["江州",420,1220,"s"],["夷陵",660,1220,"s"],["麥城",780,1220,"s"],["江陵",900,1220,"e"],["朱提",300,1300,"w"],["武陵",900,1340,"e"],["建寧",300,1380,"w"],["零陵",900,1460,"s"],["雲南",300,1460,"w"],["交趾",600,1460,"s"]];
+const regionalDirections=Object.fromEntries(regional.map(([n,x,y,dir])=>{positions[n]={x,y};return[n,dir];}));
 const lines=[
  ['河北驛路','#bb3348','北平 幽州 桃源村 冀州 廣宗 鄴 上黨 太原 雁門 朔方'],
  ['中原驛路','#2878aa','北海 平原 小沛 陳留 官渡 虎牢關 洛陽 弘農 長安 陳倉 五丈原 街亭 安定 武威'],
@@ -43,6 +46,9 @@ for(const [n,p]of Object.entries(positions)){
  obstacles.set(n,cells);for(const k of cells)occupied.add(k);
 }
 function routeEdge(a,b){
+ if([a,b].includes('成都')&&[a,b].includes('江州')){
+  const p=positions[a],q=positions[b];return [[p.x,p.y],[positions['江州'].x,positions['成都'].y],[q.x,q.y]];
+ }
  const start=positions[a],end=positions[b],sx=start.x/unit,sy=start.y/unit,ex=end.x/unit,ey=end.y/unit;
  // Clear aligned segments stay straight, regardless of previous edge routing.
  if(sx===ex||sy===ey){
@@ -66,18 +72,20 @@ function routeEdge(a,b){
  const points=[];let k=id(ex,ey);while(k){const [x,y]=k.split(',').map(Number);points.push([x*unit,y*unit]);used.set(k,(used.get(k)||0)+1);k=parents.get(k);}points.reverse();
  return points.filter((p,i)=>!i||i===points.length-1||(p[0]-points[i-1][0])*(points[i+1][1]-p[1])!==(p[1]-points[i-1][1])*(points[i+1][0]-p[0]));
 }
-const paths=network.roads.map(([a,b])=>({a,b,key:edgeKey(a,b),color:colors.get(edgeKey(a,b))||lines.at(-1)[1],points:routeEdge(a,b)}));
+const paths=network.roads.map(([a,b])=>({a,b,key:edgeKey(a,b),color:edgeKey(a,b)===edgeKey('成都','江州')?'#845ba5':colors.get(edgeKey(a,b))||lines.at(-1)[1],branch:edgeKey(a,b)===edgeKey('江州','江陽'),points:routeEdge(a,b)}));
+let regionView=location.hash==='#chengdu';
 function drawNetwork(q,from,to){
- const root=$('network');root.replaceChildren();root.setAttribute('viewBox','0 0 1760 1660');
+ const root=$('network');root.replaceChildren();root.setAttribute('viewBox',regionView?'70 850 1000 700':'0 0 1760 1660');
  const selected=new Set((q?.path||[]).slice(1).map((n,i)=>edgeKey(q.path[i],n))),focus=$('focus-route').checked;
  for(const edge of [...paths].sort((a,b)=>Number(selected.has(a.key))-Number(selected.has(b.key)))){
   const active=selected.has(edge.key),d='M'+edge.points.map(p=>p.join(',')).join(' L'),g=svg('g',{'data-road':edge.key,opacity:focus&&!active?'.13':'1'});
-  g.append(svg('path',{d,fill:'none',stroke:'#fffdf6','stroke-width':active?13:10,'stroke-linejoin':'round','stroke-linecap':'round'}),svg('path',{d,fill:'none',stroke:edge.color,'stroke-width':active?7:5,'stroke-linejoin':'round','stroke-linecap':'round'}));root.append(g);
+  g.append(svg('path',{d,fill:'none',stroke:'#fffdf6','stroke-width':active?13:10,'stroke-linejoin':'round','stroke-linecap':'round'}),svg('path',{d,fill:'none',stroke:edge.color,'stroke-dasharray':edge.branch?'12 9':'none','stroke-width':active?7:5,'stroke-linejoin':'round','stroke-linecap':'round'}));root.append(g);
  }
  for(const n of names){const p=positions[n],endpoint=n===from||n===to,active=q?.path.includes(n),g=svg('g',{'data-station':n,opacity:focus&&!active?'.3':'1'});
   g.append(svg('circle',{cx:p.x,cy:p.y,r:degree[n]>2?10:7,fill:'#fffdf6',stroke:degree[n]>2?'#263e36':'#627779','stroke-width':degree[n]>2?4:3}));
   if(endpoint)g.append(svg('circle',{cx:p.x,cy:p.y,r:4,fill:n===from?'#bf3348':'#2878aa'}));
-  const label=svg('text',{x:p.x+(verticalStops.has(n)?18:0),y:p.y-17,'text-anchor':verticalStops.has(n)?'start':'middle','font-size':19,'font-weight':endpoint?'750':'550',stroke:'#fffdf6','stroke-width':6,'paint-order':'stroke'},n);g.append(label);
+  const dirs={w:[-52,5,'end'],e:[22,5,'start'],s:[0,34,'middle'],sw:[-22,32,'end']},layout=dirs[regionalDirections[n]],lx=layout?p.x+layout[0]:p.x+(verticalStops.has(n)?18:0),ly=layout?p.y+layout[1]:p.y-17,anchor=layout?layout[2]:verticalStops.has(n)?'start':'middle';
+  const label=svg('text',{x:lx,y:ly,'text-anchor':anchor,'font-size':19,'font-weight':endpoint?'750':'550',stroke:'#fffdf6','stroke-width':6,'paint-order':'stroke'},n);g.append(label);
   if(endpoint)g.append(svg('text',{x:p.x,y:p.y+29,'text-anchor':'middle','font-size':15,stroke:'#fffdf6','stroke-width':5,'paint-order':'stroke'},from===to?'起訖':n===from?'起點':'終點'));root.append(g);
  }
 }
@@ -86,7 +94,8 @@ $('focus-route').onchange=()=>drawNetwork(WorldTravel.fare($('from').value,$('to
 function zoom(value){$('network').style.width=value+'px';$('zoom-status').textContent=Math.round(value/1760*100)+'%';}
 $('zoom-in').onclick=()=>zoom(Math.min(2640,$('network').getBoundingClientRect().width*1.25));
 $('zoom-out').onclick=()=>zoom(Math.max(600,$('network').getBoundingClientRect().width/1.25));
-$('zoom-fit').onclick=()=>zoom($('map-scroll').clientWidth);
+$('region-view').onclick=()=>{regionView=true;drawNetwork(WorldTravel.fare($('from').value,$('to').value),$('from').value,$('to').value);zoom(1000);};
+$('zoom-fit').onclick=()=>{regionView=false;drawNetwork(WorldTravel.fare($('from').value,$('to').value),$('from').value,$('to').value);zoom($('map-scroll').clientWidth);};
 $('zoom-read').onclick=()=>zoom(1760);
 zoom(1320);
 function render(){const from=$('from').value,to=$('to').value,q=WorldTravel.fare(from,to);$('price').textContent=q?q.coins+' 金幣':'路線尚未設定';$('segments').textContent=q?q.segments+' 段 × 20 金幣':'';$('route').textContent=q?q.path.join(' → '):'尚無可計價連線。';
