@@ -4,7 +4,7 @@ window.GameOffline=(()=>{
  const mb=n=>(n/1048576).toFixed(1);
  function receive(s){
   latest=s;
-  if(s.phase==='ready')summary=s.version===window.APP_VERSION?'已下載章節已備妥，可離線遊玩':'新版資料已備妥，回主城後更新';
+  if(s.phase==='ready')summary=s.version===window.APP_VERSION?'已下載章節已備妥，可離線遊玩':(window.GameUpdate?.pendingText?.()||'新版資料已備妥，回主城後更新');
   else if(s.phase==='error')summary=s.reason==='storage'?'儲存空間不足，請騰出空間後重試':s.reason==='integrity'?'資料正在更新，稍後自動重試':'下載暫停，恢復連線後自動補齊';
   else summary='離線資料 '+Math.floor(s.bytes/Math.max(1,s.totalBytes)*100)+'% · '+mb(s.bytes)+' / '+mb(s.totalBytes)+' MB';
   let shell=false;try{if(parent!==window&&typeof parent.GameShowOfflineStatus==='function'){parent.GameShowOfflineStatus(summary,s);shell=true;}}catch{}

@@ -8,7 +8,8 @@ try{FullSave.recover();}catch(e){document.documentElement.textContent='存檔恢
  Storage.prototype.setItem=function(k,v){check(this,k);return set.call(this,k,v);};
  Storage.prototype.removeItem=function(k){check(this,k);return remove.call(this,k);};
  window.addEventListener('storage',e=>{if(e.key!==FullSave.epochKey)return;stale=true;const d=document.createElement('dialog');d.innerHTML='<h2>進度已在另一頁恢復</h2><p>本頁已停止保存，請重新開啟，避免覆蓋剛匯入的進度。</p><button>重新開啟</button>';d.querySelector('button').onclick=()=>location.reload();document.body.append(d);d.showModal();});
- window.GameUpdate={safe:()=>!stale&&window.GameCanUpdate?.()===true};
+ const guidePage=['行旅手冊.html','劇情場景圖鑑.html'].includes(decodeURIComponent(location.pathname.split('/').pop()));
+ window.GameUpdate={guidePage,safe:()=>!stale&&(guidePage?!window.SceneTest?.active()&&!document.querySelector('dialog[open]'):window.GameCanUpdate?.()===true),pendingText:()=>guidePage?'新版資料已備妥，關閉彈窗後自動更新；若有其他遊戲分頁，待其回主城後套用':'新版資料已備妥，回主城後更新'};
  window.addEventListener('load',async()=>{
   if(!('serviceWorker' in navigator)||!['https:','http:'].includes(location.protocol)||!window.APP_VERSION)return;
   let controlled=!!navigator.serviceWorker.controller;
@@ -41,7 +42,7 @@ try{FullSave.recover();}catch(e){document.documentElement.textContent='存檔恢
    window.addEventListener('online',()=>{reg.update().catch(()=>{});requestChapter();sync();});
    document.addEventListener('visibilitychange',()=>{if(!document.hidden){reg.update().catch(()=>{});sync();check();}});
    requestChapter();sync();check();
-   window.GameUpdate.status=()=>reg.waiting?'新版已準備，回主城後會自動更新':'目前版本 '+APP_VERSION;
+   window.GameUpdate.status=()=>reg.waiting?GameUpdate.pendingText():'目前版本 '+APP_VERSION;
   }catch(e){console.warn('更新檢查暫時無法連線',e);}
  });
 })();
