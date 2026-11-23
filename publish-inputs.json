@@ -3,6 +3,8 @@
   "app-icon-512.png",
   "index.html",
   "manifest.webmanifest",
+  "tools/sw.js",
+  "tools/驛路棋盤.html",
   "三國大地圖-候選-v1.webp",
   "三國大地圖.html",
   "三國大地圖預覽.css",
