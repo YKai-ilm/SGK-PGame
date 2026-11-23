@@ -34,6 +34,13 @@ for(const town of ['長社','廣宗'])for(const [label,guide]of Object.entries(t
  StoryGuidePoints[id]=[[base.npc,base.npcX,base.npcY,13.5,3.6,npcKey],['離開',base.exitX,base.exitY,12,3.6,exitKey]];
  scenes.push({id,name:id,image:base.image,group:town,status:'已接入／共用室內',desc:town+'的'+label+'，沿用共用室內底圖。',npc:base.npc,guide:guide+' 離開返回'+town+'。',preview:base.image,implementedFacility:true});
 }
+
+const townEntrances={長社:[['縣衙',42,23],['驛站',23,50],['客棧',25,37],['道具鋪',76,53],['武器鋪',75,36],['防具鋪',64,44],['編輯所',25,65],['長社軍營',85,18],['離開',50,89]],廣宗:[['縣衙',25,85],['驛站',10,29],['客棧',32,31],['道具鋪',78,82],['武器鋪',30,49],['防具鋪',78,49],['編輯所',77,66],['盧植軍營',57,18],['離開',50,93]]};
+for(const [town,rows]of Object.entries(townEntrances))StoryGuidePoints[town]=rows.map(([label,x,y])=>{
+ const key='townEntrance:'+town+':'+label;
+ XuzhouGuideNotes[key]=label==='離開'?'開啟去向選單：前往大地圖；符合劇情時另有軍營任務入口。':label==='長社軍營'?'劇情入口：盧植交付赴長社軍令後才出現。':label==='盧植軍營'?'劇情入口：接下漢軍會師出征任務後才出現。':'進入'+town+'・'+label+'。'+townServices[label];
+ return [label,x,y,13.5,3.6,key];
+});
 const groups=['桃園','徐州','長社','廣宗','黃巾烽火','共用室內','保留備用'],captions={'長社':'縣城街道與基本設施','廣宗':'城鎮街道與基本設施','黃巾烽火':'黃巾戰役的軍營、前線與戰場','桃園':'已接入的故事起點','徐州':'內城、城西與室內 NPC 字卡配置','共用室內':'各城可重用，人物與事件另配','保留備用':'使用者指定保存，日後直接取用'};
 let filter='全部',restoreDetails=[];
 for(const g of ['全部',...groups]){const b=document.createElement('button');b.textContent=g;b.dataset.filter=g;b.onclick=()=>{filter=g;render()};$('filters').append(b)}
