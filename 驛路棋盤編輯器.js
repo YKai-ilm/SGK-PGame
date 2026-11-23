@@ -34,7 +34,7 @@ function changeNode(patch){if(selected?.kind!=='node')return;snapshot();Object.a
 $('name').onchange=()=>changeNode({name:$('name').value.trim()||'未命名'});$('font').onchange=()=>changeNode({font:Math.max(10,Math.min(32,Number($('font').value)||18))});$('distance').onchange=()=>changeNode({distance:Math.max(.5,Math.min(3,Number($('distance').value)||1))});$('label-box').onchange=()=>changeNode({box:$('label-box').checked});for(const b of document.querySelectorAll('[data-dir]'))b.onclick=()=>changeNode({dir:b.dataset.dir});
 for(const id of ['line-type','color','color2','gap'])$(id).onchange=()=>{if(selected?.kind!=='edge')return;snapshot();Object.assign(state.edges.find(e=>e.id===selected.id),style());save();render();};
 $('bend-node').onclick=()=>{
- if(selected?.kind!=='node')return;
+ if(selected?.kind!=='node'){$('hint').textContent='請先用「選取／移動」點選要移除的圓點，再按「改為轉角」。';return;}
  const n=node(selected.id),links=state.edges.filter(e=>e.a===n.id||e.b===n.id);
  if(links.length!==2){$('hint').textContent='轉角需要恰好連接兩條線；交會分支不能直接合併。';return;}
  const [a,b]=links,from=a.a===n.id?a.b:a.a,to=b.a===n.id?b.b:b.a;
