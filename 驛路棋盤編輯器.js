@@ -33,6 +33,17 @@ $('cancel').onclick=()=>{draft=null;render();$('hint').textContent='已取消未
 function changeNode(patch){if(selected?.kind!=='node')return;snapshot();Object.assign(node(selected.id),patch);save();panels();render();}
 $('name').onchange=()=>changeNode({name:$('name').value.trim()||'未命名'});$('font').onchange=()=>changeNode({font:Math.max(10,Math.min(32,Number($('font').value)||18))});$('distance').onchange=()=>changeNode({distance:Math.max(.5,Math.min(3,Number($('distance').value)||1))});$('label-box').onchange=()=>changeNode({box:$('label-box').checked});for(const b of document.querySelectorAll('[data-dir]'))b.onclick=()=>changeNode({dir:b.dataset.dir});
 for(const id of ['line-type','color','color2','gap'])$(id).onchange=()=>{if(selected?.kind!=='edge')return;snapshot();Object.assign(state.edges.find(e=>e.id===selected.id),style());save();render();};
+$('bend-node').onclick=()=>{
+ if(selected?.kind!=='node')return;
+ const n=node(selected.id),links=state.edges.filter(e=>e.a===n.id||e.b===n.id);
+ if(links.length!==2){$('hint').textContent='轉角需要恰好連接兩條線；交會分支不能直接合併。';return;}
+ const [a,b]=links,from=a.a===n.id?a.b:a.a,to=b.a===n.id?b.b:b.a;
+ if(from===to){$('hint').textContent='兩條線連向同一地點，無法轉成一般轉角。';return;}
+ if(['lanes','color','color2','gap'].some(k=>a[k]!==b[k])){$('hint').textContent='請先把兩條線設成相同的顏色與單／雙線樣式，再改為轉角。';return;}
+ snapshot();const before=a.b===n.id?a.via:[...a.via].reverse(),after=b.a===n.id?b.via:[...b.via].reverse();
+ const merged={...a,a:from,b:to,via:[...before,{x:n.x,y:n.y},...after]};
+ state.edges=state.edges.filter(e=>e.id!==a.id&&e.id!==b.id);state.edges.push(merged);state.nodes=state.nodes.filter(p=>p.id!==n.id);draft=null;selected={kind:'edge',id:merged.id};save();panels();render();$('hint').textContent='已改為線段轉角，圓點與名稱已移除；匯出時也不會列為地點。';
+};
 $('delete-node').onclick=()=>{if(selected?.kind!=='node')return;snapshot();state.nodes=state.nodes.filter(n=>n.id!==selected.id);state.edges=state.edges.filter(e=>e.a!==selected.id&&e.b!==selected.id);selected=null;draft=null;save();panels();render();};
 $('delete-edge').onclick=()=>{if(selected?.kind!=='edge')return;snapshot();state.edges=state.edges.filter(e=>e.id!==selected.id);selected=null;save();panels();render();};
 $('undo').onclick=()=>{if(!history.length)return;state=JSON.parse(history.pop());selected=null;draft=null;save();panels();render();};
