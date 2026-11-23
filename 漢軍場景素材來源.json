@@ -12,6 +12,12 @@
       "file": "漢軍長社側翼-v1.png",
       "source": "Generated images are saved to C:\\Users\\user\\.codex\\generated_images\\01a1953c-9d2a-7db2-aecd-7a0b2dcdabd0 as C:\\Users\\user\\.codex\\generated_images\\01a1953c-9d2a-7db2-aecd-7a0b2dcdabd0\\exec-47e8152e-a2fb-4633-9bb3-d65122306cb5.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
       "prompt": "New portrait 1024x1536 ancient Three Kingdoms RPG background, reference only for matching warm high-angle isometric miniature painted realism, fine foliage wood earth detail, no people no UI no text. Changshe flank battlefield before battle: clear winding dirt road from bottom center to upper center, spacious foreground staging area, low wooden defensive fence to left middle and open side route from right middle joining center. Upper far distance straw-roof rough enemy camp beyond the road bend, small yellow plain banners, dry grass nearby, no fire yet. Distant ancient city wall on upper left behind trees; most view is accessible foreground earth grass and stones. Dynamic NPC cards and fire overlays will be added by game, leave center and right-middle standing areas unobstructed. Match reference lighting camera scale and colors."
+    },
+    {
+      "file": "廣宗縣城-v1.png",
+      "source": "廣宗縣城-素材來源.json",
+      "status": "廣宗專用外景，已接入；七項設施及少量民房",
+      "sha256": "4c8a1aab40967a76ec077c122b86dc08d5a613cd87cacf33cda1eeeaf3d7383c"
     }
   ]
 }
