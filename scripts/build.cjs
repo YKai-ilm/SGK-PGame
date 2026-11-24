@@ -56,8 +56,12 @@ fs.writeFileSync(path.join(out,'guide/sw.js'),guideWorker);files.push('guide/sw.
 fs.writeFileSync(path.join(out,'guide/version.json'),JSON.stringify({version}));files.push('guide/version.json');
 for(const name of guideNames){
  let html=guideOriginals.get(name).replace(/<script src="[^"]*(?:手機執行環境|離線資料狀態|完整存檔|app-version|場景重測)\.js"><\/script>/g,'');
+ // 攻略獨立閱讀，不載入會導向遊戲音樂外框的背景音樂程式（含 data-scene 屬性）。
+ html=html.replace(/<script\b[^>]*\bsrc=["'][^"']*背景音樂\.js(?:\?[^"']*)?["'][^>]*>\s*<\/script>/gi,'');
  const runtime=`(()=>{const pages=new Set(${JSON.stringify(guideNames)}),root=new URL('../',location.href),base=new URL('./',location.href);const fix=()=>document.querySelectorAll('a[href]').forEach(a=>{const raw=a.getAttribute('href');if(raw.startsWith('#')){a.href=location.pathname+raw;return;}const u=new URL(a.href);const file=decodeURIComponent(u.pathname.split('/').pop());if(u.origin===location.origin&&pages.has(file)&&!u.pathname.includes('/guide/'))a.href=new URL('guide/'+encodeURIComponent(file)+u.search+u.hash,root).href;});new MutationObserver(fix).observe(document.documentElement,{childList:true,subtree:true});addEventListener('DOMContentLoaded',fix);if('serviceWorker'in navigator){const enteredWithGuide=navigator.serviceWorker.controller?.scriptURL===new URL('sw.js',base).href;if(!enteredWithGuide)navigator.serviceWorker.addEventListener('controllerchange',()=>{if(navigator.serviceWorker.controller?.scriptURL===new URL('sw.js',base).href)location.reload();},{once:true});navigator.serviceWorker.addEventListener('message',e=>{if(e.data?.type==='CAN_UPDATE')e.source?.postMessage({type:'UPDATE_READY',nonce:e.data.nonce,ready:true});});navigator.serviceWorker.register(new URL('sw.js',base),{scope:base.href,updateViaCache:'none'}).catch(()=>{});}const initial=${JSON.stringify(version)};async function check(){if(document.hidden||document.querySelector('dialog[open]'))return;try{const r=await fetch(new URL('version.json',base),{cache:'no-store'}),v=await r.json();if(v.version!==initial)location.reload();}catch{}}if(['行旅手冊.html','劇情場景圖鑑.html'].includes(${JSON.stringify(name)})){setInterval(check,15000);addEventListener('focus',check);}})();`;
- html=html.replace(/<head([^>]*)>/i,'<head$1><base href="../"><script>'+runtime+'</script>');
+ const guideBoot='<base href="../"><script>'+runtime+'</script>';
+ if(/<head\b/i.test(html))html=html.replace(/<head([^>]*)>/i,'<head$1>'+guideBoot);
+ else html=html.replace(/<html([^>]*)>/i,'<html$1><head>'+guideBoot);
  fs.writeFileSync(path.join(out,'guide',name),html);files.push('guide/'+name);
 }
 // 清理只限 dist 內已不屬於本版的檔案。
