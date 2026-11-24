@@ -21,6 +21,8 @@ window.PlayerOfficer=(()=>{
  function remaining(p){return totalPoints(p)-fields.reduce((n,k)=>n+p.points[k],0);}
  function create(s,name,style){if(s.playerOfficer)throw Error('已建立玩家武將');if(!['completed','skipped'].includes(s.tutorial?.status))throw Error('請先完成新手訓練');name=name.trim();if(!/^[\p{Script=Han}A-Za-z0-9]{2,4}$/u.test(name))throw Error('名稱請用2至4個中文字、英文字母或數字');if(!Object.hasOwn(styles,style))throw Error('請選擇風格');if((window.OFFICER_PROPOSAL?.entries||[]).some(p=>p.name===name)||Object.hasOwn(window.TestRoster||{},name)||['玩家武將','特殊'].includes(name))throw Error('此名稱已被使用，請換一個名字');const p={version:1,id:crypto.randomUUID(),name,style,rank:0,level:1,xp:0,rebirth:0,fragments:0,points:Object.fromEntries(fields.map(k=>[k,0]))};s.playerOfficer=p;unlock(s,p);return p;}
  function unlock(s,p){s.unlocks??={};for(const mode of ['story','battle']){s.unlocks[mode]??={heroes:[],letters:[]};if(!s.unlocks[mode].heroes.includes(p.name))s.unlocks[mode].heroes.push(p.name);}}
+ function addPoints(p,extra){if(!extra||!fields.every(k=>Number.isSafeInteger(extra[k])&&extra[k]>=0))throw Error('追加點數請填非負整數');allocate(p,Object.fromEntries(fields.map(k=>[k,p.points[k]+extra[k]])));}
+ function resetPoints(p){allocate(p,Object.fromEntries(fields.map(k=>[k,0])));}
  function allocate(p,points){const next={...p,points:{...points}};if(!valid(next))throw Error('配點超過可用點數或單項100上限');p.points=next.points;}
  function milestones(p){p.milestones??=[];let bonus=0;for(let level=10;level<=100;level+=10)if(p.level>=level&&!p.milestones.includes(level)){p.milestones.push(level);bonus+=10;}p.fragments+=bonus;return bonus;}
  function gainXP(p,amount){if(!integer(amount,0,100000000))throw Error('經驗數值無效');if(p.level===100)return 0;let needed=0;for(let l=p.level;l<100;l++)needed+=100*l*(p.rebirth+1);const used=Math.min(amount,needed-p.xp);p.xp+=used;while(p.level<100&&p.xp>=100*p.level*(p.rebirth+1)){p.xp-=100*p.level*(p.rebirth+1);p.level++;}if(p.level===100)p.xp=0;milestones(p);return used;}
@@ -39,5 +41,5 @@ window.PlayerOfficer=(()=>{
    window.TestRoster[p.name]={playerCard:true,hp:Math.round((400+a.body*8)*scale),atk:primary,def:(a.lead*.42+a.str*.18)*defScale,mdef:(a.lead*.2+a.int*.4)*defScale,physicalRatio:physical/primary,magicRatio:ma/primary,supportRatio:a.charm*1.5*scale/primary,combatVersion:1,interval:1/rate,range:magic?4:2,group:magic?'遠攻':'近戰',kind:magic?'magic':'hit',weaponLabel:magic?'策杖':'劍',skills:skillSets[p.style].map(x=>({...x})),quality};}
   return active;
  }
- return{totalPoints,useAttributeCardLow,key,fields,tiers,styles,skillSets,costs,starCost,upgrade,rebirth,rebirthReward,milestones,read,get,valid,is,abilities,remaining,create,unlock,allocate,gainXP,register,get active(){return active;}};
+ return{totalPoints,useAttributeCardLow,key,fields,tiers,styles,skillSets,costs,starCost,upgrade,rebirth,rebirthReward,milestones,read,get,valid,is,abilities,remaining,addPoints,resetPoints,create,unlock,allocate,gainXP,register,get active(){return active;}};
 })();
