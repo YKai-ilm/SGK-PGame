@@ -28,7 +28,7 @@ for(const [name,rows]of Object.entries({"宛城外圍":[["避難老者",29,51],[
 
 // 城鎮基本設施沿用正式場景的室內素材與人物位置。
 const townServices={縣衙:'書吏提供日常交談，軍務依城外劇情進行。',驛站:'依州選擇目的地，確認路程與費用後傳送；每段20金幣。',客棧:'無編制收20金幣；有編制為22金幣加每名武將2金幣。住宿恢復士氣至100。',道具鋪:'可與掌櫃交談及查看服務，買賣尚未開放。',武器鋪:'可與鐵匠交談及查看服務，買賣尚未開放。',防具鋪:'可與甲匠交談及查看服務，買賣尚未開放。',編輯所:'可進入候選隊伍編輯，安排同行武將。'};
-for(const town of ['長社','廣宗'])for(const [label,guide]of Object.entries(townServices)){
+for(const town of ['長社','廣宗','宛城'])for(const [label,guide]of Object.entries(townServices)){
  const base=SharedInteriorScenes.find(s=>s.id===({縣衙:'役所',道具鋪:'道具店',武器鋪:'武器店',防具鋪:'防具店'}[label]||label)),id=town+'・'+label,npcKey='townNpc:'+id,exitKey='townExit:'+id;
  XuzhouGuideNotes[npcKey]=guide;XuzhouGuideNotes[exitKey]='離開室內，返回'+town+'。';
  StoryGuidePoints[id]=[[base.npc,base.npcX,base.npcY,13.5,3.6,npcKey],['離開',base.exitX,base.exitY,12,3.6,exitKey]];
@@ -42,8 +42,8 @@ for(const [town,rows]of Object.entries(townEntrances))StoryGuidePoints[town]=row
  return [label,x,y,13.5,3.6,key];
 });
 
-StoryGuidePoints['宛城城內']=[['縣衙',28,21],['驛站',71,63],['客棧',65,44],['道具鋪',27,52],['武器鋪',11,57],['防具鋪',34,48],['編輯所',50,22],['離開',50,95]].map(([name,x,y])=>{const key='wanTownPreview:'+name;XuzhouGuideNotes[key]=name==='離開'?'預定返回既有宛城城門；尚未接入探索。':'預定'+name+'入口，尚未接入；此標記僅供查看配置。';return [name,x,y,13.5,3.6,key];});
-const groups=['桃園','徐州','長社','廣宗','宛城','黃巾烽火','共用室內','保留備用'],captions={'宛城':'城內底圖與設施配置預覽，尚未接入探索','長社':'縣城街道與基本設施','廣宗':'城鎮街道與基本設施','黃巾烽火':'黃巾戰役的軍營、前線與戰場','桃園':'已接入的故事起點','徐州':'內城、城西與室內 NPC 字卡配置','共用室內':'各城可重用，人物與事件另配','保留備用':'使用者指定保存，日後直接取用'};
+StoryGuidePoints['宛城城內']=[['縣衙',28,21],['驛站',71,63],['客棧',65,44],['道具鋪',27,52],['武器鋪',11,57],['防具鋪',34,48],['編輯所',50,22],['離開',50,95]].map(([name,x,y])=>{const key='wanTownPreview:'+name;XuzhouGuideNotes[key]=name==='離開'?'開啟離城選單，可前往大地圖；宛城委任後增加城門任務入口。':name+'入口，室內離開返回宛城。';return [name,x,y,13.5,3.6,key];});
+const groups=['桃園','徐州','長社','廣宗','宛城','黃巾烽火','共用室內','保留備用'],captions={'宛城':'城內街坊與基本設施','長社':'縣城街道與基本設施','廣宗':'城鎮街道與基本設施','黃巾烽火':'黃巾戰役的軍營、前線與戰場','桃園':'已接入的故事起點','徐州':'內城、城西與室內 NPC 字卡配置','共用室內':'各城可重用，人物與事件另配','保留備用':'使用者指定保存，日後直接取用'};
 let filter='全部',restoreDetails=[];
 for(const g of ['全部',...groups]){const b=document.createElement('button');b.textContent=g;b.dataset.filter=g;b.onclick=()=>{filter=g;render()};$('filters').append(b)}
 function render(){
