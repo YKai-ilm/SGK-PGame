@@ -19,6 +19,18 @@ window.ProgressRewards=(()=>{
   if(g.routeKnown)return '目前：前往糧道谷關的茶站，向明叔打聽消息。';
   return '救回隊長、奪回糧車，經管事核對後完成糜竺覆命。';
  }
+ function threeZhangObjective(s){const p=s.storyEvents?.threeZhang||{};
+ if(p.completed)return '已向皇甫嵩完成兩城回報；副章節獎勵可領取。';
+ if(p.quyangRecovered)return '目前：回廣宗軍前向皇甫嵩覆命，交接兩城軍情。';
+ if(p.quyangWon)return '目前：返回下曲陽城外，與張寶交談並確認處置。';
+ if(p.quyangScouted)return '目前：在下曲陽城外與張寶交談，準備進軍。';
+ if(p.quyangRefugees)return '目前：詢問下曲陽城外的引路鄉民，查明城門守備。';
+ if(p.quyangOrdered)return '目前：由廣宗軍前出口前往下曲陽，先安置逃難居民。';
+ if(p.reported)return '目前：再與廣宗軍前的皇甫嵩交談，聽取後續軍報。';
+ if(p.guangzongRecovered)return '目前：返回廣宗軍前向皇甫嵩回報收復軍情。';
+ if(p.won)return '目前：回廣宗攻城口處置張梁。';
+ return '依軍令收復失地、安置百姓，完成軍前回報。';
+ }
  function chapterRows(s){
   if(!window.PlayerOfficer?.get(s))return [];
   let party=[];try{party=JSON.parse(localStorage.getItem('three-kingdoms-taoyuan-dialogue-v1')||'{}').party||[];}catch{}
@@ -32,7 +44,7 @@ window.ProgressRewards=(()=>{
    ['2-2','義勇成軍','sub',!!s.storyEvents?.grainRoute?.armyFormed,'完成護軍後，與陶謙完整交談並領取成軍防具與劉關張武將卡。'],
    ['2-3','糜家小女','sub',!!s.storyEvents?.grainRoute?.miRecruited,'完成護軍與糜竺說媒後，再次交談，取得糜竺相助。此階段尚未成婚。'],
    ['2-4','華陀初現','sub',!!s.storyEvents?.yunlongRescue?.bookGiven,'完成救援、回徐州留宿，再與華陀完成贈書對話。'],
-['3-3','討伐三張','sub',!!s.storyEvents?.threeZhang?.completed,'收復廣宗與下曲陽，完成兩將處置，再向皇甫嵩完整覆命。'],
+['3-3','討伐三張','sub',!!s.storyEvents?.threeZhang?.completed,threeZhangObjective(s)],
 ['3','黃巾烽火','main',!!s.storyEvents?.threeZhang?.chapterCompleted,'完成討伐三張後，回徐州向陶謙完整回報。'],
 ['3-2','宛城討伐','sub',!!s.storyEvents?.wancheng?.completed,'擊退韓忠後安置百姓，再向朱儁完整覆命。'],
 ['han-campaign','漢軍會師','sub',!!s.storyEvents?.hanCampaign?.completed,'奉盧植之命前往長社，完成接應與解圍，送別盧植後隨朱儁南下聽取軍情。'],
