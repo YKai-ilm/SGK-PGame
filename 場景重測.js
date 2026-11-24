@@ -36,7 +36,7 @@
   if(id.startsWith('han-')){const row=HanTestScenes.find(r=>'han-'+r[0]===id);profile.storyEvents={grainRoute:{armyFormed:true,captainGift:true,completed:true},yellowOpening:{completed:true},hanCampaign:Object.fromEntries(HanSceneStages.slice(0,HanSceneStages.indexOf(row[2])+1).map(f=>[f,true]))};}
   if(id.startsWith('wan-')){const p=profile,stage='wan-ordered';p.storyEvents={grainRoute:{armyFormed:true,captainGift:true,completed:true},yellowOpening:{completed:true},hanCampaign:Object.fromEntries(HanSceneStages.map(f=>[f,true])),wancheng:{ordered:true}};const flags=WanSceneStages.slice(0,WanSceneStages.indexOf(stage.slice(4))+1);Object.assign(p.storyEvents.wancheng,Object.fromEntries(flags.map(f=>[f,true])));if(stage==='wan-hanWon')p.storyEvents.wancheng={ordered:true,briefed:true,hanWon:true,hanRoute:'direct'};else if(stage==='wan-directWon')p.storyEvents.wancheng={ordered:true,briefed:true,hanWon:true,hanShown:true,won:true,wonRoute:'direct',wonStage:'zhang'};else if(p.storyEvents.wancheng.won)p.storyEvents.wancheng.wonRoute='letter';p.storyItems={surrenderLetter:p.storyEvents.wancheng.letter?1:0};}
   local[mainKey]=JSON.stringify(profile);
-  put(recordKey,JSON.stringify({id,local,session:{}}));
+  put(recordKey,JSON.stringify({id,local,session:{},...(id==='town-wancheng'||id.startsWith('town-wancheng-')?{stage:'wanTownOpen'}:{})}));
   window.top.location.href=route.url;
  }
  function exit(){const r=read();if(r){r.exiting=true;put(recordKey,JSON.stringify(r));}window.top.location.href='場景重測.html';}
@@ -85,6 +85,9 @@ function conditions(){return sceneConditions[read().id]||{stages:['initial']};}
  stages.xuzhou.push(...HanSceneStages.map((f,i)=>['han-'+f,hanLabels[i]]));
  for(const [id,name,first]of HanTestScenes){const end={lu:'dispatched',relief:'reliefShown',camp:'completed',fire:'fireReported',road:'escortHeard',south:'completed'}[id];sceneConditions['han-'+id]={stages:HanSceneStages.slice(HanSceneStages.indexOf(first),HanSceneStages.indexOf(end)+1).map(f=>'han-'+f)};}
  sceneConditions['xz-城主府'].stages.push('han-departed','han-completed');sceneConditions['han-south'].stages.push(...wanOptions.map(x=>x[0]));
+ const wanTownStages=[['wanTownOccupied','黃巾佔領中・禁止進城'],['wanTownHanOnly','韓忠敗退・張寶未敗・禁止進城'],['wanTownOpen','賊軍撤退・已開城・尚未安民'],['wanTownReported','安民與覆命完成・已開城']];
+ stages.xuzhou.push(...wanTownStages);
+ for(const id of Object.keys(routes).filter(id=>id==='town-wancheng'||id.startsWith('town-wancheng-')))sceneConditions[id]={stages:wanTownStages.map(x=>x[0])};
  function availableItems(){return items.filter(([id])=>conditions().items?.includes(id));}
  function availableStages(){return stages[current().engine].filter(([id])=>conditions().stages.includes(id));}
  function flagChecked(id){return conditions().flags?.includes(id)&&document.getElementById('sceneTest'+id)?.checked;}
@@ -140,6 +143,7 @@ function conditions(){return sceneConditions[read().id]||{stages:['initial']};}
    if(n>=4)p.storyEvents.yunlongRescue={daniuCollected:true};
    if(n>=5)Object.assign(p.storyEvents.yunlongRescue,{medicineUsed:true,rescued:true});
   }
+  if(stage.startsWith('wanTown')){p.storyEvents={grainRoute:{armyFormed:true},hanCampaign:Object.fromEntries(HanSceneStages.map(f=>[f,true])),wancheng:{ordered:true}};const w=p.storyEvents.wancheng;if(stage==='wanTownHanOnly')Object.assign(w,{briefed:true,hanWon:true,hanShown:true,hanRoute:'direct'});if(['wanTownOpen','wanTownReported'].includes(stage))Object.assign(w,{won:true,shown:true,wonRoute:'letter'});if(stage==='wanTownReported')Object.assign(w,{settled:true,completed:true});p.worldTravel={current:'宛城'};}
   if(flagChecked('Oath'))p.storyEvents.peachOath=true;
   if(flagChecked('Dream'))p.storyEvents.dreamReincarnationTriggered=true;
   const objects={[mainKey]:p,[villageKey]:v,[hiddenKey]:h,[cityKey]:c};
@@ -160,6 +164,7 @@ function conditions(){return sceneConditions[read().id]||{stages:['initial']};}
   const bar=document.createElement('aside');bar.id='sceneTestBar';
   bar.innerHTML='<div class="test-row"><strong>場景劇情測試</strong><select id="sceneTestSelect" aria-label="選擇測試場景"></select><button id="sceneTestReset">恢復初始值</button><button id="sceneTestExit">返回圖鑑</button></div><details><summary>劇情觸發道具／事件條件</summary><div id="sceneTestItems"></div><label>事件階段 <select id="sceneTestStage"></select></label><label><input type="checkbox" id="sceneTestParty">關羽、張飛同行</label><label><input type="checkbox" id="sceneTestOath">已桃園結義</label><label><input type="checkbox" id="sceneTestDream">已觸發夢輪迴</label><button id="sceneTestApply">套用條件</button><p>套用後結束當前對話，點人物卡測試分支；不會修改正式遊戲。</p></details><p id="sceneTestNotice" role="status">點人物／事件卡展開劇情；出口只提示去向，不離開此圖。所有獎勵僅供測試。</p>';
   document.body.classList.add('scene-guide-test');document.body.prepend(bar);
+  if(r.id==='town-wancheng'||r.id.startsWith('town-wancheng-'))notice('宛城預設為戰後開城。展開事件條件可切換佔領中、韓忠敗退或已覆命；未開城時會停在城門，套用開城狀態後回到所選城內設施。正式存檔不受影響。');
   if(r.id==='xz-客棧')notice('住宿重測：初始／套用條件設為測試金幣 100、士氣 50。可重測付費與劇情免費住宿；不影響正式存檔。');
   const select=document.getElementById('sceneTestSelect');for(const [id,route] of Object.entries(routes)){const o=new Option(route.group+'・'+route.name,id);select.add(o);}select.value=r.id;select.onchange=()=>start(select.value);
   document.getElementById('sceneTestReset').onclick=()=>{if(confirm('恢復此場景初始狀態？測試道具與事件進度將清除，正式遊戲不受影響。'))start(r.id);};
