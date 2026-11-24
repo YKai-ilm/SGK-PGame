@@ -12,11 +12,13 @@ window.PlayerOfficer=(()=>{
  };
  const read=()=>JSON.parse(localStorage.getItem(key)||'{}');
  const integer=(n,min,max)=>Number.isSafeInteger(n)&&n>=min&&n<=max;
- function valid(p){return !!p&&p.version===1&&typeof p.id==='string'&&p.id.length>0&&/^[\p{Script=Han}A-Za-z0-9]{2,4}$/u.test(p.name)&&Object.hasOwn(styles,p.style)&&integer(p.rank,0,69)&&integer(p.level,1,100)&&integer(p.rebirth,0,10000)&&integer(p.fragments,0,Number.MAX_SAFE_INTEGER)&&(!p.milestones||Array.isArray(p.milestones)&&new Set(p.milestones).size===p.milestones.length&&p.milestones.every(n=>integer(n,10,100)&&n%10===0))&&integer(p.xp,0,p.level===100?0:100*p.level*(p.rebirth+1)-1)&&p.points&&Object.keys(p.points).length===6&&fields.every((k,i)=>integer(p.points[k],0,100-styles[p.style][i]))&&fields.reduce((n,k)=>n+p.points[k],0)<=p.rank*3;}
+ function totalPoints(p){return p.rank*3+(p.bonusPoints||0);}
+ function useAttributeCardLow(s){const p=get(s),count=s.storyItems?.attributeCardLow;if(!p)throw Error("請先建立玩家武將");if(!Number.isSafeInteger(count)||count<1)throw Error("沒有自由屬性卡（低）");const next=(p.bonusPoints||0)+5;if(!Number.isSafeInteger(next+p.rank*3))throw Error("屬性點超出範圍");p.bonusPoints=next;s.storyItems.attributeCardLow=count-1;return 5;}
+ function valid(p){return !!p&&(p.bonusPoints===undefined||integer(p.bonusPoints,0,Number.MAX_SAFE_INTEGER-207))&&p.version===1&&typeof p.id==='string'&&p.id.length>0&&/^[\p{Script=Han}A-Za-z0-9]{2,4}$/u.test(p.name)&&Object.hasOwn(styles,p.style)&&integer(p.rank,0,69)&&integer(p.level,1,100)&&integer(p.rebirth,0,10000)&&integer(p.fragments,0,Number.MAX_SAFE_INTEGER)&&(!p.milestones||Array.isArray(p.milestones)&&new Set(p.milestones).size===p.milestones.length&&p.milestones.every(n=>integer(n,10,100)&&n%10===0))&&integer(p.xp,0,p.level===100?0:100*p.level*(p.rebirth+1)-1)&&p.points&&Object.keys(p.points).length===6&&fields.every((k,i)=>integer(p.points[k],0,100-styles[p.style][i]))&&fields.reduce((n,k)=>n+p.points[k],0)<=totalPoints(p);}
  function get(s=read()){return valid(s.playerOfficer)?s.playerOfficer:null;}
  function is(name){return name===active?.name;}
  function abilities(p){return Object.fromEntries(fields.map((k,i)=>[k,styles[p.style][i]+p.points[k]]));}
- function remaining(p){return p.rank*3-fields.reduce((n,k)=>n+p.points[k],0);}
+ function remaining(p){return totalPoints(p)-fields.reduce((n,k)=>n+p.points[k],0);}
  function create(s,name,style){if(s.playerOfficer)throw Error('已建立玩家武將');if(!['completed','skipped'].includes(s.tutorial?.status))throw Error('請先完成新手訓練');name=name.trim();if(!/^[\p{Script=Han}A-Za-z0-9]{2,4}$/u.test(name))throw Error('名稱請用2至4個中文字、英文字母或數字');if(!Object.hasOwn(styles,style))throw Error('請選擇風格');if((window.OFFICER_PROPOSAL?.entries||[]).some(p=>p.name===name)||Object.hasOwn(window.TestRoster||{},name)||['玩家武將','特殊'].includes(name))throw Error('此名稱已被使用，請換一個名字');const p={version:1,id:crypto.randomUUID(),name,style,rank:0,level:1,xp:0,rebirth:0,fragments:0,points:Object.fromEntries(fields.map(k=>[k,0]))};s.playerOfficer=p;unlock(s,p);return p;}
  function unlock(s,p){s.unlocks??={};for(const mode of ['story','battle']){s.unlocks[mode]??={heroes:[],letters:[]};if(!s.unlocks[mode].heroes.includes(p.name))s.unlocks[mode].heroes.push(p.name);}}
  function allocate(p,points){const next={...p,points:{...points}};if(!valid(next))throw Error('配點超過可用點數或單項100上限');p.points=next.points;}
@@ -37,5 +39,5 @@ window.PlayerOfficer=(()=>{
    window.TestRoster[p.name]={playerCard:true,hp:Math.round((400+a.body*8)*scale),atk:primary,def:(a.lead*.42+a.str*.18)*defScale,mdef:(a.lead*.2+a.int*.4)*defScale,physicalRatio:physical/primary,magicRatio:ma/primary,supportRatio:a.charm*1.5*scale/primary,combatVersion:1,interval:1/rate,range:magic?4:2,group:magic?'遠攻':'近戰',kind:magic?'magic':'hit',weaponLabel:magic?'策杖':'劍',skills:skillSets[p.style].map(x=>({...x})),quality};}
   return active;
  }
- return{key,fields,tiers,styles,skillSets,costs,starCost,upgrade,rebirth,rebirthReward,milestones,read,get,valid,is,abilities,remaining,create,unlock,allocate,gainXP,register,get active(){return active;}};
+ return{totalPoints,useAttributeCardLow,key,fields,tiers,styles,skillSets,costs,starCost,upgrade,rebirth,rebirthReward,milestones,read,get,valid,is,abilities,remaining,create,unlock,allocate,gainXP,register,get active(){return active;}};
 })();
