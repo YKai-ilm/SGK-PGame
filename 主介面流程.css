@@ -109,3 +109,5 @@
 #content.rewards-content{display:flex;flex-direction:column;overflow:hidden;min-height:0}.rewards-heading{flex:0 0 auto}.rewards-heading .reward-tabs{margin-bottom:10px}.rewards-scroll{flex:1;min-height:0;overflow-y:auto;overscroll-behavior-y:contain;scrollbar-width:thin;padding:0 2px 12px}.rewards-scroll>.panel:first-child{margin-top:0}
 
 .bag-item-content{min-width:0}.bag-item-mark-damaged{position:relative;overflow:hidden}.bag-item-mark-damaged svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}.bag-item>button{flex-shrink:0}
+
+.player-stat-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0}.player-stat-grid>div{display:flex;flex-direction:column;background:#e7eadb;padding:9px;border-radius:8px}.player-stat-grid b{font-size:.95em;overflow-wrap:anywhere}.player-growth{margin:16px 0;padding:12px;border:1px solid #aab69c;border-radius:9px}.player-growth summary{cursor:pointer;font-weight:bold}

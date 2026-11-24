@@ -13,3 +13,16 @@ const progression=P.create({tutorial:{status:'completed'}},'里程將','全能')
 // Additional allocations use deltas; refunds preserve earned/card points.
 {const s={tutorial:{status:'completed'}},p=P.create(s,'追加將','全能');p.rank=3;p.bonusPoints=5;const extra=n=>Object.fromEntries(P.fields.map(k=>[k,k==='str'?n:0]));P.addPoints(p,extra(4));P.addPoints(p,extra(3));assert.equal(p.points.str,7);assert.equal(P.abilities(p).str,67);assert.equal(P.remaining(p),7);const before=JSON.stringify(p);for(const n of [-1,1.5,8,NaN])assert.throws(()=>P.addPoints(p,extra(n)));assert.equal(JSON.stringify(p),before);P.addPoints(p,extra(0));assert.equal(p.points.str,7);P.resetPoints(p);assert.equal(P.remaining(p),14);assert.equal(P.abilities(p).str,60);assert.equal(p.bonusPoints,5);assert.equal(p.rank,3);P.addPoints(p,extra(14));assert.equal(P.remaining(p),0);assert(P.valid(JSON.parse(JSON.stringify(p))));}
 console.log('PASS incremental allocations, rejection without mutation, zero draft, full refunds preserve card/earned points');
+// Preview must remain read-only and match the established combat formulas.
+for(const style of Object.keys(P.styles))for(const level of [1,40,100]){
+ c.TestRoster={};const q=P.create({tutorial:{status:'completed'}},'預覽將',style);q.rank=9;q.level=level;q.fragments=100;q.points.str=3;
+ const before=JSON.stringify(q),extra=Object.fromEntries(P.fields.map(k=>[k,k==='body'?2:0]));
+ const stats=P.previewPoints(q,extra),a=P.abilities(q),scale=1+(level-1)*.03;
+ assert.equal(JSON.stringify(q),before);assert.equal(stats.hp,Math.round((400+(a.body+2)*8)*scale));
+ assert.equal(stats.physical,a.str*2*scale);assert.equal(stats.mdef,(a.lead*.2+a.int*.4)*(1+(level-1)*.015));
+ c.TestRoster={};P.register({playerOfficer:q});const roster=c.TestRoster[q.name],base=P.combatStats(q);
+ assert.equal(roster.hp,base.hp);assert.equal(roster.atk*roster.physicalRatio,base.physical);assert.equal(roster.interval,1/base.rate);
+ const prior=P.combatStats(q);P.upgrade(q);assert.equal(q.rank,10);assert.equal(q.fragments,90);assert.equal(P.remaining(q),27);assert.deepEqual(P.combatStats(q),prior);
+}
+console.log('PASS read-only previews, legacy combat parity for all styles/levels, quality transition grants points without direct stat change');
+

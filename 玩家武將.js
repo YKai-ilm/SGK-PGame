@@ -18,6 +18,8 @@ window.PlayerOfficer=(()=>{
  function get(s=read()){return valid(s.playerOfficer)?s.playerOfficer:null;}
  function is(name){return name===active?.name;}
  function abilities(p){return Object.fromEntries(fields.map((k,i)=>[k,styles[p.style][i]+p.points[k]]));}
+ function combatStats(p){const a=abilities(p),scale=1+(p.level-1)*.03,defScale=1+(p.level-1)*.015;return {hp:Math.round((400+a.body*8)*scale),physical:a.str*2*scale,magic:a.int*2*scale,def:(a.lead*.42+a.str*.18)*defScale,mdef:(a.lead*.2+a.int*.4)*defScale,support:a.charm*1.5*scale,rate:(.5+a.agi*.005)*(1+(p.level-1)*.001)};}
+ function previewPoints(p,extra){const next=JSON.parse(JSON.stringify(p));addPoints(next,extra);return combatStats(next);}
  function remaining(p){return totalPoints(p)-fields.reduce((n,k)=>n+p.points[k],0);}
  function create(s,name,style){if(s.playerOfficer)throw Error('已建立玩家武將');if(!['completed','skipped'].includes(s.tutorial?.status))throw Error('請先完成新手訓練');name=name.trim();if(!/^[\p{Script=Han}A-Za-z0-9]{2,4}$/u.test(name))throw Error('名稱請用2至4個中文字、英文字母或數字');if(!Object.hasOwn(styles,style))throw Error('請選擇風格');if((window.OFFICER_PROPOSAL?.entries||[]).some(p=>p.name===name)||Object.hasOwn(window.TestRoster||{},name)||['玩家武將','特殊'].includes(name))throw Error('此名稱已被使用，請換一個名字');const p={version:1,id:crypto.randomUUID(),name,style,rank:0,level:1,xp:0,rebirth:0,fragments:0,points:Object.fromEntries(fields.map(k=>[k,0]))};s.playerOfficer=p;unlock(s,p);return p;}
  function unlock(s,p){s.unlocks??={};for(const mode of ['story','battle']){s.unlocks[mode]??={heroes:[],letters:[]};if(!s.unlocks[mode].heroes.includes(p.name))s.unlocks[mode].heroes.push(p.name);}}
@@ -37,9 +39,9 @@ window.PlayerOfficer=(()=>{
   const p=get(s);if(!p)return null;active=JSON.parse(JSON.stringify(p));const a=abilities(p),quality=tiers[Math.floor(p.rank/10)];
   if(window.OFFICER_PROPOSAL){const list=window.OFFICER_PROPOSAL.entries,entry={name:p.name,faction:'特殊',role:'玩家武將 · '+p.style,playerCard:true,quality,...a};const index=list.findIndex(x=>x.playerCard);if(index<0)list.push(entry);else list[index]=entry;}
   if(window.HERO_COMBAT_DATA)window.HERO_COMBAT_DATA[p.name]={abilities:a,quality,playerCard:true};
-  if(window.TestRoster){const scale=1+(p.level-1)*.03,defScale=1+(p.level-1)*.015,rate=(.5+a.agi*.005)*(1+(p.level-1)*.001),magic=['謀','魅'].includes(p.style),physical=a.str*2*scale,ma=a.int*2*scale,primary=magic?ma:physical;
-   window.TestRoster[p.name]={playerCard:true,hp:Math.round((400+a.body*8)*scale),atk:primary,def:(a.lead*.42+a.str*.18)*defScale,mdef:(a.lead*.2+a.int*.4)*defScale,physicalRatio:physical/primary,magicRatio:ma/primary,supportRatio:a.charm*1.5*scale/primary,combatVersion:1,interval:1/rate,range:magic?4:2,group:magic?'遠攻':'近戰',kind:magic?'magic':'hit',weaponLabel:magic?'策杖':'劍',skills:skillSets[p.style].map(x=>({...x})),quality};}
+  if(window.TestRoster){const stats=combatStats(p),magic=['謀','魅'].includes(p.style),physical=stats.physical,ma=stats.magic,primary=magic?ma:physical;
+   window.TestRoster[p.name]={playerCard:true,hp:stats.hp,atk:primary,def:stats.def,mdef:stats.mdef,physicalRatio:physical/primary,magicRatio:ma/primary,supportRatio:stats.support/primary,combatVersion:1,interval:1/stats.rate,range:magic?4:2,group:magic?'遠攻':'近戰',kind:magic?'magic':'hit',weaponLabel:magic?'策杖':'劍',skills:skillSets[p.style].map(x=>({...x})),quality};}
   return active;
  }
- return{totalPoints,useAttributeCardLow,key,fields,tiers,styles,skillSets,costs,starCost,upgrade,rebirth,rebirthReward,milestones,read,get,valid,is,abilities,remaining,addPoints,resetPoints,create,unlock,allocate,gainXP,register,get active(){return active;}};
+ return{combatStats,previewPoints,totalPoints,useAttributeCardLow,key,fields,tiers,styles,skillSets,costs,starCost,upgrade,rebirth,rebirthReward,milestones,read,get,valid,is,abilities,remaining,addPoints,resetPoints,create,unlock,allocate,gainXP,register,get active(){return active;}};
 })();
