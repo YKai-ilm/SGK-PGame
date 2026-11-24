@@ -28,7 +28,7 @@
   const local=entries(nativeLocal),route=routes[id];
   for(const k of Object.keys(local))if(k.startsWith('three-kingdoms-')||k.startsWith('tk-save-'))delete local[k];
   const profile={version:1,mode:'story',storyFaction:'蜀',libraryFaction:'蜀',page:'home',tutorial:{status:'skipped',step:0},teams:{},unlocks:{story:{heroes:[],letters:[]},battle:{heroes:[],letters:[]}},storyEvents:{},storyItems:{}};
-  if(id.startsWith('town-')){profile.storyEvents={grainRoute:{armyFormed:true}};profile.worldTravel={current:route.group};}
+  if(id.startsWith('town-')){profile.storyEvents={grainRoute:{armyFormed:true}};profile.worldTravel={current:route.group};if(route.group==='宛城')profile.storyEvents.wancheng={ordered:true,won:true,shown:true,wonRoute:'letter'};}
   if(id==='xz-客棧'||id.startsWith('town-')){profile.rewards={wallet:{coins:100,diamonds:0}};profile.storyMorale={value:50};}
   local[villageKey]=JSON.stringify({scene:route.engine==='taoyuan'?route.scene:'home',party:[],seen:[],active:null});
   local[cityKey]=JSON.stringify({scene:route.engine==='xuzhou'?route.scene:'內城',flags:{},history:[],active:null});
