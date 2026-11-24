@@ -32,7 +32,7 @@ const old=fresh();old.storyEvents.peachOath=true;old.rewards.history.push({key:'
  console.log('PASS main chapter tier-2 chest, separate old-save top-up, no duplicate fragments/chests, history recovery and no subchapter chest');
 }
 
-{const s=fresh();s.storyEvents.yellowOpening={outpostWon:true,hqWon:true,reported:true};assert.equal(R.claim(s,'chapter-3-1'),null);s.storyEvents.yellowOpening.completed=true;const reward=R.claim(s,'chapter-3-1');assert.equal(reward.playerFragments,10);assert.equal(reward.chestCount||0,0);assert.equal(R.claim(s,'chapter-3-1'),null);assert(!R.rows(s).some(r=>r.id==='chapter-3'));}
+{const s=fresh();s.storyEvents.yellowOpening={outpostWon:true,hqWon:true,reported:true};assert.equal(R.claim(s,'chapter-3-1'),null);s.storyEvents.yellowOpening.completed=true;const reward=R.claim(s,'chapter-3-1');assert.equal(reward.playerFragments,10);assert.equal(reward.chestCount||0,0);assert.equal(R.claim(s,'chapter-3-1'),null);assert.equal(R.rows(s).find(r=>r.id==='chapter-3').value,0);assert.equal(R.claim(s,'chapter-3'),null);}
 
 {const state=fresh();state.storyEvents.hanCampaign={fireWon:true,southOrdered:true};assert.equal(R.claim(state,'chapter-han-campaign'),null);state.storyEvents.hanCampaign.completed=true;assert.equal(R.claim(state,'chapter-han-campaign').playerFragments,10);assert.equal(R.claim(state,'chapter-han-campaign'),null);assert.equal(R.claim(state,'chapter-3'),null);console.log('PASS Han final-report fragment boundary and no early main-chapter reward');}
 

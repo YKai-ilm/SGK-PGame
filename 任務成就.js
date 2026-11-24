@@ -32,6 +32,8 @@ window.ProgressRewards=(()=>{
    ['2-2','義勇成軍','sub',!!s.storyEvents?.grainRoute?.armyFormed,'完成護軍後，與陶謙完整交談並領取成軍防具與劉關張武將卡。'],
    ['2-3','糜家小女','sub',!!s.storyEvents?.grainRoute?.miRecruited,'完成護軍與糜竺說媒後，再次交談，取得糜竺相助。此階段尚未成婚。'],
    ['2-4','華陀初現','sub',!!s.storyEvents?.yunlongRescue?.bookGiven,'完成救援、回徐州留宿，再與華陀完成贈書對話。'],
+['3-3','討伐三張','sub',!!s.storyEvents?.threeZhang?.completed,'收復廣宗與下曲陽，完成兩將處置，再向皇甫嵩完整覆命。'],
+['3','黃巾烽火','main',!!s.storyEvents?.threeZhang?.chapterCompleted,'完成討伐三張後，回徐州向陶謙完整回報。'],
 ['3-2','宛城討伐','sub',!!s.storyEvents?.wancheng?.completed,'擊退韓忠後安置百姓，再向朱儁完整覆命。'],
 ['han-campaign','漢軍會師','sub',!!s.storyEvents?.hanCampaign?.completed,'奉盧植之命前往長社，完成接應與解圍，送別盧植後隨朱儁南下聽取軍情。'],
 ['3-1','初戰黃巾','sub',!!s.storyEvents?.yellowOpening?.completed,'擊退鄧茂、程遠志，向前線軍吏交代，再回徐州向陶謙完成回報。']
