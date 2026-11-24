@@ -1,6 +1,6 @@
 'use strict';
 // Only register encounter variants in the two Han campaign battles; permanent cards are unchanged.
-if(new URLSearchParams(location.search).has('hanBattle')){
+if(new URLSearchParams(location.search).has('hanBattle')||new URLSearchParams(location.search).has('threeZhangBattle')){
  const definitions={
   '盧植':{kind:'hit',range:2,skills:[{...TestRoster['劉備'].skills[1],name:'援軍・護陣',cd:7},{...TestRoster['徐庶'].skills[1],name:'援軍・整軍',cd:8}]},
   '朱儁':{kind:'hit',range:2,skills:[{...TestRoster['關平'].skills[0],name:'援軍・奮擊',cd:6},{...TestRoster['張飛'].skills[1],name:'援軍・堅守',cd:7}]},
