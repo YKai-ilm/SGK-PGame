@@ -24,14 +24,16 @@
   GrainQuestUI.augment(state.scene,points);$('backdrop').src=image;$('backdrop').alt=state.scene;for(const [name,x,y,fn]of points){const b=document.createElement('button');b.className='hotspot scene-sign '+((['鄧茂','陶謙'].includes(name)||CharacterCardStyle.isHistorical(name))?'sign-story':['離開','回內城'].includes(name)?'sign-exit':'sign-common');b.style.cssText=`left:${x}%;top:${y}%;width:${name.length>2?13.5:12}%`;b.dataset.name=name;const span=document.createElement('span');span.textContent=name;b.append(span);b.onclick=()=>protect(fn);$('hotspots').append(b);}window.ThreeZhangUI?.decorate();YellowQuestUI.decorate();window.HanQuestUI?.decorate();window.WanQuestUI?.decorate();
  }
  function talk(lines,action=null){state.active={lines,index:0,action,recorded:[],visitors:action==='miZhenAwaitingMarriage'?party().slice():undefined};save();show();}
- function show(){stop();if(!state.active||document.hidden||$('history').open)return;const a=state.active,[speaker,line]=a.lines[a.index];$('dialogue').hidden=false;$('resume').hidden=true;$('hotspots').inert=true;$('speaker').textContent=speaker;$('line').textContent=line;$('lineCount').textContent=`${a.index+1} / ${a.lines.length}`;$('nextLine').textContent=a.index===a.lines.length-1?'結束對話':'下一句';if(!a.recorded.includes(a.index)){state.history.push({speaker,line,scene:state.scene});a.recorded.push(a.index);save();}timer=setTimeout(()=>protect(next),Math.max(2200,[...line].length*100));}
+ function miVisitor(){const active=state.active,visible=state.scene==='糜家'&&active?.action==='miFamilyVisited'&&active.index>=2;let card=document.getElementById('miVisitCard');if(!visible){card?.remove();return;}if(!card){card=document.createElement('button');card.id='miVisitCard';card.className='hotspot scene-sign sign-story';card.dataset.name='糜竺';card.style.cssText='left:62%;top:30%;width:12%';card.innerHTML='<span>糜竺</span>';card.onclick=()=>{if(state.active)show();};$('hotspots').append(card);}}
+ function show(){stop();miVisitor();if(!state.active||document.hidden||$('history').open)return;const a=state.active,[speaker,line]=a.lines[a.index];$('dialogue').hidden=false;$('resume').hidden=true;$('hotspots').inert=true;$('speaker').textContent=speaker;$('line').textContent=line;$('lineCount').textContent=`${a.index+1} / ${a.lines.length}`;$('nextLine').textContent=a.index===a.lines.length-1?'結束對話':'下一句';if(!a.recorded.includes(a.index)){state.history.push({speaker,line,scene:state.scene});a.recorded.push(a.index);save();}timer=setTimeout(()=>protect(next),Math.max(2200,[...line].length*100));}
  function next(){stop();if(!state.active||$('dialogue').hidden||$('history').open)return;const a=state.active;if(a.index<a.lines.length-1){a.index++;save();show();return;}finish(a.action);}
- function end(){state.active=null;save();$('dialogue').hidden=true;$('hotspots').inert=false;$('resume').hidden=true;}
+ function end(){state.active=null;miVisitor();save();$('dialogue').hidden=true;$('hotspots').inert=false;$('resume').hidden=true;}
  function finish(action){
   if(window.ThreeZhangUI?.finish(action)||window.WanQuestUI?.finish(action)||window.HanQuestUI?.finish(action)||YellowQuestUI.finish(action)||GrainQuestUI.finish(action))return;
   if(action==='huatuoGift'){YunlongRescue.gift();end();notice('取得青囊書（殘）×1。可在武將裝備的飾品格裝備。');return;}
   if(action==='miElderHeard')state.flags.miElderHeard=true;
   if(action==='miZhenAwaitingMarriage'){state.flags.miZhenAwaitingMarriage=true;state.flags.miZhenVisitors=state.active?.visitors||[];}
+  if(['miFamilyVisited','miZhenPromised','miFamilyReturned'].includes(action)){state.flags[action]=true;end();render();if(action==='miFamilyReturned'&&GrainQuest.recruitMi())notice('獲得糜竺完整武將卡。已有卡片保留養成；糜家小女副章節玩家碎片10片可至成就領取。');return;}
   if(action==='miMatchmakingDiscussed')state.flags.miMatchmakingDiscussed=true;
   if(action==='huatuo'){const result=VillageHiddenItems.completeHuatuo();if(!result&&!VillageHiddenItems.huatuoDone()){end();notice('身上已沒有糖葫蘆，尚未完成交付。');return;}}
   if(action==='clerk')state.flags.introduced=true;
@@ -40,13 +42,16 @@
   if(action==='apprenticeFirst')state.flags.apprenticeFirst=true;
   if(action==='sleep'){end();startStay(0);return;}
   end();
-  if(action==='accept')menu('城西護糧','是否前往城西接應糧車？',[['願往接應',()=>{state.flags.accepted=true;save();}],['稍作準備',()=>{}]]);
+  if(action==='miMatchmakingDiscussed')notice('任務：再訪糜家。到徐州城西糜家拜訪糜太公，再與糜貞交談。');
+  else if(action==='accept')menu('城西護糧','是否前往城西接應糧車？',[['願往接應',()=>{state.flags.accepted=true;save();}],['稍作準備',()=>{}]]);
   else if(action==='apprenticeSecond'&&VillageHiddenItems.candyOwned())huatuo();
   else if(action==='huatuo')notice('華陀初現：糖葫蘆 −1，茯苓草本膏 +1。已取得雲龍山線索，請前往尋訪華陀。');
   else if(action?.startsWith('service:'))service(action.slice(8));
  }
  function huatuo(){talk([['劉備','我這裡有隻糖葫蘆，很甜唷，送給您吧，再勞煩轉知華藥師，吾誠心來訪，恰逢藥師外出，未能見上一面實屬可惜！'],['藥童','好的，若藥師提早回來，我會轉知！不過你們也可以去城外南郊的雲龍山看看，藥師曾說那個地方的靈芝甚有靈性，此次應會去那邊採藥才是。']],'huatuo');}
  function npc(id){
+  if(id==='城主府一'&&state.flags.miMatchmakingDiscussed){if(!state.flags.miFamilyVisited)talk([['糜竺','婚事還須當面談妥。請到城西糜家拜訪父親，我也會回去一趟。']]);else if(!state.flags.miZhenPromised)talk([['糜竺','父親已將心意說明，還請親自與小妹談談。她的心意，比我這做兄長的話更重要。']]);else if(!state.flags.miFamilyReturned||(GrainQuest.progress().completed&&!GrainQuest.progress().miRecruited))talk(MiFamilyStory.reunion,'miFamilyReturned');else talk([['糜竺','妹夫，軍需若有難處，儘管與我商議。也別忘了有空回家看看小妹。']]);return;}
+
   if(window.HanQuestUI?.npc(id)||YellowQuestUI.npc(id)||GrainQuestUI.npc(id))return;
   if(id==='returnedHuatuo'){if(!YunlongRescue.progress().completed)return;talk(YunlongRescue.progress().bookGiven?[['華陀','黃巾作亂，百姓多苦多難，也不知能救下多少人。']]:YunlongRescueDialogue.gift,YunlongRescue.progress().bookGiven?null:'huatuoGift');return;}
   if(id==='apprentice'){if(VillageHiddenItems.huatuoDone())talk([['藥童','我還有好多草藥要磨，何時才到頭呢？']]);else if(!state.flags.apprenticeFirst)talk([['藥童','華藥師外出採藥，通常要數週不等，爾等日後再來吧！我會轉達有客來訪。']],'apprenticeFirst');else talk([['藥童','每天都在這邊磨藥，吃的藥湯都是苦的，好想吃點甜的東西唷！']],'apprenticeSecond');return;}

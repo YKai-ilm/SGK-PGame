@@ -31,6 +31,7 @@ window.ProgressRewards=(()=>{
  if(p.won)return '目前：回廣宗攻城口處置張梁。';
  return '依軍令收復失地、安置百姓，完成軍前回報。';
  }
+ function miObjective(s){let f={};try{f=JSON.parse(localStorage.getItem('three-kingdoms-xuzhou-story-v1')||'{}').flags||{};}catch{}if(f.miMatchmakingDiscussed&&!f.miFamilyVisited)return '任務：再訪糜家。到徐州城西與糜太公交談。';if(f.miFamilyVisited&&!f.miZhenPromised)return '目前：與糜貞確認心意。';if(f.miZhenPromised&&!f.miFamilyReturned)return '目前：回城主府找糜竺，告知親事已定。';return s.storyEvents?.grainRoute?.miRecruited?'已取得糜竺相助；親事已定，婚期另議。':'完成義勇成軍、糜貞待嫁後，找糜竺說媒。';}
  function chapterRows(s){
   if(!window.PlayerOfficer?.get(s))return [];
   let party=[];try{party=JSON.parse(localStorage.getItem('three-kingdoms-taoyuan-dialogue-v1')||'{}').party||[];}catch{}
@@ -42,7 +43,7 @@ window.ProgressRewards=(()=>{
    ['1','桃園聚義','main',oath&&farewell,'完成本章故事並向劉母正式辭行；掃蕩離村不代替完成。'],
    ['2-1','運糧護衛','sub',!!s.storyEvents?.grainRoute?.completed,grainObjective(s)],
    ['2-2','義勇成軍','sub',!!s.storyEvents?.grainRoute?.armyFormed,'完成護軍後，與陶謙完整交談並領取成軍防具與劉關張武將卡。'],
-   ['2-3','糜家小女','sub',!!s.storyEvents?.grainRoute?.miRecruited,'完成護軍與糜竺說媒後，再次交談，取得糜竺相助。此階段尚未成婚。'],
+   ['2-3','糜家小女','sub',!!s.storyEvents?.grainRoute?.miRecruited,miObjective(s)],
    ['2-4','華陀初現','sub',!!s.storyEvents?.yunlongRescue?.bookGiven,'完成救援、回徐州留宿，再與華陀完成贈書對話。'],
 ['3-3','討伐三張','sub',!!s.storyEvents?.threeZhang?.completed,threeZhangObjective(s)],
 ['3','黃巾烽火','main',!!s.storyEvents?.threeZhang?.chapterCompleted,'完成討伐三張後，回徐州向陶謙完整回報。'],

@@ -1379,6 +1379,16 @@ Object.assign(window.LetterTraits,{
  '梁':{effect:'guard',name:'棟梁不倒',threshold:.6,reduction:.11,desc:'受擊前生命不高於60%時，物理與謀略傷害減少11%；固定傷害除外。'},
  '寶':{effect:'ward',name:'護寶',period:6,ratio:.075,desc:'在場每6秒取得最大生命7.5%的專屬護盾，不累加；離場清除並重新計時。'}
 });
+Object.assign(window.LetterDesign,{
+ '糜':['糧粥、細糧；取供糧意象','護糧兵',440,27,21,20,1,1.35,'hit'],
+ '竺':['竹篤之意象；取堅定守備','竹盾兵',500,26,24,17,1,1.4,'hit'],
+ '芳':['芳香、芬芳','芳草術士',350,30,12,23,3,1.5,'magic']
+});
+Object.assign(window.LetterTraits,{
+ '糜':{effect:'ward',name:'糧備',period:6,ratio:.075,desc:'在場每6秒取得最大生命7.5%的專屬護盾，不累加；離場清除並重新計時。'},
+ '竺':{effect:'guard',name:'篤守',threshold:.6,reduction:.11,desc:'受擊前生命不高於60%時，物理與謀略傷害減少11%；固定傷害除外。'},
+ '芳':{effect:'pierce',name:'芳息',chance:.2,ignore:.3,desc:'普攻每次命中有20%機率忽略目標30%對應防禦，僅限該次攻擊。'}
+});
 for(const [letter,row] of Object.entries(window.LetterDesign)){
  const [meaning,role,hp,atk,def,mdef,range,interval,kind]=row;
  window.TestRoster[letter]={hp,atk,def,mdef,range,interval,kind,group:['arrow','magic'].includes(kind)?'遠攻':'近戰',skills:[],letter:true,meaning,role,trait:window.LetterTraits[letter]||null};

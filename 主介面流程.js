@@ -12,6 +12,7 @@
  const knownNames=new Set(roster.map(p=>p.name)),knownLetters=new Set(roster.map(p=>p.name).join(''));
  // 舊版字卡庫漏列三公，已放走者依劇情憑據補回收藏；不重發金幣、不重置養成。
  const beforeThreeLordsUnlocks=JSON.stringify(state.unlocks);
+ if(state.storyEvents?.grainRoute?.miRecruited){state.unlocks??={};for(const mode of ['story','battle']){const own=state.unlocks[mode]??={heroes:[],letters:[]};own.heroes??=[];if(!own.heroes.includes('糜竺'))own.heroes.push('糜竺');}}
  const threeLordsProgress=state.storyEvents?.threeZhang||{};
  for(const [name,choice,given]of [['張梁','zhangLiangChoice','zhangLiangCardGiven'],['張寶','zhangBaoChoice','zhangBaoCardGiven']])if(threeLordsProgress[choice]==='spare'||threeLordsProgress[given]===true){state.unlocks??={};for(const mode of ['story','battle']){state.unlocks[mode]??={heroes:[],letters:[]};if(!Array.isArray(state.unlocks[mode].heroes))state.unlocks[mode].heroes=[];if(!state.unlocks[mode].heroes.includes(name))state.unlocks[mode].heroes.push(name);}}
  const ownedData=state.unlocks;state.unlocks={};for(const mode of ['story','battle']){const data=ownedData?.[mode];state.unlocks[mode]={heroes:Array.isArray(data?.heroes)?[...new Set(data.heroes.filter(n=>knownNames.has(n)))]:[],letters:Array.isArray(data?.letters)?[...new Set(data.letters.filter(n=>knownLetters.has(n)))]:[]};}
