@@ -15,3 +15,5 @@ StorySceneGuide.places.push({id:'廣宗軍前',name:'廣宗軍前',image:'黃巾
 
 StorySceneGuide.places.push({id:'下曲陽',name:'下曲陽縣城',image:'下曲陽縣城-v1.png',group:'下曲陽',status:'已接入／新增外景待回饋',desc:'北方平原縣城，榆樹庭院、曬場與疏朗街坊。',npc:'老農及各設施店家',guide:'一般時可探索；下曲陽軍報後封城，張寶戰後處置完成再開城。',preview:'下曲陽討伐攻略.html'},{id:'下曲陽城外',name:'下曲陽城外',image:'漢軍驛道-v1.png',group:'黃巾烽火',status:'已接入／沿用道路底圖',desc:'安置鄉民、查明守備，再迎戰張寶。',npc:'逃難居民、引路鄉民、張寶',guide:'正常六波守城戰，勝利處置後恢復城內設施。',preview:'下曲陽討伐攻略.html'});
 for(const label of ['縣衙','驛站','客棧','道具鋪','武器鋪','防具鋪','編輯所']){const id=({'縣衙':'役所','武器鋪':'武器店','防具鋪':'防具店','道具鋪':'道具店'})[label]||label,base=SharedInteriorScenes.find(x=>x.id===id);if(base)StorySceneGuide.places.push({id:'下曲陽・'+label,name:'下曲陽・'+label,image:base.image,group:'下曲陽',status:'已接入／共用室內',desc:'沿用既有室內，離開返回下曲陽。',npc:base.npc,guide:'佔領期間不可進入；收復後恢復一般服務。',preview:'下曲陽討伐攻略.html',implementedFacility:true});}
+
+StorySceneGuide.places.push({id:'黃巾藏營',name:'黃巾藏營',image:'黃巾主營-v1.png',group:'黃巾烽火',status:'支線已接入／入口待葛陂主線',desc:'沿用既有黃巾主營底圖，作為徐州緊急討伐場景。',npc:'張梁、張寶；戰後揭露張角',guide:'兩弟皆放走且推進至葛陂事件後開啟。先戰兩弟，回場景揭露生還，再戰三公；回徐州向陶謙覆命。現在一般主線尚未開放入口。',preview:'天地人三公攻略.html'});

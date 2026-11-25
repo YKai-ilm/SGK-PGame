@@ -14,6 +14,7 @@ window.PlayerOfficer=(()=>{
  const integer=(n,min,max)=>Number.isSafeInteger(n)&&n>=min&&n<=max;
  function totalPoints(p){return p.rank*3+(p.bonusPoints||0);}
  function useAttributeCardLow(s){const p=get(s),count=s.storyItems?.attributeCardLow;if(!p)throw Error("請先建立玩家武將");if(!Number.isSafeInteger(count)||count<1)throw Error("沒有自由屬性卡（低）");const next=(p.bonusPoints||0)+5;if(!Number.isSafeInteger(next+p.rank*3))throw Error("屬性點超出範圍");p.bonusPoints=next;s.storyItems.attributeCardLow=count-1;return 5;}
+ function useAttributeCard(s){const p=get(s),count=s.storyItems?.attributeCard;if(!p)throw Error("請先建立玩家武將");if(!Number.isSafeInteger(count)||count<1)throw Error("沒有自由屬性分配卡");const next=(p.bonusPoints||0)+10;if(!Number.isSafeInteger(next+p.rank*3))throw Error("屬性點超出範圍");p.bonusPoints=next;s.storyItems.attributeCard=count-1;return 10;}
  function valid(p){return !!p&&(p.bonusPoints===undefined||integer(p.bonusPoints,0,Number.MAX_SAFE_INTEGER-207))&&p.version===1&&typeof p.id==='string'&&p.id.length>0&&/^[\p{Script=Han}A-Za-z0-9]{2,4}$/u.test(p.name)&&Object.hasOwn(styles,p.style)&&integer(p.rank,0,69)&&integer(p.level,1,100)&&integer(p.rebirth,0,10000)&&integer(p.fragments,0,Number.MAX_SAFE_INTEGER)&&(!p.milestones||Array.isArray(p.milestones)&&new Set(p.milestones).size===p.milestones.length&&p.milestones.every(n=>integer(n,10,100)&&n%10===0))&&integer(p.xp,0,p.level===100?0:100*p.level*(p.rebirth+1)-1)&&p.points&&Object.keys(p.points).length===6&&fields.every((k,i)=>integer(p.points[k],0,100-styles[p.style][i]))&&fields.reduce((n,k)=>n+p.points[k],0)<=totalPoints(p);}
  function get(s=read()){return valid(s.playerOfficer)?s.playerOfficer:null;}
  function is(name){return name===active?.name;}
@@ -43,5 +44,5 @@ window.PlayerOfficer=(()=>{
    window.TestRoster[p.name]={playerCard:true,hp:stats.hp,atk:primary,def:stats.def,mdef:stats.mdef,physicalRatio:physical/primary,magicRatio:ma/primary,supportRatio:stats.support/primary,combatVersion:1,interval:1/stats.rate,range:magic?4:2,group:magic?'遠攻':'近戰',kind:magic?'magic':'hit',weaponLabel:magic?'策杖':'劍',skills:skillSets[p.style].map(x=>({...x})),quality};}
   return active;
  }
- return{combatStats,previewPoints,totalPoints,useAttributeCardLow,key,fields,tiers,styles,skillSets,costs,starCost,upgrade,rebirth,rebirthReward,milestones,read,get,valid,is,abilities,remaining,addPoints,resetPoints,create,unlock,allocate,gainXP,register,get active(){return active;}};
+ return{combatStats,previewPoints,totalPoints,useAttributeCard,useAttributeCardLow,key,fields,tiers,styles,skillSets,costs,starCost,upgrade,rebirth,rebirthReward,milestones,read,get,valid,is,abilities,remaining,addPoints,resetPoints,create,unlock,allocate,gainXP,register,get active(){return active;}};
 })();

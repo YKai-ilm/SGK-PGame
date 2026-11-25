@@ -36,6 +36,7 @@ window.YellowTurbanEncounter=(()=>{
  function applyStoryStats(e,wave){if(window.VillageSweep?.combatVersion>=8&&window.HERO_COMBAT_DATA?.[e.name]){const stats=HeroCombat.encounter(e.name,{stars:1,level:VillageSweep.combatVersion>=9?officerLevel(e.name):wave},wave);Object.assign(e,stats,{max:stats.hp,combatVersion:VillageSweep.combatVersion});}return e;}
  // Each chapter has explicit phases; short encounters do not inherit six-wave finals.
  const stageLevels={
+  'three-lords-brothers':[10,10,11,11,12,12],'three-lords-lords':[11,11,12,12,13,13],
   'taoyuan-defense':[1],'taoyuan-rescue':[1,1,2],'yunlong-bandits':[2],
   'grain-rescue':[2,2,3],'grain-camp':[2,2,3,3,4],
   'yellow-outpost':[3,3,4,4,5,5],'yellow-hq':[4,4,5,5,6,6],

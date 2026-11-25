@@ -26,7 +26,8 @@
     "徐州城內城預覽.html": "xuzhou",
     "雲龍山場景預覽.html": "xuzhou",
     "黃巾前線.html": "yellow-turban",
-    "漢軍會師.html": "yellow-turban"
+    "漢軍會師.html": "yellow-turban",
+    "黃巾藏營.html": "yellow-turban"
   },
   "sceneRules": [
     {
@@ -74,7 +75,8 @@
         "宛城城門",
         "宛城城內",
         "長社縣城",
-        "廣宗縣城", "下曲陽縣城"
+        "廣宗縣城",
+        "下曲陽縣城"
       ]
     }
   ]
