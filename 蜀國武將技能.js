@@ -51,6 +51,15 @@ window.ShuSkills=(()=>{
   const source=HERO_COMBAT_DATA[row.name];if(!source)throw Error('缺少蜀將能力：'+row.name);
   TestRoster[row.name]={hp:1,atk:1,def:0,mdef:0,interval:1,kind:row.kind,group:row.group,range:row.range,weaponLabel:row.weapon,skills:[make(row.skill1,row.effect1,source.quality,row.range,row.skill1Overrides),make(row.skill2,row.effect2,source.quality,row.range,row.skill2Overrides)],skillOriginQuality:source.quality};
  }
+ // 補齊字卡庫各陣營；舊技能維持原樣，與既有施放、冷卻、存檔共用執行器。
+ for(const row of window.ADDITIONAL_HERO_SKILLS?.entries||[]){
+  if(TestRoster[row.name]?.skills?.length)continue;
+  HERO_COMBAT_DATA[row.name]??={abilities:row.abilities,quality:row.quality};
+  const source=HERO_COMBAT_DATA[row.name];
+  TestRoster[row.name]={hp:1,atk:1,def:0,mdef:0,interval:1,kind:row.kind,group:row.group,range:row.range,weaponLabel:row.weapon,skills:[make(row.skill1,row.effect1,source.quality,row.range,row.skill1Overrides),make(row.skill2,row.effect2,source.quality,row.range,row.skill2Overrides)],skillOriginQuality:source.quality};
+  // 缺少的姓名散字沿用基本近／遠攻模板，確保七將招募及局內組將有可用材料。
+  for(const ch of row.name)if(!TestRoster[ch]){const ranged=['arrow','magic'].includes(row.kind),data=[ch+'：姓名組將用單字',ranged?'散字遠兵':'散字守兵',ranged?350:440,ranged?30:28,ranged?12:20,ranged?20:16,ranged?3:1,ranged?1.4:1.35,ranged?row.kind:'hit'];LetterDesign[ch]=data;const [meaning,role,hp,atk,def,mdef,range,interval,kind]=data;TestRoster[ch]={meaning,role,hp,atk,def,mdef,range,interval,kind,group:ranged?'遠攻':'近戰',letter:true,skills:[],trait:null};}
+ }
  function controlled(a){return Math.max(a.stun||0,a.root||0,a.slow||0,a.attackSlow||0,a.letterSlow||0,a.lingSlow||0,a.airborne||0,a.shuConfused||0)>elapsed;}
  function cleanse(a){a.stun=a.root=a.slow=a.attackSlow=a.letterSlow=a.lingSlow=0;}
  function benefit(u,a,s){
