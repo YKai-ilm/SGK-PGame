@@ -13,7 +13,7 @@
  if(!label){label=document.createElement('span');bar.append(label);}label.classList.add('story-battle-title');label.id=label.id||'battleHeading';
  function update(){
   const total=window.TutorialBattleConfig?.waves||window.VillageSweep?.waves||6,current=Math.min(total,Math.max(1,typeof wave==='number'?wave:1));
-  if(label.id==='sweepProgress')name=window.YellowTurbanEncounter?.current()?.name||'掃蕩賊寇';
+  if(label.id==='sweepProgress')name=window.VillageSweep?.title||window.YellowTurbanEncounter?.current()?.name||'掃蕩賊寇';
   const text='・'+current+'/'+total+'波';
   if(label.children.length!==2){const title=document.createElement('span'),progress=document.createElement('span');label.replaceChildren(title,progress);}
   if(label.firstElementChild.textContent!==name)label.firstElementChild.textContent=name;
