@@ -119,7 +119,7 @@
  WorldTravel.recordScene('桃園起兵.html');
  if(WorldTravel.consumeArrival('桃源村')){state.scene='village';state.active=null;save();}
  $('closeExit').onclick=()=>$('villageExit').close();
- $('startSweep').onclick=()=>{state.scene='village';state.active=null;save();if(!window.SceneTest?.holdNavigation('戰場直版.html?storySweep=1&returnTo='+encodeURIComponent('桃園起兵.html')))location.href='戰場直版.html?storySweep=1&returnTo='+encodeURIComponent('桃園起兵.html');};
+ $('startSweep').onclick=()=>{state.scene='village';state.active=null;save();RegionalSweep.start('桃源村');};
  $('goXuzhou').onclick=()=>{if(!VillageJourney.status().unlocked)return;state.scene='village';state.active=null;save();if(!window.SceneTest?.holdNavigation('徐州城入口.html'))location.href='徐州城入口.html';};
  window.addEventListener('storage',e=>{if(e.key===VillageJourney.key&&$('villageExit').open){const p=VillageJourney.status();$('goXuzhou').disabled=!p.unlocked;$('goXuzhou').textContent='任務：前往徐州城'+(p.visited?'':'（滅敵 '+Math.min(10,p.wins)+'/10）');}});
  function showOathCards(){

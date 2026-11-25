@@ -10,7 +10,7 @@
     "agi": "敏捷",
     "charm": "魅力"
   },
-  "policy": "補充81人的遊戲能力初評；含黃巾線5人，數值非原始史料。",
+  "policy": "補充85人的遊戲能力評定；數值非史料原值。",
   "entries": [
     {
       "name": "甄姬",
@@ -2810,6 +2810,118 @@
           "type": "被動",
           "description": "接應目標生命低於30%時，該次治療提高25%。",
           "status": "待實裝"
+        }
+      ]
+    },
+    {
+      "name": "波才",
+      "abilities": {
+        "str": 74,
+        "int": 65,
+        "lead": 79,
+        "body": 76,
+        "agi": 62,
+        "charm": 70
+      },
+      "quality": "藍",
+      "role": "長社黃巾渠帥",
+      "faction": "群雄",
+      "reason": "區域掃蕩角色能力設計，非史實數值。",
+      "average": 71,
+      "qualityReason": "平均 71.00；符合平均≥71、2項≥75、3項≥70；由高至低取藍色，門檻包含等於，平均不先四捨五入。",
+      "aliases": [],
+      "suggestedRole": "長社黃巾渠帥",
+      "assessmentReason": "區域掃蕩角色能力設計，非史實數值。",
+      "assessmentStatus": "各城掃蕩已實裝，能力為遊戲設計",
+      "confidence": "史籍地區參考；六維為遊戲設計",
+      "references": [
+        {
+          "title": "後漢書卷71",
+          "url": "https://zh.wikisource.org/zh-hant/後漢書/卷71"
+        }
+      ]
+    },
+    {
+      "name": "彭脫",
+      "abilities": {
+        "str": 69,
+        "int": 46,
+        "lead": 64,
+        "body": 73,
+        "agi": 64,
+        "charm": 55
+      },
+      "quality": "青",
+      "role": "潁汝黃巾頭領",
+      "faction": "群雄",
+      "reason": "區域掃蕩角色能力設計，非史實數值。",
+      "average": 61.833333333333336,
+      "qualityReason": "平均 61.83；未符合綠至紫條件；由高至低取青色，門檻包含等於，平均不先四捨五入。",
+      "aliases": [],
+      "suggestedRole": "潁汝黃巾頭領",
+      "assessmentReason": "區域掃蕩角色能力設計，非史實數值。",
+      "assessmentStatus": "各城掃蕩已實裝，能力為遊戲設計",
+      "confidence": "史籍地區參考；六維為遊戲設計",
+      "references": [
+        {
+          "title": "後漢書卷71",
+          "url": "https://zh.wikisource.org/zh-hant/後漢書/卷71"
+        }
+      ]
+    },
+    {
+      "name": "趙弘",
+      "abilities": {
+        "str": 76,
+        "int": 60,
+        "lead": 77,
+        "body": 78,
+        "agi": 61,
+        "charm": 65
+      },
+      "quality": "藍",
+      "role": "南陽黃巾渠帥",
+      "faction": "群雄",
+      "reason": "區域掃蕩角色能力設計，非史實數值。",
+      "average": 69.5,
+      "qualityReason": "平均 69.50；符合2項≥75、3項≥70；由高至低取藍色，門檻包含等於，平均不先四捨五入。",
+      "aliases": [],
+      "suggestedRole": "南陽黃巾渠帥",
+      "assessmentReason": "區域掃蕩角色能力設計，非史實數值。",
+      "assessmentStatus": "各城掃蕩已實裝，能力為遊戲設計",
+      "confidence": "史籍地區參考；六維為遊戲設計",
+      "references": [
+        {
+          "title": "後漢書卷71",
+          "url": "https://zh.wikisource.org/zh-hant/後漢書/卷71"
+        }
+      ]
+    },
+    {
+      "name": "孫夏",
+      "abilities": {
+        "str": 71,
+        "int": 50,
+        "lead": 66,
+        "body": 74,
+        "agi": 68,
+        "charm": 58
+      },
+      "quality": "綠",
+      "role": "宛城黃巾餘帥",
+      "faction": "群雄",
+      "reason": "區域掃蕩角色能力設計，非史實數值。",
+      "average": 64.5,
+      "qualityReason": "平均 64.50；符合2項≥70；由高至低取綠色，門檻包含等於，平均不先四捨五入。",
+      "aliases": [],
+      "suggestedRole": "宛城黃巾餘帥",
+      "assessmentReason": "區域掃蕩角色能力設計，非史實數值。",
+      "assessmentStatus": "各城掃蕩已實裝，能力為遊戲設計",
+      "confidence": "史籍地區參考；六維為遊戲設計",
+      "references": [
+        {
+          "title": "後漢書卷71",
+          "url": "https://zh.wikisource.org/zh-hant/後漢書/卷71"
         }
       ]
     }

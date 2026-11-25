@@ -1,4 +1,4 @@
-// 遊戲技能設定，非史實能力。只補原字卡庫缺漏，沿用既有六維與品質。
+// 字卡技能實裝資料；既有技能優先保留。
 window.ADDITIONAL_HERO_SKILLS={
   "version": 1,
   "entries": [
@@ -6459,6 +6459,303 @@ window.ADDITIONAL_HERO_SKILLS={
         "body": 66,
         "agi": 58,
         "charm": 48
+      },
+      "quality": "青"
+    },
+    {
+      "name": "鄧茂",
+      "faction": "群雄",
+      "role": "黃巾突擊副將",
+      "archetype": "guard",
+      "kind": "hit",
+      "range": 1.5,
+      "group": "近戰",
+      "weapon": "刀",
+      "skill1": "突陣連刺",
+      "effect1": "physicalSlow",
+      "skill2": "戍陣護身",
+      "effect2": "selfWard",
+      "skill1Overrides": {
+        "ratio": 1.3,
+        "duration": 2,
+        "cd": 8
+      },
+      "skill2Overrides": {
+        "ratio": 0.85,
+        "threshold": 0.65,
+        "cd": 10
+      },
+      "abilities": {
+        "str": 68,
+        "int": 35,
+        "lead": 52,
+        "body": 72,
+        "agi": 60,
+        "charm": 45
+      },
+      "quality": "青"
+    },
+    {
+      "name": "程遠志",
+      "faction": "群雄",
+      "role": "黃巾領眾",
+      "archetype": "guard",
+      "kind": "hit",
+      "range": 1.5,
+      "group": "近戰",
+      "weapon": "刀",
+      "skill1": "聚眾斬擊",
+      "effect1": "physicalSlow",
+      "skill2": "黃巾固守",
+      "effect2": "selfWard",
+      "skill1Overrides": {
+        "ratio": 1.3,
+        "duration": 2,
+        "cd": 8
+      },
+      "skill2Overrides": {
+        "ratio": 0.85,
+        "threshold": 0.65,
+        "cd": 10
+      },
+      "abilities": {
+        "str": 72,
+        "int": 42,
+        "lead": 66,
+        "body": 76,
+        "agi": 56,
+        "charm": 58
+      },
+      "quality": "綠"
+    },
+    {
+      "name": "韓忠",
+      "faction": "群雄",
+      "role": "宛城守將",
+      "archetype": "guard",
+      "kind": "hit",
+      "range": 1.5,
+      "group": "近戰",
+      "weapon": "刀",
+      "skill1": "迎敵重斬",
+      "effect1": "physicalSlow",
+      "skill2": "據壘自守",
+      "effect2": "selfWard",
+      "skill1Overrides": {
+        "ratio": 1.3,
+        "duration": 2,
+        "cd": 8
+      },
+      "skill2Overrides": {
+        "ratio": 0.85,
+        "threshold": 0.65,
+        "cd": 10
+      },
+      "abilities": {
+        "str": 74,
+        "int": 56,
+        "lead": 68,
+        "body": 76,
+        "agi": 62,
+        "charm": 60
+      },
+      "quality": "綠"
+    },
+    {
+      "name": "張曼成",
+      "faction": "群雄",
+      "role": "南陽神上使",
+      "archetype": "guard",
+      "kind": "hit",
+      "range": 1.5,
+      "group": "近戰",
+      "weapon": "刀",
+      "skill1": "神上進擊",
+      "effect1": "physicalSlow",
+      "skill2": "聚眾護軍",
+      "effect2": "selfWard",
+      "skill1Overrides": {
+        "ratio": 1.3,
+        "duration": 2,
+        "cd": 8
+      },
+      "skill2Overrides": {
+        "ratio": 0.85,
+        "threshold": 0.65,
+        "cd": 10
+      },
+      "abilities": {
+        "str": 78,
+        "int": 67,
+        "lead": 82,
+        "body": 80,
+        "agi": 65,
+        "charm": 79
+      },
+      "quality": "橘"
+    },
+    {
+      "name": "馬元義",
+      "faction": "群雄",
+      "role": "黃巾聯絡者",
+      "archetype": "mage",
+      "kind": "magic",
+      "range": 3,
+      "group": "遠攻",
+      "weapon": "符",
+      "skill1": "暗符擾陣",
+      "effect1": "areaBreak",
+      "skill2": "傳令護軍",
+      "effect2": "selfWard",
+      "skill1Overrides": {
+        "ratio": 1.3,
+        "duration": 2,
+        "cd": 8
+      },
+      "skill2Overrides": {
+        "ratio": 0.85,
+        "threshold": 0.65,
+        "cd": 10
+      },
+      "abilities": {
+        "str": 58,
+        "int": 78,
+        "lead": 76,
+        "body": 64,
+        "agi": 66,
+        "charm": 82
+      },
+      "quality": "藍"
+    },
+    {
+      "name": "波才",
+      "faction": "群雄",
+      "role": "長社黃巾渠帥",
+      "archetype": "guard",
+      "kind": "hit",
+      "range": 1.5,
+      "group": "近戰",
+      "weapon": "刀",
+      "skill1": "圍城重擊",
+      "effect1": "physicalSlow",
+      "skill2": "結陣固守",
+      "effect2": "selfWard",
+      "skill1Overrides": {
+        "ratio": 1.3,
+        "duration": 2,
+        "cd": 8
+      },
+      "skill2Overrides": {
+        "ratio": 0.85,
+        "threshold": 0.65,
+        "cd": 10
+      },
+      "abilities": {
+        "str": 74,
+        "int": 65,
+        "lead": 79,
+        "body": 76,
+        "agi": 62,
+        "charm": 70
+      },
+      "quality": "藍"
+    },
+    {
+      "name": "彭脫",
+      "faction": "群雄",
+      "role": "潁汝黃巾頭領",
+      "archetype": "guard",
+      "kind": "hit",
+      "range": 1.5,
+      "group": "近戰",
+      "weapon": "刀",
+      "skill1": "突圍猛擊",
+      "effect1": "physicalSlow",
+      "skill2": "困陣自守",
+      "effect2": "selfWard",
+      "skill1Overrides": {
+        "ratio": 1.3,
+        "duration": 2,
+        "cd": 8
+      },
+      "skill2Overrides": {
+        "ratio": 0.85,
+        "threshold": 0.65,
+        "cd": 10
+      },
+      "abilities": {
+        "str": 69,
+        "int": 46,
+        "lead": 64,
+        "body": 73,
+        "agi": 64,
+        "charm": 55
+      },
+      "quality": "青"
+    },
+    {
+      "name": "趙弘",
+      "faction": "群雄",
+      "role": "南陽黃巾渠帥",
+      "archetype": "guard",
+      "kind": "hit",
+      "range": 1.5,
+      "group": "近戰",
+      "weapon": "刀",
+      "skill1": "聚眾猛斬",
+      "effect1": "physicalSlow",
+      "skill2": "宛下固守",
+      "effect2": "selfWard",
+      "skill1Overrides": {
+        "ratio": 1.3,
+        "duration": 2,
+        "cd": 8
+      },
+      "skill2Overrides": {
+        "ratio": 0.85,
+        "threshold": 0.65,
+        "cd": 10
+      },
+      "abilities": {
+        "str": 76,
+        "int": 60,
+        "lead": 77,
+        "body": 78,
+        "agi": 61,
+        "charm": 65
+      },
+      "quality": "藍"
+    },
+    {
+      "name": "孫夏",
+      "faction": "群雄",
+      "role": "宛城黃巾餘帥",
+      "archetype": "guard",
+      "kind": "hit",
+      "range": 1.5,
+      "group": "近戰",
+      "weapon": "刀",
+      "skill1": "餘軍奮擊",
+      "effect1": "physicalSlow",
+      "skill2": "退陣護身",
+      "effect2": "selfWard",
+      "skill1Overrides": {
+        "ratio": 1.3,
+        "duration": 2,
+        "cd": 8
+      },
+      "skill2Overrides": {
+        "ratio": 0.85,
+        "threshold": 0.65,
+        "cd": 10
+      },
+      "abilities": {
+        "str": 71,
+        "int": 50,
+        "lead": 66,
+        "body": 74,
+        "agi": 68,
+        "charm": 58
       },
       "quality": "青"
     }
