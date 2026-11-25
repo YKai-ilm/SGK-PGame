@@ -25,7 +25,15 @@ window.HanQuestUI=(()=>{
  }
  function choices(kind){api.menu(kind==='relief'?'守口接應':'長社解圍',kind==='relief'?'守住接應口，共四波。盧植於第二波前抵達。':'守住側翼，共六波。朱儁先行支援，皇甫嵩於第四波前抵達。',[['開始作戰',()=>start(kind)],['稍作準備',()=>{}]]);}
  async function start(kind){if(busy||window.SceneTest?.holdNavigation('漢軍會師戰鬥：'+kind))return;busy=true;api.setBusy(true);const fade=document.getElementById('fade');try{const run=HanQuest.begin(kind),b=document.createElement('button');b.className='hotspot scene-sign sign-common';b.dataset.name='漢軍戰前敵卡';b.textContent=kind==='relief'?'截路黃巾':'黃巾前隊';b.style.cssText='left:50%;top:30%;width:18%';document.getElementById('hotspots').append(b);await wait(900);fade.classList.add('busy');fade.style.opacity='1';await wait(1400);api.state.active=null;api.save();location.href='戰場直版.html?hanBattle='+kind+'&run='+encodeURIComponent(run)+'&returnTo='+encodeURIComponent('漢軍會師.html');}catch(e){api.notice(e.message);}finally{busy=false;api.setBusy(false);fade.classList.remove('busy');fade.style.opacity='0';}}
- function npc(id){if(window.WanQuestUI?.npc(id))return true;const p=q();if(id==='taoqian'&&window.YellowQuest?.progress().completed){if(!p.departed)talk('departure','departed');else say('陶謙',p.completed?'諸位已赴南陽聽取軍情，遠行辛苦，先在城中整備。':'軍前不比鄉里，凡事以軍令與百姓安危為重。徐州出口可前往盧植軍營。');return true;}
+ function npc(id){
+  // 陶謙由最新章節優先接手，不能被較早會師的常駐台詞攔截。
+  if(id==='taoqian'){
+   if(window.QuyangUI?.chapterReport())return true;
+   const three=window.ThreeZhangQuest?.progress()||{},wan=window.WanQuest?.progress()||{};
+   if(three.ordered){say('陶謙',three.quyangRecovered?'兩城已收復，請先回廣宗軍前向皇甫嵩交接軍情，再回徐州覆命。':three.quyangWon?'下曲陽守軍已敗，請先回城外處置張寶、接管城門，再向皇甫嵩覆命。':three.quyangOrdered?'下曲陽的軍務由皇甫將軍統籌。請先照看城外百姓，依軍令進退。':three.guangzongRecovered?'廣宗已收復，請先向皇甫嵩交接軍情，聽取後續安排。':'廣宗軍情緊急，請赴皇甫嵩軍前聽令，切記照看百姓。');return true;}
+   if(wan.ordered){say('陶謙',wan.completed?'宛城已定，請再與南陽軍前的朱儁交談，聽取後續軍令。':wan.won?'宛城守軍已敗，請先安置百姓，再向朱儁完整覆命。':'宛城軍務仍待處理，請到南陽軍前與朱儁商議，查明城中情形。');return true;}
+  }
+  if(window.WanQuestUI?.npc(id))return true;const p=q();if(id==='taoqian'&&window.YellowQuest?.progress().completed){if(!p.departed)talk('departure','departed');else say('陶謙',p.completed?'南陽軍情已明，請再找朱儁聽取宛城委任；出城可循任務路線前往。':'軍前不比鄉里，凡事以軍令與百姓安危為重。徐州出口可前往盧植軍營。');return true;}
   if(!id.startsWith('han'))return false;
   switch(id){
    case 'hanEnemyRetreat':talk('enemyRetreat','enemySeen');break;
