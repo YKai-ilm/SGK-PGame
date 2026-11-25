@@ -1368,6 +1368,17 @@ window.LetterTraits={
 // 黃巾線新增單字；與蜀國共用字沿用同一份設定。
 Object.assign(window.LetterDesign,{"程": ["程式、規程；取有序守備意象", "規程守衛", 490, 27, 23, 21, 1, 1.3, "hit"], "遠": ["遠方、遠望", "遠望射手", 300, 33, 9, 14, 4.8, 1.55, "arrow"], "茂": ["茂盛、生長", "生機兵", 500, 27, 18, 18, 1, 1.3, "hit"], "曼": ["曼延、綿長", "柔藤槍兵", 390, 28, 14, 20, 2, 1.3, "pierce"], "成": ["完成、成就；取收尾意象", "收勢兵", 410, 30, 17, 15, 1, 1.15, "hit"], "韓": ["取圍護城郭的遊戲聯想；非姓氏字源", "圍護兵", 530, 26, 25, 16, 1, 1.4, "hit"], "元": ["元氣、本源", "元氣兵", 450, 27, 18, 22, 1, 1.25, "hit"], "義": ["義氣、相助", "義助兵", 440, 26, 20, 22, 1, 1.3, "hit"]});
 Object.assign(window.LetterTraits,{"程": {"effect": "guard", "name": "依程守穩", "threshold": 0.6, "reduction": 0.11, "desc": "受擊前生命不高於60%時，物理與謀略傷害減少11%；固定傷害除外。"}, "遠": {"effect": "pierce", "name": "遠矢尋隙", "chance": 0.18, "ignore": 0.33, "desc": "普攻每次命中有18%機率忽略33%對應防禦，僅該次有效。"}, "茂": {"effect": "regen", "name": "茂盛", "period": 3, "ratio": 0.024, "desc": "在場每3秒回復自身最大生命2.4%；不溢補、不復活，撤回及暫停不累積。"}, "曼": {"effect": "slow", "name": "曼延", "chance": 0.24, "duration": 3, "multiplier": 0.84, "desc": "普攻命中存活敵軍，24%機率減速16%持續3秒；同類取強，不累乘。"}, "成": {"effect": "execute", "name": "收成", "threshold": 0.3, "bonus": 0.16, "desc": "普攻命中生命不高於30%的敵人，傷害增加16%。"}, "韓": {"effect": "ward", "name": "圍護", "period": 6, "ratio": 0.075, "desc": "在場每6秒取得最大生命7.5%的專屬護盾，不累加；離場清除並重新計時。"}, "元": {"effect": "regen", "name": "復元", "period": 2.5, "ratio": 0.018, "desc": "在場每2.5秒回復自身最大生命1.8%；不溢補、不復活，撤回及暫停不累積。"}, "義": {"effect": "aura", "name": "義氣相助", "radius": 1.5, "bonus": 0.035, "desc": "周圍1.5格其他友軍物理與謀略傷害增加3.5%；同類取最高，固定傷害與治療除外。撤出、陣亡、暈眩時失效。"}});
+// 三公共用姓名字：張沿用原張弓射手，其餘按字義設計。
+Object.assign(window.LetterDesign,{
+ '角':['角尖、稜角；取尖端突刺意象','角鋒槍兵',410,32,17,14,2,1.3,'pierce'],
+ '梁':['棟梁、支撐','棟梁守衛',530,26,24,18,1,1.4,'hit'],
+ '寶':['珍寶、護持；取護身寶物的遊戲意象','護寶兵',430,27,18,24,1,1.3,'hit']
+});
+Object.assign(window.LetterTraits,{
+ '角':{effect:'pierce',name:'角鋒',chance:.2,ignore:.3,desc:'普攻每次命中有20%機率忽略目標30%對應防禦，僅限該次攻擊。'},
+ '梁':{effect:'guard',name:'棟梁不倒',threshold:.6,reduction:.11,desc:'受擊前生命不高於60%時，物理與謀略傷害減少11%；固定傷害除外。'},
+ '寶':{effect:'ward',name:'護寶',period:6,ratio:.075,desc:'在場每6秒取得最大生命7.5%的專屬護盾，不累加；離場清除並重新計時。'}
+});
 for(const [letter,row] of Object.entries(window.LetterDesign)){
  const [meaning,role,hp,atk,def,mdef,range,interval,kind]=row;
  window.TestRoster[letter]={hp,atk,def,mdef,range,interval,kind,group:['arrow','magic'].includes(kind)?'遠攻':'近戰',skills:[],letter:true,meaning,role,trait:window.LetterTraits[letter]||null};
