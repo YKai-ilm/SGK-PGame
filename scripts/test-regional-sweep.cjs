@@ -6,3 +6,16 @@ for(const outcome of ['defeat','retreat']){put(full);assert.equal(R.settle(id,'�
 put(full);const saved=map.get(key);fail=true;assert.throws(()=>R.settle(id,'宛城','韓忠',['韓忠'],'victory'));fail=false;assert.equal(map.get(key),saved);assert.equal(R.settle(id,'宛城','韓忠',['韓忠'],'victory').drops.length,1);
 const r=R.create('宛城','validate',6,full);assert.throws(()=>R.validate(r,6,'長社'));assert.throws(()=>R.validate({...r,base:1},6,'宛城'));assert.throws(()=>R.validate({...r,leader:'曹操'},6,'宛城'));console.log('PASS six regional pools, occupation, random distribution, fixed troop/boss levels, actual roster, same-name fragment receipts, legacy fragment migration, no card/story unlock and failed-storage retry');
 
+for(const [index,city]of Object.keys(R.cities).entries())for(const waves of [1,3,6])for(const named of [false,true]){
+ let run;for(let i=0;i<10000;i++){run=R.create(city,'reward-'+i,waves,full);if(Boolean(run.leader)===named)break;}
+ assert.equal(Boolean(run.leader),named);const tier=index+1,baseGold=(named?{1:4,3:6,6:12}:{1:2,3:4,6:8})[waves];
+ assert.equal(run.version,2);assert.equal(R.goldReward(run),baseGold*tier);
+ const old={...run,version:1};assert(R.validate(old,waves,city));assert.equal(R.goldReward(old),baseGold);
+ let total=0,oldTotal=0;for(let w=1;w<=waves;w++)for(let k=0;k<6+w;k++){
+  const e={},legacy={};R.apply(e,w,k,run);R.apply(legacy,w,k,old);
+  assert.equal(e.settlementXP,legacy.settlementXP*tier);assert.equal(e.xp,legacy.xp);assert.equal(e.hp,legacy.hp);assert.equal(e.foodValue,legacy.foodValue);total+=e.settlementXP;oldTotal+=legacy.settlementXP;
+ }
+ assert.equal(total,oldTotal*tier);assert.throws(()=>R.validate({...run,version:3},waves,city));
+}
+console.log('PASS all six city gold/XP tiers, all wave counts and officer variants, original combat XP/stats/supply and legacy battle rewards');
+

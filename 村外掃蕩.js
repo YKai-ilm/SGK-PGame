@@ -7,7 +7,7 @@
  let regional=RegionalSweep.create(sweepCity,runId,waveCount),seenOfficers=new Set();encounterId='rabble';let enemyOfficer=makeEnemyOfficer();
  function makeEnemyOfficer(){if(regional)return null;const name=YellowTurbanEncounter.encounters.find(e=>e.id===encounterId)?.leader;return name?HeroCombat.encounter(name,{stars:1,level:YellowTurbanEncounter.officerLevel(name,undefined,waveCount)},waveCount):null;}
  const bar=document.createElement('div');bar.className='sweep-header';bar.style.cssText='display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:12px;padding:6px 0';bar.innerHTML='<span id="sweepProgress"></span><button id="sweepBack">返回桃園村</button>';document.querySelector('main header').append(bar);
- function goldReward(){if(regional)return 2*((regional.leader?{1:2,3:3,6:6}:{1:1,3:2,6:4})[waveCount]);return rewardVersion===1?waveCount:(rewardVersion>=3?2:1)*({rabble:{1:1,3:2,6:4},deng:{1:2,3:3,6:6},cheng:{1:2,3:3,6:6}}[encounterId]?.[waveCount]||0);}
+ function goldReward(){if(regional)return RegionalSweep.goldReward(regional);return rewardVersion===1?waveCount:(rewardVersion>=3?2:1)*({rabble:{1:1,3:2,6:4},deng:{1:2,3:3,6:6},cheng:{1:2,3:3,6:6}}[encounterId]?.[waveCount]||0);}
  function update(){const encounter=window.YellowTurbanEncounter?.encounters.find(e=>e.id===encounterId);$('sweepProgress').textContent=(regional?sweepCity+'・掃蕩賊寇':encounter?.name||'掃蕩賊寇')+' '+waveCount+'/波';}
  $('size').hidden=true;if($('routePattern'))$('routePattern').hidden=true;
  // 正式掃蕩只留下操作用控制，測試工具不占戰場版面。
