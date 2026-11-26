@@ -1,0 +1,47 @@
+[
+  {
+    "id": "academy-一",
+    "name": "書院候選一",
+    "file": "共用室內場景/書院候選一-v1.png",
+    "original": "共用室內場景/城主府一-v1.png",
+    "sha256": "88ac8ed7aff0d5a41933c7dd291d8b20296ebdf7dc5022732f2e9f7396f45b5a",
+    "status": "使用者要求保留；改天書院直接使用，未要求修改不得重畫",
+    "date": "2026-11-09"
+  },
+  {
+    "id": "academy-二",
+    "name": "書院候選二",
+    "file": "共用室內場景/書院候選二-v1.png",
+    "original": "共用室內場景/城主府二-v1.png",
+    "sha256": "1cb86cf3f42f545e1f419725c3fc41e7f3da8b7e5a7f8782c01800e5429926a6",
+    "status": "使用者要求保留；改天書院直接使用，未要求修改不得重畫",
+    "date": "2026-11-09"
+  },
+  {
+    "id": "academy-三",
+    "name": "書院候選三",
+    "file": "共用室內場景/書院候選三-v1.png",
+    "original": "共用室內場景/城主府三-v1.png",
+    "sha256": "554f49b475069005c4944de480719fbf8a7629407498c8affcf31db705190050",
+    "status": "使用者要求保留；改天書院直接使用，未要求修改不得重畫",
+    "date": "2026-11-09"
+  },
+  {
+    "id": "alchemy-room-candidate",
+    "name": "煉丹房候選",
+    "file": "共用室內場景/煉丹房候選-v1.png",
+    "original": "共用室內場景/城主府大堂三-v1.png",
+    "sha256": "3c104c2ba51a4b97f343eb17bafbfa70c9146dac1fd9b4e96eed3d946eb04260",
+    "status": "使用者否決作為城主府，要求保留；日後直接取用，不擅自重畫",
+    "date": "2026-11-09"
+  },
+  {
+    "id": "county-office-v1",
+    "name": "通用縣衙",
+    "file": "共用室內場景/縣衙-v1.png",
+    "sha256": "c8c3c1cdbe619d332a1e67edc01ce8452e18a7c31c724ee5ba85c3793f4daf38",
+    "date": "2026-11-27",
+    "status": "新繪共用公堂／不配置NPC；原圖保留",
+    "source": "共用室內場景/縣衙-v1-來源.json"
+  }
+]

@@ -1,0 +1,8 @@
+{
+  "tool": "內建 imagegen",
+  "date": "2026-11-27",
+  "file": "縣衙-v1.png",
+  "reference": "役所-v1.png",
+  "prompt": "Create a new portrait 1024x1536 game background: modest late Han Chinese county magistrate hall interior 縣衙, communal use across county towns. Match supplied image's high-angle oblique miniature painterly realism, warm side-window daylight, wood/plaster/stone textures, scale, crisp detailed but restrained surfaces. This is a formal local magistrate hearing hall, not a shop counter or grand palace. Small raised platform at rear with magistrate wooden desk and chair, inkstone and neatly stacked bamboo documents, plain carved wooden screen behind. Two orderly side benches, a drum near one side doorway, restrained wooden columns, open side corridor glimpses with small courtyard tree. Large clear central stone floor for petitioners, completely unobstructed walking route from open bottom entrance to shallow platform stairs. Keep modest and spacious, no extravagant golden ornaments, no royal throne, no giant counter across room. NO PEOPLE, no NPCs, no text, no signage, no UI. All furniture physically plausible, calm balanced composition. New distinct room, not repaint of reference.",
+  "source": "C:/Users/user/.codex/generated_images/01a1953c-9d2a-7db2-aecd-7a0b2dcdabd0/exec-edfc4d11-9c40-4a13-9a9c-01175b5d46fd.png"
+}

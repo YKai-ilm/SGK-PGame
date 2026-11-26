@@ -4,6 +4,7 @@
  // Normalize legacy family names while keeping all saved quest progress.
  const read=()=>JSON.parse((localStorage.getItem(key)||'{}').replace(/\u9761/g,'\u7cdc'));
  let state={scene:'內城',flags:{},history:[],active:null,...read()},timer=null,busy=false;
+ if(['宛城・縣衙','陳留・縣衙'].includes(state.scene)){state.scene=state.scene.replace('縣衙','城主府');state.active=null;save();}
  if(window.WorldTravel?.consumeArrival('徐州')){state.scene='內城';state.active=null;save();}
  const party=()=>{try{return JSON.parse(localStorage.getItem('three-kingdoms-taoyuan-dialogue-v1')||'{}').party||[];}catch{return [];}};
  const sworn=()=>{try{return !!JSON.parse(localStorage.getItem('three-kingdoms-interface-preview-v1')||'{}').storyEvents?.peachOath||JSON.parse(localStorage.getItem('three-kingdoms-taoyuan-dialogue-v1')||'{}').seen?.includes('oath');}catch{return false;}};

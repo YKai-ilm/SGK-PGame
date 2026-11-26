@@ -7,7 +7,7 @@ window.DongQuest=(()=>{
 })();
 window.DongQuestUI=(()=>{
  let api;const q=()=>DongQuest.progress(),say=(name,line)=>api.talk([[name,line]]),talk=(lines,flag)=>api.talk(lines,flag?'dong:'+flag:null);
- const facilities=[['縣衙',30,19],['驛站',78,16],['客棧',79,47],['道具鋪',35,72],['武器鋪',25,48],['防具鋪',34,59],['編輯所',23,26]];
+ const facilities=[['役所',44,23],['城主府',30,19],['驛站',78,16],['客棧',79,47],['道具鋪',35,72],['武器鋪',25,48],['防具鋪',34,59],['編輯所',23,26]];
  const ownsScene=name=>name==='陳留'||name.startsWith('陳留・')||name==='聯軍營地';
  function enter(){if(!q().ordered||window.SceneTest?.holdNavigation('前往陳留'))return;api.state.scene='陳留';api.state.active=null;api.save();location.href='討董會盟.html?town='+encodeURIComponent('陳留');}
  function npc(id){if(id!=='taoqian'||!DongQuest.ready())return false;if(q().ordered){say('陶謙',q().completed?'軍令既明，便依令整備。百姓與將士的性命，切記時時放在心上。':'出征軍令已交予你。先到陳留找接待軍吏登記，再往聯軍營地拜會公孫瓚。');return true;}
@@ -21,7 +21,7 @@ window.DongQuestUI=(()=>{
  say('軍需吏',p.completed?'義勇名冊已收妥。請先備齊兵刃、甲具與糧秣，接應路線尚待斥候回報。':'各部物資正在清點。先依次拜會公孫瓚、曹操與袁紹，領令後再來。');}
  function scene(name){if(!ownsScene(name))return null;if(name==='聯軍營地'){if(!q().registered)return scene('陳留');return {image:'討董聯軍營地-v1.png',points:[['公孫瓚',80,36,()=>officer('gongsun')],['曹操',25,36,()=>officer('cao')],['袁紹',55,18,()=>officer('yuan')],['軍需吏',25,65,()=>officer('supplies')],['離開',50,94,()=>api.go('陳留')]]};}
  if(name==='陳留'){WorldTravel.consumeArrival('陳留');WorldTravel.arrive('陳留');return {image:'陳留城內-v1.png',points:[...facilities.map(([n,x,y])=>[n,x,y,()=>api.go('陳留・'+n)]),['井邊老者',41,39,()=>say('井邊老者','南來北往的車馬都愛在此歇腳。水井有人照管，取水後記得把桶放妥。')],['布商',70,70,()=>say('布商','行路的客人多，補衣裳的針線也賣得快。願大家都能平安回家。')],...(q().ordered?[['接待軍吏',59,80,()=>officer('reception')]]:[]),['離開',50,94,cityExit]]};}
- const label=name.split('・')[1],id=({'縣衙':'役所','武器鋪':'武器店','防具鋪':'防具店','道具鋪':'道具店'})[label]||label,base=SharedInteriorScenes.find(x=>x.id===id);if(!base)return null;return {image:base.image,points:[[base.npc,base.npcX,base.npcY,()=>{if(label==='縣衙')say('書吏','市集在井邊，客棧在街東。城中來往人多，還請留意車馬。');else if(label==='驛站')WorldTravel.open('陳留',true);else api.menu(base.npc,'客官請進。',[[label==='客棧'?'詢問住宿':'查看服務',()=>api.service(id,'chenliu')],['離開',()=>{}]]);}],['離開',base.exitX,base.exitY,()=>api.go('陳留')]]};}
+ const label=name.split('・')[1],id=({'城主府':'城主府三','武器鋪':'武器店','防具鋪':'防具店','道具鋪':'道具店'})[label]||label,base=SharedInteriorScenes.find(x=>x.id===id);if(!base)return null;if(label==='縣衙'||label==='城主府')return {image:base.image,points:[['離開',base.exitX,base.exitY,()=>api.go('陳留')]]};return {image:base.image,points:[[base.npc,base.npcX,base.npcY,()=>{if(label==='役所')say('書吏','市集在井邊，客棧在街東。城中來往人多，還請留意車馬。');else if(label==='驛站')WorldTravel.open('陳留',true);else api.menu(base.npc,'客官請進。',[[label==='客棧'?'詢問住宿':'查看服務',()=>api.service(id,'chenliu')],['離開',()=>{}]]);}],['離開',base.exitX,base.exitY,()=>api.go('陳留')]]};}
  function finish(action){if(!action?.startsWith('dong:'))return false;const flag=action.slice(5);if(!DongQuest.advance(flag)&&!q()[flag])throw Error('請先完成前段軍情。');api.end();api.render();if(flag==='ordered')api.notice('已取得出征軍令。徐州出口新增「任務：前往陳留」。');if(flag==='completed')api.notice('檄文再起完成。可至成就領取玩家碎片10片；先到軍需吏處整備，等候後續接應軍令。');return true;}
  return {install:c=>api=c,npc,scene,finish,ownsScene,exitChoice:()=>q().ordered?['任務：前往陳留',enter]:null};
 })();
