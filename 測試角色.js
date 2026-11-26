@@ -1399,3 +1399,5 @@ window.CardGrowth = {
  rates(type){return window.TestRoster[type]?.letter?{hp:1.15,atk:1.12}:{hp:1.12,atk:1.09};},
  stats(type,level){const d=window.TestRoster[type],r=this.rates(type);let hp=d.hp,atk=d.atk;for(let i=1;i<level;i++){hp=Math.round(hp*r.hp);atk*=r.atk;}return {hp,atk};}
 };
+
+for(const ch of '張世平蘇雙')if(!window.TestRoster[ch]){const data=[ch+'：持有人物姓名單字','散字守兵',440,28,20,16,1,1.35,'hit'];window.LetterDesign[ch]=data;window.TestRoster[ch]={meaning:data[0],role:data[1],hp:440,atk:28,def:20,mdef:16,range:1,interval:1.35,kind:'hit',group:'近戰',letter:true,skills:[],trait:null};}

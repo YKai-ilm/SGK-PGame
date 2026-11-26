@@ -4,6 +4,7 @@ window.OFFICER_QUALITY={version:8,date:'2026-11-08',
  colors:{青:'#67bbc0',綠:'#85bb80',藍:'#85b8e0',橘:'#e8ad67',紅:'#d98989',紫:'#b69bd5',金:'#e4cb74'},
  rules:{青:'未符合綠至紫的任何條件。',綠:'平均≥66，或一項≥75，或兩項≥70；取符合的最高品質。',藍:'平均≥71，或一項≥80，或兩項≥75，或三項≥70；取符合的最高品質。',橘:'平均≥76，或一項≥88，或兩項≥83，或三項≥78；取符合的最高品質。',紅:'平均≥81，或一項≥95，或兩項≥90，或三項≥85；取符合的最高品質。',紫:'平均≥86，或一項≥98，或兩項≥95，或三項≥90。',金:'紫色十星且永久武將等級100，完成轉生後為金色一星、等級回到1；普通升星不降等級。'},
  evaluate(person,{rebirth=0}={}){
+  if(person.holdingOnly)return {name:person.name,quality:person.quality,baseQuality:person.quality,reason:'持有型人物的收藏品質，不代表戰鬥能力'};
   if(person.playerCard&&this.tiers.includes(person.quality))return {quality:person.quality,baseQuality:'青',reason:'玩家卡品質由升星進度決定'};
   if(!Number.isInteger(rebirth)||rebirth<0)throw Error('轉生次數須為非負整數');
   const keys=['str','int','lead','body','agi','charm'],values=keys.map(k=>person[k]);

@@ -13,3 +13,6 @@ window.OFFICER_PROPOSAL={"version":32,"date":"2026-11-08","fields":{"str":{"labe
 (()=>{const p=window.OFFICER_PROPOSAL;p.sources.tongYuan={title:'玩家羈絆與特殊槍術武將',url:'玩家武將攻略.html#player-bonds',type:'遊戲創作設定，非史實能力評分'};if(!p.entries.some(x=>x.name==='童淵'))p.entries.push({"name":"童淵","faction":"特殊","str":98,"int":74,"lead":68,"body":86,"agi":94,"charm":80,"role":"槍術宗師","reason":"槍術專精、身法敏捷；傳承羈絆為遊戲創作設定。","sources":["tongYuan"]});})();
 
 (()=>{const p=window.OFFICER_PROPOSAL;p.sources.playerBonds={title:'後繼英傑羈絆・沿用補充能力評定',url:'玩家武將攻略.html#player-bonds',type:'遊戲能力設計'};for(const e of [{"name":"陸抗","faction":"吳","str":72,"int":95,"lead":97,"body":79,"agi":75,"charm":88,"role":"戰線調度","reason":"後期統帥核心；智統雙高，武力不以軍團勝績直接拉到猛將級。","sources":["playerBonds"]},{"name":"鄧艾","faction":"魏","str":87,"int":95,"lead":96,"body":88,"agi":83,"charm":73,"role":"險路進軍","reason":"險路進軍與戰略兼長；雙95達紫，魅力不與智統同步拉高。","sources":["playerBonds"]}])if(!p.entries.some(x=>x.name===e.name))p.entries.push(e);})();
+
+// 持有型人物不建立戰場角色、不占編隊位置。
+(()=>{const p=window.OFFICER_PROPOSAL;p.sources.holdingMerchants={title:'滿貫大亨・持有人物卡',url:'玩家武將攻略.html#holding-merchants',type:'使用者指定遊戲設計'};for(const name of ['張世平','蘇雙'])if(!p.entries.some(x=>x.name===name))p.entries.push({name,faction:'特殊',holdingOnly:true,quality:'藍',role:'持有型人物',reason:'同時持有張世平、蘇雙，戰場糜竺可啟動滿貫大亨；不參與部署或編隊。',sources:['holdingMerchants']});})();
