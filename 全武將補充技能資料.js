@@ -6843,6 +6843,96 @@ window.ADDITIONAL_HERO_SKILLS={
         "charm": 73
       },
       "quality": "紫"
+    },
+    {
+      "name": "司馬徽",
+      "faction": "特殊",
+      "role": "水鏡・謀策支援",
+      "weapon": "扇",
+      "skill1": "水鏡洞察",
+      "effect1": "break",
+      "skill1Overrides": {
+        "duration": 4,
+        "cd": 6
+      },
+      "skill2": "授策護才",
+      "effect2": "shield",
+      "skill2Overrides": {
+        "ratio": 1.5,
+        "cd": 6
+      },
+      "kind": "magic",
+      "range": 4,
+      "group": "遠攻",
+      "abilities": {
+        "str": 28,
+        "int": 97,
+        "lead": 52,
+        "body": 57,
+        "agi": 48,
+        "charm": 98
+      },
+      "quality": "紫"
+    },
+    {
+      "name": "龐德公",
+      "faction": "特殊",
+      "role": "名士・護持啟發",
+      "weapon": "杖",
+      "skill1": "安邦護士",
+      "effect1": "guardArea",
+      "skill1Overrides": {
+        "duration": 3,
+        "cd": 7
+      },
+      "skill2": "清談解惑",
+      "effect2": "cleanseHeal",
+      "skill2Overrides": {
+        "ratio": 1,
+        "cd": 6
+      },
+      "kind": "magic",
+      "range": 4,
+      "group": "遠攻",
+      "abilities": {
+        "str": 30,
+        "int": 96,
+        "lead": 48,
+        "body": 62,
+        "agi": 45,
+        "charm": 98
+      },
+      "quality": "紫"
+    },
+    {
+      "name": "華佗",
+      "faction": "特殊",
+      "role": "神醫・治療淨化",
+      "weapon": "杖",
+      "skill1": "青囊濟世",
+      "effect1": "heal",
+      "skill1Overrides": {
+        "ratio": 1.8,
+        "cd": 4
+      },
+      "skill2": "祛疾回春",
+      "effect2": "cleanseHeal",
+      "skill2Overrides": {
+        "ratio": 1.2,
+        "cd": 7
+      },
+      "kind": "magic",
+      "range": 4,
+      "group": "遠攻",
+      "abilities": {
+        "str": 24,
+        "int": 90,
+        "lead": 35,
+        "body": 80,
+        "agi": 74,
+        "charm": 98
+      },
+      "quality": "紫"
     }
   ]
 };
