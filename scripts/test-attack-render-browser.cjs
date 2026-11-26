@@ -1,0 +1,15 @@
+const assert=require('node:assert/strict'),{chromium}=require(process.env.USERPROFILE+'/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+(async()=>{const b=await chromium.launch({channel:'msedge',headless:true});try{const p=await b.newPage({viewport:{width:1100,height:900}}),errors=[];p.on('pageerror',e=>errors.push(e.message));await p.addInitScript(()=>{window.GameAudioShell=true;delete Navigator.prototype.serviceWorker;});await p.goto('http://localhost:4192/戰場直版.html');await p.waitForFunction(()=>window.AttackArt);
+ const result=await p.evaluate(()=>{
+ running=false;const board=document.createElement('canvas');board.width=1050;board.height=840;board.style.cssText='position:fixed;inset:0;z-index:99999;background:#ecebdc';document.body.append(board);const c=board.getContext('2d');
+ const cases=[...['劉備','關羽','張飛','趙雲'].map(type=>({type,kind:type==='張飛'||type==='趙雲'?'pierce':'hit'})),...['sword','blade','spear','lance','halberd','staff','whip','hammer','axe','shortHalberd','bow','fan'].map(playerWeaponType=>({type:'測試玩家',playerWeaponType,kind:playerWeaponType==='bow'?'arrow':playerWeaponType==='fan'?'magic':playerWeaponType==='spear'?'pierce':'hit'})),{type:'將',kind:'hit',enemy:true},{type:'槍',kind:'pierce',enemy:true}];
+ let copies=0,allocations=0;const create=document.createElement.bind(document),copy=c.drawImage.bind(c);document.createElement=function(tag,...args){if(tag==='canvas')allocations++;return create(tag,...args);};c.drawImage=(...args)=>{copies++;return copy(...args);};
+ const unchanged=[];try{for(let i=0;i<cases.length;i++){const x=85+(i%6)*175,y=85+Math.floor(i/6)*245;c.fillStyle='#233d31';c.font='16px sans-serif';c.textAlign='center';c.fillText(cases[i].playerWeaponType||cases[i].type,x,y+100);for(const [j,phase]of [.15,.5,.85].entries()){const u={...cases[i],x:0,y:0,weapon:{kind:cases[i].kind,angle:(j-1)*.7,start:0,duration:1}};const before=JSON.stringify(u);c.save();c.translate(x-25,y+(j-1)*55-25);AttackArt.weapon(c,u,phase,50);c.restore();unchanged.push(before===JSON.stringify(u));}}
+ const image=c.getImageData(0,0,board.width,board.height);let pixels=0;for(let i=3;i<image.data.length;i+=4)if(image.data[i])pixels++;
+ // An expired attack must not issue any drawing calls or modify the canvas.
+ const before=c.getImageData(0,0,200,200).data;AttackArt.weapon(c,{type:'關羽',x:0,y:0,weapon:{kind:'hit',angle:0,start:0,duration:1}},2,50);const after=c.getImageData(0,0,200,200).data;
+ return{copies,allocations,unchanged:unchanged.every(Boolean),pixels,expiredUnchanged:before.every((v,i)=>v===after[i])};
+ }finally{document.createElement=create;c.drawImage=copy;}
+ });
+ assert.equal(result.copies,0);assert.equal(result.allocations,0);assert(result.unchanged);assert(result.expiredUnchanged);assert(result.pixels>10000);assert.deepEqual(errors,[]);await p.screenshot({path:'.attack-render-review.png'});console.log('PASS 18 weapon variants / 3 phases, no temporary canvas or image copy per attack, immutable combat data and expired animation');
+}finally{await b.close();}})().catch(e=>{console.error(e);process.exitCode=1;});

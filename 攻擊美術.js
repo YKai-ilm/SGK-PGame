@@ -73,18 +73,9 @@ if(a.kind==='arrow'){
  c.rotate(-1.1+p*2.1);c.strokeStyle='#d6d3b730';c.lineWidth=.05;c.beginPath();c.arc(0,0,.68,-.9,0);c.stroke();line(c,[[.1,0],[.35,0]],'#6b4127',.075);line(c,[[.32,-.1],[.32,.1]],'#665337',.047);line(c,[[.31,-.095],[.31,.095]],'#c7b37a',.018);for(let j=0;j<4;j++)line(c,[[.13+j*.044,-.027],[.145+j*.044,.027]],'#bd9a6366',.012);c.fillStyle='#eef1db';c.strokeStyle='#657f78';c.lineWidth=.018;c.beginPath();c.moveTo(.35,-.04);c.quadraticCurveTo(.68,-.16,.93,-.11);c.quadraticCurveTo(.81,.13,.35,.08);c.closePath();finishMetal(c,-.14,.1);
 }c.restore();}
 // 先將整把武器合成，再投下單一柔影，避免每條紋理各自產生黑邊。
-const weaponLayer=document.createElement('canvas');
-function weapon(c,u,time,s){
- const a=u.weapon;if(!a)return;
- // 動畫外不必清除或帶陰影合成整張武器圖層；保留武器資料供戰局使用。
- const p=(time-a.start)/a.duration;if(p<0||p>1)return;
- const size=Math.ceil(s*10),ratio=2;
- if(weaponLayer.width!==size*ratio){weaponLayer.width=size*ratio;weaponLayer.height=size*ratio;}
- const ink=weaponLayer.getContext('2d');ink.setTransform(ratio,0,0,ratio,0,0);ink.clearRect(0,0,size,size);
- drawWeapon(ink,{...u,x:4,y:4},time,s);
- c.save();c.shadowColor='rgba(13,22,15,.62)';c.shadowBlur=Math.max(2,s*.035);c.shadowOffsetX=s*.0315;c.shadowOffsetY=s*.0595;
- c.drawImage(weaponLayer,(u.x-4)*s,(u.y-4)*s,size,size);c.restore();
-}
+// 武器直接繪到戰場，避免每次攻擊清空雙倍解析度的大透明圖層及整層模糊陰影。
+// 沿用原本的幾何、位移、透明度與戰鬥時鐘；不影響命中與攻速。
+function weapon(c,u,time,s){drawWeapon(c,u,time,s);}
 // 三刀的刀氣是向前行進的薄弧刃；只處理視覺，不參與傷害判定。
 function bladeWave(c,f,time,s){
  const start=f.start??f.end-.35,duration=f.end-start,p=Math.max(0,Math.min(1,(time-start)/duration));if(time>=f.end)return;
