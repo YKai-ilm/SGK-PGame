@@ -17,6 +17,10 @@
     {
       "id": "yellow-turban",
       "name": "第三章・黃巾烽火"
+    },
+    {
+      "id": "dong-coalition",
+      "name": "第四章・討董會盟"
     }
   ],
   "pages": {
@@ -27,7 +31,8 @@
     "雲龍山場景預覽.html": "xuzhou",
     "黃巾前線.html": "yellow-turban",
     "漢軍會師.html": "yellow-turban",
-    "黃巾藏營.html": "yellow-turban"
+    "黃巾藏營.html": "yellow-turban",
+    "討董會盟.html": "dong-coalition"
   },
   "sceneRules": [
     {
@@ -77,6 +82,13 @@
         "長社縣城",
         "廣宗縣城",
         "下曲陽縣城"
+      ]
+    },
+    {
+      "pack": "dong-coalition",
+      "prefixes": [
+        "陳留城內",
+        "討董聯軍營地"
       ]
     }
   ]

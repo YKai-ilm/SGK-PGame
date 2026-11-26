@@ -1,0 +1,2 @@
+'use strict';
+(()=>{const key='three-kingdoms-xuzhou-story-v1',s=JSON.parse(localStorage.getItem(key)||'{}'),u=new URL(location.href);if(u.searchParams.get('town')==='陳留'||!DongQuestUI.ownsScene(s.scene||'')||s.scene==='聯軍營地'&&!DongQuest.progress().registered){s.scene='陳留';s.active=null;localStorage.setItem(key,JSON.stringify(s));}if(u.searchParams.has('town')){u.searchParams.delete('town');history.replaceState(history.state,'',u.href);}})();

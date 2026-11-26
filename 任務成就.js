@@ -46,6 +46,7 @@ window.ProgressRewards=(()=>{
    ['2-3','糜家小女','sub',!!s.storyEvents?.grainRoute?.miRecruited,miObjective(s)],
    ['2-4','華陀初現','sub',!!s.storyEvents?.yunlongRescue?.bookGiven,'完成救援、回徐州留宿，再與華陀完成贈書對話。'],
 ['3-3','討伐三張','sub',!!s.storyEvents?.threeZhang?.completed,threeZhangObjective(s)],
+['4-1','檄文再起','sub',!!s.storyEvents?.dongCoalition?.completed,'黃巾覆命後找陶謙領令，陳留登記，再依序拜會公孫瓚、曹操、袁紹。'],
 ['3','黃巾烽火','main',!!s.storyEvents?.threeZhang?.chapterCompleted,'完成討伐三張後，回徐州向陶謙完整回報。'],
 ['3-2','宛城討伐','sub',!!s.storyEvents?.wancheng?.completed,'擊退韓忠後安置百姓，再向朱儁完整覆命。'],
 ['han-campaign','漢軍會師','sub',!!s.storyEvents?.hanCampaign?.completed,'奉盧植之命前往長社，完成接應與解圍，送別盧植後隨朱儁南下聽取軍情。'],

@@ -1,0 +1,19 @@
+{
+  "date": "2026-11-27",
+  "tool": "內建 imagegen",
+  "status": "4-1 已接入；新外景待使用者回饋",
+  "assets": [
+    {
+      "file": "陳留城內-v1.png",
+      "reference": "宛城城內-v1.png",
+      "prompt": "Create a NEW portrait 1024x1536 game scene for 陳留城內, late Han central plains Chinese market county town. Use attached Wan city ONLY as painterly miniature/isometric style reference, do NOT copy its layout. High oblique bird eye view, crisp warm natural daylight, grey tiled roofs timber plaster walls, grounded inhabited town with NO people, NO lettering, NO UI. Distinct layout: broad east-west market square in middle with old well and two trees, main road from bottom gate goes up then branches; upper left county government courtyard; upper right stables and roadside postal lodge; middle right a two-story inn; left and bottom-left compact open-front shops (forge with racks, armor workshop, goods store) mixed with 3 modest homes, and small clerk's house near government. A narrow drainage canal and simple stone footbridge at far right give central plains water-town detail. Plenty of clean walking space between buildings, not crammed, no monumental palaces, no mountain cliffs. Bottom gate clearly accessible and visible. Entire city rendered as coherent game background, no frames or captions.",
+      "source": "C:/Users/user/.codex/generated_images/01a1953c-9d2a-7db2-aecd-7a0b2dcdabd0/exec-e39d0005-b357-42d6-86b3-f9396be8257d.png"
+    },
+    {
+      "file": "討董聯軍營地-v1.png",
+      "reference": "黃巾前線營地-v1.png",
+      "prompt": "Create a NEW portrait 1024x1536 late Han coalition army encampment game background, use reference only for coherent high-angle miniature painterly realism, warm natural sunlight and detailed canvas/wood textures. Not copy reference layout. Flat central plains outside Chenliu, distant low city silhouette at very top, no mountains. Large command pavilion at upper center with muted crimson standards without any writing, flanking smaller tan tents. Left-middle open map table and bench under tree for Cao Cao; right-middle reception awning and horses/palisade for Gongsun Zan; bottom-left orderly provisions carts with sacks and a quartermaster desk. Clear spacious central packed dirt parade ground leads to open palisade gate at bottom center. Small water trough and scattered grasses, believable functional spacing. No characters, no UI, no lettering, no modern elements. Distinct from rustic yellow-turban frontline: organized multi-unit assembly, several differently colored plain standards, restrained grandeur.",
+      "source": "C:/Users/user/.codex/generated_images/01a1953c-9d2a-7db2-aecd-7a0b2dcdabd0/exec-070467c4-89c1-40ad-afeb-416c38e431fe.png"
+    }
+  ]
+}
