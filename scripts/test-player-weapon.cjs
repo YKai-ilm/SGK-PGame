@@ -19,3 +19,9 @@ for(const style of Object.keys(P.styles)){
 }
 assert.equal(JSON.stringify(c.TestRoster.劉備),normal);assert(!B.validWeapon({name:'不存在',type:'bow'}));assert(!B.validUnit(null,null));
 console.log('PASS all catalog weapons x five player styles, attack/range, unchanged skills and speed, snapshot restore, old saves, modes and ordinary heroes');
+
+state.playerOfficer.style='全能';state.playerOfficer.rank=50;state.playerOfficer.points=Object.fromEntries(P.fields.map(k=>[k,25]));state.playerOfficer.level=1;equip(null);B.reset();
+assert.equal(c.TestRoster.測試將.hp,1968);const modern=B.save();assert.equal(modern.combatVersion,2);
+const legacy=JSON.parse(JSON.stringify(modern));delete legacy.combatVersion;B.load(legacy);assert.equal(c.TestRoster.測試將.hp,1080);assert.equal(B.save().combatVersion,1);B.load(B.save());assert.equal(c.TestRoster.測試將.hp,1080);
+B.reset();assert.equal(c.TestRoster.測試將.hp,1968);B.load(modern);assert.equal(c.TestRoster.測試將.hp,1968);assert(!B.valid({...modern,combatVersion:3}));
+console.log('PASS purple snapshot versions: old/resaved battles retain legacy stats, restart applies new growth and unknown version rejected');

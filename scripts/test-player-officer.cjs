@@ -1,6 +1,6 @@
 const fs=require('fs'),vm=require('vm'),assert=require('node:assert/strict');
 const c={window:null,crypto:require('crypto').webcrypto,localStorage:{getItem:()=>'{"mode":"story"}'}};c.window=c;vm.createContext(c);vm.runInContext(fs.readFileSync('玩家武將.js','utf8'),c);vm.runInContext(fs.readFileSync('武將品質草案.js','utf8'),c);
-const P=c.PlayerOfficer;
+vm.runInContext(fs.readFileSync('武將戰鬥換算.js','utf8'),c);const P=c.PlayerOfficer;
 for(const style of Object.keys(P.styles)){const s={tutorial:{status:'completed'}},p=P.create(s,'測試將',style);assert(P.valid(p));assert.equal(c.OFFICER_QUALITY.evaluate(P.abilities(p)).quality,'青');assert.equal(Object.values(P.abilities(p)).reduce((a,b)=>a+b,0),360);assert.equal(s.unlocks.story.heroes[0],p.name);assert.equal(s.unlocks.battle.heroes[0],p.name);assert.throws(()=>P.create(s,'另一將',style));}
 const s={tutorial:{status:'skipped'}},p=P.create(s,'自由將','全能');p.rank=22;P.allocate(p,{str:35,int:0,lead:0,body:0,agi:0,charm:0});assert.equal(P.abilities(p).str,95);assert.equal(P.tiers[Math.floor(p.rank/10)],'藍');assert.equal(P.remaining(p),31);assert.throws(()=>P.allocate(p,{str:41,int:0,lead:0,body:0,agi:0,charm:0}));
 p.rank=69;P.allocate(p,{str:40,int:40,lead:40,body:30,agi:30,charm:25});assert.equal(P.remaining(p),2);
@@ -18,11 +18,20 @@ for(const style of Object.keys(P.styles))for(const level of [1,40,100]){
  c.TestRoster={};const q=P.create({tutorial:{status:'completed'}},'預覽將',style);q.rank=9;q.level=level;q.fragments=100;q.points.str=3;
  const before=JSON.stringify(q),extra=Object.fromEntries(P.fields.map(k=>[k,k==='body'?2:0]));
  const stats=P.previewPoints(q,extra),a=P.abilities(q),scale=1+(level-1)*.03;
- assert.equal(JSON.stringify(q),before);assert.equal(stats.hp,Math.round((400+(a.body+2)*8)*scale));
- assert.equal(stats.physical,a.str*2*scale);assert.equal(stats.mdef,(a.lead*.2+a.int*.4)*(1+(level-1)*.015));
+ const expected=c.HeroCombat.calculate({...a,body:a.body+2},'青',10);assert.equal(JSON.stringify(q),before);assert.equal(stats.hp,Math.round(expected.hp*scale));
+ assert.equal(stats.physical,expected.physical*scale);assert.equal(stats.mdef,expected.mdef*(1+(level-1)*.015));
  c.TestRoster={};P.register({playerOfficer:q});const roster=c.TestRoster[q.name],base=P.combatStats(q);
  assert.equal(roster.hp,base.hp);assert.equal(roster.atk*roster.physicalRatio,base.physical);assert.equal(roster.interval,1/base.rate);
- const prior=P.combatStats(q);P.upgrade(q);assert.equal(q.rank,10);assert.equal(q.fragments,90);assert.equal(P.remaining(q),27);assert.deepEqual(P.combatStats(q),prior);
+ const prior=P.combatStats(q);P.upgrade(q);assert.equal(q.rank,10);assert.equal(q.fragments,90);assert.equal(P.remaining(q),27);for(const k of Object.keys(prior))assert(P.combatStats(q)[k]>prior[k],k);
 }
-console.log('PASS read-only previews, legacy combat parity for all styles/levels, quality transition grants points without direct stat change');
+console.log('PASS read-only previews, legacy combat parity for all styles/levels, quality transition grants points and direct stats');
 
+
+for(const style of Object.keys(P.styles))for(let rank=0;rank<70;rank++){
+ const q=P.create({tutorial:{status:'completed'}},'品質將',style);q.rank=rank;
+ const a=P.abilities(q),v=P.combatStats(q);
+ if(rank<60){const ordinary=c.HeroCombat.calculate(a,P.tiers[Math.floor(rank/10)],rank%10+1);for(const k of Object.keys(v))assert.equal(v[k],ordinary[k],style+rank+k);}
+ else{assert(Object.values(v).every(Number.isFinite));const prev=P.combatStats({...q,rank:rank-1});for(const k of Object.keys(v))assert(v[k]>=prev[k]);}
+ const old=P.combatStats(q,1);assert.equal(old.hp,400+a.body*8);assert.equal(old.physical,a.str*2);
+}
+console.log('PASS same six attributes/quality/star give identical level-1 stats, all five styles and 70 ranks, gold continuity and legacy formula');

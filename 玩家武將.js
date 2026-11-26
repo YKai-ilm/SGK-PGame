@@ -19,7 +19,16 @@ window.PlayerOfficer=(()=>{
  function get(s=read()){return valid(s.playerOfficer)?s.playerOfficer:null;}
  function is(name){return name===active?.name;}
  function abilities(p){return Object.fromEntries(fields.map((k,i)=>[k,styles[p.style][i]+p.points[k]]));}
- function combatStats(p){const a=abilities(p),scale=1+(p.level-1)*.03,defScale=1+(p.level-1)*.015;return {hp:Math.round((400+a.body*8)*scale),physical:a.str*2*scale,magic:a.int*2*scale,def:(a.lead*.42+a.str*.18)*defScale,mdef:(a.lead*.2+a.int*.4)*defScale,support:a.charm*1.5*scale,rate:(.5+a.agi*.005)*(1+(p.level-1)*.001)};}
+ function combatStats(p,combatVersion=2){
+  const a=abilities(p),scale=1+(p.level-1)*.03,defScale=1+(p.level-1)*.015;
+  const base={hp:400+a.body*8,physical:a.str*2,magic:a.int*2,def:a.lead*.42+a.str*.18,mdef:a.lead*.2+a.int*.4,support:a.charm*1.5,rate:.5+a.agi*.005};
+  // 與一般武將共用品質／星級係數；玩家金色沿用每品質階 +0.14。
+  const score={hp:a.body,physical:a.str,magic:a.int,def:a.lead*.7+a.str*.3,mdef:a.int*.7+a.lead*.3,support:a.charm,rate:a.agi};
+  const gain=combatVersion===1?0:Math.floor(p.rank/10)*.14+(p.rank%10)*.01;
+  for(const k of Object.keys(base)){const weight=k==='rate'?.2:['def','mdef'].includes(k)?.5:1;base[k]*=1+gain*(.75+.5*score[k]/100)*weight;}
+  // 一級生命的取整與一般武將一致，再套用原有玩家永久等級成長。
+  return {hp:Math.round((combatVersion===1?base.hp:Math.round(base.hp))*scale),physical:base.physical*scale,magic:base.magic*scale,def:base.def*defScale,mdef:base.mdef*defScale,support:base.support*scale,rate:base.rate*(1+(p.level-1)*.001)};
+ }
  function previewPoints(p,extra){const next=JSON.parse(JSON.stringify(p));addPoints(next,extra);return combatStats(next);}
  function remaining(p){return totalPoints(p)-fields.reduce((n,k)=>n+p.points[k],0);}
  function create(s,name,style){if(s.playerOfficer)throw Error('已建立玩家武將');if(!['completed','skipped'].includes(s.tutorial?.status))throw Error('請先完成新手訓練');name=name.trim();if(!/^[\p{Script=Han}A-Za-z0-9]{2,4}$/u.test(name))throw Error('名稱請用2至4個中文字、英文字母或數字');if(!Object.hasOwn(styles,style))throw Error('請選擇風格');if((window.OFFICER_PROPOSAL?.entries||[]).some(p=>p.name===name)||Object.hasOwn(window.TestRoster||{},name)||['玩家武將','特殊'].includes(name))throw Error('此名稱已被使用，請換一個名字');const p={version:1,id:crypto.randomUUID(),name,style,rank:0,level:1,xp:0,rebirth:0,fragments:0,points:Object.fromEntries(fields.map(k=>[k,0]))};s.playerOfficer=p;unlock(s,p);return p;}
@@ -36,11 +45,11 @@ window.PlayerOfficer=(()=>{
  function rebirth(p){if(p.level!==100)throw Error('永久等級100才能轉生');const bonus=rebirthReward(p);milestones(p);p.fragments+=bonus;p.rebirth++;p.level=1;p.xp=0;return bonus;}
  // 招募與戰鬥沿用進場快照，其他分頁配點不會改動進行中的戰局。
  let active=null;
- function register(s=read()){
+ function register(s=read(),combatVersion=2){
   const p=get(s);if(!p)return null;active=JSON.parse(JSON.stringify(p));const a=abilities(p),quality=tiers[Math.floor(p.rank/10)];
   if(window.OFFICER_PROPOSAL){const list=window.OFFICER_PROPOSAL.entries,entry={name:p.name,faction:'特殊',role:'玩家武將 · '+p.style,playerCard:true,quality,...a};const index=list.findIndex(x=>x.playerCard);if(index<0)list.push(entry);else list[index]=entry;}
   if(window.HERO_COMBAT_DATA)window.HERO_COMBAT_DATA[p.name]={abilities:a,quality,playerCard:true};
-  if(window.TestRoster){const stats=combatStats(p),magic=['謀','魅'].includes(p.style),physical=stats.physical,ma=stats.magic,primary=magic?ma:physical;
+  if(window.TestRoster){const stats=combatStats(p,combatVersion),magic=['謀','魅'].includes(p.style),physical=stats.physical,ma=stats.magic,primary=magic?ma:physical;
    window.TestRoster[p.name]={playerCard:true,hp:stats.hp,atk:primary,def:stats.def,mdef:stats.mdef,physicalRatio:physical/primary,magicRatio:ma/primary,supportRatio:stats.support/primary,combatVersion:1,interval:1/stats.rate,range:magic?4:2,group:magic?'遠攻':'近戰',kind:magic?'magic':'hit',weaponLabel:magic?'策杖':'劍',skills:skillSets[p.style].map(x=>({...x})),quality};}
   return active;
  }
