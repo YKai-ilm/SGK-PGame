@@ -1,4 +1,4 @@
-const fs=require('fs'),vm=require('vm'),assert=require('node:assert/strict'),c={};c.window=c;c.PlayerOfficer={is:n=>n==='自訂主角'};vm.createContext(c);
+const fs=require('fs'),vm=require('vm'),assert=require('node:assert/strict'),c={crypto:require("node:crypto").webcrypto};c.window=c;c.PlayerOfficer={is:n=>n==='自訂主角'};vm.createContext(c);
 for(const f of ['人物評定草案.js','武將品質草案.js','測試角色.js','武將戰鬥能力資料.js','蜀國武將技能資料.js','全武將補充技能資料.js','蜀國武將技能.js','武將戰鬥換算.js','羈絆規則.js'])vm.runInContext(fs.readFileSync(f,'utf8'),c);
 const B=c.BondRules,p='自訂主角';
 for(const r of B.playerRules)for(const g of r.groups){

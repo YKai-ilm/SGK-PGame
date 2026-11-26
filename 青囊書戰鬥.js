@@ -1,7 +1,7 @@
 'use strict';
 window.QingnangCombat=(()=>{
  const key='three-kingdoms-interface-preview-v1';let data,pointMode='story',hadStoredPoints=false;
- function persistPoints(){const s=JSON.parse(localStorage.getItem(key)||'{}');s.strategyPoints??={};s.strategyPoints[pointMode]={current:data.points};localStorage.setItem(key,JSON.stringify(s));}
+ function persistPoints(){const s=JSON.parse(localStorage.getItem(key)||'{}');s.strategyPoints??={};s.strategyPoints[pointMode]={...s.strategyPoints[pointMode],current:data.points};localStorage.setItem(key,JSON.stringify(s));}
 
  const button=document.createElement('button');button.id='restoreBody';button.title='消耗4計策值：治療生命比例最低的存活武將400，續療每秒150共3秒，冷卻5秒。';document.getElementById('tactics')?.append(button);
  function reset(){let s={};try{s=JSON.parse(localStorage.getItem(key)||'{}');}catch{}
@@ -17,5 +17,6 @@ window.QingnangCombat=(()=>{
  }
  function validate(d){if(d===undefined)return;if(!d||!Array.isArray(d.holders)||d.holders.length>7||d.holders.some(n=>typeof n!=='string'||!roster[n]?.skills.length)||d.strategist!==null&&(typeof d.strategist!=='string'||!roster[d.strategist]?.skills.length)||!Number.isInteger(d.points)||d.points<0||!Number.isSafeInteger(d.points)||d.maxPoints!==undefined&&(!Number.isInteger(d.maxPoints)||d.maxPoints<0||d.maxPoints>109)||!Number.isFinite(d.ready)||d.ready<0||!d.passive||Array.isArray(d.passive)||typeof d.passive!=='object'||Object.entries(d.passive).some(([k,v])=>!/^\d+$/.test(k)||!Number.isFinite(v)||v<0)||!Array.isArray(d.hot)||d.hot.length>3||d.hot.some(h=>h.amount!==undefined&&h.amount!==150||!Number.isInteger(h.id)||h.id<=0||!Number.isInteger(h.left)||h.left<1||h.left>3||!Number.isFinite(h.next)||h.next<0))throw Error('青囊書與計策資料無效');}
  function load(d){if(d===undefined){reset();return;}validate(d);data=JSON.parse(JSON.stringify(d));data.maxPoints=window.StrategyPoints.capacity(data.strategist);const s=JSON.parse(localStorage.getItem(key)||'{}'),current=s.strategyPoints?.[pointMode]?.current;if(hadStoredPoints&&Number.isSafeInteger(current)&&current>=0)data.points=current;if(!window.TutorialBattleConfig)persistPoints();hadStoredPoints=true;sync();}
- button.onclick=cast;reset();return {reset,update,sync,cast,validate,load,save:()=>JSON.parse(JSON.stringify(data))};
+ function restoreFromBond(id,amount){if(data.strategist!=='司馬徽'||!Number.isSafeInteger(amount)||amount<=0)return false;try{const s=JSON.parse(localStorage.getItem(key)||'{}');s.strategyPoints??={};const record=s.strategyPoints[pointMode]??={current:data.points};record.scholarBondClaims??={};if(record.scholarBondClaims[id])return true;const current=Number.isSafeInteger(record.current)&&record.current>=0?record.current:data.points,next=current+Math.min(amount,Math.max(0,data.maxPoints-current));record.current=next;record.scholarBondClaims[id]=true;localStorage.setItem(key,JSON.stringify(s));data.points=next;sync();return true;}catch{return false;}}
+ button.onclick=cast;reset();return {restoreFromBond,reset,update,sync,cast,validate,load,save:()=>JSON.parse(JSON.stringify(data))};
 })();
