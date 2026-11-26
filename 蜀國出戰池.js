@@ -1,6 +1,6 @@
 'use strict';
 window.ShuBattlePool=(()=>{
- const names=[...new Set([...SHU_SKILL_DESIGN.names,...(window.ADDITIONAL_HERO_SKILLS?.entries||[]).filter(r=>r.faction==='蜀').map(r=>r.name)])];
+ const names=[...new Set([...SHU_SKILL_DESIGN.names,...(window.ADDITIONAL_HERO_SKILLS?.entries||[]).filter(r=>['蜀','特殊'].includes(r.faction)).map(r=>r.name)])];
  function read(key){try{return JSON.parse(localStorage.getItem(key)||'{}');}catch{return {};}}
  function shuffle(items,rng=Math.random){const a=[...items];for(let i=a.length-1;i>0;i--){const j=Math.floor(rng()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
  function eligible(state){return new Set((state.unlocks?.story?.heroes||[]).filter(n=>names.includes(n)));}

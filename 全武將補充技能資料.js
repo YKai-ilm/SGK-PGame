@@ -6758,6 +6758,91 @@ window.ADDITIONAL_HERO_SKILLS={
         "charm": 58
       },
       "quality": "青"
+    },
+    {
+      "name": "童淵",
+      "faction": "特殊",
+      "role": "槍術宗師",
+      "archetype": "duelist",
+      "kind": "hit",
+      "range": 3,
+      "group": "近戰",
+      "weapon": "槍",
+      "skill1": "百鳥朝鳳",
+      "effect1": "multiStrike",
+      "skill1Overrides": {
+        "hits": 3,
+        "ratio": 0.8,
+        "cd": 6
+      },
+      "skill2": "盤蛇守勢",
+      "effect2": "counterStance",
+      "skill2Overrides": {
+        "ratio": 0.9,
+        "duration": 3,
+        "cd": 8
+      },
+      "abilities": {
+        "str": 98,
+        "int": 74,
+        "lead": 68,
+        "body": 86,
+        "agi": 94,
+        "charm": 80
+      },
+      "quality": "紫"
+    },
+    {
+      "name": "陸抗",
+      "faction": "吳",
+      "role": "戰線調度",
+      "kind": "magic",
+      "group": "遠攻",
+      "range": 4,
+      "weapon": "扇",
+      "skill1": "西陵籌策",
+      "effect1": "weakenArea",
+      "skill1Overrides": {},
+      "skill2": "協守江防",
+      "effect2": "areaShield",
+      "skill2Overrides": {},
+      "abilities": {
+        "str": 72,
+        "int": 95,
+        "lead": 97,
+        "body": 79,
+        "agi": 75,
+        "charm": 88
+      },
+      "quality": "紫"
+    },
+    {
+      "name": "鄧艾",
+      "faction": "魏",
+      "role": "險路進軍",
+      "kind": "hit",
+      "group": "近戰",
+      "range": 2,
+      "weapon": "刀",
+      "skill1": "陰平奇襲",
+      "effect1": "cleave",
+      "skill1Overrides": {
+        "armorBreakDuration": 3
+      },
+      "skill2": "屯田整軍",
+      "effect2": "healSelf",
+      "skill2Overrides": {
+        "threshold": 0.6
+      },
+      "abilities": {
+        "str": 87,
+        "int": 95,
+        "lead": 96,
+        "body": 88,
+        "agi": 83,
+        "charm": 73
+      },
+      "quality": "紫"
     }
   ]
 };
