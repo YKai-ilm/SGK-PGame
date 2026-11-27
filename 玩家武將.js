@@ -27,6 +27,7 @@ window.PlayerOfficer=(()=>{
   const gain=combatVersion===1?0:Math.floor(p.rank/10)*.14+(p.rank%10)*.01;
   for(const k of Object.keys(base)){const weight=k==='rate'?.2:['def','mdef'].includes(k)?.5:1;base[k]*=1+gain*(.75+.5*score[k]/100)*weight;}
   // 一級生命的取整與一般武將一致，再套用原有玩家永久等級成長。
+  if(combatVersion!==1&&window.HeroCombat?.permanent)return HeroCombat.permanent({...base,hp:Math.round(base.hp)},p.level);
   return {hp:Math.round((combatVersion===1?base.hp:Math.round(base.hp))*scale),physical:base.physical*scale,magic:base.magic*scale,def:base.def*defScale,mdef:base.mdef*defScale,support:base.support*scale,rate:base.rate*(1+(p.level-1)*.001)};
  }
  function previewPoints(p,extra){const next=JSON.parse(JSON.stringify(p));addPoints(next,extra);return combatStats(next);}

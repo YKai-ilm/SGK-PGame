@@ -33,7 +33,7 @@ window.SwallowChests=(()=>{
   // 新取得武將先沿用目前吞食試戰配置；正式六維換算另行接入。
   s.reserves??={};const officer=s.reserves[name]||{name,max:260,hp:260,attack:80,speed:10,xp:0,stars:1};
   if(s.party.length<5)s.party.push(officer);else{if(!Number.isInteger(replaceIndex)||replaceIndex<0||replaceIndex>=s.party.length)throw Error('請選擇要替換的武將');const old=s.party[replaceIndex];s.reserves[old.name]=old;s.party[replaceIndex]=officer;}
-  delete s.reserves[name];s.formationOrder=s.party.map((_,i)=>i);localStorage.setItem(FiveVFiveGame.key,JSON.stringify(s));
+  delete s.reserves[name];s.formationOrder=s.party.map((_,i)=>i);window.SwallowGrowth?.sync(s);localStorage.setItem(FiveVFiveGame.key,JSON.stringify(s));
  }
  return {description,pool,open,owned,deploy};
 })();

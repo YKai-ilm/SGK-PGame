@@ -11,6 +11,8 @@ window.HeroCombat=(()=>{
   return {...out,hp:Math.round(out.hp),interval:1/out.rate,quality,stars};
  }
  function stats(name){const d=window.HERO_COMBAT_DATA?.[name];return d?calculate(d.abilities,d.quality):null;}
+ // 永久等級沿用玩家武將既有成長；與局內升級分開。
+ function permanent(base,level=1){if(!Number.isInteger(level)||level<1||level>100)throw Error('武將等級無效');const scale=1+(level-1)*.03,defScale=1+(level-1)*.015;return {...base,hp:Math.round(base.hp*scale),physical:base.physical*scale,magic:base.magic*scale,def:base.def*defScale,mdef:base.mdef*defScale,support:base.support*scale,rate:base.rate*(1+(level-1)*.001)};}
  // Encounter growth is independent of player ownership and permanent progression.
  function encounter(name,config={},wave=1){
   const d=window.HERO_COMBAT_DATA?.[name];
@@ -38,5 +40,5 @@ window.HeroCombat=(()=>{
    if(skill.id==='shield')skill.desc='為全場一名生命低於60%的友軍提供輔助力120%的護盾，可保護自身；同源護盾不累加。';
   }
  }
- return {calculate,stats,encounter,power,support};
+ return {calculate,permanent,stats,encounter,power,support};
 })();

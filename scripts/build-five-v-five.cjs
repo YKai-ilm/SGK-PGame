@@ -4,6 +4,7 @@ const root=path.resolve(__dirname,'..'),out=path.join(root,'.preview-five-v-five
 (async()=>{fs.mkdirSync(out,{recursive:true});const source=path.join(root,'variants/five-v-five');const files={'入口.html':path.join(source,'玩法入口.html'),'index.html':path.join(source,'驗證入口.html'),'game.js':path.join(source,'game.js'),'ui.js':path.join(source,'ui.js'),'style.css':path.join(source,'style.css'),'shared/grain-route.js':path.join(root,'shared/grain-route.js'),'共用室內場景資料.js':path.join(root,'共用室內場景資料.js')};
  files['武將戰鬥能力資料.js']=path.join(root,'武將戰鬥能力資料.js');files['品質美術.js']=path.join(root,'品質美術.js');
  files['攻擊美術.js']=path.join(root,'攻擊美術.js');
+ for(const name of ["人物評定草案.js","武將品質草案.js","測試角色.js","武將戰鬥能力資料.js","武將戰鬥換算.js","武將裝備.js","裝備戰鬥.js","武將升星需求資料.js"])files[name]=path.join(root,name);files['吞食養成.js']=path.join(source,'吞食養成.js');
  const hashes={};for(const [target,from]of Object.entries(files)){const data=fs.readFileSync(from);fs.mkdirSync(path.dirname(path.join(out,target)),{recursive:true});fs.writeFileSync(path.join(out,target),data);hashes[target]=crypto.createHash('sha256').update(data).digest('hex');}
  for(const file of ['糧道谷關-v1.png','盜糧匪寨-v2-黑風寨.png','共用室內場景/茶站-v1.png','共用室內場景/客棧-v1.png','共用室內場景/城主府大堂三-v2-方正議事廳.png']){const target=path.join(out,file.replace(/\.png$/,'.webp'));fs.mkdirSync(path.dirname(target),{recursive:true});const data=await sharp(path.join(root,file)).webp({quality:88,effort:5}).toBuffer();fs.writeFileSync(target,data);}
  await require('./build-swallow-campaign.cjs')(out);
