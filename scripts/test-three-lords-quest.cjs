@@ -6,3 +6,11 @@ s.storyItems.attributeCard=1;s.playerOfficer.bonusPoints=Number.MAX_SAFE_INTEGER
 for(const stage of ['brothers','lords']){c.VillageSweep={mission:'three-lords-'+stage,waves:6,combatVersion:10,rewardVersion:2,encounterId:'rabble'};const final=[];for(let w=1;w<=6;w++)for(let k=0;k<8;k++){let e={};c.YellowTurbanEncounter.apply(e,w,k);c.ThreeLordsCombat.apply(e,w,k,stage);for(const f of ['hp','atk','def','mdef','range','interval'])assert(Number.isFinite(e[f])&&e[f]>=0,stage+f);assert.equal(e.max,e.hp);if(w===6&&k>=4)final.push(e.name);if(e.yellowOfficer)assert.equal(e.level,stage==='brothers'?14:e.name==='張角'?17:16);}assert.deepEqual(final,stage==='brothers'?['黃巾頭目','黃巾頭目','張梁','張寶']:['黃巾頭目','張梁','張寶','張角']);}
 seed();s=read();s.unlocks.story.heroes.push('張角');s.storyEvents.threeLords={lordsWon:true};put(s);q.advance('completed');assert.equal(read().unlocks.story.heroes.filter(n=>n==='張角').length,1);
 console.log('PASS three lords: mercy/GeBei gates, two independent battles, defeat/retry, report-only card, achievement deduplication, +10 points and complete 96-enemy roster');
+
+// Revealing the hidden commander must not hijack a different scene or restart saved dialogue.
+vm.runInContext(fs.readFileSync('天地人三公劇情.js','utf8'),c);
+seed();s=read();s.storyEvents.threeLords={accepted:true,briefed:true,brothersWon:true};put(s);
+const uiState={scene:'內城',active:null};c.ThreeLordsUI.install({state:uiState});assert(!c.ThreeLordsUI.pending());uiState.scene='黃巾藏營';assert(c.ThreeLordsUI.pending());uiState.active={action:'lords:revealed',index:3};assert(!c.ThreeLordsUI.pending());
+s.storyEvents.threeLords.completed=true;s.storyEvents.threeLords.lordsWon=true;put(s);assert.equal(c.ThreeLordsUI.npc('taoqian'),false);
+const original=()=>{};const points=[['陶謙',50,18,original]];c.ThreeLordsUI.augment('城主府',points);assert.equal(points[0][3],original);
+console.log('PASS three-lords scene-local reveal, preserved dialogue cursor and governor released after completion');
