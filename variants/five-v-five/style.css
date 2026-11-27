@@ -47,3 +47,8 @@
 #allies .heldWeapon[data-weapon="pole"]{height:57.6px}
 #allies .unit .heldWeapon[data-horizontal="true"]{width:56px;height:32px;left:50%;top:-5px!important;transform:translate(-50%,-100%);transform-origin:center}
 #allies .archer.acting{animation:none}
+
+/* Reuse the original bow art and string animation, rotated toward the enemy. */
+#allies .unit canvas.heldWeapon[data-horizontal="true"]{width:64px;height:56px;top:12px!important}
+#allies{top:calc(50% + 74px)}
+#arena{height:clamp(480px,calc(100svh - 270px),540px)}
