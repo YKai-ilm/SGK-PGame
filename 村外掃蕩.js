@@ -35,7 +35,7 @@
  `;document.head.append(controlsStyle);
  $('sweepBack').onclick=()=>BattleResults.leave();
  const originalFinish=BattleResults.finish,originalReset=BattleResults.reset,originalLeave=BattleResults.leave;
- function settle(){const r=BattleResults.result;if(!r||!runId)return true;try{StoryMorale.settle(runId,r.outcome==='retreat'?'retreat':r.win?'win':'loss',waveCount,goldReward());if(r.win&&r.outcome!=='retreat'&&sweepCity==='桃源村')VillageJourney.win(runId);const leader=regional?.leader||enemyOfficer?.name||null;const receipt=RegionalSweep.settle(runId,sweepCity,leader,[...seenOfficers],r.outcome);showDrops(receipt);update();return true;}catch(e){say('掃蕩獎勵尚未保存，請重開戰報或按返回重試。');return false;}}
+ function settle(){const r=BattleResults.result;if(!r||!runId)return true;try{StoryMorale.settle(runId,r.outcome==='retreat'?'retreat':r.win?'win':'loss',waveCount,goldReward());if(r.win&&r.outcome!=='retreat'&&sweepCity==='桃源村')VillageJourney.win(runId);const leader=regional?.leader||enemyOfficer?.name||null;const receipt=RegionalSweep.settle(runId,sweepCity,leader,[...seenOfficers],r.outcome);showDrops(receipt);update();window.ThreeLordsAlert?.show();return true;}catch(e){say('掃蕩獎勵尚未保存，請重開戰報或按返回重試。');return false;}}
  function showDrops(receipt){const dialog=document.getElementById('battleResults');if(!dialog)return;dialog.querySelector('#sweepDrops')?.remove();const row=document.createElement('p');row.id='sweepDrops';row.textContent=receipt.drops.length?'武將碎片：'+receipt.drops.map(x=>x.name+' ×'+x.count).join('、'):'本場未獲得武將碎片。';dialog.querySelector('.result-actions')?.before(row);}
  BattleResults.finish=function(win,reason){originalFinish.call(this,win,reason);settle();};
  BattleResults.leave=function(...args){if(settle())return originalLeave.apply(this,args);};
