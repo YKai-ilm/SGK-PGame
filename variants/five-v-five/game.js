@@ -23,7 +23,7 @@ window.FiveVFiveGame=(()=>{
  function go(scene){return change(s=>{if(s.battle&&!s.battle.outcome)throw Error('戰鬥尚未結束');s.scene=scene;s.active=null;});}
  function setFormation(id){return change(s=>{if(s.battle&&!s.battle.outcome)throw Error('請在戰前調整陣型');if(!formations[id])throw Error('陣型不存在');s.formation=id;});}
  function newRound(s){const b=s.battle;b.queue=['ally','enemy'].flatMap(side=>(side==='ally'?s.party:b.enemies).map((u,index)=>({side,index,score:u.speed*(.8+Math.random()*.4)})).filter(v=>(v.side==='ally'?s.party:b.enemies)[v.index].hp>0)).sort((a,b)=>b.score-a.score);b.cursor=0;}
- function prepare(s){const b=s.battle;b.phase='planning';b.orders={};b.planners=s.party.map((u,i)=>i).filter(i=>s.party[i].hp>0);b.planAt=0;b.turn=b.planners[0]??-1;b.fallen=[];b.queue=[];b.cursor=0;delete b.remaining;}
+ function prepare(s){const b=s.battle;b.phase='planning';b.orders={};b.planners=s.party.map((u,i)=>i).filter(i=>s.party[i].hp>0);b.planAt=0;b.turn=b.planners[0]??-1;b.fallen=[];b.queue=[];b.cursor=0;delete b.remaining;delete b.savedOrders;}
  function available(s=read(),except=s.battle?.turn){let sp=s.sp,stock={...s.items};for(const [who,o]of Object.entries(s.battle?.orders||{})){if(Number(who)===except)continue;if(o.kind==='strategy')sp-=strategies[o.id].cost;if(o.kind==='item')stock[o.id]=(stock[o.id]||0)-1;}return {sp,items:stock};}
  function validateOrder(s,o,actor){const {kind,id,index}=o,a=available(s,actor);if(kind==='attack'){if(!s.battle.enemies[index]||s.battle.enemies[index].hp<=0)throw Error('請選擇存活的敵人');return;}
   if(kind==='strategy'){const d=strategies[id];if(!d||a.sp<d.cost)throw Error('剩餘未預留計策值不足');const target=(d.side==='enemy'?s.battle.enemies:s.party)[index];if(!target||target.hp<=0||id==='heal'&&target.hp===target.max)throw Error('請選擇可使用計策的目標');return;}
@@ -61,7 +61,8 @@ window.FiveVFiveGame=(()=>{
  if(weak){if(s.sp>=strategies.heal.cost)return ['strategy','heal',weak.i];for(const id of ['bronzePill','redHeartPill'])if(s.items[id]>0)return ['item',id,weak.i];}
  if(s.sp>=strategies.fire.cost)return ['strategy','fire',randomTarget(s.battle.enemies)];
  }return ['attack',null,randomTarget(s.battle.enemies)];}
- function setMode(mode){return change(s=>{const b=s.battle;if(!b||b.outcome||!['manual','charge','auto'].includes(mode))throw Error('目前無法切換作戰方式');if(b.phase==='executing'){if(mode!=='manual')throw Error('請先完成本回合');b.stopAfterRound=true;return;}b.mode=mode;if(mode!=='manual'){b.orders={};launch(s);}});}
+ function setMode(mode){return change(s=>{const b=s.battle;if(!b||b.outcome||!['manual','charge','auto'].includes(mode))throw Error('目前無法切換作戰方式');if(b.phase==='executing'){if(mode!=='manual')throw Error('請先完成本回合');b.stopAfterRound=true;return;}b.mode=mode;if(mode!=='manual'){b.savedOrders={...b.orders};b.orders={};launch(s);}});}
+ function cancelAutomatic(){return change(s=>{const b=s.battle;if(!b||b.outcome||b.mode==='manual')throw Error('目前沒有自動指令');b.remaining=b.queue.slice(b.cursor).filter(v=>(v.side==='ally'?s.party:b.enemies)[v.index].hp>0&&!(v.side==='ally'&&b.fallen.includes(v.index)));b.planners=b.remaining.filter(v=>v.side==='ally').map(v=>v.index).sort((a,b)=>a-b);b.orders={};for(const i of b.planners)if(b.savedOrders?.[i])b.orders[i]=b.savedOrders[i];delete b.savedOrders;b.mode='manual';delete b.stopAfterRound;b.planAt=0;b.turn=b.planners[0]??-1;b.phase=b.planners.length?'planning':'executing';if(!b.planners.length){b.queue=b.remaining;b.cursor=0;delete b.remaining;}});}
  function step(){return change(s=>{const b=s.battle;if(!b||b.outcome||b.phase!=='executing')return;checkEnd(s);if(b.outcome)return;
   while(b.cursor<b.queue.length){const v=b.queue[b.cursor],actor=(v.side==='ally'?s.party:b.enemies)[v.index];if(actor.hp<=0||v.side==='ally'&&b.fallen.includes(v.index)){b.cursor++;continue;}
    b.turn=v.side==='ally'?v.index:-1;let order=v.side==='ally'&&b.mode==='manual'?b.orders[v.index]:null;
@@ -83,5 +84,5 @@ window.FiveVFiveGame=(()=>{
  function showRescue(){return change(s=>{if(s.progress.rescueWon&&!s.progress.rescueShown)advance(s,'rescueShown');});}
  function retreat(){return change(s=>{if(!s.battle||s.battle.outcome)throw Error('目前沒有進行中的戰鬥');finish(s,'retreat');});}
  function rest(){return change(s=>{if(s.scene!=='客棧'||s.battle&&!s.battle.outcome)throw Error('請先回客棧休息');if(!s.party.some(u=>u.hp>0))throw Error('全隊已死亡，請先使用復活丹');if(s.coins<20)throw Error('住宿需要20金幣');if(s.party.every(u=>u.hp<=0||u.hp===u.max)&&s.sp===s.spMax)throw Error('存活武將已恢復健康');s.coins-=20;for(const u of s.party)if(u.hp>0)u.hp=u.max;s.sp=s.spMax;});}
- return {key,formations,strategies,items,read,talk,next,go,begin,act,available,previous,nextPlanner,executeRound,attack:index=>act('attack',null,index),setMode,step,setFormation,useItem,retreat,returnFromBattle,showRescue,rest};
+ return {key,formations,strategies,items,read,talk,next,go,begin,act,available,previous,nextPlanner,executeRound,attack:index=>act('attack',null,index),setMode,cancelAutomatic,step,setFormation,useItem,retreat,returnFromBattle,showRescue,rest};
 })();
