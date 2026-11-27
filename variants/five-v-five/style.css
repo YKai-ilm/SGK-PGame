@@ -68,5 +68,5 @@
 #allies .unit canvas.heldWeapon[data-horizontal="true"]{width:57.6px;height:50.4px}
 .heldWeapon[alt="刀"],.heldWeapon[alt="大刀"]{height:43.56px;width:auto;max-width:none}
 
-#allies .heldWeapon[alt="錘"],#allies .heldWeapon[alt="斧"]{height:50px}
+#allies .heldWeapon[alt="錘"],#allies .heldWeapon[alt="斧"]{height:42.5px}
 .charging #allies.formation232 .unit{left:0}
