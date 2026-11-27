@@ -2,7 +2,7 @@
 window.FiveVFiveGame=(()=>{
  const demo232=typeof location!=='undefined'&&new URLSearchParams(location.search).get('formation')==='232';
  const key=demo232?'sgk-seven-232-preview-v1':'sgk-five-v-five-preview-v1',story=SharedGrainStory;
- const formations={front3:{name:'前三中二',rows:[0,1,0,1,0]},front2:{name:'前二中三',rows:[1,0,1,0,1]},threeRows:{name:'前二中一後二',rows:[2,0,1,0,2]}};
+ const formations={front3:{name:'前三後二',rows:[0,1,0,1,0]},front2:{name:'前二後三',rows:[1,0,1,0,1]}};
  if(demo232){for(const id of Object.keys(formations))delete formations[id];formations.front3={name:'前二中三後二（七人試排）',rows:[2,0,1,0,2,1,1],columns:[2,2,3,4,4,1,5]};}
  // Provisional turn-based effects, independent from tower-defense combat balance.
  const strategies={fire:{name:'火計',cost:3,side:'enemy',description:'對一名敵人造成較高傷害'},heal:{name:'赤心計',cost:2,side:'ally',description:'恢復一名存活武將80生命'}};
@@ -13,7 +13,7 @@ window.FiveVFiveGame=(()=>{
   // One-time preview supplies; old saves keep their items, HP and story progress.
   if(!s.combatSuppliesV2){for(const [id,n]of Object.entries({redHeartPill:5,bronzePill:3,revivalPill:3}))s.items[id]=(s.items[id]||0)+n;s.combatSuppliesV2=true;}
   if(!s.previewRevival999){s.items.revivalPill=Math.max(999,s.items.revivalPill||0);s.previewRevival999=true;}
-  if(s.battle){const b=s.battle;b.enemyFormation??='front2';b.formation??=s.formation;b.mode??='manual';b.log??=[];for(const [i,u]of b.enemies.entries())u.speed??=9+i;
+  if(s.battle){const b=s.battle;b.enemyFormation=formations[b.enemyFormation]?b.enemyFormation:(demo232?'front3':'front2');b.formation=formations[b.formation]?b.formation:s.formation;b.mode??='manual';b.log??=[];for(const [i,u]of b.enemies.entries())u.speed??=9+i;
    if(!b.queue){b.queue=s.party.map((u,index)=>({side:'ally',index})).filter(v=>v.index>=b.turn&&s.party[v.index].hp>0).concat(b.enemies.map((u,index)=>({side:'enemy',index})));b.cursor=0;}
    if(!b.phase){b.orders={};b.planAt=0;b.fallen=[];if(b.outcome)b.phase='ended';else if(b.mode!=='manual')b.phase='executing';else{b.remaining=b.queue.slice(b.cursor);b.planners=b.remaining.filter(v=>v.side==='ally'&&s.party[v.index].hp>0).map(v=>v.index);b.phase=b.planners.length?'planning':'executing';b.turn=b.planners[0]??-1;}}
    b.orders??={};b.planners??=[];b.planAt??=0;b.fallen??=[];
