@@ -14,3 +14,15 @@
 .heldWeapon[data-weapon="pole"]{height:68px;max-width:22px}.heldWeapon[data-weapon="bow"]{height:38px;max-width:20px}#enemies .heldWeapon{transform:translateY(-50%) scaleY(-1)}#enemies .heldWeapon[data-weapon="bow"]{transform:translateY(-50%) scaleX(-1)}
 
 #enemies .heldWeapon{transform-origin:50% 28%}.heldWeapon[data-weapon="bow"]{transform-origin:center}.hit,.healed{animation-delay:.22s}
+
+/* Compact card bodies leave actual space beside each card for held weapons. */
+.formation{gap:3px;padding:0 9px}
+.unit{width:calc(100% - 14px);justify-self:center;height:58px;min-height:58px;padding:7px 1px 4px;border-width:2px;border-radius:5px;overflow:visible;font-size:12px;line-height:1.4}
+.unit small{font-size:9px}.unit progress{height:5px;margin-top:4px}
+.heldWeapon{right:-13px;z-index:5;height:44px;max-width:18px;filter:drop-shadow(0 1px 1px #293b3055)}
+.heldWeapon[data-weapon="pole"]{height:72px;max-width:20px}
+.heldWeapon[data-weapon="bow"]{height:36px;max-width:17px}
+.heldWeapon[data-hand="left"]{left:-12px;right:auto;height:39px;transform-origin:50% 72%}
+.formation:has(.acting){z-index:7}.unit.acting{z-index:8}.combatEffect{z-index:9}
+@media(max-width:360px){.formation{padding:0 7px;gap:2px}.unit{width:calc(100% - 10px);font-size:11px}.heldWeapon{right:-11px}.heldWeapon[data-hand="left"]{left:-10px}}
+#enemies{top:calc(50% - 196px)}.charging #enemies .unit{margin-top:92px}.heldWeapon{top:68%}#enemies .heldWeapon{top:32%}
