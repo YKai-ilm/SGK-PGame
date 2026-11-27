@@ -1,12 +1,14 @@
 'use strict';
 window.FiveVFiveGame=(()=>{
- const key='sgk-five-v-five-preview-v1',story=SharedGrainStory;
+ const demo232=typeof location!=='undefined'&&new URLSearchParams(location.search).get('formation')==='232';
+ const key=demo232?'sgk-seven-232-preview-v1':'sgk-five-v-five-preview-v1',story=SharedGrainStory;
  const formations={front3:{name:'前三中二',rows:[0,1,0,1,0]},front2:{name:'前二中三',rows:[1,0,1,0,1]},threeRows:{name:'前二中一後二',rows:[2,0,1,0,2]}};
+ if(demo232){for(const id of Object.keys(formations))delete formations[id];formations.front3={name:'前二中三後二（七人試排）',rows:[2,0,1,0,2,1,1],columns:[2,2,3,4,4,1,5]};}
  // Provisional turn-based effects, independent from tower-defense combat balance.
  const strategies={fire:{name:'火計',cost:3,side:'enemy',description:'對一名敵人造成較高傷害'},heal:{name:'赤心計',cost:2,side:'ally',description:'恢復一名存活武將80生命'}};
  const items={redHeartPill:{name:'赤心丹',heal:40},bronzePill:{name:'銅仙丹',heal:75},revivalPill:{name:'復活丹',revive:true}};
- const initial=()=>({version:1,scene:'糧道谷關',progress:{routeKnown:true},coins:100,items:{},party:['劉備','關羽','張飛','趙雲','黃忠'].map((name,i)=>({name,max:260+i*15,hp:260+i*15,attack:80+i*3,speed:10+i,xp:0})),active:null,battle:null});
- function read(){const raw=localStorage.getItem(key),s=raw?JSON.parse(raw):initial();if(s.version!==1||!Array.isArray(s.party)||s.party.length!==5)throw Error('新版驗證存檔格式不符，未覆寫原資料');
+ const initial=()=>({version:1,scene:'糧道谷關',progress:demo232?{routeKnown:true,rescueWon:true,rescueShown:true}: {routeKnown:true},coins:100,items:{},party:(demo232?['劉備','關羽','張飛','趙雲','黃忠','許褚','徐晃']:['劉備','關羽','張飛','趙雲','黃忠']).map((name,i)=>({name,max:260+i*15,hp:260+i*15,attack:80+i*3,speed:10+i,xp:0})),active:null,battle:null});
+ function read(){const raw=localStorage.getItem(key),s=raw?JSON.parse(raw):initial();if(s.version!==1||!Array.isArray(s.party)||s.party.length!==(demo232?7:5))throw Error('新版驗證存檔格式不符，未覆寫原資料');
   s.formation=formations[s.formation]?s.formation:'front3';s.spMax??=24;s.sp??=24;for(const [i,u]of s.party.entries()){u.speed??=10+i;u.xp??=0;}
   // One-time preview supplies; old saves keep their items, HP and story progress.
   if(!s.combatSuppliesV2){for(const [id,n]of Object.entries({redHeartPill:5,bronzePill:3,revivalPill:3}))s.items[id]=(s.items[id]||0)+n;s.combatSuppliesV2=true;}
@@ -53,7 +55,7 @@ window.FiveVFiveGame=(()=>{
   else throw Error('未知指令');b.event={serial:(b.event?.serial||0)+1,actor:{side:v.side,index:v.index},target:{side:targetSide,index},kind,id:id||null};if(target.hp===0){log(s,target.name+' 倒下了。');if(targetSide==='ally'&&!b.fallen.includes(index))b.fallen.push(index);}b.cursor++;checkEnd(s);
  }
 
- function begin(practice=false){return change(s=>{if(s.battle&&!s.battle.outcome||!(practice?s.progress.rescueWon:story.canStart('rescue',s.progress)))throw Error('目前不能開始救援');if(s.party.every(u=>u.hp<=0))throw Error('隊伍無法作戰，請先使用復活丹');const id=crypto.randomUUID();if(!practice)s.progress.pending={kind:'rescue',runId:id};s.battle={id,practice:!!practice,round:1,turn:0,outcome:null,mode:'manual',formation:s.formation,enemyFormation:Object.keys(formations)[Math.floor(Math.random()*3)],log:['交戰開始。'],enemies:['賊兵甲','賊兵乙','賊兵丙','賊兵丁','賊首'].map((name,i)=>({name,max:170+(i===4?80:0),hp:170+(i===4?80:0),attack:15+i*3,speed:9+i}))};prepare(s);});}
+ function begin(practice=false){return change(s=>{if(s.battle&&!s.battle.outcome||!(practice?s.progress.rescueWon:story.canStart('rescue',s.progress)))throw Error('目前不能開始救援');if(s.party.every(u=>u.hp<=0))throw Error('隊伍無法作戰，請先使用復活丹');const id=crypto.randomUUID();if(!practice)s.progress.pending={kind:'rescue',runId:id};s.battle={id,practice:!!practice,round:1,turn:0,outcome:null,mode:'manual',formation:s.formation,enemyFormation:Object.keys(formations)[Math.floor(Math.random()*Object.keys(formations).length)],log:['交戰開始。'],enemies:['賊兵甲','賊兵乙','賊兵丙','賊兵丁','賊首'].map((name,i)=>({name,max:170+(i===4?80:0),hp:170+(i===4?80:0),attack:15+i*3,speed:9+i}))};prepare(s);});}
  function act(kind,id,index){return change(s=>{const b=s.battle;if(!b||b.outcome||b.mode!=='manual'||b.phase!=='planning')throw Error('目前無法下達指令');const order={kind,id,index};validateOrder(s,order,b.turn);b.orders[b.turn]=order;advancePlanner(s);});}
  function useItem(id,index){return change(s=>{if(s.battle&&!s.battle.outcome)throw Error('請由戰鬥道具指令使用');applyItem(s,id,index);});}
  function autoChoice(s,v){if(v.side==='enemy')return ['attack',null,randomTarget(s.party)];if(s.battle.mode==='auto'){
@@ -85,5 +87,5 @@ window.FiveVFiveGame=(()=>{
  function showRescue(){return change(s=>{if(s.progress.rescueWon&&!s.progress.rescueShown)advance(s,'rescueShown');});}
  function retreat(){return change(s=>{if(!s.battle||s.battle.outcome)throw Error('目前沒有進行中的戰鬥');finish(s,'retreat');});}
  function rest(){return change(s=>{if(s.scene!=='客棧'||s.battle&&!s.battle.outcome)throw Error('請先回客棧休息');if(!s.party.some(u=>u.hp>0))throw Error('全隊已死亡，請先使用復活丹');if(s.coins<20)throw Error('住宿需要20金幣');if(s.party.every(u=>u.hp<=0||u.hp===u.max)&&s.sp===s.spMax)throw Error('存活武將已恢復健康');s.coins-=20;for(const u of s.party)if(u.hp>0)u.hp=u.max;s.sp=s.spMax;});}
- return {key,formations,strategies,items,read,talk,next,go,begin,act,available,previous,nextPlanner,executeRound,attack:index=>act('attack',null,index),setMode,cancelAutomatic,step,setFormation,useItem,retreat,returnFromBattle,showRescue,rest};
+ return {demo232,key,formations,strategies,items,read,talk,next,go,begin,act,available,previous,nextPlanner,executeRound,attack:index=>act('attack',null,index),setMode,cancelAutomatic,step,setFormation,useItem,retreat,returnFromBattle,showRescue,rest};
 })();
