@@ -2,18 +2,18 @@
 window.FiveVFiveGame=(()=>{
  const demo232=typeof location!=='undefined'&&new URLSearchParams(location.search).get('formation')==='232';
  const key=demo232?'sgk-seven-232-preview-v1':'sgk-five-v-five-preview-v1',story=SharedGrainStory;
- const formations={front3:{name:'前三後二',rows:[0,1,0,1,0]},front2:{name:'前二後三',rows:[1,0,1,0,1]}};
+ const formations={front3:{name:'前三後二',rows:[0,1,0,1,0],columns:[1,2,3,4,5]},front2:{name:'前二後三',rows:[1,0,1,0,1],columns:[1,2,3,4,5]},wedge:{name:'錐形陣',rows:[0,1,1,2,2],columns:[3,2,4,1,5]}};
  if(demo232){for(const id of Object.keys(formations))delete formations[id];formations.front3={name:'前二中三後二（七人試排）',rows:[2,0,1,0,2,1,1],columns:[2,2,3,4,4,1,5]};}
  // Provisional turn-based effects, independent from tower-defense combat balance.
  const strategies={fire:{name:'火計',cost:3,side:'enemy',description:'對一名敵人造成較高傷害'},heal:{name:'赤心計',cost:2,side:'ally',description:'恢復一名存活武將80生命'}};
  const items={redHeartPill:{name:'赤心丹',heal:40},bronzePill:{name:'銅仙丹',heal:75},revivalPill:{name:'復活丹',revive:true}};
  const initial=()=>({version:1,scene:'糧道谷關',progress:demo232?{routeKnown:true,rescueWon:true,rescueShown:true}: {routeKnown:true},coins:100,items:{},party:(demo232?['劉備','關羽','張飛','趙雲','黃忠','許褚','徐晃']:['劉備','關羽','張飛','趙雲','黃忠']).map((name,i)=>({name,max:260+i*15,hp:260+i*15,attack:80+i*3,speed:10+i,xp:0})),active:null,battle:null});
  function read(){const raw=localStorage.getItem(key),s=raw?JSON.parse(raw):initial();if(s.version!==1||!Array.isArray(s.party)||s.party.length!==(demo232?7:5))throw Error('新版驗證存檔格式不符，未覆寫原資料');
-  s.formation=formations[s.formation]?s.formation:'front3';s.spMax??=24;s.sp??=24;for(const [i,u]of s.party.entries()){u.speed??=10+i;u.xp??=0;}
+  s.formation=formations[s.formation]?s.formation:'front3';s.formationOrder=validOrder(s.formationOrder,s.party.length)?s.formationOrder:s.party.map((_,i)=>i);s.spMax??=24;s.sp??=24;for(const [i,u]of s.party.entries()){u.speed??=10+i;u.xp??=0;}
   // One-time preview supplies; old saves keep their items, HP and story progress.
   if(!s.combatSuppliesV2){for(const [id,n]of Object.entries({redHeartPill:5,bronzePill:3,revivalPill:3}))s.items[id]=(s.items[id]||0)+n;s.combatSuppliesV2=true;}
   if(!s.previewRevival999){s.items.revivalPill=Math.max(999,s.items.revivalPill||0);s.previewRevival999=true;}
-  if(s.battle){const b=s.battle;b.enemyFormation=formations[b.enemyFormation]?b.enemyFormation:(demo232?'front3':'front2');b.formation=formations[b.formation]?b.formation:s.formation;b.mode??='manual';b.log??=[];for(const [i,u]of b.enemies.entries())u.speed??=9+i;
+  if(s.battle){const b=s.battle;b.enemyFormation=formations[b.enemyFormation]?b.enemyFormation:(demo232?'front3':'front2');b.formation=formations[b.formation]?b.formation:s.formation;b.formationOrder=validOrder(b.formationOrder,s.party.length)?b.formationOrder:[...s.formationOrder];b.mode??='manual';b.log??=[];for(const [i,u]of b.enemies.entries())u.speed??=9+i;
    if(!b.queue){b.queue=s.party.map((u,index)=>({side:'ally',index})).filter(v=>v.index>=b.turn&&s.party[v.index].hp>0).concat(b.enemies.map((u,index)=>({side:'enemy',index})));b.cursor=0;}
    if(!b.phase){b.orders={};b.planAt=0;b.fallen=[];if(b.outcome)b.phase='ended';else if(b.mode!=='manual')b.phase='executing';else{b.remaining=b.queue.slice(b.cursor);b.planners=b.remaining.filter(v=>v.side==='ally'&&s.party[v.index].hp>0).map(v=>v.index);b.phase=b.planners.length?'planning':'executing';b.turn=b.planners[0]??-1;}}
    b.orders??={};b.planners??=[];b.planAt??=0;b.fallen??=[];
@@ -38,11 +38,12 @@ window.FiveVFiveGame=(()=>{
  function troopTeam(pool){return Array.from({length:5},()=>troop(pick(troopPools[pool])));}
  const travelRoutes=[{places:['徐州驗證區','糧道谷關'],name:'徐州糧道',chance:.3,pool:'road'},{places:['糧道谷關','盜糧匪寨'],name:'黑風寨山道',chance:.3,pool:'mountain'}];
  function encounter(s,route,to,kind='encounter'){
-  s.battle={id:crypto.randomUUID(),kind,journey:{from:s.scene,to,route:route.name},round:1,turn:0,outcome:null,mode:'manual',formation:s.formation,enemyFormation:pick(Object.keys(formations)),log:[kind==='sweep'?'出城掃蕩賊寇！':route.name+'途中遭遇賊寇！'],enemies:troopTeam(route.pool)};prepare(s);s.active=null;
+  s.battle={id:crypto.randomUUID(),kind,journey:{from:s.scene,to,route:route.name},round:1,turn:0,outcome:null,mode:'manual',formation:s.formation,formationOrder:[...s.formationOrder],enemyFormation:pick(Object.keys(formations)),log:[kind==='sweep'?'出城掃蕩賊寇！':route.name+'途中遭遇賊寇！'],enemies:troopTeam(route.pool)};prepare(s);s.active=null;
  }
  function sweep(){return change(s=>{if(s.battle||s.active)throw Error('請先結束目前戰鬥或對話');const pool=sweepAreas[s.scene];if(!pool)throw Error('請從城鎮或野外出口掃蕩');if(s.party.every(u=>u.hp<=0))throw Error('隊伍無法作戰，請先使用復活丹');encounter(s,{name:s.scene+'附近',pool},s.scene,'sweep');});}
  function go(scene){return change(s=>{if(s.battle)throw Error('請先離開戰鬥結算');if(s.active)throw Error('請先完成對話');const route=travelRoutes.find(r=>r.places.includes(s.scene)&&r.places.includes(scene)&&s.scene!==scene);if(route){if(s.party.every(u=>u.hp<=0))throw Error('隊伍無法趕路，請先使用復活丹');if(Math.random()<route.chance){encounter(s,route,scene);return;}}s.scene=scene;s.active=null;});}
- function setFormation(id){return change(s=>{if(s.battle&&!s.battle.outcome)throw Error('請在戰前調整陣型');if(!formations[id])throw Error('陣型不存在');s.formation=id;});}
+ function validOrder(order,n){return Array.isArray(order)&&order.length===n&&new Set(order).size===n&&order.every(i=>Number.isInteger(i)&&i>=0&&i<n);}
+ function setFormation(id,order){return change(s=>{if(s.battle&&!s.battle.outcome)throw Error('請在戰前調整陣型');if(!formations[id])throw Error('陣型不存在');if(order&&!validOrder(order,s.party.length))throw Error('請完整安排武將，每人只能放一次');s.formation=id;if(order)s.formationOrder=[...order];});}
  function newRound(s){const b=s.battle;b.queue=['ally','enemy'].flatMap(side=>(side==='ally'?s.party:b.enemies).map((u,index)=>({side,index,score:u.speed*(.8+Math.random()*.4)})).filter(v=>(v.side==='ally'?s.party:b.enemies)[v.index].hp>0)).sort((a,b)=>b.score-a.score);b.cursor=0;}
  function prepare(s){const b=s.battle;b.phase='planning';b.orders={};b.planners=s.party.map((u,i)=>i).filter(i=>s.party[i].hp>0);b.planAt=0;b.turn=b.planners[0]??-1;b.fallen=[];b.queue=[];b.cursor=0;delete b.remaining;delete b.savedOrders;}
  function available(s=read(),except=s.battle?.turn){let sp=s.sp,stock={...s.items};for(const [who,o]of Object.entries(s.battle?.orders||{})){if(Number(who)===except)continue;if(o.kind==='strategy')sp-=strategies[o.id].cost;if(o.kind==='item')stock[o.id]=(stock[o.id]||0)-1;}return {sp,items:stock};}

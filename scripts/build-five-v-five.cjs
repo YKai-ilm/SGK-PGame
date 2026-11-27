@@ -1,7 +1,7 @@
 'use strict';
 const fs=require('fs'),path=require('path'),crypto=require('crypto'),sharp=require('sharp');
 const root=path.resolve(__dirname,'..'),out=path.join(root,'.preview-five-v-five');
-(async()=>{fs.mkdirSync(out,{recursive:true});const source=path.join(root,'variants/five-v-five');const files={'index.html':path.join(source,'驗證入口.html'),'game.js':path.join(source,'game.js'),'ui.js':path.join(source,'ui.js'),'style.css':path.join(source,'style.css'),'shared/grain-route.js':path.join(root,'shared/grain-route.js'),'共用室內場景資料.js':path.join(root,'共用室內場景資料.js')};
+(async()=>{fs.mkdirSync(out,{recursive:true});const source=path.join(root,'variants/five-v-five');const files={'入口.html':path.join(source,'玩法入口.html'),'index.html':path.join(source,'驗證入口.html'),'game.js':path.join(source,'game.js'),'ui.js':path.join(source,'ui.js'),'style.css':path.join(source,'style.css'),'shared/grain-route.js':path.join(root,'shared/grain-route.js'),'共用室內場景資料.js':path.join(root,'共用室內場景資料.js')};
  files['武將戰鬥能力資料.js']=path.join(root,'武將戰鬥能力資料.js');files['品質美術.js']=path.join(root,'品質美術.js');
  files['攻擊美術.js']=path.join(root,'攻擊美術.js');
  const hashes={};for(const [target,from]of Object.entries(files)){const data=fs.readFileSync(from);fs.mkdirSync(path.dirname(path.join(out,target)),{recursive:true});fs.writeFileSync(path.join(out,target),data);hashes[target]=crypto.createHash('sha256').update(data).digest('hex');}

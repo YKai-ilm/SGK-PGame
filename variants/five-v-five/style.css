@@ -88,3 +88,12 @@
 #enemies .archer.acting{animation:none}
 @media(max-width:360px){#enemies .unit{width:calc(75% - 7.5px)}}
 #enemies .unit strong{width:max-content;left:50%;transform:translateX(-50%)}
+.formationTabs{display:flex;gap:6px;flex-wrap:wrap}
+.armoryGrid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px;width:100%;margin:16px 0}
+.armoryCell{min-width:0;min-height:62px;padding:6px 1px;font-size:13px}
+#choices .armoryCell{padding:6px 1px;text-align:center}
+.armoryCell:disabled{opacity:.4}
+.armoryCell[aria-pressed="true"],.formationTabs [aria-pressed="true"]{outline:2px solid #af8535;background:#e8e2c7}
+#allies .unit:nth-child(n),#enemies .unit:nth-child(n){left:var(--inward,0)}
+.charging #allies .unit,.charging #enemies .unit{left:var(--inward,0)}
+.townTools a{align-self:center;color:#365d4b;padding:8px}
