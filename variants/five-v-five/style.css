@@ -60,7 +60,7 @@
 #allies .unit:nth-child(5){left:-24%}
 
 /* Seven-person formation preview uses its own save and the existing five column spacing. */
-#allies.formation232 .unit{left:0}
+#allies.formation232 .unit{left:var(--inward,0)}
 .charging #allies.formation232{grid-template-columns:repeat(7,minmax(0,1fr));padding-inline:12px}
 .charging #allies.formation232 .unit{width:calc(100% - 5px)}
 
@@ -69,3 +69,4 @@
 .heldWeapon[alt="刀"],.heldWeapon[alt="大刀"]{height:43.56px;width:auto;max-width:none}
 
 #allies .heldWeapon[alt="錘"],#allies .heldWeapon[alt="斧"]{height:50px}
+.charging #allies.formation232 .unit{left:0}
