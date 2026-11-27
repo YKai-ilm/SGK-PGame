@@ -7,3 +7,6 @@
 #officerSearch{max-width:100%;padding:8px;font:inherit}
 .top{position:relative}#settings{position:relative;z-index:2}
 @media(min-aspect-ratio:3/2){.modebar{position:static;padding:8px 22px}.swallow-grid{max-width:650px}}
+
+.army-support{margin:12px 0}.swallow-grid .slot{min-height:76px;padding:5px 1px}.swallow-grid .slot span{font-size:16px;white-space:nowrap}.swallow-grid .slot small{font-size:11px}.army-support .slot{min-height:82px}
+.swallow-grid .slot:nth-child(n){grid-column:auto;grid-row:auto;width:100%}.swallow-grid .slot span{display:block}.army-support .slot{grid-column:auto;grid-row:auto}
