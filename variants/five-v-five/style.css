@@ -29,7 +29,7 @@
 #allies .heldWeapon[data-thrust="true"]{top:15%}#enemies .heldWeapon[data-thrust="true"]{top:85%}
 
 /* Ally-only proportion pass; keep text sizes and enemy layout unchanged. */
-#allies .unit{width:calc(75% - 10.5px);height:43.5px;min-height:43.5px;padding:2px 0 1px}
+#allies .unit{width:calc(86.25% - 12.075px);height:50.025px;min-height:50.025px;padding:2px 0 1px}
 #allies .unit progress{margin-top:2px}
 #allies .unit small{width:max-content;left:50%;transform:translateX(-50%)}
 #allies .heldWeapon:not([data-dual="true"]){left:calc(100% + 5px);right:auto;top:-5px;transform:translate(-50%,-100%);transform-origin:50% 100%}
@@ -37,7 +37,7 @@
 #allies .heldWeapon[data-weapon="bow"]{height:45px;max-width:21.25px}
 #allies .heldWeapon[data-dual="true"]{height:48.4px;max-width:19.8px}
 #allies .heldWeapon[data-dual="true"][data-hand="left"]{height:48.4px}
-@media(max-width:360px){#allies .unit{width:calc(75% - 7.5px)}}
+@media(max-width:360px){#allies .unit{width:calc(86.25% - 8.625px)}}
 
 /* Align the visible weapon base, rather than the transparent image rectangle. */
 #allies .unit .heldWeapon{max-width:none!important;left:calc(100% + 7px);right:auto;top:-2px!important;transform:translate(calc(0% - var(--grip-x)),calc(0% - var(--grip-y)));transform-origin:var(--grip-x) var(--grip-y)}
@@ -73,7 +73,7 @@
 
 /* Enemy bodies stay upright. Only weapon placement and orientation rotate 180 degrees. */
 #enemies{top:calc(50% - 209.5px)}
-#enemies .unit{width:calc(75% - 10.5px);height:43.5px;min-height:43.5px;padding:2px 0 1px}
+#enemies .unit{width:calc(86.25% - 12.075px);height:50.025px;min-height:50.025px;padding:2px 0 1px}
 #enemies .unit progress{margin-top:2px}
 #enemies .unit small{width:max-content;left:50%;transform:translateX(-50%)}
 #enemies .unit:nth-child(1){left:24%}
@@ -86,7 +86,7 @@
 #enemies .unit .heldWeapon[alt="錘"],#enemies .unit .heldWeapon[alt="斧"]{height:42.5px}
 #enemies .unit canvas.heldWeapon[data-horizontal="true"]{width:57.6px;height:50.4px;left:50%;top:calc(100% - 12px);transform:translateX(-50%) rotate(180deg);transform-origin:center}
 #enemies .archer.acting{animation:none}
-@media(max-width:360px){#enemies .unit{width:calc(75% - 7.5px)}}
+@media(max-width:360px){#enemies .unit{width:calc(86.25% - 8.625px)}}
 #enemies .unit strong{width:max-content;left:50%;transform:translateX(-50%)}
 .formationTabs{display:flex;gap:6px;flex-wrap:wrap}
 .armoryGrid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px;width:100%;margin:16px 0}
@@ -97,3 +97,4 @@
 #allies .unit:nth-child(n),#enemies .unit:nth-child(n){left:var(--inward,0)}
 .charging #allies .unit,.charging #enemies .unit{left:var(--inward,0)}
 .townTools a{align-self:center;color:#365d4b;padding:8px}
+@media(max-width:400px){.unit small{font-size:8px;letter-spacing:-.4px}}
