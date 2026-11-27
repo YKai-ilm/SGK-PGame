@@ -12,7 +12,28 @@
 
  const weaponCache=new Map();let effectFrame=0,effectCanvas=null,weaponMotion=[],bowString=null;
  function weaponInfo(u){const types={劉備:['hit','雙股劍'],關羽:['hit','青龍偃月刀'],張飛:['pierce','丈八蛇矛'],趙雲:['pierce','銀槍'],黃忠:['arrow','弓'],許褚:['hit','錘'],徐晃:['hit','斧'],賊兵甲:['hit','刀'],賊兵乙:['pierce','槍'],賊兵丙:['arrow','弓'],賊兵丁:['hit','劍'],賊首:['hit','大刀']};const d=types[u.name]||['hit','劍'];return {kind:d[0],name:d[1],type:u.name,playerWeaponType:({'劍':'sword','錘':'hammer','斧':'axe'})[d[1]]};}
- function paintWeapon(ctx,w,x,y,p,angle,size){AttackArt.weapon(ctx,{...w,x:x/size-.5,y:y/size-.5,enemy:true,weapon:{kind:w.kind,start:0,duration:1,angle}},p,size);}
+
+ // Broad, distinct silhouettes for the small seven-person preview cards.
+ function heavyWeapon(ctx,type,x,y,angle,size){ctx.save();ctx.translate(x,y);ctx.rotate(angle+Math.PI/2);ctx.scale(size/75,size/75);ctx.lineJoin='round';
+ const shape=(points,fill,stroke='#333b35',width=1.5)=>{ctx.beginPath();points.forEach(([x,y],i)=>i?ctx.lineTo(x,y):ctx.moveTo(x,y));ctx.closePath();ctx.fillStyle=fill;ctx.fill();ctx.strokeStyle=stroke;ctx.lineWidth=width;ctx.stroke();};
+ const handle=ctx.createLinearGradient(-4,0,4,0);handle.addColorStop(0,'#33291e');handle.addColorStop(.45,type==='hammer'?'#93653b':'#69452d');handle.addColorStop(.65,'#b58a52');handle.addColorStop(1,'#30271f');shape([[-4,-94],[4,-94],[3,0],[-3,0]],handle);
+ for(let y=-7;y>-38;y-=5){ctx.strokeStyle='#30251d';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(-3,y-2);ctx.lineTo(3,y);ctx.stroke();}shape([[-5,-3],[5,-3],[4,3],[-4,3]],'#b79a5e');
+ if(type==='hammer'){
+ // Rounded iron war-hammer, restrained metal tones matching the existing weapons.
+ const metal=ctx.createRadialGradient(-8,-102,2,0,-96,24);metal.addColorStop(0,'#c4c8b7');metal.addColorStop(.28,'#939d90');metal.addColorStop(.65,'#59675d');metal.addColorStop(1,'#303d35');
+ ctx.beginPath();ctx.ellipse(0,-96,20,22,0,0,Math.PI*2);ctx.fillStyle=metal;ctx.fill();ctx.strokeStyle='#405044';ctx.lineWidth=1.2;ctx.stroke();
+ for(const k of [-1,0,1]){ctx.beginPath();ctx.moveTo(k*5,-117);ctx.bezierCurveTo(k*16-3,-106,k*16-3,-85,k*5,-75);ctx.strokeStyle=k===-1?'#c1c6b080':'#35483c88';ctx.lineWidth=1.1;ctx.stroke();}
+ shape([[-4,-123],[4,-123],[5,-117],[-5,-117]],'#8c9179','#4e5b49',1);
+ shape([[-6,-75],[6,-75],[4,-68],[-4,-68]],'#8f8c69','#4d5848',1);
+ }else{
+ const steel=ctx.createLinearGradient(-41,-105,8,-75);steel.addColorStop(0,'#d7d9c4');steel.addColorStop(.2,'#a9b4a5');steel.addColorStop(.43,'#697b6c');steel.addColorStop(.8,'#3d5044');steel.addColorStop(1,'#83917c');
+ ctx.beginPath();ctx.moveTo(2,-98);ctx.quadraticCurveTo(-16,-96,-29,-111);ctx.quadraticCurveTo(-39,-88,-27,-66);ctx.quadraticCurveTo(-16,-83,2,-82);ctx.closePath();ctx.fillStyle=steel;ctx.fill();ctx.strokeStyle='#2e4541';ctx.lineWidth=2;ctx.stroke();
+ ctx.beginPath();ctx.moveTo(-29,-110);ctx.quadraticCurveTo(-37,-88,-27,-68);ctx.strokeStyle='#eef0d9';ctx.lineWidth=3;ctx.stroke();
+ shape([[3,-97],[20,-96],[24,-92],[20,-88],[3,-85]],'#687974');shape([[-5,-101],[6,-101],[6,-78],[-5,-78]],'#979375');shape([[-3,-111],[3,-111],[4,-102],[-4,-102]],'#a4b6ad');
+ ctx.strokeStyle='#8c3c30';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(3,-76);ctx.quadraticCurveTo(16,-71,10,-60);ctx.stroke();
+ }ctx.restore();}
+
+ function paintWeapon(ctx,w,x,y,p,angle,size){if(['hammer','axe'].includes(w.playerWeaponType)){heavyWeapon(ctx,w.playerWeaponType,x,y,angle,size);return;}AttackArt.weapon(ctx,{...w,x:x/size-.5,y:y/size-.5,enemy:true,weapon:{kind:w.kind,start:0,duration:1,angle}},p,size);}
  function drawHeldBow(bow,phase){const ctx=bow.getContext('2d');ctx.clearRect(0,0,bow.width,bow.height);paintWeapon(ctx,{type:'黃忠',kind:'arrow'},64,100,phase,-Math.PI/2,145);}
  function heldWeapon(u,hand='right'){if(u.name==='黃忠'){const bow=document.createElement('canvas');bow.width=128;bow.height=112;bow.className='heldWeapon';bow.dataset.weapon='bow';bow.dataset.horizontal='true';bow.setAttribute('role','img');bow.setAttribute('aria-label','橫持弓');drawHeldBow(bow,.5);return bow;}const w=u.name==='劉備'?{kind:'hit',name:hand==='left'?'左手劍':'右手劍',type:'單劍',playerWeaponType:'sword'}:weaponInfo(u),key=w.type;if(!weaponCache.has(key)){const canvas=document.createElement('canvas');canvas.width=256;canvas.height=256;const ctx=canvas.getContext('2d');paintWeapon(ctx,w,128,175,.5,w.kind==='arrow'?0:-Math.PI/2,75);const pixels=ctx.getImageData(0,0,256,256).data;let left=256,top=256,right=0,bottom=0;for(let y=0;y<256;y++)for(let x=0;x<256;x++)if(pixels[(y*256+x)*4+3]>24){left=Math.min(left,x);right=Math.max(right,x);top=Math.min(top,y);bottom=Math.max(bottom,y);}const crop=document.createElement('canvas');crop.width=right-left+5;crop.height=bottom-top+5;crop.getContext('2d').drawImage(canvas,left-2,top-2,crop.width,crop.height,0,0,crop.width,crop.height);let gripLeft=256,gripRight=0;for(let y=Math.max(top,bottom-2);y<=bottom;y++)for(let x=left;x<=right;x++)if(pixels[(y*256+x)*4+3]>24){gripLeft=Math.min(gripLeft,x);gripRight=Math.max(gripRight,x);}let gripX=((gripLeft+gripRight)/2-left+2)/crop.width*100,source=crop;if(u.name==='關羽'){source=document.createElement('canvas');source.width=crop.width;source.height=crop.height;const mirror=source.getContext('2d');mirror.translate(crop.width,0);mirror.scale(-1,1);mirror.drawImage(crop,0,0);gripX=100-gripX;}weaponCache.set(key,{src:source.toDataURL(),x:gripX,y:(bottom-top+2.5)/crop.height*100});}const img=document.createElement('img');img.className='heldWeapon';img.dataset.hand=hand;img.dataset.dual=String(u.name==='劉備');img.dataset.thrust=String(w.kind==='pierce');img.dataset.weapon=w.kind==='arrow'?'bow':w.kind==='pierce'||u.name==='關羽'?'pole':'blade';const art=weaponCache.get(key);img.src=art.src;img.style.setProperty('--grip-x',art.x+'%');img.style.setProperty('--grip-y',art.y+'%');img.alt=w.name;img.draggable=false;return img;}
 
