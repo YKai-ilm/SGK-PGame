@@ -27,3 +27,14 @@
 @media(max-width:360px){.formation{padding:0 7px;gap:2px}.unit{width:calc(100% - 10px);font-size:11px}.heldWeapon{right:-11px}.heldWeapon[data-hand="left"]{left:-10px}}
 #enemies{top:calc(50% - 196px)}.charging #enemies .unit{margin-top:92px}.heldWeapon{top:68%}#enemies .heldWeapon{top:32%}
 #allies .heldWeapon[data-thrust="true"]{top:15%}#enemies .heldWeapon[data-thrust="true"]{top:85%}
+
+/* Ally-only proportion pass; keep text sizes and enemy layout unchanged. */
+#allies .unit{width:calc(75% - 10.5px);height:43.5px;min-height:43.5px;padding:2px 0 1px}
+#allies .unit progress{margin-top:2px}
+#allies .unit small{width:max-content;left:50%;transform:translateX(-50%)}
+#allies .heldWeapon:not([data-dual="true"]){left:calc(100% + 5px);right:auto;top:-5px;transform:translate(-50%,-100%);transform-origin:50% 100%}
+#allies .heldWeapon[data-thrust="true"]{height:57.6px;max-width:16px}
+#allies .heldWeapon[data-weapon="bow"]{height:45px;max-width:21.25px}
+#allies .heldWeapon[data-dual="true"]{height:48.4px;max-width:19.8px}
+#allies .heldWeapon[data-dual="true"][data-hand="left"]{height:42.9px}
+@media(max-width:360px){#allies .unit{width:calc(75% - 7.5px)}}
