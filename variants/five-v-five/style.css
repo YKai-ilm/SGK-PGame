@@ -52,3 +52,9 @@
 #allies .unit canvas.heldWeapon[data-horizontal="true"]{width:64px;height:56px;top:12px!important}
 #allies{top:calc(50% + 74px)}
 #arena{height:clamp(480px,calc(100svh - 270px),540px)}
+
+/* Bring ally columns inward without changing card or weapon dimensions. */
+#allies .unit:nth-child(1){left:24%}
+#allies .unit:nth-child(2){left:12%}
+#allies .unit:nth-child(4){left:-12%}
+#allies .unit:nth-child(5){left:-24%}
