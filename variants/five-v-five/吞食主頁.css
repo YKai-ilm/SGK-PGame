@@ -1,0 +1,9 @@
+.swallow-factions{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}
+.swallow-factions button{flex:1;min-width:52px;padding:8px 5px}
+.swallow-factions button.active,.swallow-factions button[aria-pressed=true],.swallow-grid button[aria-pressed=true]{background:#315744;color:#fff8e5}
+.swallow-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;margin:16px 0}
+.swallow-grid button{min-width:0;min-height:70px;padding:6px 2px;font-size:16px}
+.swallow-grid button:disabled{opacity:.45}
+#officerSearch{max-width:100%;padding:8px;font:inherit}
+.top{position:relative}#settings{position:relative;z-index:2}
+@media(min-aspect-ratio:3/2){.modebar{position:static;padding:8px 22px}.swallow-grid{max-width:650px}}

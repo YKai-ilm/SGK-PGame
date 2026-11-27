@@ -7,7 +7,8 @@ module.exports=async function(out){
   fs.writeFileSync(path.join(out,name),text);
  }
  for(const name of ['桃園起兵.css','主介面流程.css','遊戲字體.css','場景物件.css'])fs.writeFileSync(path.join(out,name),fs.readFileSync(path.join(root,name),'utf8').replaceAll('.png','.webp'));
- for(const name of ['吞食主頁.js','吞食銜接.js'])fs.copyFileSync(path.join(variant,name),path.join(out,name));
+ for(const name of ['吞食主頁.js','吞食銜接.js','吞食整備.js','吞食主頁.css'])fs.copyFileSync(path.join(variant,name),path.join(out,name));
+ for(const name of ['人物評定草案.js','武將品質草案.js'])fs.copyFileSync(path.join(root,name),path.join(out,name));
  const home=fs.readFileSync(path.join(variant,'吞食主頁.html'),'utf8');for(const name of ['入口.html','主介面流程預覽.html'])fs.writeFileSync(path.join(out,name),home);
  // 沿用走防的手機外框，內容直接開啟吞食自己的主畫面。
  let phone=fs.readFileSync(path.join(root,'手機模擬.html'),'utf8')
@@ -24,4 +25,10 @@ module.exports=async function(out){
  village=village.replace('<script src="桃園起兵.js', '<script>window.SWALLOW_CAMPAIGN=true;</script><script src="shared/grain-route.js"></script><script src="game.js"></script><script src="吞食銜接.js"></script><script src="桃園起兵.js');fs.writeFileSync(path.join(out,'桃園起兵.html'),village);
  const images=['劉備家居室-v1.png','桃園村背景-無字牌-v1.png','桃源村東-v1.png','桃源村西-v1.png','村長家居室-v1.png','張飛家居室-v1.png','主城草地背景-v1.png','場景共用物件-v1.png'];
  for(const name of images)await sharp(path.join(root,name)).webp({quality:88,effort:5}).toFile(path.join(out,name.replace('.png','.webp')));
+ fs.copyFileSync(path.join(root,'背景音樂.js'),path.join(out,'背景音樂.js'));
+ fs.mkdirSync(path.join(out,'音樂'),{recursive:true});
+ for(const name of ['主頁.mp3','劇情.mp3','戰鬥.mp3'])fs.copyFileSync(path.join(root,'音樂',name),path.join(out,'音樂',name));
+ for(const [name,scene]of [['入口.html','home'],['主介面流程預覽.html','home'],['桃園起兵.html','story'],['index.html','story']]){
+  const target=path.join(out,name);fs.writeFileSync(target,fs.readFileSync(target,'utf8').replace('</head>',`<script src="背景音樂.js" data-standalone="true" data-scene="${scene}"></script></head>`));
+ }
 };

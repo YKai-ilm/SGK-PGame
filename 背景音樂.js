@@ -2,7 +2,7 @@
 (()=>{
  const script=document.currentScript,initial=script?.dataset.scene||'home';
  // 舊書籤與直接入口也由固定外層承載；file:// 本機預覽保持原入口。
- if(parent===window&&!window.GameAudioShell&&/^https?:$/.test(location.protocol)){
+ if(parent===window&&!window.GameAudioShell&&script?.dataset.standalone!=='true'&&/^https?:$/.test(location.protocol)){
   const page=decodeURIComponent(location.pathname.split('/').pop())+location.search+location.hash;
   location.replace(new URL('index.html#page='+encodeURIComponent(page),location.href).href);return;
  }
