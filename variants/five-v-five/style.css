@@ -70,3 +70,21 @@
 
 #allies .heldWeapon[alt="錘"],#allies .heldWeapon[alt="斧"]{height:42.5px}
 .charging #allies.formation232 .unit{left:0}
+
+/* Enemy bodies stay upright. Only weapon placement and orientation rotate 180 degrees. */
+#enemies{top:calc(50% - 209.5px)}
+#enemies .unit{width:calc(75% - 10.5px);height:43.5px;min-height:43.5px;padding:2px 0 1px}
+#enemies .unit progress{margin-top:2px}
+#enemies .unit small{width:max-content;left:50%;transform:translateX(-50%)}
+#enemies .unit:nth-child(1){left:24%}
+#enemies .unit:nth-child(2){left:12%}
+#enemies .unit:nth-child(4){left:-12%}
+#enemies .unit:nth-child(5){left:-24%}
+#enemies .unit .heldWeapon{height:43.56px;max-width:none;left:-7px;right:auto;top:calc(100% + 2px);transform:translate(calc(0% - var(--grip-x)),calc(0% - var(--grip-y))) rotate(180deg);transform-origin:var(--grip-x) var(--grip-y)}
+#enemies .unit .heldWeapon[data-hand="left"]{left:calc(100% + 7px)}
+#enemies .unit .heldWeapon[data-weapon="pole"]{height:57.6px}
+#enemies .unit .heldWeapon[alt="錘"],#enemies .unit .heldWeapon[alt="斧"]{height:42.5px}
+#enemies .unit canvas.heldWeapon[data-horizontal="true"]{width:57.6px;height:50.4px;left:50%;top:calc(100% - 12px);transform:translateX(-50%) rotate(180deg);transform-origin:center}
+#enemies .archer.acting{animation:none}
+@media(max-width:360px){#enemies .unit{width:calc(75% - 7.5px)}}
+#enemies .unit strong{width:max-content;left:50%;transform:translateX(-50%)}
