@@ -10,6 +10,7 @@ window.FiveVFiveGame=(()=>{
   s.formation=formations[s.formation]?s.formation:'front3';s.spMax??=24;s.sp??=24;for(const [i,u]of s.party.entries()){u.speed??=10+i;u.xp??=0;}
   // One-time preview supplies; old saves keep their items, HP and story progress.
   if(!s.combatSuppliesV2){for(const [id,n]of Object.entries({redHeartPill:5,bronzePill:3,revivalPill:3}))s.items[id]=(s.items[id]||0)+n;s.combatSuppliesV2=true;}
+  if(!s.previewRevival999){s.items.revivalPill=Math.max(999,s.items.revivalPill||0);s.previewRevival999=true;}
   if(s.battle){const b=s.battle;b.enemyFormation??='front2';b.formation??=s.formation;b.mode??='manual';b.log??=[];for(const [i,u]of b.enemies.entries())u.speed??=9+i;
    if(!b.queue){b.queue=s.party.map((u,index)=>({side:'ally',index})).filter(v=>v.index>=b.turn&&s.party[v.index].hp>0).concat(b.enemies.map((u,index)=>({side:'enemy',index})));b.cursor=0;}
    if(!b.phase){b.orders={};b.planAt=0;b.fallen=[];if(b.outcome)b.phase='ended';else if(b.mode!=='manual')b.phase='executing';else{b.remaining=b.queue.slice(b.cursor);b.planners=b.remaining.filter(v=>v.side==='ally'&&s.party[v.index].hp>0).map(v=>v.index);b.phase=b.planners.length?'planning':'executing';b.turn=b.planners[0]??-1;}}
