@@ -36,7 +36,7 @@
 #allies .heldWeapon[data-thrust="true"]{height:57.6px;max-width:16px}
 #allies .heldWeapon[data-weapon="bow"]{height:45px;max-width:21.25px}
 #allies .heldWeapon[data-dual="true"]{height:48.4px;max-width:19.8px}
-#allies .heldWeapon[data-dual="true"][data-hand="left"]{height:42.9px}
+#allies .heldWeapon[data-dual="true"][data-hand="left"]{height:48.4px}
 @media(max-width:360px){#allies .unit{width:calc(75% - 7.5px)}}
 
 /* Align the visible weapon base, rather than the transparent image rectangle. */
