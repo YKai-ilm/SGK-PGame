@@ -6,5 +6,7 @@ const root=path.resolve(__dirname,'..'),out=path.join(root,'.preview-five-v-five
  files['攻擊美術.js']=path.join(root,'攻擊美術.js');
  const hashes={};for(const [target,from]of Object.entries(files)){const data=fs.readFileSync(from);fs.mkdirSync(path.dirname(path.join(out,target)),{recursive:true});fs.writeFileSync(path.join(out,target),data);hashes[target]=crypto.createHash('sha256').update(data).digest('hex');}
  for(const file of ['糧道谷關-v1.png','盜糧匪寨-v2-黑風寨.png','共用室內場景/茶站-v1.png','共用室內場景/客棧-v1.png','共用室內場景/城主府大堂三-v2-方正議事廳.png']){const target=path.join(out,file.replace(/\.png$/,'.webp'));fs.mkdirSync(path.dirname(target),{recursive:true});const data=await sharp(path.join(root,file)).webp({quality:88,effort:5}).toBuffer();fs.writeFileSync(target,data);}
+ await require('./build-swallow-campaign.cjs')(out);
  fs.writeFileSync(path.join(out,'build-info.json'),JSON.stringify({variant:'five-v-five-preview',sharedContent:hashes['shared/grain-route.js'],saveKey:'sgk-five-v-five-preview-v1',production:false},null,2));console.log('Built isolated five-v-five preview; shared content hash '+hashes['shared/grain-route.js'].slice(0,12));
 })().catch(e=>{console.error(e);process.exitCode=1;});
+

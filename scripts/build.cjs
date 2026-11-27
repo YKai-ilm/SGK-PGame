@@ -64,6 +64,7 @@ for(const name of guideNames){
  else html=html.replace(/<html([^>]*)>/i,'<html$1><head>'+guideBoot);
  fs.writeFileSync(path.join(out,'guide',name),html);files.push('guide/'+name);
 }
+files.push(...require('./build-swallow-release.cjs')(out));
 // 清理只限 dist 內已不屬於本版的檔案。
 function prune(dir){for(const e of fs.readdirSync(dir,{withFileTypes:true})){const p=path.join(dir,e.name);if(e.isDirectory())prune(p);else if(!files.includes(path.relative(out,p).replaceAll('\\','/')))fs.unlinkSync(p);}}prune(out);
 fs.writeFileSync(path.join(root,'publish-inputs.json'),JSON.stringify(inputs,null,2)+'\n');
@@ -72,6 +73,7 @@ fs.writeFileSync(path.join(root,'本機版本.js'),`window.LOCAL_GAME_VERSION=${
 console.log(`Built ${version}: ${files.length} files, ${precache.length} core assets.`);
 console.log(`Scene images ${(originalImages/1048576).toFixed(1)} -> ${(packedImages/1048576).toFixed(1)} MiB; original PNG files preserved.`);
 })().catch(e=>{console.error(e);process.exitCode=1;});
+
 
 
 
