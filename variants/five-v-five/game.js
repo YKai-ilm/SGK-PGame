@@ -23,7 +23,11 @@ window.FiveVFiveGame=(()=>{
  function advance(s,flag){if(!story.canAdvance(flag,s.progress))throw Error('請先完成前段對話');if(flag==='captainGift')s.items.damagedLeatherArmor=(s.items.damagedLeatherArmor||0)+1;if(flag==='reported'){s.coins+=60;s.trainingXP=(s.trainingXP||0)+100;}s.progress[flag]=true;}
  function talk(lines,flag=null){return change(s=>{if(s.battle?.outcome===null)throw Error('請先結束戰鬥');s.active={lines,index:0,flag};});}
  function next(){return change(s=>{if(!s.active)return null;const a=s.active;if(a.index<a.lines.length-1){a.index++;return null;}if(a.flag)advance(s,a.flag);s.active=null;return a.flag;});}
- function go(scene){return change(s=>{if(s.battle&&!s.battle.outcome)throw Error('戰鬥尚未結束');s.scene=scene;s.active=null;});}
+ const travelRoutes=[{places:['徐州驗證區','糧道谷關'],name:'徐州糧道',chance:.3},{places:['糧道谷關','盜糧匪寨'],name:'黑風寨山道',chance:.3}];
+ function encounter(s,route,to){const names=['賊兵甲','賊兵乙','賊兵丙','賊兵丁','賊首'];for(let i=names.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[names[i],names[j]]=[names[j],names[i]];}
+  s.battle={id:crypto.randomUUID(),kind:'encounter',journey:{from:s.scene,to,route:route.name},round:1,turn:0,outcome:null,mode:'manual',formation:s.formation,enemyFormation:Object.keys(formations)[Math.floor(Math.random()*Object.keys(formations).length)],log:[route.name+'途中遭遇賊寇！'],enemies:names.map(name=>{const chief=name==='賊首',hp=(chief?210:140)+Math.floor(Math.random()*4)*10;return {name,max:hp,hp,attack:(chief?24:15)+Math.floor(Math.random()*5),speed:9+Math.floor(Math.random()*5)};})};prepare(s);s.active=null;
+ }
+ function go(scene){return change(s=>{if(s.battle)throw Error('請先離開戰鬥結算');if(s.active)throw Error('請先完成對話');const route=travelRoutes.find(r=>r.places.includes(s.scene)&&r.places.includes(scene)&&s.scene!==scene);if(route){if(s.party.every(u=>u.hp<=0))throw Error('隊伍無法趕路，請先使用復活丹');if(Math.random()<route.chance){encounter(s,route,scene);return;}}s.scene=scene;s.active=null;});}
  function setFormation(id){return change(s=>{if(s.battle&&!s.battle.outcome)throw Error('請在戰前調整陣型');if(!formations[id])throw Error('陣型不存在');s.formation=id;});}
  function newRound(s){const b=s.battle;b.queue=['ally','enemy'].flatMap(side=>(side==='ally'?s.party:b.enemies).map((u,index)=>({side,index,score:u.speed*(.8+Math.random()*.4)})).filter(v=>(v.side==='ally'?s.party:b.enemies)[v.index].hp>0)).sort((a,b)=>b.score-a.score);b.cursor=0;}
  function prepare(s){const b=s.battle;b.phase='planning';b.orders={};b.planners=s.party.map((u,i)=>i).filter(i=>s.party[i].hp>0);b.planAt=0;b.turn=b.planners[0]??-1;b.fallen=[];b.queue=[];b.cursor=0;delete b.remaining;delete b.savedOrders;}
@@ -42,6 +46,7 @@ window.FiveVFiveGame=(()=>{
 
  function log(s,line){s.battle.log.push(line);s.battle.log=s.battle.log.slice(-20);}
  function finish(s,outcome){const b=s.battle;if(b.outcome)return;b.outcome=outcome;b.mode='manual';b.turn=-1;b.phase='ended';
+  if(b.kind==='encounter'){if(outcome==='victory'){b.reward={coins:12,xp:10};s.coins+=b.reward.coins;b.experience=s.party.map(u=>({name:u.name,gained:u.hp>0?b.reward.xp:0}));for(const u of s.party)if(u.hp>0)u.xp+=b.reward.xp;}log(s,outcome==='victory'?'賊寇已被擊退，獲得12金幣；存活武將各得10經驗，可繼續前往'+b.journey.to+'。':outcome==='defeat'?'全隊戰敗，退回'+b.journey.from+'。請使用復活丹救回武將。':'已撤退，返回'+b.journey.from+'。');return;}
   if(outcome==='victory'&&!b.practice){if(s.progress.pending?.runId!==b.id)throw Error('救援場次不符');s.progress.rescueWon=true;s.progress.rescueRun=b.id;b.experience=s.party.map(u=>({name:u.name,gained:u.hp>0?30:0}));for(const u of s.party)if(u.hp>0)u.xp+=30;}
   if(s.progress.pending?.runId===b.id)delete s.progress.pending;log(s,outcome==='victory'?(b.practice?'演練結束，不重複領取經驗與劇情獎勵。':'追兵已被擊退。存活武將各得30經驗；死亡武將不分經驗。'):outcome==='defeat'?'全隊戰敗。請使用復活丹救回死亡武將。':'已撤退，剩餘生命與死亡狀態保留。');
  }
@@ -83,7 +88,7 @@ window.FiveVFiveGame=(()=>{
   }endRound(s);
  });}
 
- function returnFromBattle(){return change(s=>{if(!s.battle?.outcome)throw Error('戰鬥尚未結束');s.battle=null;s.scene='糧道谷關';});}
+ function returnFromBattle(){return change(s=>{if(!s.battle?.outcome)throw Error('戰鬥尚未結束');const b=s.battle;s.scene=b.kind==='encounter'?(b.outcome==='victory'?b.journey.to:b.journey.from):'糧道谷關';s.battle=null;});}
  function showRescue(){return change(s=>{if(s.progress.rescueWon&&!s.progress.rescueShown)advance(s,'rescueShown');});}
  function retreat(){return change(s=>{if(!s.battle||s.battle.outcome)throw Error('目前沒有進行中的戰鬥');finish(s,'retreat');});}
  function rest(){return change(s=>{if(s.scene!=='客棧'||s.battle&&!s.battle.outcome)throw Error('請先回客棧休息');if(!s.party.some(u=>u.hp>0))throw Error('全隊已死亡，請先使用復活丹');if(s.coins<20)throw Error('住宿需要20金幣');if(s.party.every(u=>u.hp<=0||u.hp===u.max)&&s.sp===s.spMax)throw Error('存活武將已恢復健康');s.coins-=20;for(const u of s.party)if(u.hp>0)u.hp=u.max;s.sp=s.spMax;});}

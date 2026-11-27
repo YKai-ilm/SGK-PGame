@@ -9,7 +9,7 @@
     "release": "node scripts/release.cjs",
     "build:five-v-five": "node scripts/build-five-v-five.cjs",
     "preview:five-v-five": "node scripts/serve-five-v-five.cjs",
-    "test:five-v-five": "node scripts/test-five-v-five-combat.cjs"
+    "test:five-v-five": "node scripts/test-five-v-five-combat.cjs && node scripts/test-five-v-five-travel.cjs"
   },
   "engines": {
     "node": ">=22"
