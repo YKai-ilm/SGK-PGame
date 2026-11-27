@@ -38,3 +38,7 @@
 #allies .heldWeapon[data-dual="true"]{height:48.4px;max-width:19.8px}
 #allies .heldWeapon[data-dual="true"][data-hand="left"]{height:42.9px}
 @media(max-width:360px){#allies .unit{width:calc(75% - 7.5px)}}
+
+/* Align the visible weapon base, rather than the transparent image rectangle. */
+#allies .unit .heldWeapon{max-width:none!important;left:calc(100% + 7px);right:auto;top:-2px!important;transform:translate(calc(0% - var(--grip-x)),calc(0% - var(--grip-y)));transform-origin:var(--grip-x) var(--grip-y)}
+#allies .heldWeapon[data-dual="true"][data-hand="left"]{left:-7px;right:auto}
