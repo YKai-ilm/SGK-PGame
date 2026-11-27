@@ -1,7 +1,7 @@
 'use strict';
 window.FiveVFiveGame=(()=>{
  const key='sgk-five-v-five-preview-v1',story=SharedGrainStory;
- const formations={front3:{name:'前三後二',rows:[0,1,0,1,0]},front2:{name:'前二後三',rows:[1,0,1,0,1]},threeRows:{name:'前二中一後二',rows:[2,0,1,0,2]}};
+ const formations={front3:{name:'前三中二',rows:[0,1,0,1,0]},front2:{name:'前二中三',rows:[1,0,1,0,1]},threeRows:{name:'前二中一後二',rows:[2,0,1,0,2]}};
  // Provisional turn-based effects, independent from tower-defense combat balance.
  const strategies={fire:{name:'火計',cost:3,side:'enemy',description:'對一名敵人造成較高傷害'},heal:{name:'赤心計',cost:2,side:'ally',description:'恢復一名存活武將80生命'}};
  const items={redHeartPill:{name:'赤心丹',heal:40},bronzePill:{name:'銅仙丹',heal:75},revivalPill:{name:'復活丹',revive:true}};
