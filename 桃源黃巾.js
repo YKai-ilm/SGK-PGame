@@ -40,7 +40,7 @@ window.YellowTurbanEncounter=(()=>{
   'taoyuan-defense':[1],'taoyuan-rescue':[1,1,2],'yunlong-bandits':[2],
   'grain-rescue':[2,2,3],'grain-camp':[2,2,3,3,4],
   'yellow-outpost':[3,3,4,4,5,5],'yellow-hq':[4,4,5,5,6,6],
-  'han-quyang':[7,7,8,8,9,9],'han-guangzong':[6,6,7,7,8,8],'han-relief':[4,4,5,5],'han-fire':[4,4,5,5,6,6],'han-wancheng':[5,5,6,6,7,7]
+  'dong-relief':[8,8,9,9,10,10],'han-quyang':[7,7,8,8,9,9],'han-guangzong':[6,6,7,7,8,8],'han-relief':[4,4,5,5],'han-fire':[4,4,5,5,6,6],'han-wancheng':[5,5,6,6,7,7]
  };
  function infantryLevel(w,mission=window.VillageSweep?.mission,waves=window.VillageSweep?.waves||6,route=window.HanBattle?.battleRoute){const levels=mission?stageLevels[mission]:{1:[1],3:[1,1,2],6:[1,1,2,2,3,3]}[waves];if(!levels||!Number.isInteger(w)||w<1||w>levels.length)throw Error('未設定的敵軍波段');return levels[w-1]+(mission==='han-wancheng'&&route==='direct'&&window.VillageSweep?.combatVersion===9?1:0);}
  function officerLevel(name,mission=window.VillageSweep?.mission,waves=window.VillageSweep?.waves||6,route=window.HanBattle?.battleRoute){if(!mission){const level={1:2,3:3,6:4}[waves];if(!level)throw Error('未設定的掃蕩頭目等級');return level;}const level={'han-quyang':name==='張寶'?11:10,'han-guangzong':name==='張梁'?10:9,'grain-camp':5,'yellow-outpost':6,'yellow-hq':7,'han-wancheng':name==='張寶'?9:8}[mission];if(!level)throw Error('未設定的劇情敵將等級');return level+(mission==='han-wancheng'&&route==='direct'&&window.VillageSweep?.combatVersion===9?1:0);}

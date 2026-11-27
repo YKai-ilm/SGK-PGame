@@ -1,5 +1,5 @@
 'use strict';
-if(window.HanBattle&&HanBattle.kind!=='three-lords')window.HanSupport=(()=>{
+if(window.HanBattle&&HanBattle.kind!=='three-lords'&&HanBattle.kind!=='dong-relief')window.HanSupport=(()=>{
  const config=['guangzong','quyang'].includes(HanBattle.kind)?[['皇甫嵩',3]]:HanBattle.kind==='wancheng'?[['朱儁',3]]:HanBattle.kind==='relief'?[['盧植',2]]:[['朱儁',0],['皇甫嵩',4]];
  let used=[],announced=[],picked=null,paused=false,creating=false;
  const box=document.createElement('section');box.id='hanSupport';box.title='本關限定，不佔招募格';

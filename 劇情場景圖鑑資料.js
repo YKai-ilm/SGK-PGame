@@ -18,9 +18,11 @@ for(const label of ['縣衙','驛站','客棧','道具鋪','武器鋪','防具�
 
 StorySceneGuide.places.push({id:'黃巾藏營',name:'黃巾藏營',image:'黃巾主營-v1.png',group:'黃巾烽火',status:'支線已接入／入口待葛陂主線',desc:'沿用既有黃巾主營底圖，作為徐州緊急討伐場景。',npc:'張梁、張寶；戰後揭露張角',guide:'兩弟皆放走且推進至葛陂事件後開啟。先戰兩弟，回場景揭露生還，再戰三公；回徐州向陶謙覆命。現在一般主線尚未開放入口。',preview:'天地人三公攻略.html'});
 
-StorySceneGuide.places.push({id:'陳留',name:'陳留城內',image:'陳留城內-v1.png',group:'陳留',status:'已接入／新外景待回饋',desc:'井邊市集、街東水道，商旅往來的中原城鎮。',npc:'接待軍吏（領令後）、井邊老者、布商與店家',guide:'軍令後登記再進聯軍營地；一般時可逛城與住宿。',preview:'檄文再起攻略.html'},{id:'聯軍營地',name:'聯軍營地',image:'討董聯軍營地-v1.png',group:'討董會盟',status:'4-1已接入',desc:'中軍帳、議事桌與接待棚分區，保留演武空地。',npc:'公孫瓚、曹操、袁紹、軍需吏',guide:'依序完成引見、軍情、受令。後續接應戰尚未開放。',preview:'檄文再起攻略.html'});
+StorySceneGuide.places.push({id:'陳留',name:'陳留城內',image:'陳留城內-v1.png',group:'陳留',status:'已接入／新外景待回饋',desc:'井邊市集、街東水道，商旅往來的中原城鎮。',npc:'接待軍吏（領令後）、井邊老者、布商與店家',guide:'軍令後登記再進聯軍營地；一般時可逛城與住宿。',preview:'檄文再起攻略.html'},{id:'聯軍營地',name:'聯軍營地',image:'討董聯軍營地-v1.png',group:'討董會盟',status:'4-1已接入',desc:'中軍帳、議事桌與接待棚分區，保留演武空地。',npc:'公孫瓚、曹操、袁紹、軍需吏',guide:'依序完成引見、軍情、受令。軍需吏領接應軍令，出口前往接應前線；戰後回此覆命。',preview:'檄文再起攻略.html'});
 for(const label of ['縣衙','驛站','客棧','道具鋪','武器鋪','防具鋪','編輯所']){const id=({'縣衙':'役所','武器鋪':'武器店','防具鋪':'防具店','道具鋪':'道具店'})[label]||label,base=SharedInteriorScenes.find(x=>x.id===id);StorySceneGuide.places.push({id:'陳留・'+label,name:'陳留・'+label,image:base.image,group:'陳留',status:'已接入／共用室內',desc:'沿用保存素材，離開返回陳留。',npc:base.npc,guide:'一般服務與陳留對話；店鋪商品尚未上架。',preview:'檄文再起攻略.html',implementedFacility:true});}
 
 for(const town of ['長社','廣宗','宛城','下曲陽','陳留']){const old=StorySceneGuide.places.find(p=>p.id===town+'・縣衙');if(old)Object.assign(old,{image:'共用室內場景/縣衙-v1.png',npc:'暫無NPC',desc:'通用縣衙公堂；書吏已移往獨立役所。',guide:'進入參觀，離開返回本城。佔領期間沿用原有進城限制。'});StorySceneGuide.places.push({id:town+'・役所',name:town+'・役所',image:'共用室內場景/役所-v1.png',group:town,status:'已接入',npc:'書吏',desc:'獨立役所，沿用原有書吏對話。',guide:'點書吏交談；離開返回本城。',preview:'共用室內場景預覽.html?scene=役所',implementedFacility:true});}
 
 for(const town of ['宛城','陳留']){const hall=StorySceneGuide.places.find(p=>p.id===town+'・縣衙'),base=SharedInteriorScenes.find(x=>x.id==='城主府三');if(hall)Object.assign(hall,{id:town+'・城主府',name:town+'・城主府',image:base.image,npc:'暫無NPC',desc:'郡治城池採城主府，沿用保存的議事廳素材。',guide:'書吏在獨立役所；離開返回本城。'});}
+
+StorySceneGuide.places.push({id:'接應前線',name:'接應前線',image:'漢軍驛道-v1.png',group:'討董會盟',status:'4-2已接入／沿用外景',desc:'驛道岔口，接應傷兵與後隊。',npc:'斥候、孫堅、董軍追兵（戰勝後消失）',guide:'軍需吏領令，六波接戰，與孫堅交接後回營覆命。',preview:'接應先鋒攻略.html'});
