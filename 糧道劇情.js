@@ -2,37 +2,20 @@
 window.GrainQuestUI=(()=>{
  let api,animating=false,showBandit=false;
  const q=()=>GrainQuest.progress(),sleep=ms=>new Promise(r=>setTimeout(r,ms));
- const dialogue={
- teaWaiter:[['店小二','方圓十里，就我們一間茶水站，客官您歇息一下再上路吧！']],
- xiulan:[['秀蘭','走了半天山路，總算能坐下喝口茶了。這山風吹著舒服，我還想再歇一會兒呢。']],
- dali:[['大力','我原想一口氣走到徐州城，誰知聞到茶香，腿就不肯往前走了。哈哈，喝完這碗再趕路！']],
- ming:[['明叔','糧道上總有點不太平，偶而會有些賊匪劫盜路上的運糧隊伍，老天保佑！']]
- };
+ const dialogue=SharedGrainStory.dialogue;
  function talk(lines,action){api.talk(lines,action?'grain:'+action:null);}
- const reportLines=[['劉備','已救下護衛隊長，並安排他回城到客棧休養，只是糧車仍在賊人手中。'],['糜竺','糧車雖失，護軍能平安回來，已是不幸中的大幸。'],['陶謙','聞壯士救回護軍，特來相見。危急之時仍以人命為先，難能可貴。'],['劉備','備只是盡力而為。只是糧道未安，往來百姓恐仍受其害。'],['糜竺','先領些盤纏與整備經驗。請再到客棧問隊長追糧線索，再與城西管事核對糧車記號。']];
- // Repeated conversations follow the latest completed milestone, preserving earlier flags.
- function nextStep(p){
-  if(p.cargoVerified)return '糧車已安排接回，請到城主府向糜別駕作最後覆命。';
-  if(p.cargoChecked)return '糧車已查驗，請找城西糧隊管事清點並安排接運。';
-  if(p.campWon)return '寨中賊兵已被擊退，請先查看寨內糧車，再找城西糧隊管事接運。';
-  if(p.marksKnown)return '糧車記號已核對，請循車轍前往黑風寨，先護住糧食，再奪回糧車。';
-  if(p.trailKnown)return '賊人去向已問明，請找城西糧隊管事核對糧車標記。';
-  if(p.reported)return '隊長已回客棧養傷，請先向他詢問追糧線索。';
-  if(p.captainGift)return '護衛隊長已獲救，請到城主府向糜別駕覆命，安排隊長回客棧休養。';
-  return '護衛隊長已獲救，請先照看茶站旁的隊長，再到城主府報平安。';
- }
+ const {reportLines,nextStep}=SharedGrainStory;
  function point(name,x,y,id){return [name,x,y,()=>npc(id)];}
- function scene(name){const p=q();if(name==='糧道谷關'){const points=[['茶站',44,53,()=>api.go('茶站')],['離開',50,94,()=>api.go('城西')]];if(p.heardMing&&!p.reported)points.push(point('受傷隊長',p.rescueShown?39:66,p.rescueShown?48:19,'captain'));if(showBandit||p.rescueWon&&!p.rescueShown)points.push(point('賊匪',49,19,'bandit'));if(p.marksKnown)points.push(['盜糧匪寨',55,7,()=>api.go('盜糧匪寨')]);return {image:'糧道谷關-v1.png',points};}if(name==='茶站')return {image:'共用室內場景/茶站-v1.png',points:[point('店小二',29,28,'teaWaiter'),point('秀蘭',25,38,'xiulan'),point('大力',39,46,'dali'),point('明叔',63,46,'ming'),['離開',50,91,()=>api.go('糧道谷關')]]};if(name==='盜糧匪寨')return {image:'盜糧匪寨-v2-黑風寨.png',points:[...(p.campShown?[]:[point('鄧茂',50,52,'deng')]),...(p.campWon?[point('糧車',77,34,'cargo')]:[]),['離開',49,75,()=>api.go('糧道谷關')]]};return null;}
+ function scene(name){return SharedGrainStory.scene(name,q(),{point,go:name=>api.go(name)},showBandit);}
  function augment(name,points){if(name==='客棧'&&q().reported)points.push(point('護衛隊長',78,61,'captain'));if(name==='城主府'&&q().captainGift)points.push(point('陶謙',50,18,'taoqian'));if(name==='城西'&&q().routeKnown)points.push(['糧道查探',46,89,()=>api.go('糧道谷關')]);if(name==='防具店')points.push(point('修復師',78,27,'repair'));}
- function choice(kind){api.menu(kind==='rescue'?'救援護衛隊長':'奪回糧車',kind==='rescue'?'先擊退追兵，讓隊長退至茶站。':'守住糧車，擊退鄧茂的賊兵。',[[kind==='rescue'?'開始救援':'開始奪糧',()=>start(kind)],['稍作準備',()=>{}]]);}
+ function choice(kind){const b=SharedGrainStory.battles[kind];api.menu(b.title,b.description,[[b.confirm,()=>start(kind)],['稍作準備',()=>{}]]);}
  async function start(kind){if(animating)return;animating=true;api.setBusy(true);try{const runId=GrainQuest.begin(kind);if(kind==='rescue'){showBandit=true;api.render();await sleep(700);}const fade=document.getElementById('fade');fade.classList.add('busy');fade.style.opacity='1';await sleep(1400);api.state.scene=kind==='rescue'?'糧道谷關':'盜糧匪寨';api.state.active=null;api.save();const url='戰場直版.html?grainBattle='+kind+'&run='+encodeURIComponent(runId)+'&returnTo='+encodeURIComponent('徐州劇情.html');if(window.SceneTest?.holdNavigation(url)){fade.style.opacity='0';fade.classList.remove('busy');return;}location.href=url;}catch(e){document.getElementById('fade').style.opacity='0';api.notice(e.message);}finally{animating=false;api.setBusy(false);}}
  function npc(id){if(window.DongQuestUI?.npc(id))return true;if(window.YellowQuestUI?.npc(id))return true;const p=q();
 if(dialogue[id]){talk(dialogue[id],id==='ming'?'heardMing':null);return true;}
  if(id==='taoqian'&&p.completed&&!p.armyFormed){talk([['陶謙','壯士先救護軍，再奪回糧車，既有勇略，又不忘護民。這番功勞，徐州百姓都記在心裡。'],['劉備','護軍與糧食皆得保全，備也總算能安心。'],['陶謙','我備下厚布衣、皮甲、硬皮甲各一件，助你們整備義勇。另將劉備、關羽、張飛三張武將卡交予你，往後可正式編入隊伍。'],['陶謙','自今日起，義勇正式成軍。願你們同心協力，守護百姓！'],['劉備','多謝陶公相助！備當謹記護民之志，不負所託。']],'armyFormed');return true;}
  if(id==='taoqian'){if(!p.captainGift)return true;if(!p.reported)talk(reportLines,'reported');else talk([['陶謙',p.completed?'壯士已使糧道重通，百姓得以安生，此功我記下了。':nextStep(p)]]);return true;}
  if(id==='役所'&&p.rescueWon){talk([['書吏',p.completed?'護軍得救，糧車也已平安接回，這次辛苦壯士了。':nextStep(p)]]);return true;}
- if(id==='captain'&&p.completed){talk([['護衛隊長','糧車能平安送回，我也終於能安心養傷了。救命與護糧之恩，沒齒難忘！']]);return true;}
- if(id==='captain'){if(!p.heardMing)return true;if(p.rescueWon&&!p.rescueShown)return true;if(p.rescueShown&&!p.captainGift)talk([['受傷隊長','多謝壯士出手！方才被賊兵追趕，若非相救，恐怕性命難保。'],['受傷隊長','這套皮甲雖已破損，還能請城裡防具舖的修復師縫補。請收下，聊表謝意。'],['劉備','隊長先在茶站休養，我回城向糜別駕報個平安。']],'captainGift');else if(p.reported&&!p.trailKnown)talk([['受傷隊長','賊人帶著糧車往西面山道去了。我記得他們轉入一處舊營地，路口有棵折斷的大樹。'],['受傷隊長','那一帶如今被賊人占作黑風寨，沿糧道盡頭的車轍便能追過去。'],['劉備','我先向管事核對標記，再循車轍追查。']],'trailKnown');else if(p.captainGift)talk([['受傷隊長',p.trailKnown?nextStep(p):'請代我向糜別駕覆命，我就在茶站養傷。']]);else if(p.captainBriefed)choice('rescue');else talk([['受傷隊長','救命……我是徐州運糧隊的護衛隊長。糧車被劫，同伴也被打散了！'],['劉備','莫慌，先退到路旁，讓我看看傷勢。'],['受傷隊長','賊兵就在後頭！還請壯士替我擋住他們，讓我逃到茶站！']],'captainBriefed');return true;}
+ if(id==='captain'){const event=SharedGrainStory.captain(p);if(event?.choice)choice(event.choice);else if(event?.lines)talk(event.lines,event.flag);return true;}
  if(id==='bandit')return true;
  if(id==='repair'){if(p.armorRepaired)talk([['修復師','皮甲已替您修好了，出門前記得穿戴妥當。']]);else if(p.captainGift)api.menu('修復師','修復破損皮甲需要 30 金幣，修好後獲得皮甲一套。',[['修復（30 金幣）',()=>{try{api.notice(GrainQuest.repair()?'破損皮甲已修復，皮甲已放入裝備背包。':'目前沒有可修復的破損皮甲。');}catch(e){api.notice(e.message);}}],['稍後再來',()=>{}]]);else talk([['修復師','皮甲若有破損，可以帶來讓我瞧瞧。']]);return true;}
  if(id==='deng'){if(p.campWon)return true;if(p.campBriefed)choice('camp');else talk([['鄧茂','追到這裡來了？這些糧車如今歸我，識相便走！'],['劉備','這是百姓活命的糧食，豈容你奪去！放下糧車！'],['鄧茂','有本事便來拿！弟兄們，給我上！']],'campBriefed');return true;}

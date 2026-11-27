@@ -12,3 +12,6 @@ test-results/
 本機版本.js
 .asset-cache/
 .compression-review/
+
+# Independent, unpublished five-v-five build output
+.preview-five-v-five/

@@ -3,6 +3,7 @@
   "app-icon-512.png",
   "index.html",
   "manifest.webmanifest",
+  "shared/grain-route.js",
   "tools/sw.js",
   "tools/驛站收費圖表.html",
   "tools/驛路棋盤.html",
