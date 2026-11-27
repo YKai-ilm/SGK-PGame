@@ -26,3 +26,4 @@
 .formation:has(.acting){z-index:7}.unit.acting{z-index:8}.combatEffect{z-index:9}
 @media(max-width:360px){.formation{padding:0 7px;gap:2px}.unit{width:calc(100% - 10px);font-size:11px}.heldWeapon{right:-11px}.heldWeapon[data-hand="left"]{left:-10px}}
 #enemies{top:calc(50% - 196px)}.charging #enemies .unit{margin-top:92px}.heldWeapon{top:68%}#enemies .heldWeapon{top:32%}
+#allies .heldWeapon[data-thrust="true"]{top:15%}#enemies .heldWeapon[data-thrust="true"]{top:85%}
