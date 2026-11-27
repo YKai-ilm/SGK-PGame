@@ -14,4 +14,8 @@ function setup(random=0){const map=new Map(),math=Object.create(Math);math.rando
 {
  const {g,map,c}=setup();const before=g.read();c.localStorage.setItem=()=>{throw Error('quota');};assert.throws(()=>g.go('徐州驗證區'));assert(!map.has(g.key));assert.equal(g.read().scene,before.scene);
 }
-console.log('PASS outdoor encounter/safe routes, reload, one-time reward, living XP, story/save isolation, victory arrival, retreat/defeat origin, dead travel guard and atomic persistence');
+{
+ const {g,map}=setup();assert.equal(Object.keys(g.basicTroops).length,10);
+ g.sweep();let s=g.read();assert.equal(s.battle.kind,'sweep');assert(s.battle.enemies.every(u=>g.basicTroops[u.name]&&u.troop===u.name&&u.weapon));assert.throws(()=>g.sweep());const progress=JSON.stringify(s.progress);for(const u of s.party){u.attack=999;u.speed=999;}map.set(g.key,JSON.stringify(s));g.setMode('charge');for(let i=0;i<50&&!g.read().battle.outcome;i++)g.step();assert.equal(g.read().battle.outcome,'victory');assert.equal(JSON.stringify(g.read().progress),progress);g.returnFromBattle();assert.equal(g.read().scene,'糧道谷關');assert(!g.read().battle);g.sweep();g.retreat();g.returnFromBattle();g.go('茶站');assert.throws(()=>g.sweep());
+}
+console.log('PASS outdoor encounters and sweeps, ten troop definitions, safe routes, reload, one-time reward, living XP, story/save isolation, victory arrival, retreat/defeat origin, dead travel guard and atomic persistence');
