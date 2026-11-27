@@ -7,7 +7,7 @@ module.exports=async function(out){
   fs.writeFileSync(path.join(out,name),text);
  }
  for(const name of ['桃園起兵.css','主介面流程.css','遊戲字體.css','場景物件.css'])fs.writeFileSync(path.join(out,name),fs.readFileSync(path.join(root,name),'utf8').replaceAll('.png','.webp'));
- for(const name of ['吞食主頁.js','吞食銜接.js','吞食整備.js','吞食主頁.css'])fs.copyFileSync(path.join(variant,name),path.join(out,name));
+ for(const name of ['吞食主頁.js','吞食銜接.js','吞食整備.js','吞食主頁.css','更新入口.html'])fs.copyFileSync(path.join(variant,name),path.join(out,name));
  for(const name of ['人物評定草案.js','武將品質草案.js'])fs.copyFileSync(path.join(root,name),path.join(out,name));
  const home=fs.readFileSync(path.join(variant,'吞食主頁.html'),'utf8');for(const name of ['入口.html','主介面流程預覽.html'])fs.writeFileSync(path.join(out,name),home);
  // 沿用走防的手機外框，內容直接開啟吞食自己的主畫面。
