@@ -63,3 +63,7 @@
 #allies.formation232 .unit{left:0}
 .charging #allies.formation232{grid-template-columns:repeat(7,minmax(0,1fr));padding-inline:12px}
 .charging #allies.formation232 .unit{width:calc(100% - 5px)}
+
+/* Keep the bow's proportions; short sabres use the same length as the swords. */
+#allies .unit canvas.heldWeapon[data-horizontal="true"]{width:57.6px;height:50.4px}
+.heldWeapon[alt="刀"],.heldWeapon[alt="大刀"]{height:43.56px;width:auto;max-width:none}
