@@ -40,12 +40,12 @@
 @media(max-width:360px){#allies .unit{width:calc(86.25% - 8.625px)}}
 
 /* Align the visible weapon base, rather than the transparent image rectangle. */
-#allies .unit .heldWeapon{max-width:none!important;left:calc(100% + 7px);right:auto;top:-2px!important;transform:translate(calc(0% - var(--grip-x)),calc(0% - var(--grip-y)));transform-origin:var(--grip-x) var(--grip-y)}
+#allies .unit .heldWeapon{max-width:none!important;left:calc(100% + 7px);right:auto;top:-2px!important;transform:translate(calc(0% - var(--grip-x)),calc(0% - var(--grip-y))) scale(.7);transform-origin:var(--grip-x) var(--grip-y)}
 #allies .heldWeapon[data-dual="true"][data-hand="left"]{left:-7px;right:auto}
 
 #allies .heldWeapon[data-dual="true"],#allies .heldWeapon[data-dual="true"][data-hand="left"]{height:43.56px}
 #allies .heldWeapon[data-weapon="pole"]{height:57.6px}
-#allies .unit .heldWeapon[data-horizontal="true"]{width:56px;height:32px;left:50%;top:-5px!important;transform:translate(-50%,-100%);transform-origin:center}
+#allies .unit .heldWeapon[data-horizontal="true"]{width:56px;height:32px;left:50%;top:-5px!important;transform:translate(-50%,-100%) scale(.7);transform-origin:center}
 #allies .archer.acting{animation:none}
 
 /* Reuse the original bow art and string animation, rotated toward the enemy. */
@@ -80,11 +80,11 @@
 #enemies .unit:nth-child(2){left:12%}
 #enemies .unit:nth-child(4){left:-12%}
 #enemies .unit:nth-child(5){left:-24%}
-#enemies .unit .heldWeapon{height:43.56px;max-width:none;left:-7px;right:auto;top:calc(100% + 2px);transform:translate(calc(0% - var(--grip-x)),calc(0% - var(--grip-y))) rotate(180deg);transform-origin:var(--grip-x) var(--grip-y)}
+#enemies .unit .heldWeapon{height:43.56px;max-width:none;left:-7px;right:auto;top:calc(100% + 2px);transform:translate(calc(0% - var(--grip-x)),calc(0% - var(--grip-y))) rotate(180deg) scale(.7);transform-origin:var(--grip-x) var(--grip-y)}
 #enemies .unit .heldWeapon[data-hand="left"]{left:calc(100% + 7px)}
 #enemies .unit .heldWeapon[data-weapon="pole"]{height:57.6px}
 #enemies .unit .heldWeapon[alt="錘"],#enemies .unit .heldWeapon[alt="斧"]{height:42.5px}
-#enemies .unit canvas.heldWeapon[data-horizontal="true"]{width:57.6px;height:50.4px;left:50%;top:calc(100% - 12px);transform:translateX(-50%) rotate(180deg);transform-origin:center}
+#enemies .unit canvas.heldWeapon[data-horizontal="true"]{width:57.6px;height:50.4px;left:50%;top:calc(100% - 12px);transform:translateX(-50%) rotate(180deg) scale(.7);transform-origin:center}
 #enemies .archer.acting{animation:none}
 @media(max-width:360px){#enemies .unit{width:calc(86.25% - 8.625px)}}
 #enemies .unit strong{width:max-content;left:50%;transform:translateX(-50%)}
@@ -99,5 +99,5 @@
 .townTools a{align-self:center;color:#365d4b;padding:8px}
 @media(max-width:400px){.unit small{font-size:8px;letter-spacing:-.4px}}
 /* Uniform weapon preview reduction, preserving grip anchors and attack transforms. */
-#allies .unit .heldWeapon,#enemies .unit .heldWeapon{scale:.7}
+
 
