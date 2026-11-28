@@ -98,3 +98,6 @@
 .charging #allies .unit,.charging #enemies .unit{left:var(--inward,0)}
 .townTools a{align-self:center;color:#365d4b;padding:8px}
 @media(max-width:400px){.unit small{font-size:8px;letter-spacing:-.4px}}
+/* Uniform weapon preview reduction, preserving grip anchors and attack transforms. */
+#allies .unit .heldWeapon,#enemies .unit .heldWeapon{scale:.7}
+
